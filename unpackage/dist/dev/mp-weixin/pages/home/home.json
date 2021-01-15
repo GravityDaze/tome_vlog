@@ -1,0 +1,11 @@
+{
+  "navigationStyle": "custom",
+  "navigationBarBackgroundColor": "#000000",
+  "navigationBarTextStyle": "white",
+  "usingComponents": {
+    "navbar": "/pages/home/components/navbar",
+    "menubar": "/pages/home/components/menubar",
+    "hot-scenery": "/pages/home/components/hotScenery",
+    "moment": "/pages/home/components/moment"
+  }
+}

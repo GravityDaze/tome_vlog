@@ -1,0 +1,1 @@
+<view class="menubar data-v-9d0010bc"><block wx:for="{{$root.l0}}" wx:for-item="item" wx:for-index="index" wx:key="index"><view class="menu-item data-v-9d0010bc"><image src="{{item.m0}}" mode class="data-v-9d0010bc"></image><text class="data-v-9d0010bc">{{item.$orig.label}}</text></view></block></view>
