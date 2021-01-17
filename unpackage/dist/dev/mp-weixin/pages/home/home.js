@@ -97,6 +97,15 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
+  if (!_vm._isMounted) {
+    _vm.e0 = function($event) {
+      _vm.done = true
+    }
+
+    _vm.e1 = function($event) {
+      _vm.showDialog = false
+    }
+  }
 }
 var recyclableRender = false
 var staticRenderFns = []
@@ -156,7 +165,19 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var _home = __webpack_require__(/*! ../../api/home.js */ 43);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _slicedToArray(arr, i) {return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();}function _nonIterableRest() {throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");}function _unsupportedIterableToArray(o, minLen) {if (!o) return;if (typeof o === "string") return _arrayLikeToArray(o, minLen);var n = Object.prototype.toString.call(o).slice(8, -1);if (n === "Object" && o.constructor) n = o.constructor.name;if (n === "Map" || n === "Set") return Array.from(o);if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);}function _arrayLikeToArray(arr, len) {if (len == null || len > arr.length) len = arr.length;for (var i = 0, arr2 = new Array(len); i < len; i++) {arr2[i] = arr[i];}return arr2;}function _iterableToArrayLimit(arr, i) {if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return;var _arr = [];var _n = true;var _d = false;var _e = undefined;try {for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {_arr.push(_s.value);if (i && _arr.length === i) break;}} catch (err) {_d = true;_e = err;} finally {try {if (!_n && _i["return"] != null) _i["return"]();} finally {if (_d) throw _e;}}return _arr;}function _arrayWithHoles(arr) {if (Array.isArray(arr)) return arr;}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var navbar = function navbar() {__webpack_require__.e(/*! require.ensure | pages/home/components/navbar */ "pages/home/components/navbar").then((function () {return resolve(__webpack_require__(/*! ./components/navbar.vue */ 46));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var menubar = function menubar() {Promise.all(/*! require.ensure | pages/home/components/menubar */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pages/home/components/menubar")]).then((function () {return resolve(__webpack_require__(/*! ./components/menubar.vue */ 53));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var hotScenery = function hotScenery() {__webpack_require__.e(/*! require.ensure | pages/home/components/hotScenery */ "pages/home/components/hotScenery").then((function () {return resolve(__webpack_require__(/*! ./components/hotScenery.vue */ 73));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var moment = function moment() {__webpack_require__.e(/*! require.ensure | pages/home/components/moment */ "pages/home/components/moment").then((function () {return resolve(__webpack_require__(/*! ./components/moment.vue */ 80));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+
+
+
+
+
+
+
+
+
+
+var _home = __webpack_require__(/*! ../../api/home.js */ 43);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _slicedToArray(arr, i) {return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();}function _nonIterableRest() {throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");}function _unsupportedIterableToArray(o, minLen) {if (!o) return;if (typeof o === "string") return _arrayLikeToArray(o, minLen);var n = Object.prototype.toString.call(o).slice(8, -1);if (n === "Object" && o.constructor) n = o.constructor.name;if (n === "Map" || n === "Set") return Array.from(o);if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);}function _arrayLikeToArray(arr, len) {if (len == null || len > arr.length) len = arr.length;for (var i = 0, arr2 = new Array(len); i < len; i++) {arr2[i] = arr[i];}return arr2;}function _iterableToArrayLimit(arr, i) {if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return;var _arr = [];var _n = true;var _d = false;var _e = undefined;try {for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {_arr.push(_s.value);if (i && _arr.length === i) break;}} catch (err) {_d = true;_e = err;} finally {try {if (!_n && _i["return"] != null) _i["return"]();} finally {if (_d) throw _e;}}return _arr;}function _arrayWithHoles(arr) {if (Array.isArray(arr)) return arr;}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var navbar = function navbar() {__webpack_require__.e(/*! require.ensure | pages/home/components/navbar */ "pages/home/components/navbar").then((function () {return resolve(__webpack_require__(/*! ./components/navbar.vue */ 63));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var menubar = function menubar() {Promise.all(/*! require.ensure | pages/home/components/menubar */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pages/home/components/menubar")]).then((function () {return resolve(__webpack_require__(/*! ./components/menubar.vue */ 70));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var hotScenery = function hotScenery() {__webpack_require__.e(/*! require.ensure | pages/home/components/hotScenery */ "pages/home/components/hotScenery").then((function () {return resolve(__webpack_require__(/*! ./components/hotScenery.vue */ 96));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var moment = function moment() {__webpack_require__.e(/*! require.ensure | pages/home/components/moment */ "pages/home/components/moment").then((function () {return resolve(__webpack_require__(/*! ./components/moment.vue */ 103));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var sceneryDialog = function sceneryDialog() {__webpack_require__.e(/*! require.ensure | pages/home/components/dialog */ "pages/home/components/dialog").then((function () {return resolve(__webpack_require__(/*! ./components/dialog.vue */ 110));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+
+
 
 
 
@@ -168,16 +189,22 @@ var _home = __webpack_require__(/*! ../../api/home.js */ 43);function _interopRe
   data: function data() {
     return {
       bannerList: [],
-      hotSceneryList: [] };
-
+      hotSceneryList: [],
+      immersive: true, //导航条是否处于沉浸式状态
+      done: false, // 瀑布流数据加载是否完毕
+      showDialog: false, //是否展示对话框
+      sceneryName: "" //对话框中的景区名
+    };
   },
   onLoad: function onLoad() {
-    // 获取景区定位
+    // 获取用户定位
     this.getLocation();
     // 获取banner数据
     this.getBannerList();
-    // 获取热门景区数据
+    // 获取热门景区数据，默认会获取到天府广场的坐标
     this.getHotSceneryList();
+    // // 获取当前所属景区
+    // this.getCurrentScenery()
   },
   methods: {
     getLocation: function getLocation() {var _this = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2() {var _yield$uni$getLocatio, _yield$uni$getLocatio2, err, res, _yield$uni$getSetting, _yield$uni$getSetting2, _err, _res;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:_context2.next = 2;return (
@@ -207,12 +234,16 @@ var _home = __webpack_require__(/*! ../../api/home.js */ 43);function _interopRe
 
 
 
-                }_context2.next = 20;break;case 17:
+                }_context2.next = 22;break;case 17:
 
 
                 console.log('授权地理位置成功');
-                getApp().globalData.lon = res.latitude;
-                getApp().globalData.lat = res.longitude;case 20:case "end":return _context2.stop();}}}, _callee2);}))();
+                getApp().globalData.lat = res.latitude;
+                getApp().globalData.lon = res.longitude;
+                // 获取到用户地理位置后，重新获取热门景区数据
+                _this.getHotSceneryList();
+                // 获取当前所属景区
+                _this.getCurrentScenery();case 22:case "end":return _context2.stop();}}}, _callee2);}))();
 
     },
 
@@ -221,19 +252,77 @@ var _home = __webpack_require__(/*! ../../api/home.js */ 43);function _interopRe
                 _this2.bannerList = res.value;case 4:case "end":return _context3.stop();}}}, _callee3);}))();
     },
     getHotSceneryList: function getHotSceneryList() {var _this3 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee4() {var _getApp$globalData, lon, lat, res;return _regenerator.default.wrap(function _callee4$(_context4) {while (1) {switch (_context4.prev = _context4.next) {case 0:_getApp$globalData =
+
+
+
                 getApp().globalData, lon = _getApp$globalData.lon, lat = _getApp$globalData.lat;_context4.next = 3;return (
                   (0, _home.queryHotScenery)({
                     lon: lon,
                     lat: lat }));case 3:res = _context4.sent;
 
                 _this3.hotSceneryList = res.value;case 5:case "end":return _context4.stop();}}}, _callee4);}))();
+    },
+
+    // 判断当前所属景区是否弹出对话框
+    getCurrentScenery: function getCurrentScenery() {var _this4 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee5() {var _getApp$globalData2, lon, lat, res;return _regenerator.default.wrap(function _callee5$(_context5) {while (1) {switch (_context5.prev = _context5.next) {case 0:_getApp$globalData2 =
+
+
+
+                getApp().globalData, lon = _getApp$globalData2.lon, lat = _getApp$globalData2.lat;_context5.prev = 1;_context5.next = 4;return (
+
+                  (0, _home.queryCurrentScenery)({
+                    lon: lon,
+                    lat: lat,
+                    sceneryId: '' }));case 4:res = _context5.sent;
+
+                if (res.value.flag === 1) {
+                  // 传输景区名给对话框
+                  _this4.sceneryName = res.value.name;
+                  _this4.showDialog = true;
+                }_context5.next = 11;break;case 8:_context5.prev = 8;_context5.t0 = _context5["catch"](1);
+
+
+                console.log(_context5.t0);case 11:case "end":return _context5.stop();}}}, _callee5, null, [[1, 8]]);}))();
+
+
+
     } },
+
+
+
+
+  // 上拉加载更多数据
+  onReachBottom: function onReachBottom() {
+    if (this.done) return;
+    this.$refs.moment.loadNextPage();
+  },
+  // 判断当前滚动位置改变导航条颜色
+  onPageScroll: function onPageScroll(e) {
+    if (e.scrollTop > 50) {
+      // 防止频繁修改
+      if (!this.immersive) return;
+      this.immersive = false;
+      uni.setNavigationBarColor({
+        frontColor: "#000000",
+        backgroundColor: "#000000" });
+
+    } else {
+      if (this.immersive) return;
+      this.immersive = true;
+      uni.setNavigationBarColor({
+        frontColor: "#ffffff",
+        backgroundColor: "#000000" });
+
+    }
+  },
+
 
   components: {
     navbar: navbar,
     menubar: menubar,
     hotScenery: hotScenery,
-    moment: moment } };exports.default = _default;
+    moment: moment,
+    sceneryDialog: sceneryDialog } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),

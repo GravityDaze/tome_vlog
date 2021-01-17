@@ -3,16 +3,16 @@
 		<view class="title-bar">
 
 			<text class="title">热门景区</text>
-			<view class="more">
+			<view class="more" @click="seeMore">
 				<text>查看全部</text>
 				<image src="../../../static/arrow.png"></image>
 			</view>
 		</view>
 
 		<view class="scenery-list">
-			<scroll-view :scroll-x="true" enable-flex class="list" enhanced :show-scrollbar="false">
+			<scroll-view scroll-x enable-flex class="list" enhanced :show-scrollbar="false">
 				<view class="card-wrapper" >
-					<view  v-for="(item,index) in data" :key="index" class="scenery-card" :style="{backgroundImage:`url(${item.coverUrl})`}">
+					<navigator  v-for="(item,index) in hotSceneryData" :key="index" class="scenery-card" :style="{backgroundImage:`url(${item.coverUrl})`}">
 						<view class="mask"></view>
 						<view class="text">
 							<view class="name">
@@ -22,7 +22,7 @@
 								<text>{{item.describe.length>6?item.describe.substr(0,6)+'...':item.describe}}</text>
 							</view>
 						</view>
-					</view>
+					</navigator>
 				</view>
 			</scroll-view>
 		</view>
@@ -37,13 +37,17 @@
 			}
 		},
 		props: {
-			data: {
+			hotSceneryData: {
 				type: Array,
 				default: []
 			}
 		},
 		methods: {
-
+			seeMore(){
+				uni.navigateTo({
+					url:'/pages/sceneryList/sceneryList'
+				})
+			}
 		}
 	}
 </script>

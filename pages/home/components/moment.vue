@@ -5,11 +5,9 @@
 		</view>
 		<!-- 瀑布流 -->
 		<view style="padding:0 30rpx">
-			<waterfallsFlow :list="momentList" imageSrcKey="coverUrl" idKey="videoId">
+			<waterfallsFlow ref="waterfallsFlow" :list="momentList" imageSrcKey="coverUrl" idKey="videoId" @image-load="imageLoad" @wapper-lick="test" >
 				<view class="box" v-for="(item, index) of momentList" :key="index" slot="slot{{index}}">
 					<view class="content">
-						
-						
 						<!-- 地点 -->
 						<view class="location">
 							<image src="../../../static/local.png" mode=""></image>
@@ -29,7 +27,7 @@
 								<text>{{item.shareCustomer}}</text>
 							</view>
 
-							<view class="like">
+							<view class="like" @click.stop="like">
 								<image src="../../../static/like.png" mode=""></image>
 								<text>{{item.laudTimes}}</text>
 							</view>
@@ -52,7 +50,8 @@
 			return {
 				momentList: [],
 				pageNum: 1,
-				pageSize: 10
+				pageSize: 10,
+				finish:false //提示瀑布流所有数据是否加载完成
 			}
 		},
 		created() {
@@ -69,12 +68,34 @@
 					pageSize
 				}
 				const res = await queryMoment(data)
-				console.log(res.value)
-				this.momentList = res.value
-				// this.$refs.wfalls.init()
+				this.momentList.push(...res.value)
+				// 如果已经加载到最后一页数据
+				if( res.value.length < pageSize ){
+					this.finish = true
+				}
+				
 			},
-			getLoadNum() {
-				console.log('起飞')
+			// 图片加载完成
+			imageLoad(){
+				if(this.finish){
+					this.$emit("loadFinish")
+				}
+			},
+			
+			// 加载下一页数据
+			loadNextPage(){
+				this.pageNum ++
+				this.getMomentList()
+			},
+			// 跳转到视频播放
+			test(e){
+				uni.navigateTo({
+					url:"/pages/video/video"
+				})
+			},
+			// 点赞
+			like(){
+				console.log('执行点赞')
 			}
 		},
 		components: {

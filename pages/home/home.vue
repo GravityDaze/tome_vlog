@@ -1,51 +1,69 @@
 <template>
 	<view class="home">
 		<!-- 导航条 -->
-		<navbar class="navbar" />
+		<navbar class="navbar" :immersive="immersive" />
 		<!-- banner -->
 		<view class="banner">
 			<swiper interval="10000" class="swiper" :indicator-dots="false" :autoplay="true" circular>
 				<swiper-item v-for="(item,index) in bannerList" :key="index">
-					<image class="play-icon" src="../../static/play.png" mode=""></image>
+					<image class="play-icon" src="../../static/play.png"></image>
 					<view class="swiper-item">
-						<image :src="item.coverUrl" mode=""></image>
+						<image :src="item.coverUrl"></image>
 					</view>
 				</swiper-item>
 			</swiper>
 		</view>
 		<!-- 菜单 -->
-		<menubar />
+		<menubar class="menubar" />
 		<!-- 热门景区 -->
-		<hotScenery :data="hotSceneryList" />
-		<!-- 精彩瞬间 -->
-		<moment />
-
+		<hotScenery :hotSceneryData="hotSceneryList" />
+		<!-- 精彩瞬间瀑布流 -->
+		<moment ref="moment" @loadFinish="done = true" />
+		<!-- 瀑布流加载提示 -->
+		<view class="load">
+			<image v-if="!done" src="../../static/load.png"></image>
+			<view class="empty" v-else>
+				<image src="../../static/bad.png"></image>
+				<text>没有更多数据了</text>
+			</view>
+		</view>
+		<!-- 对话框 -->
+		<scenery-dialog :name="sceneryName" :show="showDialog" @close="showDialog = false" />
+		
 	</view>
 </template>
 
 <script>
 	import {
 		queryBannerList,
-		queryHotScenery
+		queryHotScenery,
+		queryCurrentScenery
 	} from '../../api/home.js'
 	import navbar from './components/navbar.vue'
 	import menubar from './components/menubar.vue'
 	import hotScenery from './components/hotScenery.vue'
 	import moment from './components/moment.vue'
+	import sceneryDialog from './components/dialog.vue'
 	export default {
 		data() {
 			return {
 				bannerList: [],
-				hotSceneryList:[]
+				hotSceneryList: [],
+				immersive: true, //导航条是否处于沉浸式状态
+				done: false ,// 瀑布流数据加载是否完毕
+				showDialog:false ,//是否展示对话框
+				sceneryName:"",//对话框中的景区名
 			}
 		},
 		onLoad() {
-			// 获取景区定位
+			// 获取用户定位
 			this.getLocation()
 			// 获取banner数据
 			this.getBannerList()
-			// 获取热门景区数据
+			// 获取热门景区数据，默认会获取到天府广场的坐标
 			this.getHotSceneryList()
+			// // 获取当前所属景区
+			// this.getCurrentScenery()
 		},
 		methods: {
 			async getLocation() {
@@ -79,8 +97,12 @@
 
 				} else {
 					console.log('授权地理位置成功')
-					getApp().globalData.lon = res.latitude
-					getApp().globalData.lat = res.longitude
+					getApp().globalData.lat = res.latitude
+					getApp().globalData.lon = res.longitude
+					// 获取到用户地理位置后，重新获取热门景区数据
+					this.getHotSceneryList()
+					// 获取当前所属景区
+					this.getCurrentScenery()
 				}
 			},
 
@@ -89,25 +111,92 @@
 				this.bannerList = res.value
 			},
 			async getHotSceneryList() {
-				const { lon,lat } = getApp().globalData
+				const {
+					lon,
+					lat
+				} = getApp().globalData
 				const res = await queryHotScenery({
 					lon,
 					lat
 				})
 				this.hotSceneryList = res.value
+			},
+			
+			// 判断当前所属景区是否弹出对话框
+			async getCurrentScenery(){
+				const {
+					lon,
+					lat
+				} = getApp().globalData
+				try{
+					const res = await queryCurrentScenery({
+						lon,
+						lat,
+						sceneryId:''
+					})
+					if(res.value.flag === 1){
+						// 传输景区名给对话框
+						this.sceneryName = res.value.name
+						this.showDialog = true
+					}
+					
+				}catch(err){
+					console.log(err)
+				}
+				
+					
+			}
+		
+		},
+
+
+		// 上拉加载更多数据
+		onReachBottom() {
+			if (this.done) return
+			this.$refs.moment.loadNextPage()
+		},
+		// 判断当前滚动位置改变导航条颜色
+		onPageScroll(e) {
+			if (e.scrollTop > 50) {
+				// 防止频繁修改
+				if(!this.immersive) return
+				this.immersive = false
+				uni.setNavigationBarColor({
+					frontColor: "#000000",
+					backgroundColor:"#000000"
+				})
+			} else {
+				if(this.immersive) return 
+				this.immersive = true
+				uni.setNavigationBarColor({
+					frontColor: "#ffffff",
+					backgroundColor:"#000000"
+				})
 			}
 		},
+
+
 		components: {
 			navbar,
 			menubar,
 			hotScenery,
-			moment
+			moment,
+			sceneryDialog
 		}
 	}
 </script>
 
 <style lang="scss" scoped>
-	
+	@keyframes rota {
+		from {
+			transform: rotate(0);
+		}
+
+		to {
+			transform: rotate(1turn);
+		}
+	}
+
 	.banner {
 		position: relative;
 		height: 430rpx;
@@ -137,6 +226,36 @@
 				}
 			}
 		}
+	}
 
+	.load {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		
+		
+		
+		&>image {
+			padding: 20rpx 0;
+			width: 45rpx;
+			height: 45rpx;
+			animation: rota .5s infinite linear;
+		}
+		
+		.empty{
+			display:flex;
+			align-items: center;
+			color: #bfbfbf;
+			font-size: 28rpx;
+			padding: 40rpx 0;
+			
+			image{
+				width: 35rpx;
+				height:35rpx;
+				margin-right:8rpx;
+			}
+		}
+
+		
 	}
 </style>

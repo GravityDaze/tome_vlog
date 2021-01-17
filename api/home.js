@@ -8,3 +8,6 @@ export const queryHotScenery = data => http.post('/videoapp/scenery/hot',data)
 
 // 获取精彩瞬间
 export const queryMoment = data => http.post('/videoapp/video/goodMoment',data)
+
+// 判断当前所属景区
+export const queryCurrentScenery = data => http.post('/videoapp/scenery/locationConfirm',data)

@@ -3,7 +3,7 @@
 		{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "uni-app"
+				"navigationStyle":"custom"
 			}
 		}, 
 		{
@@ -11,7 +11,19 @@
 			"style": {
 				"navigationStyle":"custom",
 				"navigationBarBackgroundColor": "#000000",
-				 "navigationBarTextStyle": "white"
+				"navigationBarTextStyle": "white"
+			}
+		},
+		{
+			"path": "pages/sceneryList/sceneryList",
+			"style": {
+				"navigationBarTitleText": "景区列表"
+			}
+		},
+		{
+			"path": "pages/video/video",
+			"style": {
+				"navigationBarTitleText": "视频详情"
 			}
 		}
 	],
@@ -19,6 +31,8 @@
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",
 		"navigationBarBackgroundColor": "#F8F8F8",
-		"backgroundColor": "#F8F8F8"
+		"backgroundColor": "#F8F8F8",
+		"onReachBottomDistance":100
+		
 	}
 }

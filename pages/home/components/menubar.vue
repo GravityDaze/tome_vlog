@@ -1,6 +1,6 @@
 <template>
 	<view class="menubar">
-		<view class="menu-item" v-for="(item,index) in menuItem" :key="index">
+		<view class="menu-item" v-for="(item,index) in menuItem" :key="index" @click="navigate(item.path)">
 			<image :src="require(`../../../static/${item.icon}.png`)" mode=""></image>
 			<text>{{item.label}}</text>
 		</view>
@@ -41,7 +41,18 @@
 
 		},
 		methods: {
-
+			navigate(path){
+				if(path){
+					uni.navigateTo({
+						url:path
+					})
+				}else{
+					uni.showToast({
+						title:'敬请期待',
+						icon:'none'
+					})
+				}
+			}
 		}
 	}
 </script>
@@ -50,7 +61,7 @@
 	.menubar {
 		
 		position:relative;
-		z-index:9999;
+		z-index:50;
 		padding:20rpx 0;
 		margin: -40rpx 30rpx 0;
 		display: flex;

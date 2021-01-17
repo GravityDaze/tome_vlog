@@ -1,8 +1,8 @@
 <template>
-	<view class="nav" :style="{paddingTop:`${statusBarHeight}px`,height:`${NavHeight}px`}">
+	<view class="nav" :style="{paddingTop:`${statusBarHeight}px`,height:`${NavHeight}px`,background:immersive?'transpranst':'#fff'}">
 		<view class="content">
-			<view class="search" :style="{left:`${capsuleLeft}px`,top:`${capsuleTop}px`,height:`${capsuleHeight}px`}">
-				<view class="search-inner">
+			<view class="search" :style="{left:`${capsuleLeft}px`,top:`${capsuleTop}px`,height:`${capsuleHeight}px`,background:immersive?'rgba(240, 240, 240, 0.48)':'#F0F0F0'}">
+				<view class="search-inner" @click="queryScenery">
 					<icon color="#0E0E0E" type="search" size="32rpx" />
 					<text>搜索景区 马上打卡</text>
 				</view>
@@ -18,8 +18,14 @@
 				statusBarHeight: 0,
 				NavHeight: 0,
 				capsuleLeft: 0,
-				capsuleHeight:0,
-				capsuleTop:0
+				capsuleHeight: 0,
+				capsuleTop: 0
+			}
+		},
+		props: {
+			immersive: {
+				default: true,
+				type: Boolean
 			}
 		},
 		created() {
@@ -41,7 +47,12 @@
 				this.capsuleTop = menuButton.top - this.statusBarHeight
 				// 获取胶囊高度
 				this.capsuleHeight = menuButton.height
-			}
+			},
+			queryScenery(){
+				uni.navigateTo({
+					url:'/pages/sceneryList/sceneryList'
+				})
+			},
 		}
 	}
 </script>
@@ -50,8 +61,8 @@
 	.nav {
 		position: fixed;
 		width: 100%;
-		z-index:100;
-		// box-sizing: border-box;
+		z-index: 100;
+		transition: background-color .3s;
 	}
 
 	.content {
@@ -59,7 +70,7 @@
 		height: 100%;
 
 		.search {
-			position:absolute;
+			position: absolute;
 			display: flex;
 			align-items: center;
 			box-sizing: border-box;

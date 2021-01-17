@@ -1,19 +1,23 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/home/home"
+    "pages/home/home",
+    "pages/sceneryList/sceneryList",
+    "pages/video/video"
   ],
   "subPackages": [],
   "window": {
     "navigationBarTextStyle": "black",
     "navigationBarTitleText": "uni-app",
     "navigationBarBackgroundColor": "#F8F8F8",
-    "backgroundColor": "#F8F8F8"
+    "backgroundColor": "#F8F8F8",
+    "onReachBottomDistance": 100
   },
   "permission": {
     "scope.userLocation": {
       "desc": "给我位置"
     }
   },
-  "usingComponents": {}
+  "usingComponents": {},
+  "sitemapLocation": "sitemap45.json"
 }

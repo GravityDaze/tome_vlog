@@ -1,7 +1,6 @@
 {
   "component": true,
   "usingComponents": {
-    "moment-waterfalls-flow-default": "/pages/home/components/moment-waterfalls-flow-default",
     "waterfalls-flow": "/components/maramlee-waterfalls-flow"
   }
 }
