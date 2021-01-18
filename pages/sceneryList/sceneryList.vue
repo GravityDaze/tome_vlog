@@ -64,7 +64,9 @@
 			},
 			// 带参数跳转
 			navigate(item){
-				console.log(item)
+				uni.navigateTo({
+					url: `/pages/shoot/shoot?id=${item.id}`
+				})
 			},
 		}
 	}

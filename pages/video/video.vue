@@ -80,7 +80,7 @@
 		padding: 25rpx;
 		display: flex;
 		flex-direction: column;
-		box-shadow: 10rpx 0 50rpx rgba(0, 0, 0, 0.3);
+		border-bottom:20rpx solid rgb(247, 247, 247);
 
 		.top-info {
 			display: flex;

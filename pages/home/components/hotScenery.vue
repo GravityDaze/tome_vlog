@@ -11,15 +11,16 @@
 
 		<view class="scenery-list">
 			<scroll-view scroll-x enable-flex class="list" enhanced :show-scrollbar="false">
-				<view class="card-wrapper" >
-					<navigator :url="`/pages/shoot/shoot?id=${item.id}`"  v-for="(item,index) in hotSceneryData" :key="index" class="scenery-card" :style="{backgroundImage:`url(${item.coverUrl})`}">
+				<view class="card-wrapper">
+					<navigator :url="`/pages/shoot/shoot?id=${item.id}`" v-for="(item,index) in hotSceneryData" :key="index" class="scenery-card"
+					 :style="{backgroundImage:`url(${item.coverUrl})`}">
 						<view class="mask"></view>
 						<view class="text">
 							<view class="name">
-								<text>{{item.name.length>5?item.name.substr(0,5)+'...':item.name}}</text>
+								<text>{{handleText(item.name,5)}}</text>
 							</view>
 							<view class="desc">
-								<text>{{item.describe.length>6?item.describe.substr(0,6)+'...':item.describe}}</text>
+								<text>{{handleText(item.describe,6)}}</text>
 							</view>
 						</view>
 					</navigator>
@@ -30,12 +31,10 @@
 </template>
 
 <script>
+	import {
+		handleText
+	} from '../../../utils/handleText.js'
 	export default {
-		data() {
-			return {
-
-			}
-		},
 		props: {
 			hotSceneryData: {
 				type: Array,
@@ -43,10 +42,13 @@
 			}
 		},
 		methods: {
-			seeMore(){
+			seeMore() {
 				uni.navigateTo({
-					url:'/pages/sceneryList/sceneryList'
+					url: '/pages/sceneryList/sceneryList'
 				})
+			},
+			handleText(...arg) {
+				return handleText(...arg)
 			}
 		}
 	}
@@ -68,14 +70,14 @@
 			}
 
 			.more {
-				display:flex;
+				display: flex;
 				align-items: center;
 				font-size: 22rpx;
 				font-weight: 400;
 				color: #B5B3B2;
-				
-				image{
-					padding-left:8rpx;
+
+				image {
+					padding-left: 8rpx;
 					width: 13rpx;
 					height: 24rpx;
 				}
@@ -85,18 +87,18 @@
 		.scenery-list {
 			padding-left: 30rpx;
 			height: 180rpx;
-			 
-			.card-wrapper{
-				padding-right:15rpx;
-				display:flex;
-				height:100%;
+
+			.card-wrapper {
+				padding-right: 15rpx;
+				display: flex;
+				height: 100%;
 			}
 
 			.list {
-				display:flex;
-				height:100%;
-				
-			
+				display: flex;
+				height: 100%;
+
+
 				.scenery-card {
 					flex-shrink: 0;
 					position: relative;
@@ -106,14 +108,14 @@
 					background-size: cover;
 					background-position: center center;
 					box-shadow: 0px 4rpx 10rpx 0px rgba(0, 0, 0, 0.27);
-					margin-right:15rpx;
-					
-					
+					margin-right: 15rpx;
+
+
 
 					.mask {
 
 						position: absolute;
-						background: rgba(57, 57, 57,.25);
+						background: rgba(57, 57, 57, .25);
 						top: 0;
 						bottom: 0;
 						width: 100%;
@@ -121,32 +123,32 @@
 					}
 
 					.text {
-						display:flex;
+						display: flex;
 						flex-direction: column;
 						position: relative;
 						z-index: 20;
 						// justify-content: center;
-						padding-top:58rpx;
-						align-items:center;
-						height:100%;
-						
-						.name{
+						padding-top: 58rpx;
+						align-items: center;
+						height: 100%;
+
+						.name {
 							color: #fff;
 							font-size: 28rpx;
 							font-weight: 800;
 							overflow: hidden;
-							text-overflow:ellipsis;
+							text-overflow: ellipsis;
 							white-space: nowrap;
-							margin-bottom:5rpx;
+							margin-bottom: 5rpx;
 						}
-						
+
 						.desc {
-							background: rgba(40,40,40,.5);
+							background: rgba(40, 40, 40, .5);
 							border-radius: 16rpx;
 							font-size: 22rpx;
 							font-weight: 500;
 							color: #FFFFFF;
-							padding:3rpx 15rpx;
+							padding: 3rpx 15rpx;
 						}
 
 					}

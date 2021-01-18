@@ -19,5 +19,6 @@
       "desc": "给我位置"
     }
   },
-  "usingComponents": {}
+  "usingComponents": {},
+  "sitemapLocation": "sitemap83.json"
 }
