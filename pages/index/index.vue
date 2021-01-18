@@ -5,7 +5,7 @@
 </template>
 
 <script>
-	import { initParams,login,queryMsgHit } from '../../api/index.js'
+	import { initParams,login,queryMsgHit,refreshAccessToken } from '../../api/index.js'
 	export default {
 		data() {
 			return {
@@ -19,7 +19,7 @@
 			  // 判断刷新Token还是重新登录
 			  autoMakefn() {
 			    // 查询缓存中是否有刷新用的缓存token
-			    const refreshToken = wx.getStorageSync("refresh_token");
+			    const refreshToken = wx.getStorageSync("refresh_token") || "";				
 			    if (!refreshToken) {
 			      // 没有刷新token 获取授权数据以重新登录
 			      this.getAuthData()
@@ -35,6 +35,7 @@
 			      const res = await refreshAccessToken({
 			        refreshToken
 			      })
+				  console.log(res)
 			      // 缓存refresh_token
 			      wx.setStorageSync(
 			        'refresh_token',

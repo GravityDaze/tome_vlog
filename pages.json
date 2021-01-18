@@ -15,6 +15,14 @@
 			}
 		},
 		{
+			"path": "pages/shoot/shoot",
+			"style": {
+				"navigationStyle":"custom",
+				"navigationBarBackgroundColor": "#000000",
+				"navigationBarTextStyle": "white"
+			}
+		},
+		{
 			"path": "pages/sceneryList/sceneryList",
 			"style": {
 				"navigationBarTitleText": "景区列表"

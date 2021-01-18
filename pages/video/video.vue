@@ -1,26 +1,26 @@
 <!-- 视频详情页面 -->
 <template>
 	<view>
-		<video id="video" style="width:100%" autoplay src="https://tomevideo.zhihuiquanyu.com/liunian1.mp4" objectFit="fill"></video>
+		<video id="video" style="width:100%" autoplay :src="videoInfo.url" objectFit="fill"></video>
 		<!-- 视频详细信息面板 -->
 		<view class="details">
 			<view class="top-info">
 				<view class="title">
-					<text>都江堰视频之旅</text>
+					<text>{{videoInfo.describe}}</text>
 				</view>
 				<view class="location">
-					<text>都江堰</text>
+					<text>{{videoInfo.sceneryName}}</text>
 				</view>
 			</view>
 			<view class="bottom-info">
 
 				<view class="user">
-					<image src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=1475331839,2066156315&fm=26&gp=0.jpg"></image>
-					<text>柠檬</text>
+					<image :src="videoInfo.headUrl"></image>
+					<text>{{videoInfo.shareCustomer}}</text>
 				</view>
 				<view class="like">
-					<image src="../../static/like.png" mode=""></image>
-					<text>1314</text>
+					<image src="../../static/like.png"></image>
+					<text>{{videoInfo.laudTimes}}</text>
 				</view>
 			</view>
 		</view>
@@ -35,18 +35,39 @@
 </template>
 
 <script>
+	// 解密视频url
+	import {
+	  JSEncrypt
+	} from '../../utils/jsencrypt.js';
+	import { queryVideoInfo } from '../../api/video.js'
 	import comment from './components/comment.vue'
 	export default {
 		data() {
 			return {
-
+				videoInfo:{}
 			}
 		},
-		onLoad() {
-
+		onLoad(options) {
+			console.log(options)
+			// 获取视频信息
+			this.getVideoInfo(options)
 		},
 		methods: {
-
+			async getVideoInfo(options){
+				const res = await queryVideoInfo({
+					videoShareId:options.videoShareId
+				})
+				// 解密视频
+				const encryptByRsa = (text, privateKey) => {
+				  var encrypt = new JSEncrypt();
+				  encrypt.setPrivateKey(privateKey);
+				  var encrypted = encrypt.decrypt(text);
+				  return encrypted
+				}
+				res.value.url = encryptByRsa(res.value.url,getApp().globalData.encryptKey)
+				this.videoInfo = res.value
+				console.log(this.videoInfo)
+			},
 		},
 		components:{
 			comment

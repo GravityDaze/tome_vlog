@@ -2,11 +2,11 @@
 	<view class="comment">
 		<view class="title">
 			<text>全部评论</text>
-			<text>(584)</text>
+			<text>(0)</text>
 		</view>
 		<!-- 评论列表 -->
 		<view class="list">
-			<image src="../../../static/bad.png"></image>
+			<!-- <image src="../../../static/bad.png"></image> -->
 			<text>当前视频的评论已关闭</text>
 		</view>
 	</view>

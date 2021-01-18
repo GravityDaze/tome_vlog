@@ -12,7 +12,7 @@
 		<view class="scenery-list">
 			<scroll-view scroll-x enable-flex class="list" enhanced :show-scrollbar="false">
 				<view class="card-wrapper" >
-					<navigator  v-for="(item,index) in hotSceneryData" :key="index" class="scenery-card" :style="{backgroundImage:`url(${item.coverUrl})`}">
+					<navigator :url="`/pages/shoot/shoot?id=${item.id}`"  v-for="(item,index) in hotSceneryData" :key="index" class="scenery-card" :style="{backgroundImage:`url(${item.coverUrl})`}">
 						<view class="mask"></view>
 						<view class="text">
 							<view class="name">

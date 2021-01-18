@@ -1,11 +1,18 @@
 <template>
 	<view class="home">
 		<!-- 导航条 -->
-		<navbar class="navbar" :immersive="immersive" />
+		<navbar :immersive="immersive">
+			<view class="search" slot="left" :style="{background:immersive?'rgba(240, 240, 240, 0.48)':'#F0F0F0'}">
+				<view class="search-inner" @click="queryScenery">
+					<icon color="#0E0E0E" type="search" size="32rpx" />
+					<text>搜索景区 马上打卡</text>
+				</view>
+			</view>
+		</navbar>
 		<!-- banner -->
 		<view class="banner">
 			<swiper interval="10000" class="swiper" :indicator-dots="false" :autoplay="true" circular>
-				<swiper-item v-for="(item,index) in bannerList" :key="index">
+				<swiper-item v-for="(item,index) in bannerList" :key="index" @click="navigate(item)">
 					<image class="play-icon" src="../../static/play.png"></image>
 					<view class="swiper-item">
 						<image :src="item.coverUrl"></image>
@@ -34,12 +41,15 @@
 </template>
 
 <script>
+	// api
 	import {
 		queryBannerList,
 		queryHotScenery,
 		queryCurrentScenery
 	} from '../../api/home.js'
-	import navbar from './components/navbar.vue'
+	// 公用导航组件
+	import navbar from '../../components/nav.vue'
+	// 页面内组件
 	import menubar from './components/menubar.vue'
 	import hotScenery from './components/hotScenery.vue'
 	import moment from './components/moment.vue'
@@ -145,10 +155,23 @@
 				}
 				
 					
-			}
+			},
+			
+			// 点击搜索框跳转到景区列表页面
+			queryScenery(){
+				uni.navigateTo({
+					url:'/pages/sceneryList/sceneryList'
+				})
+			},
+			
+			// 点击banner跳转到视频详情
+			navigate(item){
+				uni.navigateTo({
+					url:`/pages/video/video?videoShareId=${item.videoShareId}`
+				})
+			},
 		
 		},
-
 
 		// 上拉加载更多数据
 		onReachBottom() {
@@ -194,6 +217,31 @@
 
 		to {
 			transform: rotate(1turn);
+		}
+	}
+	
+	.search {
+		
+		display: flex;
+		align-items: center;
+		box-sizing: border-box;
+		padding-left: 26rpx;
+		height:100%; 
+		width: 336rpx;
+		background: rgba(240, 240, 240, 0.48);
+		box-shadow: 0px 8rpx 16rpx 0px rgba(49, 49, 48, 0.1);
+		border-radius: 32rpx;
+	
+		.search-inner {
+			display: flex;
+			align-items: center;
+		}
+	
+		text {
+			font-size: 28rpx;
+			font-weight: 500;
+			color: #0E0E0E;
+			margin-left: 15rpx;
 		}
 	}
 

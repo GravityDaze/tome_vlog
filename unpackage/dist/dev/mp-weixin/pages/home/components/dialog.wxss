@@ -42,8 +42,7 @@
   left: 50%;
   -webkit-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
-  -webkit-border-radius: 30rpx;
-          border-radius: 30rpx;
+  border-radius: 30rpx;
   height: 782rpx;
   width: 699rpx;
   display: -webkit-box;
@@ -72,8 +71,7 @@
   -webkit-justify-content: center;
           justify-content: center;
   height: 459rpx;
-  -webkit-border-radius: 30rpx 30rpx 0 0;
-          border-radius: 30rpx 30rpx 0 0;
+  border-radius: 30rpx 30rpx 0 0;
   background-color: #f7f7f7;
 }
 .dialog-box .box-top image.data-v-b8de772c {
@@ -105,8 +103,7 @@
   -webkit-box-flex: 1;
   -webkit-flex: 1;
           flex: 1;
-  -webkit-border-radius: 0 0 30rpx 30rpx;
-          border-radius: 0 0 30rpx 30rpx;
+  border-radius: 0 0 30rpx 30rpx;
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
@@ -130,11 +127,9 @@
   background-color: #ffcb3e;
   width: 380rpx;
   height: 88rpx;
-  -webkit-border-radius: 44rpx;
-          border-radius: 44rpx;
+  border-radius: 44rpx;
   margin-top: 60rpx;
-  -webkit-box-shadow: 0px 8rpx 16rpx 0px rgba(239, 181, 22, 0.48);
-          box-shadow: 0px 8rpx 16rpx 0px rgba(239, 181, 22, 0.48);
+  box-shadow: 0px 8rpx 16rpx 0px rgba(239, 181, 22, 0.48);
   font-size: 30rpx;
   color: #000;
   display: -webkit-box;
@@ -160,7 +155,6 @@
   width: 54rpx;
   height: 54rpx;
   border: white;
-  -webkit-border-radius: 50%;
-          border-radius: 50%;
+  border-radius: 50%;
 }
 

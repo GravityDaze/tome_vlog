@@ -2,6 +2,7 @@
   "pages": [
     "pages/index/index",
     "pages/home/home",
+    "pages/shoot/shoot",
     "pages/sceneryList/sceneryList",
     "pages/video/video"
   ],
@@ -18,6 +19,5 @@
       "desc": "给我位置"
     }
   },
-  "usingComponents": {},
-  "sitemapLocation": "sitemap45.json"
+  "usingComponents": {}
 }

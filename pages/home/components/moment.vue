@@ -90,7 +90,7 @@
 			// 跳转到视频播放
 			test(e){
 				uni.navigateTo({
-					url:"/pages/video/video"
+					url:`/pages/video/video?videoShareId=${e.videoShareId}`
 				})
 			},
 			// 点赞

@@ -23,8 +23,9 @@
 
 
 
+
 /*每个页面公共css */
-page{
+page {
 	background-color: #FCFCFC;
 }
 

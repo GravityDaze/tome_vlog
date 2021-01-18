@@ -16,7 +16,7 @@
 					</view>
 					<view class="bottom">
 						<image src="../../static/location@2x.png"></image>
-						<text>{{item.distance < 1 ? `${item.distance * 1000}M` : `${item.distance.toFixed(2)}KM`}}</text>
+						<text>{{item.distance < 1 ? `${parseInt(item.distance * 1000)}M` : `${item.distance.toFixed(2)}KM`}}</text>
 					</view>
 				</view>
 			</template>
@@ -28,7 +28,7 @@
 <script>
 	import {
 		queryNearby
-	} from '../../api/selectScenery.js'
+	} from '../../api/sceneryList.js'
 	export default {
 		data() {
 			return {

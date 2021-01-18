@@ -151,7 +151,7 @@ var _index = __webpack_require__(/*! ../../api/index.js */ 20);function _interop
     // 判断刷新Token还是重新登录
     autoMakefn: function autoMakefn() {
       // 查询缓存中是否有刷新用的缓存token
-      var refreshToken = wx.getStorageSync("refresh_token");
+      var refreshToken = wx.getStorageSync("refresh_token") || "";
       if (!refreshToken) {
         // 没有刷新token 获取授权数据以重新登录
         this.getAuthData();
@@ -164,9 +164,10 @@ var _index = __webpack_require__(/*! ../../api/index.js */ 20);function _interop
     // 刷新accecctoken
     freshenToken: function freshenToken(refreshToken) {var _this = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var res;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:_context.prev = 0;_context.next = 3;return (
 
-                  refreshAccessToken({
+                  (0, _index.refreshAccessToken)({
                     refreshToken: refreshToken }));case 3:res = _context.sent;
 
+                console.log(res);
                 // 缓存refresh_token
                 wx.setStorageSync(
                 'refresh_token',
@@ -180,13 +181,13 @@ var _index = __webpack_require__(/*! ../../api/index.js */ 20);function _interop
                 // 获取初始化参数
                 _this.initParamFn();
                 //  查询用户的消息提示
-                _this.selectMsgHitFn();_context.next = 15;break;case 10:_context.prev = 10;_context.t0 = _context["catch"](0);
+                _this.selectMsgHitFn();_context.next = 16;break;case 11:_context.prev = 11;_context.t0 = _context["catch"](0);
 
                 console.log(_context.t0);
                 // 刷新失败时清除token
                 uni.clearStorageSync();
                 // 刷新失败 判断用户是否有授权,如有授权,仍然可以调用登录方法
-                _this.getAuthData();case 15:case "end":return _context.stop();}}}, _callee, null, [[0, 10]]);}))();
+                _this.getAuthData();case 16:case "end":return _context.stop();}}}, _callee, null, [[0, 11]]);}))();
 
     },
 
