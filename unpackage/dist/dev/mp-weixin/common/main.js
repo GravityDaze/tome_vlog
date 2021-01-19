@@ -99,7 +99,6 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
     console.log('App Hide');
   },
   globalData: {
-    userInfo: {},
     noBuyVideoLook: "",
     uploadVideoMaxSize: "",
     uploadVideoDuration: "",

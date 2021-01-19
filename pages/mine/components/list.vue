@@ -1,90 +1,226 @@
 <template>
 	<view class="list">
-		<view class="list-item">
-			<!-- 时间线 -->
-			<view class="timeline">
-				<text>2021-01-01</text>
-				<view class="greyline"></view>
+		<template v-for="(item,index) in dataList">
+			<view class="list-item" v-for="(subItem,subIndex) in item.dateInfo" :key="index">
+				<!-- 时间线 -->
+				<view class="timeline">
+					<text>{{subItem.date}}</text>
+					<view class="greyline"></view>
+				</view>
+				<view class="content">
+					<!-- 如果内容是视频 -->
+					<view class="video-area" v-if="subItem.status === 2">
+						<template  v-for="videoItem in subItem.videoInfo">
+							<view class="video-box" :key="videoItem.videoId">
+								<view class="cover" :style="{backgroundImage:`url(${videoItem.coverUrl})`}">
+									<!-- <image wx:if="{{videoItem.newRead == 0}}" src="../../imgs/new.png" class="icon_new"></image> -->
+									<view class="duration">
+										<text>{{videoItem.duration}}</text>
+									</view>
+								</view>
+								<!-- <view class="box5_2_2" wx:if="{{videoItem.buyStatus == 0}}">
+								<image src="../../imgs/time.png" class="icon_time"></image>
+								<text wx:if="{{videoItem.expiredTime > 1}}">{{videoItem.expiredTime}}天后自动清除</text>
+								<text wx:if="{{videoItem.expiredTime <= 1}}" style="color:red">即将过期被清除</text>
+							</view> -->
+							</view>
+						</template>
+					</view>
+
+					<!-- 如果内容不是视频,显示通知面板 -->
+					<view class="notification" v-if="subItem.status !== 2">
+						<!-- status 0 合成中 -->
+						<template v-if="subItem.status === 0">
+							<view class="text-area">
+								<text>“视频之旅”已开启</text>
+								<text>上传本地视频，还可以合成个性游记哦 </text>
+							</view>
+							<view class="panel-btn">
+								<text>上传自拍视频</text>
+							</view>
+						</template>
+
+						<!-- status 1 正在合成 -->
+						<template v-if="subItem.status === 1">
+							<view class="text-area">
+								<text>“视频之旅”正在合成</text>
+								<text>景区视频正在合成中，稍后可进行查看</text>
+							</view>
+						</template>
+
+						<!-- status 3 合成失败 -->
+						<template v-if="subItem.status === 3">
+							<view class="text-area">
+								<text>“视频之旅”合成失败</text>
+								<text>未在景区摄像头中识别到您的图像
+									请查看头像采集是否清晰</text>
+							</view>
+							<view class="panel-btn fail-status">
+								<text>查看人脸采集</text>
+							</view>
+						</template>
+					</view>
+
+				</view>
+				<!-- 定位 -->
+				<view class="location">
+					<image src="../../../static/locationy.png"></image>
+					<text>{{item.sceneryName}}</text>
+				</view>
 			</view>
-			<view class="content">
-				爱丽丝梦游仙境
-			</view>
-			<!-- 定位 -->
-			<view class="location">
-				<image src="../../../static/locationy.png"></image>
-				<text>弥留之国</text>
-			</view>
-		</view>
-		
-		<view class="list-item">
-			<!-- 时间线 -->
-			<view class="timeline">
-				<text>2021-01-01</text>
-				<view class="greyline"></view>
-			</view>
-			<view class="content">
-				It's my own invention
-			</view>
-			<!-- 定位 -->
-			<view class="location">
-				<image src="../../../static/locationy.png"></image>
-				<text>镜之国</text>
-			</view>
-		</view>
+		</template>
 	</view>
 </template>
 
 <script>
-</script>
-
-<style lang="scss" scoped>
-	.list{
-		.list-item{
-			margin-top: 50rpx;
-			
-			// 时间线
-			.timeline {
-			  font-size: 28rpx;
-			  color: #999896;
-			  display: flex;
-			  justify-content: space-between;
-			  align-items: center;
-			  
-			  .greyline {
-			    width: 450rpx;
-			    border: 0.5rpx solid rgba(220, 220, 220, 1);
-			  }
-			  
-			}
-			
-			.content{
-				 color: #999;
-				   font-size: 28rpx;
-				   padding:25rpx 0;
-			}
-			
-			
-			// 定位
-			.location {
-			  font-size: 24rpx;
-			  color: #999;
-			  display: inline-block;
-			  padding: 0 20rpx 0 0;
-			  height: 40rpx;
-			  line-height: 40rpx;
-			  margin-top: 20rpx;
-			  border-radius: 20rpx;
-			  background-color: rgba(220, 220, 220, 0.5);
-			  
-			  image{
-			    width: 25rpx;
-			    height: 29rpx;
-			    margin-left: 15rpx;
-			    margin-right: 8rpx;
-			    vertical-align: -4rpx;
-			  }
+	export default {
+		props: {
+			dataList: {
+				type: Array,
+				default: []
 			}
 		}
 	}
-	
+</script>
+
+<style lang="scss" scoped>
+	.list {
+		.list-item {
+			margin-top: 50rpx;
+
+			// 时间线
+			.timeline {
+				font-size: 28rpx;
+				color: #999896;
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+
+				.greyline {
+					width: 450rpx;
+					border: 0.5rpx solid rgba(220, 220, 220, 1);
+				}
+
+			}
+
+			.content {
+				 margin-top: 20rpx;
+
+				/* 视频区域 */
+				.video-area {
+					display: grid;
+					grid-template-columns: repeat(2, 1fr);
+					gap: 40rpx;
+
+					.video-box {
+						position: relative;
+						width: 300rpx;
+						/* height: 230rpx; */
+						display: flex;
+						flex-direction: column;
+						align-items: center;
+
+						.cover {
+							position: relative;
+							width: 300rpx;
+							height: 175rpx;
+							border-radius: 15rpx;
+							background-size: cover;
+							display: flex;
+							box-shadow: 10rpx 0 50rpx rgba(0, 0, 0, 0.2);
+							
+							.duration {
+							  position:absolute;
+							  right:18rpx;
+							  bottom:15rpx;
+							  font-weight: 400;
+							  color: rgba(255, 255, 254, 1);
+							  font-size: 20rpx;
+							}
+						}
+
+					}
+
+				}
+
+
+				.notification {
+					border-radius: 30rpx;
+					background: #fff;
+					box-shadow: 10rpx 0 100rpx rgba(0, 0, 0, 0.1);
+					padding: 30rpx 15rpx 0;
+					box-sizing: border-box;
+					height: 180rpx;
+					display: flex;
+					justify-content: space-between;
+
+					.text-area {
+						display: flex;
+						flex-direction: column;
+
+						&>text:first-child {
+
+							color: #333332;
+							font-size: 36rpx;
+							font-weight: 700;
+						}
+
+						&>text:last-child {
+							font-size: 24rpx;
+							color: #999;
+							margin-top: 20rpx;
+						}
+
+
+					}
+
+					/* 按钮 */
+					.panel-btn {
+						border-radius: 27rpx;
+						background-color: rgba(250, 200, 60, 1);
+						color: #333332;
+						font-size: 24rpx;
+						width: 188rpx;
+						height: 54rpx;
+						display: flex;
+						justify-content: center;
+						align-items: center;
+						box-shadow: 0px 8rpx 37rpx 1rpx rgba(248, 185, 14, 0.29);
+
+					}
+
+
+					.fail-status {
+						background: rgba(252, 69, 65, 1);
+						color: #fff;
+						box-shadow: 0px 0px 24rpx 0px rgba(244, 40, 35, 0.29);
+					}
+
+				}
+
+			}
+
+
+			// 定位
+			.location {
+				font-size: 24rpx;
+				color: #999;
+				display: inline-block;
+				padding: 0 20rpx 0 0;
+				height: 40rpx;
+				line-height: 40rpx;
+				margin-top: 20rpx;
+				border-radius: 20rpx;
+				background-color: rgba(220, 220, 220, 0.5);
+
+				image {
+					width: 25rpx;
+					height: 29rpx;
+					margin-left: 15rpx;
+					margin-right: 8rpx;
+					vertical-align: -4rpx;
+				}
+			}
+		}
+	}
 </style>

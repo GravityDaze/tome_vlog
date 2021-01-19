@@ -2,7 +2,7 @@
 <template>
 	<!--pages/mine/mine.wxml-->
 	<view class="mine">
-		<navbar ref="navbar">
+		<navbar ref="navbar" :immersive="immersive">
 			<view slot="center">
 				<text>个人中心</text>
 			</view>
@@ -12,8 +12,18 @@
 			<image src="../../static/minebg.png"></image>
 			<view class="user-container">
 				<view class="user-info">
-					<image src="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2180936608,1480355193&fm=26&gp=0.jpg" class="avatar"></image>
-					<text>Charlotte</text>
+					<template v-if="isLogin">
+						<image :src="userInfo.avatarUrl" class="avatar"></image>
+						<text>{{userInfo.nickName}}</text>
+						<text @click="logout" style="color:#fff">注销测试按钮</text>
+					</template>
+
+					<template v-else>
+						<view class="btn" @click="toLogin">
+							<text>登录</text>
+						</view>
+					</template>
+
 					<!-- <text bindtap="login" wx:else>点击登录</text> -->
 				</view>
 				<!-- <view class="message" data-onreadmsg="{{msgHit.onReadMsg}}" bindtap="navigateToMsgFn">
@@ -51,10 +61,10 @@
 					<text>视频最长保留一周，请及时下载</text>
 				</view>
 			</view>
-			
+
 			<!-- 游记列表 -->
-			<list />
-			
+			<list :dataList="travelList" />
+
 		</view>
 
 
@@ -67,25 +77,73 @@
 	import navbar from '../../components/nav.vue'
 	// 游记列表组件
 	import list from './components/list.vue'
-	
+	// 查询游记接口
+	import {
+		queryTravel
+	} from '../../api/mine.js'
 	export default {
 		data() {
 			return {
-				topHeight: 0
+				topHeight: 0,
+				immersive: true,
+				isLogin: false, //判断是否登录
+				userInfo: {},
+				travelList: []
 			}
 		},
 		onLoad() {
 			// 获取到导航栏高度
 			this.getNavHeight()
-			// 获取我的游记
-			
+			// 判断是否登录
+			this.checkLoginStatus()
+
 		},
 		methods: {
+			// 获取到导航栏高度
 			getNavHeight() {
 				const {
 					navbar
 				} = this.$refs
 				this.topHeight = navbar.statusBarHeight + navbar.navHeight
+			},
+
+			// 检查登录状态
+			async checkLoginStatus() {
+				const token = uni.getStorageSync('access_token')
+				const userInfo = uni.getStorageSync('userInfo')
+				if (token && userInfo) {
+					this.userInfo = JSON.parse(userInfo)
+					this.isLogin = true
+					// 获取游记数据
+					const res = await queryTravel()
+					this.travelList = res.value.info
+				} else {
+					this.isLogin = false
+				}
+			},
+
+			// 跳转至登录界面
+			toLogin() {
+				uni.navigateTo({
+					url: '/pages/login/login'
+				})
+			},
+			logout(){
+				uni.clearStorageSync()
+				uni.reLaunch({
+					url:"/pages/index/index"
+				})
+			},
+		},
+		onPageScroll(e) {
+			if (e.scrollTop > 50) {
+				// 防止频繁修改
+				if (!this.immersive) return
+				this.immersive = false
+
+			} else {
+				if (this.immersive) return
+				this.immersive = true
 			}
 		},
 		components: {
@@ -118,13 +176,13 @@
 
 			.user-info {
 				display: flex;
-				justify-content: center;
 				align-items: center;
 				font-size: 34rpx;
 				font-weight: 700;
+				width: 100%;
 
-				text {
-					margin-left: 15rpx;
+				&>text {
+					margin-left: 25rpx;
 				}
 
 				.avatar {
@@ -133,17 +191,35 @@
 					border-radius: 50%;
 				}
 
+				.btn {
+					display: flex;
+					justify-content: center;
+					align-items: center;
+					margin: 0 auto;
+					width: 265rpx;
+					height: 75rpx;
+					background: #fff;
+					border-radius: 44rpx;
+					box-shadow: 10rpx 0 50rpx rgba(0, 0, 0, 0.2);
+
+					text {
+						font-size: 30rpx;
+						font-family: PingFang SC;
+						font-weight: bold;
+					}
+				}
+
 			}
 		}
 
 	}
 
 	.panel {
-		position:absolute;
+		position: absolute;
 		width: 700rpx;
 		// top:-50%;
-		left:50%;
-		transform: translate(-50%,-50%);
+		left: 50%;
+		transform: translate(-50%, -50%);
 		margin: 0 auto;
 		border-radius: 30rpx;
 		background: #fff;
@@ -184,33 +260,32 @@
 	}
 
 	.my-travel {
-		margin-top:165rpx;
+		margin-top: 165rpx;
 		margin-bottom: 55rpx;
 		padding: 0 55rpx;
 
 		.title {
 			position: relative;
-		
-			&>text{
+
+			&>text {
 				font-size: 40rpx;
 				font-weight: 700;
 			}
-			
+
 			.title-underline {
-			  width: 38rpx;
-			  height: 8rpx;
-			  background: rgba(250, 200, 60, 1);
-			  margin-top: 12rpx;
-			  border-radius: 3rpx;
+				width: 38rpx;
+				height: 8rpx;
+				background: rgba(250, 200, 60, 1);
+				margin-top: 12rpx;
+				border-radius: 3rpx;
 			}
-			
+
 			.tips {
-			  font-size: 30rpx;
-			  color: #999;
-			  margin-top: 18rpx;
+				font-size: 30rpx;
+				color: #999;
+				margin-top: 18rpx;
 			}
-			
+
 		}
 	}
-
 </style>

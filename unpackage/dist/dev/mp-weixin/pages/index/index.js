@@ -143,13 +143,13 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var _index = __webpack_require__(/*! ../../api/index.js */ 20);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var _default =
+var _index = __webpack_require__(/*! ../../api/index.js */ 20);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var _default =
+
+
+
+
+
 {
-  data: function data() {
-    return {};
-
-
-  },
   onLoad: function onLoad() {
     this.autoMakefn();
   },
@@ -157,7 +157,7 @@ var _index = __webpack_require__(/*! ../../api/index.js */ 20);function _interop
     // 判断刷新Token还是重新登录
     autoMakefn: function autoMakefn() {
       // 查询缓存中是否有刷新用的缓存token
-      var refreshToken = wx.getStorageSync("refresh_token") || "";
+      var refreshToken = uni.getStorageSync("refresh_token") || "";
       if (!refreshToken) {
         // 没有刷新token 获取授权数据以重新登录
         this.getAuthData();
@@ -200,29 +200,14 @@ var _index = __webpack_require__(/*! ../../api/index.js */ 20);function _interop
     // 获取授权数据
     getAuthData: function getAuthData() {var _this2 = this;
       // 判断用户是否授权
-      wx.getSetting({
+      uni.getSetting({
         success: function success(res) {
           if (res.authSetting['scope.userInfo']) {
             // 已经授权，可以直接调用 getUserInfo 获取头像昵称
-            wx.getUserInfo({
+            uni.getUserInfo({
               success: function success(res) {
-                console.log(res);
                 // 获取用户信息成功
-                var userInfo = res.userInfo;
-                getApp().globalData.userInfo = userInfo;
-                // 用户头像URL
-                wx.setStorageSync('headUrl', userInfo.avatarUrl);
-                // 用户昵称
-                wx.setStorageSync('nickName', userInfo.nickName);
-                // 用户性别
-                wx.setStorageSync('gender', userInfo.gender);
-                // 用户所在国家
-                wx.setStorageSync('country', userInfo.country);
-                // 用户所在省
-                wx.setStorageSync('province', userInfo.province);
-                // 用户所在城市
-                wx.setStorageSync('city', userInfo.city);
-                wx.setStorageSync('iv', res.iv);
+                uni.setStorageSync('userInfo', JSON.stringify(res.userInfo));
                 // 登录
                 _this2.loginFn();
               },
@@ -242,27 +227,23 @@ var _index = __webpack_require__(/*! ../../api/index.js */ 20);function _interop
     // 登录方法
     loginFn: function loginFn() {var _this3 = this;
       wx.login({
-        success: function () {var _success = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2(_ref) {var code, res;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:
-                    code = _ref.code;_context2.prev = 1;_context2.next = 4;return (
+        success: function () {var _success = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2(_ref) {var code, userInfo, res;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:
+                    code = _ref.code;_context2.prev = 1;
 
 
 
-                      (0, _index.login)({
-                        code: code,
-                        nickName: getApp().globalData.userInfo.nickName,
-                        avatarUrl: getApp().globalData.userInfo.avatarUrl,
-                        gender: getApp().globalData.userInfo.gender,
-                        country: getApp().globalData.userInfo.country,
-                        province: getApp().globalData.userInfo.province,
-                        city: getApp().globalData.userInfo.city }));case 4:res = _context2.sent;
+                    userInfo = JSON.parse(uni.getStorageSync('userInfo'));_context2.next = 5;return (
+                      (0, _index.login)(_objectSpread({
+                        code: code },
+                      userInfo)));case 5:res = _context2.sent;
 
-                    wx.setStorageSync('refresh_token', res.value.refresh_token);
-                    wx.setStorageSync('access_token', res.value.access_token);
+                    uni.setStorageSync('refresh_token', res.value.refresh_token);
+                    uni.setStorageSync('access_token', res.value.access_token);
                     _this3.initParamFn();
                     // 登录成功，查询用户的消息提示
-                    _this3.selectMsgHitFn();_context2.next = 14;break;case 11:_context2.prev = 11;_context2.t0 = _context2["catch"](1);
+                    _this3.selectMsgHitFn();_context2.next = 15;break;case 12:_context2.prev = 12;_context2.t0 = _context2["catch"](1);
 
-                    _this3.initParamFn();case 14:case "end":return _context2.stop();}}}, _callee2, null, [[1, 11]]);}));function success(_x) {return _success.apply(this, arguments);}return success;}(),
+                    _this3.initParamFn();case 15:case "end":return _context2.stop();}}}, _callee2, null, [[1, 12]]);}));function success(_x) {return _success.apply(this, arguments);}return success;}(),
 
 
         fail: function fail() {

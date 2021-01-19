@@ -5,7 +5,8 @@
     "pages/shoot/shoot",
     "pages/mine/mine",
     "pages/sceneryList/sceneryList",
-    "pages/video/video"
+    "pages/video/video",
+    "pages/login/login"
   ],
   "subPackages": [],
   "window": {

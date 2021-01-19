@@ -10,7 +10,6 @@
 			console.log('App Hide')
 		},
 		globalData: {
-			userInfo: {},
 			noBuyVideoLook: "",
 			uploadVideoMaxSize: "",
 			uploadVideoDuration: "",

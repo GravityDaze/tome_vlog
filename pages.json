@@ -41,6 +41,12 @@
 			"style": {
 				"navigationBarTitleText": "视频详情"
 			}
+		},
+		{
+			"path": "pages/login/login",
+			"style": {
+				"navigationBarTitleText": "登录"
+			}
 		}
 	],
 	"globalStyle": {
