@@ -1,1 +1,1 @@
-<view class="index"><text>启动中...请稍后</text></view>
+<view class="index"><view class="bg"><image src="../../static/bg.jpg" mode="aspectFill"></image></view><view class="logo"><image src="../../static/logo.png"></image><text>Copyright ©2021 Tome Vlog</text></view></view>

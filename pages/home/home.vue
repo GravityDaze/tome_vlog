@@ -36,7 +36,7 @@
 		</view>
 		<!-- 对话框 -->
 		<scenery-dialog :name="sceneryName" :show="showDialog" @close="showDialog = false" />
-		
+
 	</view>
 </template>
 
@@ -60,9 +60,9 @@
 				bannerList: [],
 				hotSceneryList: [],
 				immersive: true, //导航条是否处于沉浸式状态
-				done: false ,// 瀑布流数据加载是否完毕
-				showDialog:false ,//是否展示对话框
-				sceneryName:"",//对话框中的景区名
+				done: false, // 瀑布流数据加载是否完毕
+				showDialog: false, //是否展示对话框
+				sceneryName: "", //对话框中的景区名
 			}
 		},
 		onLoad() {
@@ -131,46 +131,46 @@
 				})
 				this.hotSceneryList = res.value
 			},
-			
+
 			// 判断当前所属景区是否弹出对话框
-			async getCurrentScenery(){
+			async getCurrentScenery() {
 				const {
 					lon,
 					lat
 				} = getApp().globalData
-				try{
+				try {
 					const res = await queryCurrentScenery({
 						lon,
 						lat,
-						sceneryId:''
+						sceneryId: ''
 					})
-					if(res.value.flag === 1){
+					if (res.value.flag === 1) {
 						// 传输景区名给对话框
 						this.sceneryName = res.value.name
 						this.showDialog = true
 					}
-					
-				}catch(err){
+
+				} catch (err) {
 					console.log(err)
 				}
-				
-					
+
+
 			},
-			
+
 			// 点击搜索框跳转到景区列表页面
-			queryScenery(){
+			queryScenery() {
 				uni.navigateTo({
-					url:'/pages/sceneryList/sceneryList'
+					url: '/pages/sceneryList/sceneryList'
 				})
 			},
-			
+
 			// 点击banner跳转到视频详情
-			navigate(item){
+			navigate(item) {
 				uni.navigateTo({
-					url:`/pages/video/video?videoShareId=${item.videoShareId}`
+					url: `/pages/video/video?videoShareId=${item.videoShareId}`
 				})
 			},
-		
+
 		},
 
 		// 上拉加载更多数据
@@ -182,23 +182,14 @@
 		onPageScroll(e) {
 			if (e.scrollTop > 50) {
 				// 防止频繁修改
-				if(!this.immersive) return
+				if (!this.immersive) return
 				this.immersive = false
-				uni.setNavigationBarColor({
-					frontColor: "#000000",
-					backgroundColor:"#000000"
-				})
+
 			} else {
-				if(this.immersive) return 
+				if (this.immersive) return
 				this.immersive = true
-				uni.setNavigationBarColor({
-					frontColor: "#ffffff",
-					backgroundColor:"#000000"
-				})
 			}
 		},
-
-
 		components: {
 			navbar,
 			menubar,
@@ -219,24 +210,24 @@
 			transform: rotate(1turn);
 		}
 	}
-	
+
 	.search {
-		
+
 		display: flex;
 		align-items: center;
 		box-sizing: border-box;
 		padding-left: 26rpx;
-		height:100%; 
+		height: 100%;
 		width: 336rpx;
 		background: rgba(240, 240, 240, 0.48);
 		box-shadow: 0px 8rpx 16rpx 0px rgba(49, 49, 48, 0.1);
 		border-radius: 32rpx;
-	
+
 		.search-inner {
 			display: flex;
 			align-items: center;
 		}
-	
+
 		text {
 			font-size: 28rpx;
 			font-weight: 500;
@@ -280,30 +271,30 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		
-		
-		
+
+
+
 		&>image {
 			padding: 20rpx 0;
 			width: 45rpx;
 			height: 45rpx;
 			animation: rota .5s infinite linear;
 		}
-		
-		.empty{
-			display:flex;
+
+		.empty {
+			display: flex;
 			align-items: center;
 			color: #bfbfbf;
 			font-size: 28rpx;
 			padding: 40rpx 0;
-			
-			image{
+
+			image {
 				width: 35rpx;
-				height:35rpx;
-				margin-right:8rpx;
+				height: 35rpx;
+				margin-right: 8rpx;
 			}
 		}
 
-		
+
 	}
 </style>

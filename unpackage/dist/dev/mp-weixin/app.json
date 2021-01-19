@@ -3,13 +3,14 @@
     "pages/index/index",
     "pages/home/home",
     "pages/shoot/shoot",
+    "pages/mine/mine",
     "pages/sceneryList/sceneryList",
     "pages/video/video"
   ],
   "subPackages": [],
   "window": {
     "navigationBarTextStyle": "black",
-    "navigationBarTitleText": "uni-app",
+    "navigationBarTitleText": "途咪VLOG",
     "navigationBarBackgroundColor": "#F8F8F8",
     "backgroundColor": "#F8F8F8",
     "onReachBottomDistance": 100
@@ -19,6 +20,5 @@
       "desc": "给我位置"
     }
   },
-  "usingComponents": {},
-  "sitemapLocation": "sitemap83.json"
+  "usingComponents": {}
 }

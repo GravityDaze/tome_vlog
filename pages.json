@@ -23,6 +23,14 @@
 			}
 		},
 		{
+			"path": "pages/mine/mine",
+			"style": {
+				"navigationStyle":"custom",
+				"navigationBarBackgroundColor": "#000000",
+				"navigationBarTextStyle": "white"
+			}
+		},
+		{
 			"path": "pages/sceneryList/sceneryList",
 			"style": {
 				"navigationBarTitleText": "景区列表"
@@ -37,7 +45,7 @@
 	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "uni-app",
+		"navigationBarTitleText": "途咪VLOG",
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8",
 		"onReachBottomDistance":100

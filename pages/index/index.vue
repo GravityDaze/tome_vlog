@@ -1,6 +1,12 @@
 <template>
 	<view class="index">
-		<text>启动中...请稍后</text>
+		<view class="bg">
+			<image src="../../static/bg.jpg"  mode="aspectFill"></image>
+		</view>
+		<view class="logo">
+			<image src="../../static/logo.png"></image>
+			<text>Copyright ©2021 Tome Vlog</text>
+		</view>
 	</view>
 </template>
 
@@ -153,8 +159,8 @@
 			            uni.reLaunch({
 			              url: '/pages/home/home',
 			            })
-			//           }
-			//         },300 )
+			          // }
+			        // },300 )
 			
 			//     } catch (err) {
 			// 		console.log(err)
@@ -189,7 +195,39 @@
 	.index{
 		height:100vh;
 		display:flex;
-		align-items:center;
-		justify-content:center;
+		flex-direction: column;
+		
+		.bg{
+			flex:1;
+			
+			image{
+				height:100%;
+				width:100%;
+			}
+		}
+		
+		.logo{
+			height:160rpx;
+			display:flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			
+			image{
+				width:235rpx;
+				height:60rpx;
+				margin-bottom:8rpx;
+			}
+			
+			text{
+				color:rgb(205,205,205);
+				font-size:20rpx;
+			}
+		}
+		
+		
+		
+		
+		
 	}
 </style>

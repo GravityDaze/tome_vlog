@@ -130,12 +130,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 var _default =
 {
   data: function data() {
     return {
       statusBarHeight: 0,
-      NavHeight: 0,
+      navHeight: 0,
       capsuleLeft: 0,
       capsuleHeight: 0,
       capsuleTop: 0 };
@@ -153,6 +157,22 @@ var _default =
       type: Boolean } },
 
 
+  watch: {
+    immersive: function immersive(val) {
+      if (val) {
+        uni.setNavigationBarColor({
+          frontColor: "#ffffff",
+          backgroundColor: "#000000" });
+
+
+      } else {
+        uni.setNavigationBarColor({
+          frontColor: "#000000",
+          backgroundColor: "#000000" });
+
+      }
+    } },
+
   created: function created() {
     this.getSysInfo();
   },
@@ -163,7 +183,7 @@ var _default =
       // 获取状态栏高度
       this.statusBarHeight = sysInfo.statusBarHeight;
       // 计算导航条内容栏高度
-      this.NavHeight = (menuButton.top - this.statusBarHeight) * 2 + menuButton.height;
+      this.navHeight = (menuButton.top - this.statusBarHeight) * 2 + menuButton.height;
       // 获取胶囊左侧偏移量
       this.capsuleLeft = sysInfo.screenWidth - menuButton.right;
       // 获取胶囊上侧偏移量

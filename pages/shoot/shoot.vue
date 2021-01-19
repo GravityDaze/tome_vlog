@@ -1,6 +1,10 @@
 <template>
 	<view class="shoot">
-		<navbar showBack />
+		<navbar showBack :immersive="immersive">
+			<view slot="center">
+				<text>{{sceneryInfo.name}}</text>
+			</view>
+		</navbar>
 		<view class="cover">
 			<view class="bkg" :style="{backgroundImage:`url(${sceneryInfo.coverUrl})`}"></view>
 			<view class="mask" v-if="Object.keys(sceneryInfo).length"></view>
@@ -12,14 +16,6 @@
 			</view>
 		</view>
 		<view class="panel">
-			<!-- 文字1 -->
-			<view class="title1">
-				<text>您所在的位置</text>
-			</view>
-			<!-- 地图 -->
-			<view class="map-wrapper">
-				<map id="map" show-location :longitude="longitude" :latitude="latitude"></map>
-			</view>
 			<!-- 引导视频 -->
 			<view class="title1">
 				<text>打卡攻略</text>
@@ -33,8 +29,12 @@
 			</view>
 			
 			<!-- 文字2 -->
-			<view class="title1">
+			<view class="title2">
 				<text>自动录像点</text>
+				<view class="goMap">
+					<text>查看地图</text>
+					<image src="../../static/arrow.png" mode=""></image>
+				</view>
 			</view>
 			
 			<!-- 自动录像点 -->
@@ -75,6 +75,7 @@
 				sceneryInfo: {},
 				latitude: "",
 				longitude: "",
+				immersive:true,
 				testData:[
 					{
 						img:"https://img1.qunarzz.com/travel/d5/1801/d0/6a8fbbdf116efcb5.jpg_r_720x480x95_bef77a31.jpg",
@@ -96,9 +97,6 @@
 			}
 		},
 		onLoad(options) {
-			// 获取全局数据中保存的经纬度
-			this.longitude = getApp().globalData.lon
-			this.latitude = getApp().globalData.lat
 
 			// 查询景区数据( 进入本页面的前置条件 )
 			this.getSceneryInfo(options.id)
@@ -112,6 +110,17 @@
 				})
 				this.sceneryInfo = res.value
 			},
+		},
+		onPageScroll(e) {
+			if (e.scrollTop > 50) {
+				// 防止频繁修改
+				if (!this.immersive) return
+				this.immersive = false
+		
+			} else {
+				if (this.immersive) return
+				this.immersive = true
+			}
 		},
 		components: {
 			navbar
@@ -147,7 +156,7 @@
 				position: absolute;
 				bottom: 45rpx;
 				left: 30rpx;
-				z-index: 100;
+				z-index: 10;
 
 				text {
 					font-family: PingFang SC;
@@ -204,22 +213,34 @@
 
 			}
 			.title1{
-				padding:20rpx 0;
+				padding:10rpx 0rpx 5rpx;
 				font-size: 36rpx;
 				font-family: PingFang SC;
 				font-weight: 500;
 				color: #333332;
 			}
-
-			.map-wrapper {
-				border-radius: 27rpx;
-				overflow:hidden;
-				// margin-bottom:20rpx;
+			
+			.title2{
+				display: flex;
+				justify-content: space-between;
+				padding:30rpx 0;
+				font-size: 36rpx;
+				font-family: PingFang SC;
+				font-weight: 500;
+				color: #333332;
 				
-				#map {
-					height: 292rpx;
-					width: 100%;
+				.goMap{
+					display: flex;
+					align-items: center;
+					font-size: 22rpx;
+					font-weight: 400;
+					color: #B5B3B2;
 					
+					image {
+						padding-left: 8rpx;
+						width: 13rpx;
+						height: 24rpx;
+					}
 				}
 			}
 			

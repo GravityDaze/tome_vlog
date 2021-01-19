@@ -216,6 +216,7 @@ var _shoot = __webpack_require__(/*! ../../api/shoot.js */ 52);function _interop
       sceneryInfo: {},
       latitude: "",
       longitude: "",
+      immersive: true,
       testData: [
       {
         img: "https://img1.qunarzz.com/travel/d5/1801/d0/6a8fbbdf116efcb5.jpg_r_720x480x95_bef77a31.jpg",
@@ -237,9 +238,6 @@ var _shoot = __webpack_require__(/*! ../../api/shoot.js */ 52);function _interop
 
   },
   onLoad: function onLoad(options) {
-    // 获取全局数据中保存的经纬度
-    this.longitude = getApp().globalData.lon;
-    this.latitude = getApp().globalData.lat;
 
     // 查询景区数据( 进入本页面的前置条件 )
     this.getSceneryInfo(options.id);
@@ -254,6 +252,17 @@ var _shoot = __webpack_require__(/*! ../../api/shoot.js */ 52);function _interop
                 _this.sceneryInfo = res.value;case 5:case "end":return _context.stop();}}}, _callee);}))();
     } },
 
+  onPageScroll: function onPageScroll(e) {
+    if (e.scrollTop > 50) {
+      // 防止频繁修改
+      if (!this.immersive) return;
+      this.immersive = false;
+
+    } else {
+      if (this.immersive) return;
+      this.immersive = true;
+    }
+  },
   components: {
     navbar: navbar } };exports.default = _default;
 

@@ -13,7 +13,8 @@
 			return {
 				menuItem: [{
 						label: '精彩瞬间',
-						icon: 'moment'
+						icon: 'moment',
+						path:'/pages/mine/mine'
 					},
 					{
 

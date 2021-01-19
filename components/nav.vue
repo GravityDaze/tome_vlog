@@ -1,14 +1,18 @@
 <!-- 沉浸式导航条公用组件 -->
 <template>
-	<view class="nav" :style="{paddingTop:`${statusBarHeight}px`,height:`${NavHeight}px`,background:immersive?'transpranst':'#fff'}">
+	<view class="nav" :style="{paddingTop:`${statusBarHeight}px`,height:`${navHeight}px`,background:immersive?'transpranst':'#fff'}">
 		<view class="content">
 			<view class="left" :style="{left:`${capsuleLeft}px`,top:`${capsuleTop}px`,height:`${capsuleHeight}px`}">
 				<!-- 左侧插槽 -->
 				<slot name="left"></slot>
 				<!-- 返回按钮 -->
 				<view v-if="showBack" @click="back" class="back">
-					<image  src="../static/back_white.png"></image>
+					<image v-show="immersive" src="../static/back_white.png"></image>
+					<image v-show="!immersive" src="../static/back_black.png"></image>
 				</view>
+			</view>
+			<view class="center" v-show="!immersive">
+				<slot name="center"></slot>
 			</view>
 		</view>
 	</view>
@@ -19,7 +23,7 @@
 		data() {
 			return {
 				statusBarHeight: 0,
-				NavHeight: 0,
+				navHeight: 0,
 				capsuleLeft: 0,
 				capsuleHeight: 0,
 				capsuleTop: 0
@@ -37,6 +41,22 @@
 				type: Boolean
 			},
 		},
+		watch: {
+			immersive(val) {
+				if (val) {
+					uni.setNavigationBarColor({
+						frontColor: "#ffffff",
+						backgroundColor: "#000000"
+					})
+					
+				} else {
+					uni.setNavigationBarColor({
+						frontColor: "#000000",
+						backgroundColor: "#000000"
+					})
+				}
+			}
+		},
 		created() {
 			this.getSysInfo()
 		},
@@ -47,7 +67,7 @@
 				// 获取状态栏高度
 				this.statusBarHeight = sysInfo.statusBarHeight
 				// 计算导航条内容栏高度
-				this.NavHeight = (menuButton.top - this.statusBarHeight) * 2 + menuButton.height
+				this.navHeight = (menuButton.top - this.statusBarHeight) * 2 + menuButton.height
 				// 获取胶囊左侧偏移量
 				this.capsuleLeft = sysInfo.screenWidth - menuButton.right
 				// 获取胶囊上侧偏移量
@@ -55,7 +75,7 @@
 				// 获取胶囊高度
 				this.capsuleHeight = menuButton.height
 			},
-			back(){
+			back() {
 				uni.navigateBack()
 			}
 		}
@@ -78,16 +98,23 @@
 			position: absolute;
 
 			.back {
-				height:100%;
-				display:flex;
-				align-items:center;
-				
+				height: 100%;
+				display: flex;
+				align-items: center;
+
 				image {
-					padding-left:5rpx;
+					padding-left: 5rpx;
 					height: 35rpx;
-					width:35rpx;
+					width: 35rpx;
 				}
 			}
+		}
+		
+		.center{
+			position:absolute;
+			top:50%;
+			left:50%;
+			transform:translate(-50%,-50%);
 		}
 
 	}

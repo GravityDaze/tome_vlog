@@ -51,16 +51,13 @@ to {
   -webkit-box-align: center;
   -webkit-align-items: center;
           align-items: center;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
   padding-left: 26rpx;
   height: 100%;
   width: 336rpx;
   background: rgba(240, 240, 240, 0.48);
-  -webkit-box-shadow: 0px 8rpx 16rpx 0px rgba(49, 49, 48, 0.1);
-          box-shadow: 0px 8rpx 16rpx 0px rgba(49, 49, 48, 0.1);
-  -webkit-border-radius: 32rpx;
-          border-radius: 32rpx;
+  box-shadow: 0px 8rpx 16rpx 0px rgba(49, 49, 48, 0.1);
+  border-radius: 32rpx;
 }
 .search .search-inner.data-v-92bb8f34 {
   display: -webkit-box;
@@ -91,8 +88,7 @@ to {
           transform: translateX(-50%);
   width: 72rpx;
   height: 72rpx;
-  -webkit-border-radius: 50%;
-          border-radius: 50%;
+  border-radius: 50%;
 }
 .banner .swiper .swiper-item.data-v-92bb8f34 {
   width: 100%;
