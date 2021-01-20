@@ -4,7 +4,6 @@
   "navigationBarTextStyle": "white",
   "usingComponents": {
     "navbar": "/components/nav",
-    "list": "/pages/mine/components/list",
-    "tab-bar": "/components/jinjie-tabBar"
+    "list": "/pages/mine/components/list"
   }
 }

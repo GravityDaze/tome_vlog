@@ -14,6 +14,19 @@ _vue.default.config.productionTip = false;
 
 _App.default.mpType = 'app';
 
+_vue.default.mixin({
+  methods: {
+    setTabBarIndex: function setTabBarIndex(index) {
+      if (typeof this.$mp.page.getTabBar === 'function' &&
+      this.$mp.page.getTabBar()) {
+        this.$mp.page.getTabBar().setData({
+          selected: index });
+
+      }
+    } } });
+
+
+
 var app = new _vue.default(_objectSpread({},
 _App.default));
 
@@ -104,6 +117,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
     uploadVideoDuration: "",
     uploadVideoMaxNum: "",
     composeSuccessSubscribeTmplId: "",
+    sceneryId: "",
     navStyleHeight: 0, //导航栏总高度
     lon: '104.072329', // 成都天府广场经度
     lat: '30.66342', // 成都天府广场维度

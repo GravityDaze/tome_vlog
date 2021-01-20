@@ -97,14 +97,22 @@
 			}
 		},
 		onLoad(options) {
-
-			// 查询景区数据( 进入本页面的前置条件 )
-			this.getSceneryInfo(options.id)
+			// 获取到景区id 链接参数中如果没有 就去globalData中寻找
+			const sceneryId = options.id?options.id:getApp().globalData.sceneryId
+			// 如果在globalData中都没有
+			console.log(getApp().globalData.sceneryId)
+			if( sceneryId === ""){
+				return uni.redirectTo({
+					url:"/pages/sceneryList/sceneryList"
+				})
+			}
+			// 查询景区数据( 景区id为进入本页面的前置条件 )
+			this.getSceneryInfo(sceneryId)
 
 
 		},
 		methods: {
-			async getSceneryInfo(id = 17) {
+			async getSceneryInfo(id) {
 				const res = await querySceneryInfo({
 					id
 				})

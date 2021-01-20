@@ -139,7 +139,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ 17));
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ 17));
 
 
 
@@ -238,18 +238,26 @@ var _shoot = __webpack_require__(/*! ../../api/shoot.js */ 52);function _interop
 
   },
   onLoad: function onLoad(options) {
+    // 获取到景区id 链接参数中如果没有 就去globalData中寻找
+    var sceneryId = options.id ? options.id : getApp().globalData.sceneryId;
+    // 如果在globalData中都没有
+    console.log(getApp().globalData.sceneryId);
+    if (sceneryId === "") {
+      return uni.redirectTo({
+        url: "/pages/sceneryList/sceneryList" });
 
-    // 查询景区数据( 进入本页面的前置条件 )
-    this.getSceneryInfo(options.id);
+    }
+    // 查询景区数据( 景区id为进入本页面的前置条件 )
+    this.getSceneryInfo(sceneryId);
 
 
   },
   methods: {
-    getSceneryInfo: function getSceneryInfo() {var _arguments = arguments,_this = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var id, res;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:id = _arguments.length > 0 && _arguments[0] !== undefined ? _arguments[0] : 17;_context.next = 3;return (
+    getSceneryInfo: function getSceneryInfo(id) {var _this = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var res;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:_context.next = 2;return (
                   (0, _shoot.querySceneryInfo)({
-                    id: id }));case 3:res = _context.sent;
+                    id: id }));case 2:res = _context.sent;
 
-                _this.sceneryInfo = res.value;case 5:case "end":return _context.stop();}}}, _callee);}))();
+                _this.sceneryInfo = res.value;case 4:case "end":return _context.stop();}}}, _callee);}))();
     } },
 
   onPageScroll: function onPageScroll(e) {
@@ -265,6 +273,7 @@ var _shoot = __webpack_require__(/*! ../../api/shoot.js */ 52);function _interop
   },
   components: {
     navbar: navbar } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 

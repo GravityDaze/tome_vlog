@@ -15,6 +15,7 @@
 			uploadVideoDuration: "",
 			uploadVideoMaxNum: "",
 			composeSuccessSubscribeTmplId: "",
+			sceneryId:"",
 			navStyleHeight:0,//导航栏总高度
 			lon: '104.072329', // 成都天府广场经度
 			lat: '30.66342', // 成都天府广场维度

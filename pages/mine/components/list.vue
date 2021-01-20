@@ -1,7 +1,7 @@
 <template>
 	<view class="list">
 		<template v-for="(item,index) in dataList">
-			<view class="list-item" v-for="(subItem,subIndex) in item.dateInfo" :key="index">
+			<view class="list-item" v-for="(subItem,subIndex) in item.dateInfo" :key="subIndex">
 				<!-- 时间线 -->
 				<view class="timeline">
 					<text>{{subItem.date}}</text>
@@ -10,19 +10,19 @@
 				<view class="content">
 					<!-- 如果内容是视频 -->
 					<view class="video-area" v-if="subItem.status === 2">
-						<template  v-for="videoItem in subItem.videoInfo">
-							<view class="video-box" :key="videoItem.videoId">
+						<template v-for="(videoItem,videoIndex) in subItem.videoInfo">
+							<view class="video-box" :key="videoItem.videoId"  @click="watchVideo(videoItem)">
 								<view class="cover" :style="{backgroundImage:`url(${videoItem.coverUrl})`}">
 									<!-- <image wx:if="{{videoItem.newRead == 0}}" src="../../imgs/new.png" class="icon_new"></image> -->
 									<view class="duration">
 										<text>{{videoItem.duration}}</text>
 									</view>
 								</view>
-								<!-- <view class="box5_2_2" wx:if="{{videoItem.buyStatus == 0}}">
-								<image src="../../imgs/time.png" class="icon_time"></image>
-								<text wx:if="{{videoItem.expiredTime > 1}}">{{videoItem.expiredTime}}天后自动清除</text>
-								<text wx:if="{{videoItem.expiredTime <= 1}}" style="color:red">即将过期被清除</text>
-							</view> -->
+								<view class="tips" v-if="videoItem.buyStatus === 0">
+									<image src="../../../static/time.png" class="icon_time"></image>
+									<text v-if="videoItem.expiredTime <= 1" style="color:red">即将过期被清除</text>
+									<text v-else>{{videoItem.expiredTime}}天后自动清除</text>
+								</view>
 							</view>
 						</template>
 					</view>
@@ -79,6 +79,14 @@
 				type: Array,
 				default: []
 			}
+		},
+		methods:{
+			watchVideo(item){
+				const type = item.buyStatus?1:2
+				uni.navigateTo({
+					url:`/pages/video/video?videoId=${item.videoId}&type=${type}`
+				})
+			}
 		}
 	}
 </script>
@@ -98,14 +106,14 @@
 
 				.greyline {
 					width: 450rpx;
-					height:0.5rpx;
+					height: 0.5rpx;
 					background: #ececec;
 				}
 
 			}
 
 			.content {
-				 margin-top: 20rpx;
+				margin-top: 20rpx;
 
 				/* 视频区域 */
 				.video-area {
@@ -129,15 +137,31 @@
 							background-size: cover;
 							display: flex;
 							box-shadow: 10rpx 0 50rpx rgba(0, 0, 0, 0.2);
-							
+
 							.duration {
-							  position:absolute;
-							  right:18rpx;
-							  bottom:15rpx;
-							  font-weight: 400;
-							  color: rgba(255, 255, 254, 1);
-							  font-size: 20rpx;
+								position: absolute;
+								right: 18rpx;
+								bottom: 15rpx;
+								font-weight: 400;
+								color: rgba(255, 255, 254, 1);
+								font-size: 20rpx;
 							}
+						}
+						
+						.tips {
+						  margin-left: -75rpx;
+						  margin-top: 10rpx;
+						  display: flex;
+						  justify-content: flex-start;
+						  align-items: center;
+						  font-size: 22rpx;
+						  color: #999;
+						  
+						  image{
+								width: 25rpx;
+							    height: 25rpx;
+							    margin-right: 15rpx;
+						  }
 						}
 
 					}

@@ -105,11 +105,11 @@
 /******/
 /******/
 /******/ 		// mini-css-extract-plugin CSS loading
-/******/ 		var cssChunks = {"pages/home/components/hotScenery":1,"pages/home/components/menubar":1,"components/jinjie-tabBar":1,"components/nav":1,"pages/home/components/dialog":1,"pages/home/components/moment":1,"pages/mine/components/list":1,"pages/video/components/comment":1,"components/maramlee-waterfalls-flow":1};
+/******/ 		var cssChunks = {"pages/home/components/hotScenery":1,"pages/home/components/menubar":1,"components/nav":1,"pages/home/components/dialog":1,"pages/home/components/moment":1,"pages/mine/components/list":1,"pages/video/components/comment":1,"components/maramlee-waterfalls-flow":1};
 /******/ 		if(installedCssChunks[chunkId]) promises.push(installedCssChunks[chunkId]);
 /******/ 		else if(installedCssChunks[chunkId] !== 0 && cssChunks[chunkId]) {
 /******/ 			promises.push(installedCssChunks[chunkId] = new Promise(function(resolve, reject) {
-/******/ 				var href = "" + ({"pages/home/components/hotScenery":"pages/home/components/hotScenery","pages/home/components/menubar":"pages/home/components/menubar","components/jinjie-tabBar":"components/jinjie-tabBar","components/nav":"components/nav","pages/home/components/dialog":"pages/home/components/dialog","pages/home/components/moment":"pages/home/components/moment","pages/mine/components/list":"pages/mine/components/list","pages/video/components/comment":"pages/video/components/comment","components/maramlee-waterfalls-flow":"components/maramlee-waterfalls-flow"}[chunkId]||chunkId) + ".wxss";
+/******/ 				var href = "" + ({"pages/home/components/hotScenery":"pages/home/components/hotScenery","pages/home/components/menubar":"pages/home/components/menubar","components/nav":"components/nav","pages/home/components/dialog":"pages/home/components/dialog","pages/home/components/moment":"pages/home/components/moment","pages/mine/components/list":"pages/mine/components/list","pages/video/components/comment":"pages/video/components/comment","components/maramlee-waterfalls-flow":"components/maramlee-waterfalls-flow"}[chunkId]||chunkId) + ".wxss";
 /******/ 				var fullhref = __webpack_require__.p + href;
 /******/ 				var existingLinkTags = document.getElementsByTagName("link");
 /******/ 				for(var i = 0; i < existingLinkTags.length; i++) {

@@ -2,34 +2,40 @@
 <template>
 	<view>
 		<video id="video" style="width:100%" autoplay :src="videoInfo.url" objectFit="fill"></video>
-		<!-- 视频详细信息面板 -->
-		<view class="details">
-			<view class="top-info">
-				<view class="title">
-					<text>{{videoInfo.describe}}</text>
+		<template v-if="type === ''">
+			<view></view>
+		</template>
+		<template v-else>
+			<!-- 视频详细信息面板 -->
+			<view class="details">
+				<view class="top-info">
+					<view class="title">
+						<text>{{videoInfo.describe}}</text>
+					</view>
+					<view class="location">
+						<text>{{videoInfo.sceneryName}}</text>
+					</view>
 				</view>
-				<view class="location">
-					<text>{{videoInfo.sceneryName}}</text>
+				<view class="bottom-info">
+			
+					<view class="user">
+						<image :src="videoInfo.headUrl"></image>
+						<text>{{videoInfo.shareCustomer}}</text>
+					</view>
+					<view class="like">
+						<image src="../../static/like.png"></image>
+						<text>{{videoInfo.laudTimes}}</text>
+					</view>
 				</view>
 			</view>
-			<view class="bottom-info">
-
-				<view class="user">
-					<image :src="videoInfo.headUrl"></image>
-					<text>{{videoInfo.shareCustomer}}</text>
-				</view>
-				<view class="like">
-					<image src="../../static/like.png"></image>
-					<text>{{videoInfo.laudTimes}}</text>
-				</view>
+			<!-- 评论区 -->
+			<comment v-if="type === 0" />
+			<!-- 我也要拍 -->
+			<view class="btn" v-if="type === 0">
+				<text>我也要拍</text>
 			</view>
-		</view>
-		<!-- 评论区 -->
-		<comment />
-		<!-- 我也要拍 -->
-		<view class="btn">
-			<text>我也要拍</text>
-		</view>
+		</template>
+		
 
 	</view>
 </template>
@@ -39,34 +45,62 @@
 	import {
 	  JSEncrypt
 	} from '../../utils/jsencrypt.js';
-	import { queryVideoInfo } from '../../api/video.js'
+	import { queryVideoInfo,queryShareVideoInfo } from '../../api/video.js'
 	import comment from './components/comment.vue'
 	export default {
 		data() {
 			return {
-				videoInfo:{}
+				videoInfo:{},
+				type:''
 			}
 		},
 		onLoad(options) {
-			console.log(options)
-			// 获取视频信息
-			this.getVideoInfo(options)
+			/** 
+			 * 进入本页面有几种type,控制组件类型的显隐
+			 * 0 => 从分享视频进入
+			 * 1 => 从我的视频进入 / 已购买
+			 * 2 => 从我的视频进入 / 未购买
+			 * ...待续
+			**/
+			this.type = options.type
+			switch(options.type){
+				case '0':
+					this.getShareVideoInfo(options.videoShareId)
+				break;
+				
+				case ('1' || '2'):
+					this.getVideoInfo(options.videoId)
+				break;
+			}
+	
 		},
 		methods: {
-			async getVideoInfo(options){
-				const res = await queryVideoInfo({
-					videoShareId:options.videoShareId
+			// 解析分享视频
+			async getShareVideoInfo(videoShareId){
+				const res = await queryShareVideoInfo({
+					videoShareId
 				})
-				// 解密视频
+				this.videoInfo = this.handleVideoUrl(res) 
+			},
+			// 解析我的视频
+			async getVideoInfo(videoId){
+				const res = await queryVideoInfo({
+					videoId
+				})
+				this.videoInfo = this.handleVideoUrl(res) 
+			},
+			
+			// 处理解密视频
+			handleVideoUrl(res){
 				const encryptByRsa = (text, privateKey) => {
 				  const encrypt = new JSEncrypt();
 				  encrypt.setPrivateKey(privateKey);
 				  return encrypt.decrypt(text);
 				}
 				res.value.url = encryptByRsa(res.value.url,getApp().globalData.encryptKey)
-				this.videoInfo = res.value
-				console.log(this.videoInfo)
+				return res.value
 			},
+			
 		},
 		components:{
 			comment

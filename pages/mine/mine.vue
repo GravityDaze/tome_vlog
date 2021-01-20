@@ -12,14 +12,14 @@
 			<image src="../../static/minebg.jpg" mode="aspectFill"></image>
 			<view class="user-container">
 				<view class="user-info">
-						<view class="user" v-if="isLogin">
-							<image :src="userInfo.avatarUrl" class="avatar"></image>
-							<text>{{userInfo.nickName}}</text>
-						</view>
+					<view class="user" v-if="isLogin">
+						<image :src="userInfo.avatarUrl" class="avatar"></image>
+						<text>{{userInfo.nickName}}</text>
+					</view>
 
-						<view class="btn" @click="toLogin" v-else>
-							<text>登录</text>
-						</view>
+					<view class="btn" @click="toLogin" v-else>
+						<text>登录</text>
+					</view>
 					<!-- <text bindtap="login" wx:else>点击登录</text> -->
 				</view>
 				<!-- <view class="message" data-onreadmsg="{{msgHit.onReadMsg}}" bindtap="navigateToMsgFn">
@@ -64,15 +64,12 @@
 
 			</view>
 		</view>
-		<tabBar tabIndex=2></tabBar>
 	</view>
 </template>
 
 <script>
 	// 公用导航组件
 	import navbar from '../../components/nav.vue'
-	// 公用tabbar组件
-	import tabBar from '../../components/jinjie-tabBar.vue'
 	// 游记列表组件
 	import list from './components/list.vue'
 	// 查询游记接口
@@ -93,7 +90,9 @@
 			// 获取到导航栏高度
 			this.getNavHeight()
 		},
-		onShow(){
+		onShow() {
+			this.setTabBarIndex(2)
+
 			// 判断是否登录
 			this.checkLoginStatus()
 		},
@@ -147,8 +146,7 @@
 		},
 		components: {
 			navbar,
-			list,
-			tabBar
+			list
 		}
 	}
 </script>
@@ -179,25 +177,25 @@
 				display: flex;
 				align-items: center;
 				width: 100%;
-				
-				.user{
-					display:flex;
+
+				.user {
+					display: flex;
 					flex-direction: column;
 					align-items: center;
-					height:100%;
-					width:100%;
+					height: 100%;
+					width: 100%;
 					font-size: 34rpx;
 					font-weight: 700;
-					
+
 					.avatar {
 						width: 130rpx;
 						height: 130rpx;
-						margin-bottom:20rpx;
+						margin-bottom: 20rpx;
 						border-radius: 50%;
 					}
 				}
 
-				
+
 
 				.btn {
 					display: flex;

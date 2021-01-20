@@ -36,7 +36,6 @@
 		</view>
 		<!-- 对话框 -->
 		<scenery-dialog :name="sceneryName" :show="showDialog" @close="showDialog = false" />
-		<tabBar tabIndex=0></tabBar>
 	</view>
 </template>
 
@@ -49,8 +48,6 @@
 	} from '../../api/home.js'
 	// 公用导航组件
 	import navbar from '../../components/nav.vue'
-	// 公用tabbar组件
-	import tabBar from '../../components/jinjie-tabBar.vue'
 	// 页面内组件
 	import menubar from './components/menubar.vue'
 	import hotScenery from './components/hotScenery.vue'
@@ -76,6 +73,10 @@
 			this.getHotSceneryList()
 			// // 获取当前所属景区
 			// this.getCurrentScenery()
+		},
+		onShow() {
+			// 自定义tabBar mixin 详见https://developers.weixin.qq.com/community/develop/article/doc/0000047ece8448712589b28525b413
+			this.setTabBarIndex(0)
 		},
 		methods: {
 			async getLocation() {
@@ -147,6 +148,8 @@
 						sceneryId: ''
 					})
 					if (res.value.flag === 1) {
+						// 储存景区id为全局可用
+						getApp().globalData.sceneryId = res.value.id
 						// 传输景区名给对话框
 						this.sceneryName = res.value.name
 						this.showDialog = true
@@ -169,7 +172,7 @@
 			// 点击banner跳转到视频详情
 			navigate(item) {
 				uni.navigateTo({
-					url: `/pages/video/video?videoShareId=${item.videoShareId}`
+					url: `/pages/video/video?videoShareId=${item.videoShareId}&type=0`
 				})
 			},
 
@@ -197,8 +200,7 @@
 			menubar,
 			hotScenery,
 			moment,
-			sceneryDialog,
-			tabBar
+			sceneryDialog
 		}
 	}
 </script>
