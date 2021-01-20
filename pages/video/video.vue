@@ -59,10 +59,9 @@
 				})
 				// 解密视频
 				const encryptByRsa = (text, privateKey) => {
-				  var encrypt = new JSEncrypt();
+				  const encrypt = new JSEncrypt();
 				  encrypt.setPrivateKey(privateKey);
-				  var encrypted = encrypt.decrypt(text);
-				  return encrypted
+				  return encrypt.decrypt(text);
 				}
 				res.value.url = encryptByRsa(res.value.url,getApp().globalData.encryptKey)
 				this.videoInfo = res.value

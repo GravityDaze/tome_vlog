@@ -98,7 +98,8 @@
 
 				.greyline {
 					width: 450rpx;
-					border: 0.5rpx solid rgba(220, 220, 220, 1);
+					height:0.5rpx;
+					background: #ececec;
 				}
 
 			}

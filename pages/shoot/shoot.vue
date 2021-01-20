@@ -23,7 +23,7 @@
 			<view class="guide">
 				<text>在开拍前，可观看此视频进行操作指引哟~</text>
 				<view class="guide-cover">
-					<image class="cover" src="../../static/guide.jpg" mode=""></image>
+					<image class="cover" src="https://tomevideo.zhihuiquanyu.com/20210120142357.jpg"></image>
 					<image class="play" src="../../static/play_guide.png" mode=""></image>
 				</view>
 			</view>
@@ -181,7 +181,7 @@
 			position: relative;
 			z-index: 99;
 			background: #fff;
-			transform: translateY(-25rpx);
+			transform: translateY(-35rpx);
 			border-radius: 27rpx 27rpx 0px 0px;
 			padding: 30rpx 30rpx 150rpx;
 

@@ -151,13 +151,13 @@ var _index = __webpack_require__(/*! ../../api/index.js */ 20);function _interop
 
 {
   onLoad: function onLoad() {
-    this.autoMakefn();
+    this.handleRefreshToken();
   },
   methods: {
     // 判断刷新Token还是重新登录
-    autoMakefn: function autoMakefn() {
+    handleRefreshToken: function handleRefreshToken() {
       // 查询缓存中是否有刷新用的缓存token
-      var refreshToken = uni.getStorageSync("refresh_token") || "";
+      var refreshToken = uni.getStorageSync("refresh_token");
       if (!refreshToken) {
         // 没有刷新token 获取授权数据以重新登录
         this.getAuthData();

@@ -9,21 +9,17 @@
 		</navbar>
 		<!-- 用户资料 -->
 		<view class="user-bg" :style="{paddingTop:`${topHeight}px`}">
-			<image src="../../static/minebg.png"></image>
+			<image src="../../static/minebg.jpg" mode="aspectFill"></image>
 			<view class="user-container">
 				<view class="user-info">
-					<template v-if="isLogin">
-						<image :src="userInfo.avatarUrl" class="avatar"></image>
-						<text>{{userInfo.nickName}}</text>
-						<text @click="logout" style="color:#fff">注销测试按钮</text>
-					</template>
+						<view class="user" v-if="isLogin">
+							<image :src="userInfo.avatarUrl" class="avatar"></image>
+							<text>{{userInfo.nickName}}</text>
+						</view>
 
-					<template v-else>
-						<view class="btn" @click="toLogin">
+						<view class="btn" @click="toLogin" v-else>
 							<text>登录</text>
 						</view>
-					</template>
-
 					<!-- <text bindtap="login" wx:else>点击登录</text> -->
 				</view>
 				<!-- <view class="message" data-onreadmsg="{{msgHit.onReadMsg}}" bindtap="navigateToMsgFn">
@@ -32,49 +28,51 @@
 				</view> -->
 			</view>
 		</view>
-		<!-- 按钮面板 -->
-		<view class="panel">
-			<view class="single-item">
-				<image src="../../static/mine01.png" class="icons"></image>
-				<text>人脸采集</text>
-			</view>
-			<view class="single-item">
-				<image src="../../static/mine02.png" class="icons"></image>
-				<!-- <view class="notice-dot"></view> -->
-				<text>已购视频</text>
-			</view>
-			<view class="single-item">
-				<image src="../../static/mine03_.png" class="icons"></image>
-				<text>关于途咪</text>
-			</view>
-		</view>
-
-		<!-- 我的游记 -->
-		<view class="my-travel">
-			<view class="title">
-				<!-- <image src="../../imgs/tips.png" class="icon_tips" wx:if="{{msgHit.noReadCount > 0}}"></image> -->
-				<text>我的游记</text>
-				<!-- <text class="remind" wx:if="{{msgHit.noReadCount > 0}}" bindtap="openRecentVideo">{{msgHit.noReadCount}}条新游记</text> -->
-				<!-- </view> -->
-				<view class="title-underline"></view>
-				<view class="tips">
-					<text>视频最长保留一周，请及时下载</text>
+		<view class="content-box">
+			<!-- 按钮面板 -->
+			<view class="panel">
+				<view class="single-item">
+					<image src="../../static/mine01.png" class="icons"></image>
+					<text>人脸采集</text>
+				</view>
+				<view class="single-item">
+					<image src="../../static/mine02.png" class="icons"></image>
+					<!-- <view class="notice-dot"></view> -->
+					<text>已购视频</text>
+				</view>
+				<view class="single-item">
+					<image src="../../static/mine03_.png" class="icons"></image>
+					<text>关于途咪</text>
 				</view>
 			</view>
 
-			<!-- 游记列表 -->
-			<list :dataList="travelList" />
+			<!-- 我的游记 -->
+			<view class="my-travel">
+				<view class="title">
+					<!-- <image src="../../imgs/tips.png" class="icon_tips" wx:if="{{msgHit.noReadCount > 0}}"></image> -->
+					<text>我的游记</text>
+					<!-- <text class="remind" wx:if="{{msgHit.noReadCount > 0}}" bindtap="openRecentVideo">{{msgHit.noReadCount}}条新游记</text> -->
+					<!-- </view> -->
+					<view class="title-underline"></view>
+					<view class="tips">
+						<text>{{isLogin?'视频最长保留一周，请及时下载':'请登录后查看游记'}}</text>
+					</view>
+				</view>
 
+				<!-- 游记列表 -->
+				<list :dataList="travelList" />
+
+			</view>
 		</view>
-
-
-
+		<tabBar tabIndex=2></tabBar>
 	</view>
 </template>
 
 <script>
 	// 公用导航组件
 	import navbar from '../../components/nav.vue'
+	// 公用tabbar组件
+	import tabBar from '../../components/jinjie-tabBar.vue'
 	// 游记列表组件
 	import list from './components/list.vue'
 	// 查询游记接口
@@ -94,9 +92,10 @@
 		onLoad() {
 			// 获取到导航栏高度
 			this.getNavHeight()
+		},
+		onShow(){
 			// 判断是否登录
 			this.checkLoginStatus()
-
 		},
 		methods: {
 			// 获取到导航栏高度
@@ -128,10 +127,10 @@
 					url: '/pages/login/login'
 				})
 			},
-			logout(){
+			logout() {
 				uni.clearStorageSync()
 				uni.reLaunch({
-					url:"/pages/index/index"
+					url: "/pages/index/index"
 				})
 			},
 		},
@@ -148,14 +147,15 @@
 		},
 		components: {
 			navbar,
-			list
+			list,
+			tabBar
 		}
 	}
 </script>
 
 <style lang="scss" scoped>
 	.user-bg {
-		height: 339rpx;
+		height: 260rpx;
 		position: relative;
 
 		&>image {
@@ -167,29 +167,37 @@
 			z-index: -1;
 		}
 
+
+
 		.user-container {
 			display: flex;
 			justify-content: space-between;
 			align-items: center;
 			padding: 0 35rpx;
-			margin-top: 50rpx;
 
 			.user-info {
 				display: flex;
 				align-items: center;
-				font-size: 34rpx;
-				font-weight: 700;
 				width: 100%;
-
-				&>text {
-					margin-left: 25rpx;
+				
+				.user{
+					display:flex;
+					flex-direction: column;
+					align-items: center;
+					height:100%;
+					width:100%;
+					font-size: 34rpx;
+					font-weight: 700;
+					
+					.avatar {
+						width: 130rpx;
+						height: 130rpx;
+						margin-bottom:20rpx;
+						border-radius: 50%;
+					}
 				}
 
-				.avatar {
-					width: 130rpx;
-					height: 130rpx;
-					border-radius: 50%;
-				}
+				
 
 				.btn {
 					display: flex;
@@ -197,10 +205,12 @@
 					align-items: center;
 					margin: 0 auto;
 					width: 265rpx;
+					margin-top: 50rpx;
 					height: 75rpx;
 					background: #fff;
 					border-radius: 44rpx;
-					box-shadow: 10rpx 0 50rpx rgba(0, 0, 0, 0.2);
+					color: #4D4A45;
+					box-shadow: 0px 7px 7px 0px rgba(78, 78, 78, 0.19);
 
 					text {
 						font-size: 30rpx;
@@ -214,78 +224,90 @@
 
 	}
 
-	.panel {
-		position: absolute;
-		width: 700rpx;
-		// top:-50%;
-		left: 50%;
-		transform: translate(-50%, -50%);
-		margin: 0 auto;
-		border-radius: 30rpx;
+	.content-box {
+		position: relative;
+		z-index: 99;
 		background: #fff;
-		box-shadow: 10rpx 0 50rpx rgba(0, 0, 0, 0.2);
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		font-size: 26rpx;
-		color: #999;
-		padding: 50rpx 60rpx 30rpx;
-		box-sizing: border-box;
-
-		.single-item {
-			position: relative;
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-			justify-content: space-between;
-
-			.icons {
-				width: 79rpx;
-				height: 79rpx;
-				margin-bottom: 30rpx;
-			}
-
-			/* 通知圆点 */
-			.notice-dot {
-				position: absolute;
-				top: 0;
-				width: 14rpx;
-				height: 14rpx;
-				background: rgba(251, 60, 56, 1);
-				box-shadow: 0px 0px 19rpx 2rpx rgba(244, 40, 35, 0.29);
-				border-radius: 50%;
-				right: 0;
-			}
-		}
-	}
-
-	.my-travel {
-		margin-top: 165rpx;
-		margin-bottom: 55rpx;
+		transform: translateY(-25rpx);
+		border-radius: 27rpx 27rpx 0px 0px;
 		padding: 0 55rpx;
 
-		.title {
+		.panel {
 			position: relative;
+			background: #fff;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			font-size: 26rpx;
+			color: #999;
+			padding: 55rpx 55rpx;
 
-			&>text {
-				font-size: 40rpx;
-				font-weight: 700;
+
+			&::after {
+				content: '';
+				position: absolute;
+				bottom: 0;
+				width: 546rpx;
+				height: 0.5rpx;
+				background: #E2E2E2;
 			}
 
-			.title-underline {
-				width: 38rpx;
-				height: 8rpx;
-				background: rgba(250, 200, 60, 1);
-				margin-top: 12rpx;
-				border-radius: 3rpx;
-			}
+			.single-item {
+				position: relative;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: space-between;
 
-			.tips {
-				font-size: 30rpx;
-				color: #999;
-				margin-top: 18rpx;
-			}
+				.icons {
+					width: 79rpx;
+					height: 79rpx;
+					margin-bottom: 30rpx;
+				}
 
+				/* 通知圆点 */
+				.notice-dot {
+					position: absolute;
+					top: 0;
+					width: 14rpx;
+					height: 14rpx;
+					background: rgba(251, 60, 56, 1);
+					box-shadow: 0px 0px 19rpx 2rpx rgba(244, 40, 35, 0.29);
+					border-radius: 50%;
+					right: 0;
+				}
+			}
 		}
+
+		.my-travel {
+			margin-top: 65rpx;
+			margin-bottom: 55rpx;
+
+			.title {
+				position: relative;
+
+				&>text {
+					font-size: 40rpx;
+					font-weight: 700;
+				}
+
+				.title-underline {
+					width: 38rpx;
+					height: 8rpx;
+					background: rgba(250, 200, 60, 1);
+					margin-top: 12rpx;
+					border-radius: 3rpx;
+				}
+
+				.tips {
+					font-size: 30rpx;
+					color: #999;
+					margin-top: 18rpx;
+				}
+
+			}
+		}
+
+
 	}
 </style>

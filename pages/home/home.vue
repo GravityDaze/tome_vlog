@@ -36,7 +36,7 @@
 		</view>
 		<!-- 对话框 -->
 		<scenery-dialog :name="sceneryName" :show="showDialog" @close="showDialog = false" />
-
+		<tabBar tabIndex=0></tabBar>
 	</view>
 </template>
 
@@ -49,6 +49,8 @@
 	} from '../../api/home.js'
 	// 公用导航组件
 	import navbar from '../../components/nav.vue'
+	// 公用tabbar组件
+	import tabBar from '../../components/jinjie-tabBar.vue'
 	// 页面内组件
 	import menubar from './components/menubar.vue'
 	import hotScenery from './components/hotScenery.vue'
@@ -195,7 +197,8 @@
 			menubar,
 			hotScenery,
 			moment,
-			sceneryDialog
+			sceneryDialog,
+			tabBar
 		}
 	}
 </script>

@@ -7,6 +7,7 @@
     "menubar": "/pages/home/components/menubar",
     "hot-scenery": "/pages/home/components/hotScenery",
     "moment": "/pages/home/components/moment",
-    "scenery-dialog": "/pages/home/components/dialog"
+    "scenery-dialog": "/pages/home/components/dialog",
+    "tab-bar": "/components/jinjie-tabBar"
   }
 }

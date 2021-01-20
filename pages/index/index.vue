@@ -1,7 +1,7 @@
 <template>
 	<view class="index">
 		<view class="bg">
-			<image src="../../static/bg.jpg" mode="aspectFill"></image>
+			<image src="https://tomevideo.zhihuiquanyu.com/20210120142348.jpg" mode="aspectFill"></image>
 		</view>
 		<view class="logo">
 			<image src="../../static/logo.png"></image>

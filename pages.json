@@ -43,12 +43,38 @@
 			}
 		},
 		{
+			"path":"pages/map/map",
+			"style":{
+				"navigationBarTitleText": "地图"
+			}
+		},
+		{
 			"path": "pages/login/login",
 			"style": {
 				"navigationBarTitleText": "登录"
 			}
 		}
 	],
+	  "tabBar": {
+		"custom": true,
+	    "color": "#000",
+	    "selectedColor": "#F8C137",
+	    "borderStyle": "black",
+	    "list": [
+	      {
+	        "iconPath": "static/1.png",
+	        "selectedIconPath": "static/2.png",
+	        "pagePath": "pages/home/home",
+	        "text": "首页"
+	      },
+	      {
+	        "iconPath": "static/3.png",
+	        "selectedIconPath": "static/4.png",
+	        "pagePath": "pages/mine/mine",
+	        "text": "我的"
+	      }
+	    ]
+	  },
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "途咪VLOG",

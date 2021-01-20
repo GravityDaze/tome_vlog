@@ -6,6 +6,7 @@
     "pages/mine/mine",
     "pages/sceneryList/sceneryList",
     "pages/video/video",
+    "pages/map/map",
     "pages/login/login"
   ],
   "subPackages": [],
@@ -15,6 +16,26 @@
     "navigationBarBackgroundColor": "#F8F8F8",
     "backgroundColor": "#F8F8F8",
     "onReachBottomDistance": 100
+  },
+  "tabBar": {
+    "custom": true,
+    "color": "#000",
+    "selectedColor": "#F8C137",
+    "borderStyle": "black",
+    "list": [
+      {
+        "iconPath": "static/1.png",
+        "selectedIconPath": "static/2.png",
+        "pagePath": "pages/home/home",
+        "text": "首页"
+      },
+      {
+        "iconPath": "static/3.png",
+        "selectedIconPath": "static/4.png",
+        "pagePath": "pages/mine/mine",
+        "text": "我的"
+      }
+    ]
   },
   "permission": {
     "scope.userLocation": {
