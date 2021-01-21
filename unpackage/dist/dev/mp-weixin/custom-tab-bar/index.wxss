@@ -32,7 +32,7 @@
 }
 
 .tab-bar-item .middle {
-  width:101rpx;
+  width:105rpx;
   height:105rpx;
   transform:translateY(-55rpx);
 }

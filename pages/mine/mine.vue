@@ -1,6 +1,5 @@
 <!-- 我的页面 -->
 <template>
-	<!--pages/mine/mine.wxml-->
 	<view class="mine">
 		<navbar ref="navbar" :immersive="immersive">
 			<view slot="center">
@@ -152,6 +151,11 @@
 </script>
 
 <style lang="scss" scoped>
+	
+	.mine{
+		padding-bottom:150rpx;
+	}
+	
 	.user-bg {
 		height: 260rpx;
 		position: relative;

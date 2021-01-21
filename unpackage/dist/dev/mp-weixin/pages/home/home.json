@@ -6,7 +6,6 @@
     "navbar": "/components/nav",
     "menubar": "/pages/home/components/menubar",
     "hot-scenery": "/pages/home/components/hotScenery",
-    "moment": "/pages/home/components/moment",
-    "scenery-dialog": "/pages/home/components/dialog"
+    "moment": "/pages/home/components/moment"
   }
 }

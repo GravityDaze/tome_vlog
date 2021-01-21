@@ -5,7 +5,8 @@
     "pages/shoot/shoot",
     "pages/mine/mine",
     "pages/sceneryList/sceneryList",
-    "pages/video/video",
+    "pages/shareVideo/shareVideo",
+    "pages/myVideo/myVideo",
     "pages/map/map",
     "pages/login/login"
   ],
@@ -43,5 +44,5 @@
     }
   },
   "usingComponents": {},
-  "sitemapLocation": "sitemap2.json"
+  "sitemapLocation": "sitemap62.json"
 }

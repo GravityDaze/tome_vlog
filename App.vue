@@ -27,6 +27,7 @@
 <style>
 	/*每个页面公共css */
 	page {
-		background-color: #FCFCFC;
+		/* background-color: #FCFCFC; */
+		
 	}
 </style>

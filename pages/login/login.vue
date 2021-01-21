@@ -9,6 +9,9 @@
 			<button style="position:absolute;top:0;bottom:0;width:100%;opacity:0" size="small" open-type="getUserInfo" type="default"
 			 @getuserinfo="getUserInfo">登录</button>
 		</view>
+		<view class="tips">
+			<text>请授权头像等信息，以便为您提供更好的服务</text>
+		</view>
 	</view>
 </template>
 
@@ -112,6 +115,19 @@
 				height: 42rpx;
 				margin-right: 12rpx;
 			}
+		}
+		
+		.tips{
+			position:fixed;
+			width:100%;
+			bottom:47rpx;
+			text-align: center;
+			// left:50%;
+			// transform:translateX(-50%);
+			font-size: 24rpx;
+			font-family: PingFang SC;
+			font-weight: 400;
+			color: #707070;
 		}
 
 	}

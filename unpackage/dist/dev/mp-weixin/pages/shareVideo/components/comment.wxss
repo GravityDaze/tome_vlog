@@ -24,21 +24,21 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
-.comment.data-v-71d954f3 {
+.comment.data-v-d08e1160 {
   padding: 30rpx 25rpx;
 }
-.comment .title.data-v-71d954f3 {
+.comment .title.data-v-d08e1160 {
   color: #333332;
   font-size: 32rpx;
   font-family: PingFang SC;
   font-weight: bold;
 }
-.comment .title text.data-v-71d954f3:last-child {
+.comment .title text.data-v-d08e1160:last-child {
   color: #999896;
   font-weight: normal;
   margin-left: 15rpx;
 }
-.comment .list.data-v-71d954f3 {
+.comment .list.data-v-d08e1160 {
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
@@ -52,7 +52,7 @@
   color: #bfbfbf;
   margin-top: 55rpx;
 }
-.comment .list image.data-v-71d954f3 {
+.comment .list image.data-v-d08e1160 {
   margin-right: 10rpx;
   width: 35rpx;
   height: 35rpx;

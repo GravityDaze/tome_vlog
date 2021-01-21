@@ -37,7 +37,13 @@
 			}
 		},
 		{
-			"path": "pages/video/video",
+			"path": "pages/shareVideo/shareVideo",
+			"style": {
+				"navigationBarTitleText": "视频详情"
+			}
+		},
+		{
+			"path": "pages/myVideo/myVideo",
 			"style": {
 				"navigationBarTitleText": "视频详情"
 			}

@@ -34,8 +34,6 @@
 				<text>没有更多数据了</text>
 			</view>
 		</view>
-		<!-- 对话框 -->
-		<scenery-dialog :name="sceneryName" :show="showDialog" @close="showDialog = false" />
 	</view>
 </template>
 
@@ -52,7 +50,6 @@
 	import menubar from './components/menubar.vue'
 	import hotScenery from './components/hotScenery.vue'
 	import moment from './components/moment.vue'
-	import sceneryDialog from './components/dialog.vue'
 	export default {
 		data() {
 			return {
@@ -199,8 +196,7 @@
 			navbar,
 			menubar,
 			hotScenery,
-			moment,
-			sceneryDialog
+			moment
 		}
 	}
 </script>
@@ -214,6 +210,10 @@
 		to {
 			transform: rotate(1turn);
 		}
+	}
+	
+	.home{
+		padding-bottom:150rpx;
 	}
 
 	.search {

@@ -24,7 +24,7 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
-.details.data-v-3ec61a7e {
+.details.data-v-0f776dc6 {
   padding: 25rpx;
   display: -webkit-box;
   display: -webkit-flex;
@@ -35,7 +35,7 @@
           flex-direction: column;
   border-bottom: 20rpx solid #f7f7f7;
 }
-.details .top-info.data-v-3ec61a7e {
+.details .top-info.data-v-0f776dc6 {
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
@@ -46,18 +46,18 @@
   -webkit-align-items: center;
           align-items: center;
 }
-.details .top-info .title.data-v-3ec61a7e {
+.details .top-info .title.data-v-0f776dc6 {
   font-size: 36rpx;
   font-weight: bold;
   color: #333332;
 }
-.details .top-info .location.data-v-3ec61a7e {
+.details .top-info .location.data-v-0f776dc6 {
   font-size: 22rpx;
   font-family: PingFang SC;
   font-weight: 500;
   color: #999896;
 }
-.details .bottom-info.data-v-3ec61a7e {
+.details .bottom-info.data-v-0f776dc6 {
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
@@ -69,7 +69,7 @@
           align-items: center;
   margin-top: 28rpx;
 }
-.details .bottom-info .user.data-v-3ec61a7e {
+.details .bottom-info .user.data-v-0f776dc6 {
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
@@ -80,16 +80,14 @@
   font-weight: 500;
   color: #999996;
 }
-.details .bottom-info .user image.data-v-3ec61a7e {
+.details .bottom-info .user image.data-v-0f776dc6 {
   width: 48rpx;
   height: 48rpx;
-  -webkit-box-shadow: 0px 0px 12px 0px rgba(62, 62, 62, 0.11);
-          box-shadow: 0px 0px 12px 0px rgba(62, 62, 62, 0.11);
-  -webkit-border-radius: 50%;
-          border-radius: 50%;
+  box-shadow: 0px 0px 12px 0px rgba(62, 62, 62, 0.11);
+  border-radius: 50%;
   margin-right: 9rpx;
 }
-.details .bottom-info .like.data-v-3ec61a7e {
+.details .bottom-info .like.data-v-0f776dc6 {
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
@@ -101,19 +99,17 @@
   font-weight: 400;
   color: #999896;
 }
-.details .bottom-info .like image.data-v-3ec61a7e {
+.details .bottom-info .like image.data-v-0f776dc6 {
   width: 32rpx;
   height: 29rpx;
   margin-right: 9rpx;
 }
-.btn.data-v-3ec61a7e {
+.btn.data-v-0f776dc6 {
   background-color: #fac83c;
-  -webkit-box-shadow: 0rpx 8rpx 16rpx 0px rgba(239, 181, 22, 0.48);
-          box-shadow: 0rpx 8rpx 16rpx 0px rgba(239, 181, 22, 0.48);
+  box-shadow: 0rpx 8rpx 16rpx 0px rgba(239, 181, 22, 0.48);
   width: 700rpx;
   height: 88rpx;
-  -webkit-border-radius: 44rpx;
-          border-radius: 44rpx;
+  border-radius: 44rpx;
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
