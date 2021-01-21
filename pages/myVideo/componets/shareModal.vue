@@ -1,6 +1,6 @@
 <template>
 	<!-- 分享弹框 -->
-	<view class="shareModal">
+	<view :class="{'shareModal':true,'out':!show}">
 		<view class="item-box">
 			<view class="item">
 				<button style="position:absolute;top:0;bottom:0;width:100%;opacity:0" open-type="share"></button>
@@ -8,12 +8,12 @@
 				<text>微信好友</text>
 			</view>
 
-			<view class="item">
+			<view class="item" @click="shareToMoments">
 				<image src="../../../static/pyq.png"></image>
 				<text>朋友圈</text>
 			</view>
 
-			<view class="item" @click="showPublishModal = true">
+			<view class="item" @click="showPublishModal = true" v-if="videoInfo.shareStatus === 0">
 				<image src="../../../static/tmicon.png"></image>
 				<text class="publish">发布至途咪</text>
 			</view>
@@ -24,24 +24,39 @@
 		</view>
 
 		<!-- 发布至途咪 -->
-		<view :class="[ 'publishModal',showPublishModal?'in':'out' ]">
+		<view :class="{'publishModal':true,'out':!showPublishModal }">
 			<view class="cover">
-				<image :src="url"></image>
+				<image :src="videoInfo.coverUrl"></image>
 			</view>
 			<view class="tips">
 				<text>发布至途咪平台后，视频可公开评论和点赞</text>
 			</view>
 			<view class="input-box">
 				<text>游记说明</text>
-				<input maxlength="30" type='text' placeholder-class="placeholder"
-				 placeholder='请输入（必填,最大输入长度为30）' />
+				<input v-model="describe" maxlength="30" type='text' placeholder-class="placeholder" placeholder='请输入（必填,最大输入长度为30）' />
 			</view>
-			<view class="publish-btn" bindtap="shareFn">
+			<view class="publish-btn" @click="shareToTome">
 				<text>立即发布</text>
-				<!-- <image wx:else src="/imgs/loading_white.png"></image> -->
 			</view>
 			<view class="cancel-publish" @click="showPublishModal = false">
 				<text>暂不发布</text>
+			</view>
+		</view>
+
+		<!-- 朋友圈分享码 -->
+		<view class="qr-code" v-if="false">
+			<image src="../../../static/whitebg.png"></image>
+			<view class="content-box">
+				<view class="pic-box">
+					<image></image>
+				</view>
+				<view class="save">
+					<text>保存到相册，可以分享到朋友圈</text>
+				</view>
+				<view class="btn">
+					<view>取消</view>
+					<view>保存</view>
+				</view>
 			</view>
 		</view>
 
@@ -49,30 +64,95 @@
 </template>
 
 <script>
+	import {
+		share,
+		getQrCode
+	} from '../../../api/video.js'
 	export default {
-		props:{
-			url:{
-				default:'',
-				type:String
+		props: {
+			show: {
+				default: false,
+				type: Boolean
+			},
+			videoInfo: {
+				default: {},
+				type: Object
 			}
 		},
 		data() {
 			return {
+				describe: "",
 				showPublishModal: false
+			}
+		},
+		watch: {
+			show(val) {
+				if (!val) {
+					this.showPublishModal = false
+				}
 			}
 		},
 		methods: {
 			cancel() {
 				this.$emit('close')
+			},
+			// 分享到途咪
+			async shareToTome() {
+				uni.showLoading({
+					title: '发布中',
+					mask: true
+				})
+				const res = await share({
+					id: this.videoInfo.id,
+					describe: this.describe
+				})
+				uni.showToast({
+					title: '发布成功'
+				})
+				this.describe = ""
+				this.$emit('close')
+				this.$emit('change')
+			},
+			// 分享朋友圈
+			shareToMoments() {
+				uni.showToast({
+					title:'暂未开放',
+					icon:'none'
+				})
+				// uni.showLoading({
+				// 	title: '加载中',
+				// 	mask: true
+				// })
+				
+				// 生成不同类型的二维码
+				// let scene
+				// let pagePath
+				// if (this.videoInfo.shareStatus === 0) {
+				// 	// 未发布
+				// 	pagePath = "pages/shareVideo/shareVideo";
+				// 	scene = this.videoInfo.id;
+				// } else {
+				// 	// 已发布
+				// 	pagePath = "pages/shareVideo/shareVideo";
+				// 	scene = "videoShareId=" + this.videoInfo.videoShareId;
+				// }
+				
+				// const res = await getQrCode({
+				// 	pagePath,
+				// 	scene
+				// })
+				// console.log(res)
 			}
-		},
-		beforeDestroy() {
-			this.showPublishModal = false
 		}
 	}
 </script>
 
 <style lang="scss" scoped>
+	// 过渡类名
+	.out {
+		bottom: -100vh !important;
+	}
+
 	.shareModal {
 		position: fixed;
 		bottom: 0;
@@ -82,6 +162,7 @@
 		background: #FFFFFF;
 		display: flex;
 		flex-flow: column;
+		transition: .3s;
 
 		.item-box {
 			display: flex;
@@ -123,9 +204,9 @@
 			font-weight: 500;
 			color: #999896;
 		}
-		
-		
-		
+
+
+
 		.publishModal {
 			position: fixed;
 			border-radius: 30rpx 30rpx 0 0;
@@ -137,7 +218,7 @@
 			box-sizing: border-box;
 			transition: 0.5s;
 			bottom: 0;
-			transition:0.3s;
+			transition: 0.3s;
 
 			.cover {
 				position: absolute;
@@ -174,19 +255,19 @@
 				box-sizing: border-box;
 				border-top: 1rpx solid rgba(230, 227, 227, 1);
 				border-bottom: 1rpx solid rgba(230, 227, 227, 1);
-				
-				text{
+
+				text {
 					font-size: 30rpx;
 					font-family: PingFang SC;
 					font-weight: bold;
 					color: rgba(51, 51, 50, 1);
 				}
-				
-				input{
+
+				input {
 					text-align: right;
 					width: 510rpx;
 				}
-				
+
 				.placeholder {
 					text-align: end;
 					font-size: 26rpx;
@@ -205,13 +286,13 @@
 				display: flex;
 				justify-content: center;
 				align-items: center;
-				
+
 				text {
 					font-size: 30rpx;
 					font-family: PingFang SC;
 					color: rgba(255, 255, 255, 1);
 				}
-				
+
 				image {
 					width: 34rpx;
 					height: 34rpx;
@@ -230,13 +311,123 @@
 			}
 
 		}
-		
-		.in{
-			bottom:0;
+
+		.qr-code {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			z-index: 600;
+			background: #fff;
+			position: fixed;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+
+			&>image {
+				width: 100%;
+				height: 100%;
+			}
+
+			.content-box {
+				position: absolute;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+
+
+				.pic-box {
+					display: flex;
+					flex-direction: column;
+					align-items: center;
+
+					image {
+						width: 350rpx;
+						height: 350rpx;
+					}
+				}
+
+				.save {
+					margin-top: 40rpx;
+
+					text {
+						font-size: 30rpx;
+						font-family: San Francisco Display;
+						color: rgba(153, 152, 150, 1);
+					}
+				}
+
+				.btn {
+					display: flex;
+					flex-wrap: nowrap;
+					flex-direction: row;
+					margin-top: 60rpx;
+
+					view {
+						border-radius: 40rpx;
+						width: 200rpx;
+						height: 78rpx;
+						display: flex;
+						justify-content: center;
+						align-items: center;
+						font-size: 30rpx;
+						font-weight: 400;
+
+						&:first-child {
+							border: 1px solid rgba(252, 69, 65, 1);
+							background-color: rgba(252, 69, 65, 1);
+							color: #000;
+						}
+
+						&:last-child {
+							border: 1px solid rgba(29, 210, 151, 1);
+							background-color: rgba(29, 210, 151, 1);
+							color: white;
+							margin-left: 50rpx;
+
+						}
+					}
+				}
+
+			}
+
 		}
-		
-		.out{
-			bottom:-100vh;
-		}
+
+
+		// .anishow {
+		// 	transition: .3s;
+		// 	overflow: hidden;
+		// 	width: 596rpx;
+		// 	height: 724rpx;
+		// 	opacity: 1;
+		// }
+
+		// .anihide {
+		// 	transition: .3s;
+		// 	overflow: hidden;
+		// 	width: 0;
+		// 	height: 0;
+		// 	opacity: 0;
+		// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	}
 </style>

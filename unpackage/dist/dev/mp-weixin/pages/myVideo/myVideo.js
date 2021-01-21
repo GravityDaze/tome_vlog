@@ -130,7 +130,14 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ 17));
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ 17));
+
+
+
+
+
+
+
 
 
 
@@ -182,6 +189,7 @@ var _video = __webpack_require__(/*! ../../api/video.js */ 80);function _interop
 
 
 
+
 {
   data: function data() {
     return {
@@ -195,7 +203,7 @@ var _video = __webpack_require__(/*! ../../api/video.js */ 80);function _interop
     this.getVideoInfo(options.videoId);
   },
   methods: {
-    // 解析分享视频
+    // 获取分享视频
     getVideoInfo: function getVideoInfo(videoId) {var _this = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var res;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:_context.next = 2;return (
                   (0, _video.queryVideoInfo)({
                     videoId: videoId }));case 2:res = _context.sent;
@@ -220,11 +228,6 @@ var _video = __webpack_require__(/*! ../../api/video.js */ 80);function _interop
       this.showModal = true;
     },
 
-    cancelShareModal: function cancelShareModal() {
-      this.mask = false;
-      this.showModal = false;
-    },
-
     // 下载视频
     download: function download() {
 
@@ -234,11 +237,47 @@ var _video = __webpack_require__(/*! ../../api/video.js */ 80);function _interop
     cancel: function cancel() {
       this.mask = false;
       this.showModal = false;
+    },
+
+    // 组件发布时改变分享状态
+    changeShareStatus: function changeShareStatus() {
+      this.$set(this.videoInfo, 'shareStatus', true);
+    },
+
+    // 取消发布
+    cancelShare: function cancelShare() {var _this2 = this;
+      uni.showModal({
+        content: '是否取消发布',
+        success: function () {var _success = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2(res) {var _res;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:if (!
+                    res.confirm) {_context2.next = 13;break;}
+                    uni.showLoading({
+                      title: '正在取消',
+                      mask: true });_context2.prev = 2;_context2.next = 5;return (
+
+
+                      (0, _video.cancelShare)({
+                        videoId: _this2.videoInfo.id }));case 5:_res = _context2.sent;
+
+                    uni.showToast({
+                      title: '取消成功' });
+
+                    // 更改状态
+                    _this2.getVideoInfo(_this2.videoInfo.id);_context2.next = 13;break;case 10:_context2.prev = 10;_context2.t0 = _context2["catch"](2);
+
+                    uni.showToast({
+                      title: '取消失败',
+                      icon: 'none' });case 13:case "end":return _context2.stop();}}}, _callee2, null, [[2, 10]]);}));function success(_x) {return _success.apply(this, arguments);}return success;}() });
+
+
+
+
+
     } },
 
 
   components: {
     shareModal: shareModal } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 

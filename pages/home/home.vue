@@ -30,8 +30,7 @@
 		<view class="load">
 			<image v-if="!done" src="../../static/load.png"></image>
 			<view class="empty" v-else>
-				<image src="../../static/bad.png"></image>
-				<text>没有更多数据了</text>
+				<text>加载完毕</text>
 			</view>
 		</view>
 	</view>
@@ -292,12 +291,6 @@
 			color: #bfbfbf;
 			font-size: 28rpx;
 			padding: 40rpx 0;
-
-			image {
-				width: 35rpx;
-				height: 35rpx;
-				margin-right: 8rpx;
-			}
 		}
 
 

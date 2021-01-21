@@ -19,8 +19,12 @@
 			</view>
 		</view>
 		<view class="bottom-bar">
-			<template v-if="true">
-				<view class="type1">
+			<!-- 已购视频 -->
+			<view class="bought " v-if="videoInfo.buyStatus">
+				<view class="cancel-share" v-if="videoInfo.shareStatus" @click="cancelShare">
+					<text>取消发布</text>
+				</view>
+				<view class="btn-group">
 					<view class="share" @click="share">
 						<text>我要分享</text>
 					</view>
@@ -28,14 +32,17 @@
 						<text>我要下载</text>
 					</view>
 				</view>
-			</template>
+			</view>
+			
+			<!-- 未购视频 -->
+			
 		</view>
 
 		<!-- 遮罩 -->
 		<view class="mask" v-if="mask" @click="cancel"></view>
 		<!-- 分享组件 -->
-		<shareModal @close="cancelShareModal" :url="videoInfo.coverUrl" v-if="showModal" />
-		
+		<shareModal @close="cancel" @change="changeShareStatus" :videoInfo="videoInfo"  :show="showModal" />
+
 	</view>
 </template>
 
@@ -46,7 +53,8 @@
 	} from '../../utils/jsencrypt.js';
 	// API
 	import {
-		queryVideoInfo
+		queryVideoInfo,
+		cancelShare
 	} from '../../api/video.js'
 	// 分享组件
 	import shareModal from './componets/shareModal.vue'
@@ -63,7 +71,7 @@
 			this.getVideoInfo(options.videoId)
 		},
 		methods: {
-			// 解析分享视频
+			// 获取分享视频
 			async getVideoInfo(videoId) {
 				const res = await queryVideoInfo({
 					videoId
@@ -88,11 +96,6 @@
 				this.showModal = true
 			},
 			
-			cancelShareModal(){
-				this.mask = false
-				this.showModal = false
-			},
-
 			// 下载视频
 			download() {
 
@@ -102,10 +105,45 @@
 			cancel() {
 				this.mask = false
 				this.showModal = false
+			},
+			
+			// 组件发布时改变分享状态
+			changeShareStatus(){
+				this.$set(this.videoInfo,'shareStatus',true)
+			},
+			
+			// 取消发布
+			cancelShare(){
+				uni.showModal({
+					content:'是否取消发布',
+					success:async res=>{
+						if(res.confirm){
+							uni.showLoading({
+								title:'正在取消',
+								mask:true
+							})
+							try{
+								const res = await cancelShare({
+									videoId:this.videoInfo.id
+								})
+								uni.showToast({
+									title:'取消成功'
+								})
+								// 更改状态
+								this.getVideoInfo(this.videoInfo.id)
+							}catch{
+								uni.showToast({
+									title:'取消失败',
+									icon:'none',
+								})
+							}
+						}
+					}
+				})
 			}
 
 		},
-		components:{
+		components: {
 			shareModal
 		}
 	}
@@ -164,37 +202,63 @@
 		height: 97rpx;
 		background: #FFFFFF;
 		box-shadow: 0px 1rpx 15rpx 3rpx rgba(62, 62, 62, 0.19);
-
-		.type1 {
-			display: flex;
-			justify-content: space-evenly;
-			align-items: center;
+		
+		// 已购视频
+		.bought{
+			display:flex;
 			height: 100%;
-
-			view {
-				width: 328rpx;
-				height: 78rpx;
-				border-radius: 39rpx;
+			
+			.btn-group {
 				display: flex;
-				justify-content: center;
+				justify-content: space-evenly;
 				align-items: center;
+				height: 100%;
+				flex:1;
+				column-gap: 20rpx;
+			
+				view {
+				    flex:1;
+					height: 78rpx;
+					border-radius: 39rpx;
+					display: flex;
+					justify-content: center;
+					align-items: center;
+					font-size: 30rpx;
+					font-family: PingFang SC;
+					font-weight: 500;
+					color: #FFFFFF;
+					margin-left:25rpx;
+					
+					&:last-child{
+						margin:0 25rpx;
+					}
+				}
+			
+				.share {
+					background: #FC4541;
+					box-shadow: 0px 8px 16px 0px rgba(225, 66, 66, 0.23);
+				}
+			
+				.download {
+					background: #1DD297;
+					box-shadow: 0px 8px 9px 0px rgba(127, 254, 213, 0.35);
+				}
+			
+			}
+			
+			.cancel-share{
+				width:210rpx;
+				display:flex;
+				align-items:center;
+				justify-content: center;
 				font-size: 30rpx;
 				font-family: PingFang SC;
 				font-weight: 500;
-				color: #FFFFFF;
+				color: #999896;
 			}
-
-			.share {
-				background: #FC4541;
-				box-shadow: 0px 8px 16px 0px rgba(225, 66, 66, 0.23);
-			}
-
-			.download {
-				background: #1DD297;
-				box-shadow: 0px 8px 9px 0px rgba(127, 254, 213, 0.35);
-			}
-
 		}
+
+		
 
 	}
 
@@ -207,17 +271,17 @@
 		z-index: 98;
 	}
 
-	
-	
-	.publishModal{
-		  background-color: white;
-		  border-radius: 30rpx 30rpx 0 0;
-		  width: 100%;
-		  height: 715rpx;
-		  z-index: 700;
-		  position: fixed;
-		  padding:174rpx 55rpx 0;
-		  box-sizing:border-box;
-		  transition:0.5s;
+
+
+	.publishModal {
+		background-color: white;
+		border-radius: 30rpx 30rpx 0 0;
+		width: 100%;
+		height: 715rpx;
+		z-index: 700;
+		position: fixed;
+		padding: 174rpx 55rpx 0;
+		box-sizing: border-box;
+		transition: 0.5s;
 	}
 </style>

@@ -24,6 +24,9 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
+.out.data-v-4b59af60 {
+  bottom: -100vh !important;
+}
 .shareModal.data-v-4b59af60 {
   position: fixed;
   bottom: 0;
@@ -38,13 +41,16 @@
   -webkit-box-direction: normal;
   -webkit-flex-flow: column;
           flex-flow: column;
+  -webkit-transition: .3s;
+  transition: .3s;
 }
 .shareModal .item-box.data-v-4b59af60 {
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
   height: 245rpx;
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
   -webkit-box-align: center;
   -webkit-align-items: center;
           align-items: center;
@@ -97,13 +103,15 @@
 }
 .shareModal .publishModal.data-v-4b59af60 {
   position: fixed;
-  border-radius: 30rpx 30rpx 0 0;
+  -webkit-border-radius: 30rpx 30rpx 0 0;
+          border-radius: 30rpx 30rpx 0 0;
   width: 100%;
   height: 715rpx;
   z-index: 700;
   background-color: white;
   padding: 174rpx 55rpx 0;
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
   -webkit-transition: 0.5s;
   transition: 0.5s;
   bottom: 0;
@@ -114,12 +122,14 @@
   position: absolute;
   top: -174rpx;
   background-color: #777373;
-  border-radius: 30rpx;
+  -webkit-border-radius: 30rpx;
+          border-radius: 30rpx;
   width: 638rpx;
   height: 348rpx;
 }
 .shareModal .publishModal .cover image.data-v-4b59af60 {
-  border-radius: 30rpx;
+  -webkit-border-radius: 30rpx;
+          border-radius: 30rpx;
   width: 638rpx;
   height: 348rpx;
 }
@@ -148,7 +158,8 @@
           flex-direction: row;
   -webkit-flex-wrap: nowrap;
           flex-wrap: nowrap;
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
   border-top: 1rpx solid #e6e3e3;
   border-bottom: 1rpx solid #e6e3e3;
 }
@@ -172,8 +183,10 @@
   width: 638rpx;
   height: 88rpx;
   background: #fc4541;
-  box-shadow: 0rpx 8rpx 16rpx 0rpx rgba(252, 69, 65, 0.48);
-  border-radius: 44rpx;
+  -webkit-box-shadow: 0rpx 8rpx 16rpx 0rpx rgba(252, 69, 65, 0.48);
+          box-shadow: 0rpx 8rpx 16rpx 0rpx rgba(252, 69, 65, 0.48);
+  -webkit-border-radius: 44rpx;
+          border-radius: 44rpx;
   margin-top: 90rpx;
   display: -webkit-box;
   display: -webkit-flex;
@@ -195,7 +208,8 @@
   height: 34rpx;
   -webkit-animation: rotate .5s linear infinite;
           animation: rotate .5s linear infinite;
-  border-radius: 50%;
+  -webkit-border-radius: 50%;
+          border-radius: 50%;
 }
 .shareModal .publishModal .cancel-publish.data-v-4b59af60 {
   margin-top: 50rpx;
@@ -204,10 +218,103 @@
   text-align: center;
   color: #999896;
 }
-.shareModal .in.data-v-4b59af60 {
-  bottom: 0;
+.shareModal .qr-code.data-v-4b59af60 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  z-index: 600;
+  background: #fff;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
 }
-.shareModal .out.data-v-4b59af60 {
-  bottom: -100vh;
+.shareModal .qr-code > image.data-v-4b59af60 {
+  width: 100%;
+  height: 100%;
+}
+.shareModal .qr-code .content-box.data-v-4b59af60 {
+  position: absolute;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+}
+.shareModal .qr-code .content-box .pic-box.data-v-4b59af60 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+}
+.shareModal .qr-code .content-box .pic-box image.data-v-4b59af60 {
+  width: 350rpx;
+  height: 350rpx;
+}
+.shareModal .qr-code .content-box .save.data-v-4b59af60 {
+  margin-top: 40rpx;
+}
+.shareModal .qr-code .content-box .save text.data-v-4b59af60 {
+  font-size: 30rpx;
+  font-family: San Francisco Display;
+  color: #999896;
+}
+.shareModal .qr-code .content-box .btn.data-v-4b59af60 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-wrap: nowrap;
+          flex-wrap: nowrap;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+          flex-direction: row;
+  margin-top: 60rpx;
+}
+.shareModal .qr-code .content-box .btn view.data-v-4b59af60 {
+  -webkit-border-radius: 40rpx;
+          border-radius: 40rpx;
+  width: 200rpx;
+  height: 78rpx;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  font-size: 30rpx;
+  font-weight: 400;
+}
+.shareModal .qr-code .content-box .btn view.data-v-4b59af60:first-child {
+  border: 1px solid #fc4541;
+  background-color: #fc4541;
+  color: #000;
+}
+.shareModal .qr-code .content-box .btn view.data-v-4b59af60:last-child {
+  border: 1px solid #1dd297;
+  background-color: #1dd297;
+  color: white;
+  margin-left: 50rpx;
 }
 

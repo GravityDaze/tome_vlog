@@ -123,77 +123,152 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ 17));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var _video = __webpack_require__(/*! ../../../api/video.js */ 80);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var _default =
+
+
+
 {
   props: {
-    url: {
-      default: '',
-      type: String } },
+    show: {
+      default: false,
+      type: Boolean },
+
+    videoInfo: {
+      default: {},
+      type: Object } },
 
 
   data: function data() {
     return {
+      describe: "",
       showPublishModal: false };
 
   },
+  watch: {
+    show: function show(val) {
+      if (!val) {
+        this.showPublishModal = false;
+      }
+    } },
+
   methods: {
     cancel: function cancel() {
       this.$emit('close');
-    } },
+    },
+    // 分享到途咪
+    shareToTome: function shareToTome() {var _this = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var res;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
+                uni.showLoading({
+                  title: '发布中',
+                  mask: true });_context.next = 3;return (
 
-  beforeDestroy: function beforeDestroy() {
-    this.showPublishModal = false;
-  } };exports.default = _default;
+                  (0, _video.share)({
+                    id: _this.videoInfo.id,
+                    describe: _this.describe }));case 3:res = _context.sent;
+
+                uni.showToast({
+                  title: '发布成功' });
+
+                _this.describe = "";
+                _this.$emit('close');
+                _this.$emit('change');case 8:case "end":return _context.stop();}}}, _callee);}))();
+    },
+    // 分享朋友圈
+    shareToMoments: function shareToMoments() {
+      uni.showToast({
+        title: '暂未开放',
+        icon: 'none' });
+
+      // uni.showLoading({
+      // 	title: '加载中',
+      // 	mask: true
+      // })
+
+      // 生成不同类型的二维码
+      // let scene
+      // let pagePath
+      // if (this.videoInfo.shareStatus === 0) {
+      // 	// 未发布
+      // 	pagePath = "pages/shareVideo/shareVideo";
+      // 	scene = this.videoInfo.id;
+      // } else {
+      // 	// 已发布
+      // 	pagePath = "pages/shareVideo/shareVideo";
+      // 	scene = "videoShareId=" + this.videoInfo.videoShareId;
+      // }
+
+      // const res = await getQrCode({
+      // 	pagePath,
+      // 	scene
+      // })
+      // console.log(res)
+    } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 

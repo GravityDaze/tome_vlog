@@ -80,7 +80,8 @@
   width: 130rpx;
   height: 130rpx;
   margin-bottom: 20rpx;
-  border-radius: 50%;
+  -webkit-border-radius: 50%;
+          border-radius: 50%;
 }
 .user-bg .user-container .user-info .btn.data-v-dcbcfe34 {
   display: -webkit-box;
@@ -97,9 +98,11 @@
   margin-top: 50rpx;
   height: 75rpx;
   background: #fff;
-  border-radius: 44rpx;
+  -webkit-border-radius: 44rpx;
+          border-radius: 44rpx;
   color: #4D4A45;
-  box-shadow: 0px 7px 7px 0px rgba(78, 78, 78, 0.19);
+  -webkit-box-shadow: 0px 7px 7px 0px rgba(78, 78, 78, 0.19);
+          box-shadow: 0px 7px 7px 0px rgba(78, 78, 78, 0.19);
 }
 .user-bg .user-container .user-info .btn text.data-v-dcbcfe34 {
   font-size: 30rpx;
@@ -112,7 +115,8 @@
   background: #fff;
   -webkit-transform: translateY(-25rpx);
           transform: translateY(-25rpx);
-  border-radius: 27rpx 27rpx 0px 0px;
+  -webkit-border-radius: 27rpx 27rpx 0px 0px;
+          border-radius: 27rpx 27rpx 0px 0px;
   padding: 0 55rpx;
 }
 .content-box .panel.data-v-dcbcfe34 {
@@ -167,8 +171,10 @@
   width: 14rpx;
   height: 14rpx;
   background: #fb3c38;
-  box-shadow: 0px 0px 19rpx 2rpx rgba(244, 40, 35, 0.29);
-  border-radius: 50%;
+  -webkit-box-shadow: 0px 0px 19rpx 2rpx rgba(244, 40, 35, 0.29);
+          box-shadow: 0px 0px 19rpx 2rpx rgba(244, 40, 35, 0.29);
+  -webkit-border-radius: 50%;
+          border-radius: 50%;
   right: 0;
 }
 .content-box .my-travel.data-v-dcbcfe34 {
@@ -187,7 +193,8 @@
   height: 8rpx;
   background: #fac83c;
   margin-top: 12rpx;
-  border-radius: 3rpx;
+  -webkit-border-radius: 3rpx;
+          border-radius: 3rpx;
 }
 .content-box .my-travel .title .tips.data-v-dcbcfe34 {
   font-size: 30rpx;
