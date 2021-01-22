@@ -1,48 +1,71 @@
 <!-- '我的'视频详情页面 -->
 <template>
 	<view>
-		<video id="video" style="width:100%" autoplay :src="videoInfo.url" objectFit="fill"></video>
-		<!-- 视频详细信息面板 -->
-		<view class="details">
-			<view class="top-info">
-				<view class="title">
-					<text>{{videoInfo.sceneryName + '-视频之旅'}}</text>
-				</view>
-				<view class="location">
-					<text>{{videoInfo.sceneryName}}</text>
-				</view>
-			</view>
-			<view class="bottom-info">
-				<view class="time">
-					<text>{{videoInfo.createDatetime}}</text>
-				</view>
-			</view>
-		</view>
-		<view class="bottom-bar">
-			<!-- 已购视频 -->
-			<view class="bought " v-if="videoInfo.buyStatus">
-				<view class="cancel-share" v-if="videoInfo.shareStatus" @click="cancelShare">
-					<text>取消发布</text>
-				</view>
-				<view class="btn-group">
-					<view class="share" @click="share">
-						<text>我要分享</text>
+		<template v-if="Object.keys(videoInfo).length">
+			<video id="video" style="width:100%" autoplay :src="videoInfo.url" objectFit="fill"></video>
+			<!-- 视频详细信息面板 -->
+			<view class="details">
+				<view class="top-info">
+					<view class="title">
+						<text>{{videoInfo.sceneryName + '-视频之旅'}}</text>
 					</view>
-					<view class="download" @click="download">
-						<text>我要下载</text>
+					<view class="location">
+						<text>{{videoInfo.sceneryName}}</text>
+					</view>
+				</view>
+				<view class="bottom-info">
+					<view class="time" v-if="videoInfo.buyStatus === 1">
+						<text>{{videoInfo.createDatetime}}</text>
+					</view>
+					<view class="price" v-else>
+						<text>购买价格:</text>
+						<text>￥{{videoInfo.price}}</text>
 					</view>
 				</view>
 			</view>
+			<view class="bottom-bar">
+				<!-- 已购视频 -->
+				<view class="bought " v-if="videoInfo.buyStatus === 1">
+					<view class="cancel-share" v-if="videoInfo.shareStatus" @click="cancelShare">
+						<text>取消发布</text>
+					</view>
+					<view class="btn-group">
+						<view class="share" @click="share">
+							<text>我要分享</text>
+						</view>
+						<view class="download" @click="download">
+							<text>我要下载</text>
+						</view>
+					</view>
+				</view>
 			
-			<!-- 未购视频 -->
+				<!-- 未购视频 -->
+				<view class="buy" v-else>
+					<view @click="buyTips">
+						<image src="../../static/download_no.png"></image>
+						<text>下载</text>
+					</view>
+					<view @click="buyTips">
+						<image src="../../static/share_no.png"></image>
+						<text>分享</text>
+					</view>
+					<view class="buy-btn" @click="buy">
+						<text>立即购买</text>
+					</view>
+				</view>
 			
-		</view>
-
-		<!-- 遮罩 -->
-		<view class="mask" v-if="mask" @click="cancel"></view>
-		<!-- 分享组件 -->
-		<shareModal @close="cancel" @change="changeShareStatus" :videoInfo="videoInfo"  :show="showModal" />
-
+			</view>
+			
+			<!-- 遮罩 -->
+			<view class="mask" v-if="mask" @click="cancel"></view>
+			<!-- 分享组件 -->
+			<shareModal @close="cancel" @change="changeShareStatus" :videoInfo="videoInfo" :show="showModal" />
+		</template>
+		
+		<!-- 防止图标闪烁 -->
+		<template v-else>
+			<view></view>
+		</template>
 	</view>
 </template>
 
@@ -54,7 +77,9 @@
 	// API
 	import {
 		queryVideoInfo,
-		cancelShare
+		cancelShare,
+		confirmOrder,
+		buy
 	} from '../../api/video.js'
 	// 分享组件
 	import shareModal from './componets/shareModal.vue'
@@ -95,53 +120,174 @@
 				this.mask = true
 				this.showModal = true
 			},
-			
+
 			// 下载视频
 			download() {
-
+				// 检测用户之前是否拒绝了存储权限
+				uni.getSetting({
+					success: res => {
+						if (res.authSetting['scope.writePhotosAlbum'] === false) {
+							wx.showModal({
+								content: '检测到您没有打开存储权限，无法将视频保存到手机本地，是否去设置打开？',
+								success(res) {
+									if (res.confirm) {
+										uni.openSetting()
+									}
+								}
+							})
+						} else {
+							// 执行下载方法
+							const downloadTask = uni.downloadFile({
+								url: this.videoInfo.url,
+								success: res => {
+									if (res.statusCode === 200) {
+										this.saveToAlbum(res.tempFilePath)
+									} else {
+										uni.showToast({
+											title: '下载出错',
+											icon: 'none'
+										})
+									}
+								}
+							})
+							// 进度
+							downloadTask.onProgressUpdate((res) => {
+								uni.showLoading({
+									title: `下载中${res.progress}%`,
+									mask: true
+								})
+							})
+						}
+					},
+				})
 			},
+
+			// 保存视频到相册
+			saveToAlbum(filePath) {
+				uni.saveVideoToPhotosAlbum({
+					filePath,
+					success: res => {
+						// 保存下载目录
+						uni.showToast({
+							title: '已保存至相册',
+							icon: 'success',
+							duration: 2000
+						})
+					},
+					fail: _ => {
+						uni.showModal({
+							content: '检测到您没有打开存储权限，无法将视频保存到手机本地，是否去设置打开？',
+							success(res) {
+								if (res.confirm) {
+									uni.openSetting()
+								} else {
+									uni.showToast({
+										title: '保存失败',
+										icon: 'none'
+									})
+								}
+							}
+						})
+						uni.hideLoading()
+					}
+				})
+			},
+
 
 			// 关闭模态框
 			cancel() {
 				this.mask = false
 				this.showModal = false
 			},
-			
+
 			// 组件发布时改变分享状态
-			changeShareStatus(){
-				this.$set(this.videoInfo,'shareStatus',true)
+			changeShareStatus() {
+				this.$set(this.videoInfo, 'shareStatus', true)
 			},
-			
+
 			// 取消发布
-			cancelShare(){
+			cancelShare() {
 				uni.showModal({
-					content:'是否取消发布',
-					success:async res=>{
-						if(res.confirm){
+					content: '是否取消发布',
+					success: async res => {
+						if (res.confirm) {
 							uni.showLoading({
-								title:'正在取消',
-								mask:true
+								title: '正在取消',
+								mask: true
 							})
-							try{
+							try {
 								const res = await cancelShare({
-									videoId:this.videoInfo.id
+									videoId: this.videoInfo.id
 								})
 								uni.showToast({
-									title:'取消成功'
+									title: '取消成功'
 								})
 								// 更改状态
 								this.getVideoInfo(this.videoInfo.id)
-							}catch{
+							} catch {
 								uni.showToast({
-									title:'取消失败',
-									icon:'none',
+									title: '取消失败',
+									icon: 'none',
 								})
 							}
 						}
 					}
 				})
+			},
+			
+			// 解锁提示
+			buyTips(){
+				uni.showModal({
+					content:'购买视频后开启下载、分享功能 是否立即购买视频？',
+					success:res=>{
+						if(res.confirm){
+							this.buy()
+						}
+					}
+				})
+			},
+			
+			// 购买视频
+			async buy(){
+				uni.showLoading({
+					title:'生成订单中',
+					icon:'none',
+					mask:true
+				})
+				const res = await confirmOrder({
+					videoId:this.videoInfo.id
+				})
+				if(res.value.buyStatus === 1){
+					uni.hideLoading()
+					uni.showModal({
+						content:"请勿重复购买",
+						showCancel:false
+					})
+				}else{
+					try{
+						const params = await buy({
+							videoId: res.value.id,
+							price: res.value.videoPrice
+						})
+						uni.requestPayment({
+							...params.value,
+							success:res=>{
+								// 修改本页属性
+								this.$set(this.videoInfo, 'buyStatus', 1)
+								uni.showModal({
+									content:'购买成功'
+								})	
+							}
+						})
+					}catch(err){
+						uni.showModal({
+							content:err.toString()
+						})
+					}finally{
+						uni.hideLoading()
+					}
+				}
 			}
-
 		},
 		components: {
 			shareModal
@@ -191,6 +337,25 @@
 				font-weight: 400;
 				color: #999996;
 			}
+			
+			.price{
+				display:flex;
+				align-items:center;
+				
+				&>text:first-child{
+					font-size: 26rpx;
+					font-family: PingFang SC;
+					font-weight: 500;
+					color: #999996;
+				}
+				
+				&>text:last-child{
+					font-size: 40rpx;
+					font-family: San Francisco Display;
+					font-weight: 500;
+					color: #FFCB3E;
+				}
+			}
 
 		}
 	}
@@ -202,22 +367,22 @@
 		height: 97rpx;
 		background: #FFFFFF;
 		box-shadow: 0px 1rpx 15rpx 3rpx rgba(62, 62, 62, 0.19);
-		
+
 		// 已购视频
-		.bought{
-			display:flex;
+		.bought {
+			display: flex;
 			height: 100%;
-			
+
 			.btn-group {
 				display: flex;
 				justify-content: space-evenly;
 				align-items: center;
 				height: 100%;
-				flex:1;
+				flex: 1;
 				column-gap: 20rpx;
-			
+
 				view {
-				    flex:1;
+					flex: 1;
 					height: 78rpx;
 					border-radius: 39rpx;
 					display: flex;
@@ -227,29 +392,29 @@
 					font-family: PingFang SC;
 					font-weight: 500;
 					color: #FFFFFF;
-					margin-left:25rpx;
-					
-					&:last-child{
-						margin:0 25rpx;
+					margin-left: 25rpx;
+
+					&:last-child {
+						margin: 0 25rpx;
 					}
 				}
-			
+
 				.share {
 					background: #FC4541;
 					box-shadow: 0px 8px 16px 0px rgba(225, 66, 66, 0.23);
 				}
-			
+
 				.download {
 					background: #1DD297;
 					box-shadow: 0px 8px 9px 0px rgba(127, 254, 213, 0.35);
 				}
-			
+
 			}
-			
-			.cancel-share{
-				width:210rpx;
-				display:flex;
-				align-items:center;
+
+			.cancel-share {
+				width: 210rpx;
+				display: flex;
+				align-items: center;
 				justify-content: center;
 				font-size: 30rpx;
 				font-family: PingFang SC;
@@ -258,7 +423,40 @@
 			}
 		}
 
-		
+		.buy {
+			padding: 0 20rpx 0 60rpx;
+			height: 100rpx;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+
+			&>view {
+				/* border: 1px solid red; */
+				display: flex;
+				flex-direction: column;
+				font-size: 20rpx;
+				color: #999;
+
+				image {
+					width: 48rpx;
+					height: 51rpx;
+					margin-bottom: 10rpx;
+				}
+			}
+
+			.buy-btn {
+				border-radius: 40rpx;
+				background-color: rgba(250, 200, 60, 1);
+				box-shadow: 0px 8rpx 16rpx 0px rgba(239, 181, 22, 0.48);
+				width: 375rpx;
+				height: 80rpx;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				font-size: 30rpx;
+				color: #333332;
+			}
+		}
 
 	}
 

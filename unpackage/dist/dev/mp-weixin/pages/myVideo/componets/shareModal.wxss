@@ -49,8 +49,7 @@
   display: -webkit-flex;
   display: flex;
   height: 245rpx;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
   -webkit-box-align: center;
   -webkit-align-items: center;
           align-items: center;
@@ -103,15 +102,13 @@
 }
 .shareModal .publishModal.data-v-4b59af60 {
   position: fixed;
-  -webkit-border-radius: 30rpx 30rpx 0 0;
-          border-radius: 30rpx 30rpx 0 0;
+  border-radius: 30rpx 30rpx 0 0;
   width: 100%;
   height: 715rpx;
   z-index: 700;
   background-color: white;
   padding: 174rpx 55rpx 0;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
   -webkit-transition: 0.5s;
   transition: 0.5s;
   bottom: 0;
@@ -122,14 +119,12 @@
   position: absolute;
   top: -174rpx;
   background-color: #777373;
-  -webkit-border-radius: 30rpx;
-          border-radius: 30rpx;
+  border-radius: 30rpx;
   width: 638rpx;
   height: 348rpx;
 }
 .shareModal .publishModal .cover image.data-v-4b59af60 {
-  -webkit-border-radius: 30rpx;
-          border-radius: 30rpx;
+  border-radius: 30rpx;
   width: 638rpx;
   height: 348rpx;
 }
@@ -158,8 +153,7 @@
           flex-direction: row;
   -webkit-flex-wrap: nowrap;
           flex-wrap: nowrap;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
   border-top: 1rpx solid #e6e3e3;
   border-bottom: 1rpx solid #e6e3e3;
 }
@@ -183,10 +177,8 @@
   width: 638rpx;
   height: 88rpx;
   background: #fc4541;
-  -webkit-box-shadow: 0rpx 8rpx 16rpx 0rpx rgba(252, 69, 65, 0.48);
-          box-shadow: 0rpx 8rpx 16rpx 0rpx rgba(252, 69, 65, 0.48);
-  -webkit-border-radius: 44rpx;
-          border-radius: 44rpx;
+  box-shadow: 0rpx 8rpx 16rpx 0rpx rgba(252, 69, 65, 0.48);
+  border-radius: 44rpx;
   margin-top: 90rpx;
   display: -webkit-box;
   display: -webkit-flex;
@@ -208,8 +200,7 @@
   height: 34rpx;
   -webkit-animation: rotate .5s linear infinite;
           animation: rotate .5s linear infinite;
-  -webkit-border-radius: 50%;
-          border-radius: 50%;
+  border-radius: 50%;
 }
 .shareModal .publishModal .cancel-publish.data-v-4b59af60 {
   margin-top: 50rpx;
@@ -290,8 +281,7 @@
   margin-top: 60rpx;
 }
 .shareModal .qr-code .content-box .btn view.data-v-4b59af60 {
-  -webkit-border-radius: 40rpx;
-          border-radius: 40rpx;
+  border-radius: 40rpx;
   width: 200rpx;
   height: 78rpx;
   display: -webkit-box;

@@ -14,3 +14,9 @@ export const cancelShare = data => http.get('/videoapp/video/shareCancel',{param
 
 // 获取小程序页面分享码
 export const getQrCode = data => http.post('/videoapp/qr/shareQr',data)
+
+// 获取视频购买信息
+export const confirmOrder = data=> http.post('/videoapp/order/confirm',data)
+
+// 购买
+export const buy = data => http.post('/videoapp/order/create',data)

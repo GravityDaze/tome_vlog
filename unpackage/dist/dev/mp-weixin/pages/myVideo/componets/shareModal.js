@@ -222,21 +222,51 @@ var _video = __webpack_require__(/*! ../../../api/video.js */ 80);function _inte
       this.$emit('close');
     },
     // 分享到途咪
-    shareToTome: function shareToTome() {var _this = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var res;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
+    shareToTome: function shareToTome() {var _this = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var reg, res;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
+                // emoji正则
+                reg =
+                /[\uD83C|\uD83D|\uD83E][\uDC00-\uDFFF][\u200D|\uFE0F]|[\uD83C|\uD83D|\uD83E][\uDC00-\uDFFF]|[0-9|*|#]\uFE0F\u20E3|[0-9|#]\u20E3|[\u203C-\u3299]\uFE0F\u200D|[\u203C-\u3299]\uFE0F|[\u2122-\u2B55]|\u303D|[\A9|\AE]\u3030|\uA9|\uAE|\u3030/ig;
+
+                // 校验是否为空
+                if (!(_this.describe === "")) {_context.next = 5;break;}return _context.abrupt("return",
+                uni.showToast({
+                  title: '请输入说明',
+                  icon: 'none',
+                  mask: true }));case 5:if (!
+
+
+
+                reg.test(_this.describe)) {_context.next = 7;break;}return _context.abrupt("return",
+                uni.showToast({
+                  title: '暂不支持emoji',
+                  icon: 'none',
+                  mask: true }));case 7:
+
+
+
+
+
                 uni.showLoading({
                   title: '发布中',
-                  mask: true });_context.next = 3;return (
+                  mask: true });_context.prev = 8;_context.next = 11;return (
+
 
                   (0, _video.share)({
                     id: _this.videoInfo.id,
-                    describe: _this.describe }));case 3:res = _context.sent;
+                    describe: _this.describe }));case 11:res = _context.sent;
 
                 uni.showToast({
                   title: '发布成功' });
 
                 _this.describe = "";
                 _this.$emit('close');
-                _this.$emit('change');case 8:case "end":return _context.stop();}}}, _callee);}))();
+                _this.$emit('change');_context.next = 22;break;case 18:_context.prev = 18;_context.t0 = _context["catch"](8);
+
+                uni.hideLoading();
+                uni.showModal({
+                  content: _context.t0.toString() });case 22:case "end":return _context.stop();}}}, _callee, null, [[8, 18]]);}))();
+
+
     },
     // 分享朋友圈
     shareToMoments: function shareToMoments() {

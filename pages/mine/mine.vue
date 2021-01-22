@@ -19,7 +19,6 @@
 					<view class="btn" @click="toLogin" v-else>
 						<text>登录</text>
 					</view>
-					<!-- <text bindtap="login" wx:else>点击登录</text> -->
 				</view>
 				<!-- <view class="message" data-onreadmsg="{{msgHit.onReadMsg}}" bindtap="navigateToMsgFn">
 					<view wx:if="{{msgHit.onReadMsg == 1}}" class="hit"></view>
@@ -50,6 +49,9 @@
 				<view class="title">
 					<!-- <image src="../../imgs/tips.png" class="icon_tips" wx:if="{{msgHit.noReadCount > 0}}"></image> -->
 					<text>我的游记</text>
+					<view class="remind">
+						<text>2</text>
+					</view>
 					<!-- <text class="remind" wx:if="{{msgHit.noReadCount > 0}}" bindtap="openRecentVideo">{{msgHit.noReadCount}}条新游记</text> -->
 					<!-- </view> -->
 					<view class="title-underline"></view>
@@ -305,6 +307,10 @@
 					font-size: 30rpx;
 					color: #999;
 					margin-top: 18rpx;
+				}
+				
+				.remind{
+					
 				}
 
 			}

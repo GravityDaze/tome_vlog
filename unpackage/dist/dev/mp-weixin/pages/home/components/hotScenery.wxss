@@ -26,8 +26,7 @@
 /* 文章场景相关 */
 .hot-scenery .title-bar.data-v-26e0b9e8 {
   padding: 35rpx 30rpx;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
@@ -82,12 +81,10 @@
   position: relative;
   width: 238rpx;
   height: 168rpx;
-  -webkit-border-radius: 18rpx;
-          border-radius: 18rpx;
+  border-radius: 18rpx;
   background-size: cover;
   background-position: center center;
-  -webkit-box-shadow: 0px 4rpx 10rpx 0px rgba(0, 0, 0, 0.27);
-          box-shadow: 0px 4rpx 10rpx 0px rgba(0, 0, 0, 0.27);
+  box-shadow: 0px 4rpx 10rpx 0px rgba(0, 0, 0, 0.27);
   margin-right: 15rpx;
 }
 .hot-scenery .scenery-list .list .scenery-card .mask.data-v-26e0b9e8 {
@@ -96,8 +93,7 @@
   top: 0;
   bottom: 0;
   width: 100%;
-  -webkit-border-radius: 18rpx;
-          border-radius: 18rpx;
+  border-radius: 18rpx;
 }
 .hot-scenery .scenery-list .list .scenery-card .text.data-v-26e0b9e8 {
   display: -webkit-box;
@@ -126,8 +122,7 @@
 }
 .hot-scenery .scenery-list .list .scenery-card .text .desc.data-v-26e0b9e8 {
   background: rgba(40, 40, 40, 0.5);
-  -webkit-border-radius: 16rpx;
-          border-radius: 16rpx;
+  border-radius: 16rpx;
   font-size: 22rpx;
   font-weight: 500;
   color: #FFFFFF;

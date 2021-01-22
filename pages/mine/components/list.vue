@@ -13,7 +13,9 @@
 						<template v-for="(videoItem,videoIndex) in subItem.videoInfo">
 							<view class="video-box" :key="videoItem.videoId"  @click="watchVideo(videoItem)">
 								<view class="cover" :style="{backgroundImage:`url(${videoItem.coverUrl})`}">
-									<!-- <image wx:if="{{videoItem.newRead == 0}}" src="../../imgs/new.png" class="icon_new"></image> -->
+									<view v-if="videoItem.newRead === 0" class="new">
+										<text>NEW !</text>
+									</view>
 									<view class="duration">
 										<text>{{videoItem.duration}}</text>
 									</view>
@@ -137,6 +139,24 @@
 							background-size: cover;
 							display: flex;
 							box-shadow: 10rpx 0 50rpx rgba(0, 0, 0, 0.2);
+							
+							.new{
+								position:absolute;
+								top:0;
+								left:0;
+								width: 74rpx;
+								height: 32rpx;
+								background: linear-gradient(199deg, #FFB70D, #FFD505);
+								box-shadow: 0px 4rpx 5rpx 0px rgba(70, 50, 0, 0.24);
+								border-radius:15rpx 0 15rpx 0;
+								font-size: 18rpx;
+								font-family: San Francisco Display;
+								font-weight: bold;
+								color: #FFFFFF;
+								display:flex;
+								justify-content: center;
+								align-items: center;
+							}
 
 							.duration {
 								position: absolute;

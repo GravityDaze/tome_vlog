@@ -97,6 +97,15 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
+  var g0 = Object.keys(_vm.videoInfo)
+  _vm.$mp.data = Object.assign(
+    {},
+    {
+      $root: {
+        g0: g0
+      }
+    }
+  )
 }
 var recyclableRender = false
 var staticRenderFns = []
@@ -180,11 +189,36 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 var _jsencrypt = __webpack_require__(/*! ../../utils/jsencrypt.js */ 79);
 
 
 
-var _video = __webpack_require__(/*! ../../api/video.js */ 80);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var shareModal = function shareModal() {__webpack_require__.e(/*! require.ensure | pages/myVideo/componets/shareModal */ "pages/myVideo/componets/shareModal").then((function () {return resolve(__webpack_require__(/*! ./componets/shareModal.vue */ 187));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+var _video = __webpack_require__(/*! ../../api/video.js */ 80);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var shareModal = function shareModal() {__webpack_require__.e(/*! require.ensure | pages/myVideo/componets/shareModal */ "pages/myVideo/componets/shareModal").then((function () {return resolve(__webpack_require__(/*! ./componets/shareModal.vue */ 187));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+
+
 
 
 
@@ -229,9 +263,77 @@ var _video = __webpack_require__(/*! ../../api/video.js */ 80);function _interop
     },
 
     // 下载视频
-    download: function download() {
+    download: function download() {var _this2 = this;
+      // 检测用户之前是否拒绝了存储权限
+      uni.getSetting({
+        success: function success(res) {
+          if (res.authSetting['scope.writePhotosAlbum'] === false) {
+            wx.showModal({
+              content: '检测到您没有打开存储权限，无法将视频保存到手机本地，是否去设置打开？',
+              success: function success(res) {
+                if (res.confirm) {
+                  uni.openSetting();
+                }
+              } });
+
+          } else {
+            // 执行下载方法
+            var downloadTask = uni.downloadFile({
+              url: _this2.videoInfo.url,
+              success: function success(res) {
+                if (res.statusCode === 200) {
+                  _this2.saveToAlbum(res.tempFilePath);
+                } else {
+                  uni.showToast({
+                    title: '下载出错',
+                    icon: 'none' });
+
+                }
+              } });
+
+            // 进度
+            downloadTask.onProgressUpdate(function (res) {
+              uni.showLoading({
+                title: "\u4E0B\u8F7D\u4E2D".concat(res.progress, "%"),
+                mask: true });
+
+            });
+          }
+        } });
 
     },
+
+    // 保存视频到相册
+    saveToAlbum: function saveToAlbum(filePath) {
+      uni.saveVideoToPhotosAlbum({
+        filePath: filePath,
+        success: function success(res) {
+          // 保存下载目录
+          uni.showToast({
+            title: '已保存至相册',
+            icon: 'success',
+            duration: 2000 });
+
+        },
+        fail: function fail(_) {
+          uni.showModal({
+            content: '检测到您没有打开存储权限，无法将视频保存到手机本地，是否去设置打开？',
+            success: function success(res) {
+              if (res.confirm) {
+                uni.openSetting();
+              } else {
+                uni.showToast({
+                  title: '保存失败',
+                  icon: 'none' });
+
+              }
+            } });
+
+          uni.hideLoading();
+        } });
+
+    },
+
 
     // 关闭模态框
     cancel: function cancel() {
@@ -245,7 +347,7 @@ var _video = __webpack_require__(/*! ../../api/video.js */ 80);function _interop
     },
 
     // 取消发布
-    cancelShare: function cancelShare() {var _this2 = this;
+    cancelShare: function cancelShare() {var _this3 = this;
       uni.showModal({
         content: '是否取消发布',
         success: function () {var _success = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2(res) {var _res;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:if (!
@@ -256,13 +358,13 @@ var _video = __webpack_require__(/*! ../../api/video.js */ 80);function _interop
 
 
                       (0, _video.cancelShare)({
-                        videoId: _this2.videoInfo.id }));case 5:_res = _context2.sent;
+                        videoId: _this3.videoInfo.id }));case 5:_res = _context2.sent;
 
                     uni.showToast({
                       title: '取消成功' });
 
                     // 更改状态
-                    _this2.getVideoInfo(_this2.videoInfo.id);_context2.next = 13;break;case 10:_context2.prev = 10;_context2.t0 = _context2["catch"](2);
+                    _this3.getVideoInfo(_this3.videoInfo.id);_context2.next = 13;break;case 10:_context2.prev = 10;_context2.t0 = _context2["catch"](2);
 
                     uni.showToast({
                       title: '取消失败',
@@ -272,8 +374,61 @@ var _video = __webpack_require__(/*! ../../api/video.js */ 80);function _interop
 
 
 
-    } },
+    },
 
+    // 解锁提示
+    buyTips: function buyTips() {var _this4 = this;
+      uni.showModal({
+        content: '购买视频后开启下载、分享功能 是否立即购买视频？',
+        success: function success(res) {
+          if (res.confirm) {
+            _this4.buy();
+          }
+        } });
+
+    },
+
+    // 购买视频
+    buy: function buy() {var _this5 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee3() {var res, params;return _regenerator.default.wrap(function _callee3$(_context3) {while (1) {switch (_context3.prev = _context3.next) {case 0:
+                uni.showLoading({
+                  title: '生成订单中',
+                  icon: 'none',
+                  mask: true });_context3.next = 3;return (
+
+                  (0, _video.confirmOrder)({
+                    videoId: _this5.videoInfo.id }));case 3:res = _context3.sent;if (!(
+
+                res.value.buyStatus === 1)) {_context3.next = 9;break;}
+                uni.hideLoading();
+                uni.showModal({
+                  content: "请勿重复购买",
+                  showCancel: false });_context3.next = 22;break;case 9:_context3.prev = 9;_context3.next = 12;return (
+
+
+
+                  (0, _video.buy)({
+                    videoId: res.value.id,
+                    price: res.value.videoPrice }));case 12:params = _context3.sent;
+
+                uni.requestPayment(_objectSpread(_objectSpread({},
+                params.value), {}, {
+                  success: function success(res) {
+                    // 修改本页属性
+                    _this5.$set(_this5.videoInfo, 'buyStatus', 1);
+                    uni.showModal({
+                      content: '购买成功' });
+
+                  } }));_context3.next = 19;break;case 16:_context3.prev = 16;_context3.t0 = _context3["catch"](9);
+
+
+                uni.showModal({
+                  content: _context3.t0.toString() });case 19:_context3.prev = 19;
+
+
+                uni.hideLoading();return _context3.finish(19);case 22:case "end":return _context3.stop();}}}, _callee3, null, [[9, 16, 19, 22]]);}))();
+
+
+    } },
 
   components: {
     shareModal: shareModal } };exports.default = _default;

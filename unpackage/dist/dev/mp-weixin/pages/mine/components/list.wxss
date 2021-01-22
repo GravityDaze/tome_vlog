@@ -73,14 +73,36 @@
   position: relative;
   width: 300rpx;
   height: 175rpx;
-  -webkit-border-radius: 15rpx;
-          border-radius: 15rpx;
+  border-radius: 15rpx;
   background-size: cover;
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
-  -webkit-box-shadow: 10rpx 0 50rpx rgba(0, 0, 0, 0.2);
-          box-shadow: 10rpx 0 50rpx rgba(0, 0, 0, 0.2);
+  box-shadow: 10rpx 0 50rpx rgba(0, 0, 0, 0.2);
+}
+.list .list-item .content .video-area .video-box .cover .new.data-v-5b9064b4 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 74rpx;
+  height: 32rpx;
+  background: -webkit-linear-gradient(251deg, #FFB70D, #FFD505);
+  background: linear-gradient(199deg, #FFB70D, #FFD505);
+  box-shadow: 0px 4rpx 5rpx 0px rgba(70, 50, 0, 0.24);
+  border-radius: 15rpx 0 15rpx 0;
+  font-size: 18rpx;
+  font-family: San Francisco Display;
+  font-weight: bold;
+  color: #FFFFFF;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
 }
 .list .list-item .content .video-area .video-box .cover .duration.data-v-5b9064b4 {
   position: absolute;
@@ -111,14 +133,11 @@
   margin-right: 15rpx;
 }
 .list .list-item .content .notification.data-v-5b9064b4 {
-  -webkit-border-radius: 30rpx;
-          border-radius: 30rpx;
+  border-radius: 30rpx;
   background: #fff;
-  -webkit-box-shadow: 10rpx 0 100rpx rgba(0, 0, 0, 0.1);
-          box-shadow: 10rpx 0 100rpx rgba(0, 0, 0, 0.1);
+  box-shadow: 10rpx 0 100rpx rgba(0, 0, 0, 0.1);
   padding: 30rpx 15rpx 0;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
   height: 180rpx;
   display: -webkit-box;
   display: -webkit-flex;
@@ -148,8 +167,7 @@
   margin-top: 20rpx;
 }
 .list .list-item .content .notification .panel-btn.data-v-5b9064b4 {
-  -webkit-border-radius: 27rpx;
-          border-radius: 27rpx;
+  border-radius: 27rpx;
   background-color: #fac83c;
   color: #333332;
   font-size: 24rpx;
@@ -164,14 +182,12 @@
   -webkit-box-align: center;
   -webkit-align-items: center;
           align-items: center;
-  -webkit-box-shadow: 0px 8rpx 37rpx 1rpx rgba(248, 185, 14, 0.29);
-          box-shadow: 0px 8rpx 37rpx 1rpx rgba(248, 185, 14, 0.29);
+  box-shadow: 0px 8rpx 37rpx 1rpx rgba(248, 185, 14, 0.29);
 }
 .list .list-item .content .notification .fail-status.data-v-5b9064b4 {
   background: #fc4541;
   color: #fff;
-  -webkit-box-shadow: 0px 0px 24rpx 0px rgba(244, 40, 35, 0.29);
-          box-shadow: 0px 0px 24rpx 0px rgba(244, 40, 35, 0.29);
+  box-shadow: 0px 0px 24rpx 0px rgba(244, 40, 35, 0.29);
 }
 .list .list-item .location.data-v-5b9064b4 {
   font-size: 24rpx;
@@ -181,8 +197,7 @@
   height: 40rpx;
   line-height: 40rpx;
   margin-top: 20rpx;
-  -webkit-border-radius: 20rpx;
-          border-radius: 20rpx;
+  border-radius: 20rpx;
   background-color: rgba(220, 220, 220, 0.5);
 }
 .list .list-item .location image.data-v-5b9064b4 {

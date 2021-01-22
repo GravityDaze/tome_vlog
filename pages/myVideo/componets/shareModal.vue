@@ -98,32 +98,62 @@
 			},
 			// 分享到途咪
 			async shareToTome() {
+				// emoji正则
+				const reg =
+					/[\uD83C|\uD83D|\uD83E][\uDC00-\uDFFF][\u200D|\uFE0F]|[\uD83C|\uD83D|\uD83E][\uDC00-\uDFFF]|[0-9|*|#]\uFE0F\u20E3|[0-9|#]\u20E3|[\u203C-\u3299]\uFE0F\u200D|[\u203C-\u3299]\uFE0F|[\u2122-\u2B55]|\u303D|[\A9|\AE]\u3030|\uA9|\uAE|\u3030/ig
+
+				// 校验是否为空
+				if (this.describe === "") {
+					return uni.showToast({
+						title: '请输入说明',
+						icon: 'none',
+						mask: true,
+					})
+
+					// 过滤emoji
+				} else if (reg.test(this.describe)) {
+					return uni.showToast({
+						title: '暂不支持emoji',
+						icon: 'none',
+						mask: true
+					})
+				}
+
+
+
 				uni.showLoading({
 					title: '发布中',
 					mask: true
 				})
-				const res = await share({
-					id: this.videoInfo.id,
-					describe: this.describe
-				})
-				uni.showToast({
-					title: '发布成功'
-				})
-				this.describe = ""
-				this.$emit('close')
-				this.$emit('change')
+				try {
+					const res = await share({
+						id: this.videoInfo.id,
+						describe: this.describe
+					})
+					uni.showToast({
+						title: '发布成功'
+					})
+					this.describe = ""
+					this.$emit('close')
+					this.$emit('change')
+				} catch (err) {
+					uni.hideLoading()
+					uni.showModal({
+						content: err.toString()
+					})
+				}
 			},
 			// 分享朋友圈
 			shareToMoments() {
 				uni.showToast({
-					title:'暂未开放',
-					icon:'none'
+					title: '暂未开放',
+					icon: 'none'
 				})
 				// uni.showLoading({
 				// 	title: '加载中',
 				// 	mask: true
 				// })
-				
+
 				// 生成不同类型的二维码
 				// let scene
 				// let pagePath
@@ -136,7 +166,7 @@
 				// 	pagePath = "pages/shareVideo/shareVideo";
 				// 	scene = "videoShareId=" + this.videoInfo.videoShareId;
 				// }
-				
+
 				// const res = await getQrCode({
 				// 	pagePath,
 				// 	scene
