@@ -47,13 +47,12 @@
 			<!-- 我的游记 -->
 			<view class="my-travel">
 				<view class="title">
-					<!-- <image src="../../imgs/tips.png" class="icon_tips" wx:if="{{msgHit.noReadCount > 0}}"></image> -->
-					<text>我的游记</text>
-					<view class="remind">
-						<text>2</text>
+					<view class="text">
+						<text>我的游记</text>
+						<view class="remind">
+							<text>2</text>
+						</view>
 					</view>
-					<!-- <text class="remind" wx:if="{{msgHit.noReadCount > 0}}" bindtap="openRecentVideo">{{msgHit.noReadCount}}条新游记</text> -->
-					<!-- </view> -->
 					<view class="title-underline"></view>
 					<view class="tips">
 						<text>{{isLogin?'视频最长保留一周，请及时下载':'请登录后查看游记'}}</text>
@@ -153,11 +152,10 @@
 </script>
 
 <style lang="scss" scoped>
-	
-	.mine{
-		padding-bottom:150rpx;
+	.mine {
+		padding-bottom: 150rpx;
 	}
-	
+
 	.user-bg {
 		height: 260rpx;
 		position: relative;
@@ -290,9 +288,27 @@
 			.title {
 				position: relative;
 
-				&>text {
-					font-size: 40rpx;
-					font-weight: 700;
+
+				.text {
+					display: flex;
+
+					&>text {
+						font-size: 40rpx;
+						font-weight: 700;
+					}
+
+					.remind {
+						margin-left: 12rpx;
+						background: #FC4541;
+						display: flex;
+						width: 36rpx;
+						height: 36rpx;
+						border-radius: 50%;
+						align-items: center;
+						justify-content: center;
+						color: #fff;
+						font-size: 24rpx;
+					}
 				}
 
 				.title-underline {
@@ -308,10 +324,8 @@
 					color: #999;
 					margin-top: 18rpx;
 				}
-				
-				.remind{
-					
-				}
+
+
 
 			}
 		}

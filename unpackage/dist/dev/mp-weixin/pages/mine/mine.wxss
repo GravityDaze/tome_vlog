@@ -178,9 +178,32 @@
 .content-box .my-travel .title.data-v-dcbcfe34 {
   position: relative;
 }
-.content-box .my-travel .title > text.data-v-dcbcfe34 {
+.content-box .my-travel .title .text.data-v-dcbcfe34 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+}
+.content-box .my-travel .title .text > text.data-v-dcbcfe34 {
   font-size: 40rpx;
   font-weight: 700;
+}
+.content-box .my-travel .title .text .remind.data-v-dcbcfe34 {
+  margin-left: 12rpx;
+  background: #FC4541;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  width: 36rpx;
+  height: 36rpx;
+  border-radius: 50%;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+  color: #fff;
+  font-size: 24rpx;
 }
 .content-box .my-travel .title .title-underline.data-v-dcbcfe34 {
   width: 38rpx;

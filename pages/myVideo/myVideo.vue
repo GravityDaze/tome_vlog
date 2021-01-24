@@ -1,71 +1,69 @@
 <!-- '我的'视频详情页面 -->
 <template>
-	<view>
-		<template v-if="Object.keys(videoInfo).length">
-			<video id="video" style="width:100%" autoplay :src="videoInfo.url" objectFit="fill"></video>
-			<!-- 视频详细信息面板 -->
-			<view class="details">
-				<view class="top-info">
-					<view class="title">
-						<text>{{videoInfo.sceneryName + '-视频之旅'}}</text>
-					</view>
-					<view class="location">
-						<text>{{videoInfo.sceneryName}}</text>
-					</view>
+	<view v-if="Object.keys(videoInfo).length">
+		<video @timeupdate="timeupdate" id="video" style="width:100%" autoplay :controls="trial" :src="videoInfo.url" objectFit="fill">
+			<cover-view class="tips">
+				<cover-view>{{ trial? '试看中':'试看结束'}}，查看完整版请</cover-view>
+				<cover-view style="color: rgba(252, 69, 65, 1);margin-left:15rpx" @click="buy">立即购买</cover-view>
+			</cover-view>
+		</video>
+		<!-- 视频详细信息面板 -->
+		<view class="details">
+			<view class="top-info">
+				<view class="title">
+					<text>{{videoInfo.sceneryName + '-视频之旅'}}</text>
 				</view>
-				<view class="bottom-info">
-					<view class="time" v-if="videoInfo.buyStatus === 1">
-						<text>{{videoInfo.createDatetime}}</text>
+				<view class="location">
+					<text>{{videoInfo.sceneryName}}</text>
+				</view>
+			</view>
+			<view class="bottom-info">
+				<view class="time" v-if="videoInfo.buyStatus === 1">
+					<text>{{videoInfo.createDatetime}}</text>
+				</view>
+				<view class="price" v-else>
+					<text>购买价格:</text>
+					<text>￥{{videoInfo.price}}</text>
+				</view>
+			</view>
+		</view>
+		<view class="bottom-bar">
+			<!-- 已购视频 -->
+			<view class="bought " v-if="videoInfo.buyStatus === 1">
+				<view class="cancel-share" v-if="videoInfo.shareStatus" @click="cancelShare">
+					<text>取消发布</text>
+				</view>
+				<view class="btn-group">
+					<view class="share" @click="share">
+						<text>我要分享</text>
 					</view>
-					<view class="price" v-else>
-						<text>购买价格:</text>
-						<text>￥{{videoInfo.price}}</text>
+					<view class="download" @click="download">
+						<text>我要下载</text>
 					</view>
 				</view>
 			</view>
-			<view class="bottom-bar">
-				<!-- 已购视频 -->
-				<view class="bought " v-if="videoInfo.buyStatus === 1">
-					<view class="cancel-share" v-if="videoInfo.shareStatus" @click="cancelShare">
-						<text>取消发布</text>
-					</view>
-					<view class="btn-group">
-						<view class="share" @click="share">
-							<text>我要分享</text>
-						</view>
-						<view class="download" @click="download">
-							<text>我要下载</text>
-						</view>
-					</view>
+
+			<!-- 未购视频 -->
+			<view class="buy" v-else>
+				<view @click="buyTips">
+					<image src="../../static/download_no.png"></image>
+					<text>下载</text>
 				</view>
-			
-				<!-- 未购视频 -->
-				<view class="buy" v-else>
-					<view @click="buyTips">
-						<image src="../../static/download_no.png"></image>
-						<text>下载</text>
-					</view>
-					<view @click="buyTips">
-						<image src="../../static/share_no.png"></image>
-						<text>分享</text>
-					</view>
-					<view class="buy-btn" @click="buy">
-						<text>立即购买</text>
-					</view>
+				<view @click="buyTips">
+					<image src="../../static/share_no.png"></image>
+					<text>分享</text>
 				</view>
-			
+				<view class="buy-btn" @click="buy">
+					<text>立即购买</text>
+				</view>
 			</view>
-			
-			<!-- 遮罩 -->
-			<view class="mask" v-if="mask" @click="cancel"></view>
-			<!-- 分享组件 -->
-			<shareModal @close="cancel" @change="changeShareStatus" :videoInfo="videoInfo" :show="showModal" />
-		</template>
-		
-		<!-- 防止图标闪烁 -->
-		<template v-else>
-			<view></view>
-		</template>
+
+		</view>
+
+		<!-- 遮罩 -->
+		<view class="mask" v-if="mask" @click="cancel"></view>
+		<!-- 分享组件 -->
+		<shareModal @close="cancel" @change="changeShareStatus" :videoInfo="videoInfo" :show="showModal" />
 	</view>
 </template>
 
@@ -89,7 +87,8 @@
 				videoInfo: {},
 				mask: false, //是否展开遮罩
 				showModal: false, // 是否展开分享
-				publishModal: false // 发布至途咪
+				publishModal: false, // 发布至途咪
+				trial:true //试看视频
 			}
 		},
 		onLoad(options) {
@@ -114,6 +113,21 @@
 				res.value.url = encryptByRsa(res.value.url, getApp().globalData.encryptKey)
 				return res.value
 			},
+			
+			// 视频播放回调
+			timeupdate(e){
+				if(!this.videoInfo.buyStatus){
+					const { currentTime,duration } = e.detail
+					const availableTime = duration * 1/3
+					if( currentTime >  availableTime ){
+						 const ctx = uni.createVideoContext('video')
+						 // 试看结束
+						 this.trial = false
+						 ctx.stop()
+					}
+				}
+			},
+			
 
 			// 分享视频
 			share() {
@@ -234,56 +248,56 @@
 					}
 				})
 			},
-			
+
 			// 解锁提示
-			buyTips(){
+			buyTips() {
 				uni.showModal({
-					content:'购买视频后开启下载、分享功能 是否立即购买视频？',
-					success:res=>{
-						if(res.confirm){
+					content: '购买视频后开启下载、分享功能 是否立即购买视频？',
+					success: res => {
+						if (res.confirm) {
 							this.buy()
 						}
 					}
 				})
 			},
-			
+
 			// 购买视频
-			async buy(){
+			async buy() {
 				uni.showLoading({
-					title:'生成订单中',
-					icon:'none',
-					mask:true
+					title: '生成订单中',
+					icon: 'none',
+					mask: true
 				})
 				const res = await confirmOrder({
-					videoId:this.videoInfo.id
+					videoId: this.videoInfo.id
 				})
-				if(res.value.buyStatus === 1){
+				if (res.value.buyStatus === 1) {
 					uni.hideLoading()
 					uni.showModal({
-						content:"请勿重复购买",
-						showCancel:false
+						content: "请勿重复购买",
+						showCancel: false
 					})
-				}else{
-					try{
+				} else {
+					try {
 						const params = await buy({
 							videoId: res.value.id,
 							price: res.value.videoPrice
 						})
 						uni.requestPayment({
 							...params.value,
-							success:res=>{
+							success: res => {
 								// 修改本页属性
 								this.$set(this.videoInfo, 'buyStatus', 1)
 								uni.showModal({
-									content:'购买成功'
-								})	
+									content: '购买成功'
+								})
 							}
 						})
-					}catch(err){
+					} catch (err) {
 						uni.showModal({
-							content:err.toString()
+							content: err.toString()
 						})
-					}finally{
+					} finally {
 						uni.hideLoading()
 					}
 				}
@@ -296,6 +310,20 @@
 </script>
 
 <style lang="scss" scoped>
+	.tips {
+		background-color: rgba(0, 0, 0, 0.6);
+		padding: 5rpx 15rpx;
+		position: absolute;
+		left: 100rpx;
+		bottom: 80rpx;
+		display: flex;
+		justify-content: flex-start;
+		align-items: center;
+		font-size: 28rpx;
+		color: #fff;
+	}
+
+
 	.details {
 		padding: 25rpx;
 		display: flex;
@@ -337,19 +365,19 @@
 				font-weight: 400;
 				color: #999996;
 			}
-			
-			.price{
-				display:flex;
-				align-items:center;
-				
-				&>text:first-child{
+
+			.price {
+				display: flex;
+				align-items: center;
+
+				&>text:first-child {
 					font-size: 26rpx;
 					font-family: PingFang SC;
 					font-weight: 500;
 					color: #999996;
 				}
-				
-				&>text:last-child{
+
+				&>text:last-child {
 					font-size: 40rpx;
 					font-family: San Francisco Display;
 					font-weight: 500;

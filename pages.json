@@ -59,6 +59,12 @@
 			"style": {
 				"navigationBarTitleText": "登录"
 			}
+		},
+		{
+			"path": "pages/face/face",
+			"style": {
+				"navigationBarTitleText": "人脸采集"
+			}
 		}
 	],
 	  "tabBar": {

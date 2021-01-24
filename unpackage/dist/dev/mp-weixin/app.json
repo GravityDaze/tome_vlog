@@ -8,7 +8,8 @@
     "pages/shareVideo/shareVideo",
     "pages/myVideo/myVideo",
     "pages/map/map",
-    "pages/login/login"
+    "pages/login/login",
+    "pages/face/face"
   ],
   "subPackages": [],
   "window": {
@@ -43,6 +44,5 @@
       "desc": "给我位置"
     }
   },
-  "usingComponents": {},
-  "sitemapLocation": "sitemap11.json"
+  "usingComponents": {}
 }
