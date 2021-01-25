@@ -1,9 +1,9 @@
 <!-- '我的'视频详情页面 -->
 <template>
 	<view v-if="Object.keys(videoInfo).length">
-		<video @timeupdate="timeupdate" id="video" style="width:100%" autoplay :controls="trial" :src="videoInfo.url" objectFit="fill">
-			<cover-view class="tips">
-				<cover-view>{{ trial? '试看中':'试看结束'}}，查看完整版请</cover-view>
+		<video @timeupdate="timeupdate" id="video" style="width:100%" autoplay :controls="controls" :src="videoInfo.url" objectFit="fill">
+			<cover-view class="tips" v-if="videoInfo.buyStatus === 0">
+				<cover-view>{{ controls? '试看中':'试看结束'}}，查看完整版请</cover-view>
 				<cover-view style="color: rgba(252, 69, 65, 1);margin-left:15rpx" @click="buy">立即购买</cover-view>
 			</cover-view>
 		</video>
@@ -88,7 +88,7 @@
 				mask: false, //是否展开遮罩
 				showModal: false, // 是否展开分享
 				publishModal: false, // 发布至途咪
-				trial:true //试看视频
+				controls:true
 			}
 		},
 		onLoad(options) {
@@ -122,7 +122,7 @@
 					if( currentTime >  availableTime ){
 						 const ctx = uni.createVideoContext('video')
 						 // 试看结束
-						 this.trial = false
+						 this.controls = false
 						 ctx.stop()
 					}
 				}
@@ -288,8 +288,11 @@
 							success: res => {
 								// 修改本页属性
 								this.$set(this.videoInfo, 'buyStatus', 1)
+								// 恢复controls
+								this.controls = true
 								uni.showModal({
-									content: '购买成功'
+									content: '购买成功，快去分享吧~',
+									showCancel:false
 								})
 							}
 						})

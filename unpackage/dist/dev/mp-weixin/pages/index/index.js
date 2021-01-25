@@ -207,7 +207,7 @@ var _index = __webpack_require__(/*! ../../api/index.js */ 20);function _interop
             uni.getUserInfo({
               success: function success(res) {
                 // 获取用户信息成功
-                uni.setStorageSync('userInfo', JSON.stringify(res.userInfo));
+                uni.setStorageSync('userInfo', res.userInfo);
                 // 登录
                 _this2.loginFn();
               },
@@ -232,7 +232,7 @@ var _index = __webpack_require__(/*! ../../api/index.js */ 20);function _interop
 
 
 
-                    userInfo = JSON.parse(uni.getStorageSync('userInfo'));_context2.next = 5;return (
+                    userInfo = uni.getStorageSync('userInfo');_context2.next = 5;return (
                       (0, _index.login)(_objectSpread({
                         code: code },
                       userInfo)));case 5:res = _context2.sent;

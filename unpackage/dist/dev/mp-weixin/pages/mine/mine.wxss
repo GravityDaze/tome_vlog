@@ -188,22 +188,12 @@
   font-weight: 700;
 }
 .content-box .my-travel .title .text .remind.data-v-dcbcfe34 {
-  margin-left: 12rpx;
+  width: 10rpx;
+  height: 10rpx;
   background: #FC4541;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: flex;
-  width: 36rpx;
-  height: 36rpx;
+  box-shadow: 0px 0px 20rpx 1rpx rgba(244, 40, 35, 0.29);
   border-radius: 50%;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-          justify-content: center;
-  color: #fff;
-  font-size: 24rpx;
+  margin-left: 12rpx;
 }
 .content-box .my-travel .title .title-underline.data-v-dcbcfe34 {
   width: 38rpx;

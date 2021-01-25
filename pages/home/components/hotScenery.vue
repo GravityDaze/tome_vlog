@@ -2,7 +2,7 @@
 	<view class="hot-scenery">
 		<view class="title-bar">
 
-			<text class="title">热门景区</text>
+			<text class="title">精选景区</text>
 			<view class="more" @click="seeMore">
 				<text>查看全部</text>
 				<image src="../../../static/arrow.png"></image>
@@ -13,14 +13,15 @@
 			<scroll-view scroll-x enable-flex class="list" enhanced :show-scrollbar="false">
 				<view class="card-wrapper">
 					<navigator :url="`/pages/shoot/shoot?id=${item.id}`" v-for="(item,index) in hotSceneryData" :key="index" class="scenery-card"
-					 :style="{backgroundImage:`url(${item.coverUrl})`}">
+					 :style="{backgroundImage:`url(${item.coverUrl})`,border:item.isOpen===1?'1rpx solid #FFB90C':'none'}">
 						<view class="mask"></view>
+						<image v-if="item.isLocation === 1 && index === 0" src="../../../static/local2.png"></image>
 						<view class="text">
 							<view class="name">
 								<text>{{handleText(item.name,5)}}</text>
 							</view>
-							<view class="desc">
-								<text>{{handleText(item.describe,6)}}</text>
+							<view class="desc" :class="{ 'open':item.isOpen === 1 }">
+								<text>{{item.isOpen === 1 ? '开拍中':handleText(item.describe,6) }}</text>
 							</view>
 						</view>
 					</navigator>
@@ -109,8 +110,15 @@
 					background-position: center center;
 					box-shadow: 0px 4rpx 10rpx 0px rgba(0, 0, 0, 0.27);
 					margin-right: 15rpx;
+					box-sizing: border-box;
 
-
+					&>image{
+						position:absolute;
+						right:15rpx;
+						top:15rpx;
+						width: 23rpx;
+						height: 25rpx;
+					}
 
 					.mask {
 
@@ -149,6 +157,10 @@
 							font-weight: 500;
 							color: #FFFFFF;
 							padding: 3rpx 15rpx;
+						}
+						
+						.open{
+							background: #FFB90C;
 						}
 
 					}

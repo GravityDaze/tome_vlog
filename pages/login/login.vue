@@ -28,7 +28,7 @@
 		methods: {
 			getUserInfo(e) {
 				if (e.detail.userInfo) {
-					uni.setStorageSync('userInfo', JSON.stringify(e.detail.userInfo))
+					uni.setStorageSync('userInfo', e.detail.userInfo)
 					// 执行登录逻辑
 					this.loginFn()
 				}
@@ -44,7 +44,7 @@
 					}) => {
 						//发起网络请求
 						try {
-							const userInfo = JSON.parse(uni.getStorageSync('userInfo'))
+							const userInfo = uni.getStorageSync('userInfo')
 							const res = await login({
 								code,
 								...userInfo

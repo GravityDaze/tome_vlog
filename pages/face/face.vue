@@ -1,5 +1,5 @@
 <template>
-	<view class="face" v-if="hasGetRes">
+	<view class="face" v-if="hasRes">
 		<!-- 相机 -->
 		<view class="camera-box" v-if="!faceUrl || recaptureStatus">
 			<view class="camera-wrapper">
@@ -36,7 +36,7 @@
 		data() {
 			return {
 				faceUrl: '', //人脸url
-				hasGetRes: false, // 是否已经完成网络请求 防止camera组件闪烁
+				hasRes: false, // 是否已经完成网络请求 防止camera组件闪烁
 				recaptureStatus: false, //是否是重新采集头像的状态
 				showComfirm: false //是否显示确认头像按钮
 			}
@@ -54,7 +54,7 @@
 						this.faceUrl = res.value.frontFace
 					}
 				} finally {
-					this.hasGetRes = true
+					this.hasRes = true
 				}
 
 			},

@@ -75,7 +75,7 @@
 							uni.getUserInfo({
 								success: res => {
 									// 获取用户信息成功
-									uni.setStorageSync('userInfo', JSON.stringify(res.userInfo))
+									uni.setStorageSync('userInfo', res.userInfo)
 									// 登录
 									this.loginFn()
 								},
@@ -100,7 +100,7 @@
 					}) => {
 						//发起网络请求
 						try {
-							const userInfo = JSON.parse(uni.getStorageSync('userInfo'))
+							const userInfo =uni.getStorageSync('userInfo')
 							const res = await login({
 								code,
 								...userInfo

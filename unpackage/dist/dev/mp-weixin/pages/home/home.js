@@ -175,7 +175,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var _home = __webpack_require__(/*! ../../api/home.js */ 43);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _slicedToArray(arr, i) {return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();}function _nonIterableRest() {throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");}function _unsupportedIterableToArray(o, minLen) {if (!o) return;if (typeof o === "string") return _arrayLikeToArray(o, minLen);var n = Object.prototype.toString.call(o).slice(8, -1);if (n === "Object" && o.constructor) n = o.constructor.name;if (n === "Map" || n === "Set") return Array.from(o);if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);}function _arrayLikeToArray(arr, len) {if (len == null || len > arr.length) len = arr.length;for (var i = 0, arr2 = new Array(len); i < len; i++) {arr2[i] = arr[i];}return arr2;}function _iterableToArrayLimit(arr, i) {if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return;var _arr = [];var _n = true;var _d = false;var _e = undefined;try {for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {_arr.push(_s.value);if (i && _arr.length === i) break;}} catch (err) {_d = true;_e = err;} finally {try {if (!_n && _i["return"] != null) _i["return"]();} finally {if (_d) throw _e;}}return _arr;}function _arrayWithHoles(arr) {if (Array.isArray(arr)) return arr;}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var navbar = function navbar() {__webpack_require__.e(/*! require.ensure | components/nav */ "components/nav").then((function () {return resolve(__webpack_require__(/*! ../../components/nav.vue */ 105));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var menubar = function menubar() {Promise.all(/*! require.ensure | pages/home/components/menubar */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pages/home/components/menubar")]).then((function () {return resolve(__webpack_require__(/*! ./components/menubar.vue */ 112));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var hotScenery = function hotScenery() {Promise.all(/*! require.ensure | pages/home/components/hotScenery */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pages/home/components/hotScenery")]).then((function () {return resolve(__webpack_require__(/*! ./components/hotScenery.vue */ 160));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var moment = function moment() {__webpack_require__.e(/*! require.ensure | pages/home/components/moment */ "pages/home/components/moment").then((function () {return resolve(__webpack_require__(/*! ./components/moment.vue */ 168));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+var _home = __webpack_require__(/*! ../../api/home.js */ 43);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _toConsumableArray(arr) {return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();}function _nonIterableSpread() {throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");}function _iterableToArray(iter) {if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter);}function _arrayWithoutHoles(arr) {if (Array.isArray(arr)) return _arrayLikeToArray(arr);}function _slicedToArray(arr, i) {return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();}function _nonIterableRest() {throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");}function _unsupportedIterableToArray(o, minLen) {if (!o) return;if (typeof o === "string") return _arrayLikeToArray(o, minLen);var n = Object.prototype.toString.call(o).slice(8, -1);if (n === "Object" && o.constructor) n = o.constructor.name;if (n === "Map" || n === "Set") return Array.from(o);if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);}function _arrayLikeToArray(arr, len) {if (len == null || len > arr.length) len = arr.length;for (var i = 0, arr2 = new Array(len); i < len; i++) {arr2[i] = arr[i];}return arr2;}function _iterableToArrayLimit(arr, i) {if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return;var _arr = [];var _n = true;var _d = false;var _e = undefined;try {for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {_arr.push(_s.value);if (i && _arr.length === i) break;}} catch (err) {_d = true;_e = err;} finally {try {if (!_n && _i["return"] != null) _i["return"]();} finally {if (_d) throw _e;}}return _arr;}function _arrayWithHoles(arr) {if (Array.isArray(arr)) return arr;}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var navbar = function navbar() {__webpack_require__.e(/*! require.ensure | components/nav */ "components/nav").then((function () {return resolve(__webpack_require__(/*! ../../components/nav.vue */ 114));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var menubar = function menubar() {Promise.all(/*! require.ensure | pages/home/components/menubar */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pages/home/components/menubar")]).then((function () {return resolve(__webpack_require__(/*! ./components/menubar.vue */ 121));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var hotScenery = function hotScenery() {Promise.all(/*! require.ensure | pages/home/components/hotScenery */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pages/home/components/hotScenery")]).then((function () {return resolve(__webpack_require__(/*! ./components/hotScenery.vue */ 170));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var moment = function moment() {__webpack_require__.e(/*! require.ensure | pages/home/components/moment */ "pages/home/components/moment").then((function () {return resolve(__webpack_require__(/*! ./components/moment.vue */ 178));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+
 
 
 
@@ -192,34 +193,33 @@ var _home = __webpack_require__(/*! ../../api/home.js */ 43);function _interopRe
       bannerList: [],
       hotSceneryList: [],
       immersive: true, //导航条是否处于沉浸式状态
-      done: false, // 瀑布流数据加载是否完毕
-      showDialog: false, //是否展示对话框
-      sceneryName: "" //对话框中的景区名
+      done: false // 瀑布流数据加载是否完毕
     };
   },
   onLoad: function onLoad() {
-    // 获取用户定位
-    this.getLocation();
     // 获取banner数据
     this.getBannerList();
-    // 获取热门景区数据，默认会获取到天府广场的坐标
-    this.getHotSceneryList();
-    // // 获取当前所属景区
-    // this.getCurrentScenery()
   },
   onShow: function onShow() {
     // 自定义tabBar mixin 详见https://developers.weixin.qq.com/community/develop/article/doc/0000047ece8448712589b28525b413
     this.setTabBarIndex(0);
+    // 获取用户定位
+    this.getLocation();
   },
   methods: {
-    getLocation: function getLocation() {var _this = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2() {var _yield$uni$getLocatio, _yield$uni$getLocatio2, err, res, _yield$uni$getSetting, _yield$uni$getSetting2, _err, _res;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:_context2.next = 2;return (
+    getLocation: function getLocation() {var _this = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2() {var _yield$uni$getLocatio, _yield$uni$getLocatio2, err, res, _getApp$globalData, lon, lat, _yield$uni$getSetting, _yield$uni$getSetting2, _err, _res;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:_context2.next = 2;return (
                   uni.getLocation({
                     type: 'gcj02' }));case 2:_yield$uni$getLocatio = _context2.sent;_yield$uni$getLocatio2 = _slicedToArray(_yield$uni$getLocatio, 2);err = _yield$uni$getLocatio2[0];res = _yield$uni$getLocatio2[1];if (!
 
+                err) {_context2.next = 18;break;}
+                // 定位获取失败时,精选景区会默认以麦田中心的经纬度为基准
+                _getApp$globalData =
 
-                err) {_context2.next = 17;break;}_context2.next = 9;return (
-                  uni.getSetting());case 9:_yield$uni$getSetting = _context2.sent;_yield$uni$getSetting2 = _slicedToArray(_yield$uni$getSetting, 2);_err = _yield$uni$getSetting2[0];_res = _yield$uni$getSetting2[1];
-                console.log(_res.authSetting['scope.userLocation']);
+
+                getApp().globalData, lon = _getApp$globalData.lon, lat = _getApp$globalData.lat;
+                _this.getHotSceneryList(lon, lat);
+                // 检查是否是拒绝授权造成的定位失败
+                _context2.next = 11;return uni.getSetting();case 11:_yield$uni$getSetting = _context2.sent;_yield$uni$getSetting2 = _slicedToArray(_yield$uni$getSetting, 2);_err = _yield$uni$getSetting2[0];_res = _yield$uni$getSetting2[1];
                 if (_res.authSetting['scope.userLocation'] === false) {
                   uni.showModal({
                     title: '提示',
@@ -233,22 +233,20 @@ var _home = __webpack_require__(/*! ../../api/home.js */ 43);function _interopRe
 
                                 uni.showToast({
                                   title: '授权失败',
-                                  icon: 'none',
-                                  duration: 1000 });case 12:case "end":return _context.stop();}}}, _callee);}));function success(_x) {return _success.apply(this, arguments);}return success;}() });
+                                  icon: 'none' });case 12:case "end":return _context.stop();}}}, _callee);}));function success(_x) {return _success.apply(this, arguments);}return success;}() });
 
 
 
 
-                }_context2.next = 22;break;case 17:
+                }_context2.next = 22;break;case 18:
 
 
                 console.log('授权地理位置成功');
                 getApp().globalData.lat = res.latitude;
                 getApp().globalData.lon = res.longitude;
-                // 获取到用户地理位置后，重新获取热门景区数据
-                _this.getHotSceneryList();
                 // 获取当前所属景区
                 _this.getCurrentScenery();case 22:case "end":return _context2.stop();}}}, _callee2);}))();
+
 
     },
 
@@ -256,20 +254,39 @@ var _home = __webpack_require__(/*! ../../api/home.js */ 43);function _interopRe
                   (0, _home.queryBannerList)());case 2:res = _context3.sent;
                 _this2.bannerList = res.value;case 4:case "end":return _context3.stop();}}}, _callee3);}))();
     },
-    getHotSceneryList: function getHotSceneryList() {var _this3 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee4() {var _getApp$globalData, lon, lat, res;return _regenerator.default.wrap(function _callee4$(_context4) {while (1) {switch (_context4.prev = _context4.next) {case 0:_getApp$globalData =
-
-
-
-                getApp().globalData, lon = _getApp$globalData.lon, lat = _getApp$globalData.lat;_context4.next = 3;return (
-                  (0, _home.queryHotScenery)({
+    getHotSceneryList: function getHotSceneryList(lon, lat) {var _this3 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee4() {var res, filterScenery, insert, i, temp;return _regenerator.default.wrap(function _callee4$(_context4) {while (1) {switch (_context4.prev = _context4.next) {case 0:_context4.next = 2;return (
+                  (0, _home.queryCard)({
                     lon: lon,
-                    lat: lat }));case 3:res = _context4.sent;
+                    lat: lat }));case 2:res = _context4.sent;
 
-                _this3.hotSceneryList = res.value;case 5:case "end":return _context4.stop();}}}, _callee4);}))();
+                // 过滤出景区( 条件为热门景区 + 开启了视频之旅 + 已定位的景区 ) 满足一个条件即可
+                filterScenery = res.value.filter(function (v) {
+                  return v.hotStatus === 1 || v.isOpen === 1 || v.isLocation === 1;
+                });
+                // 应该插入的索引
+                insert = 1;
+                /*
+                            	按优先级排序
+                            	1:定位景区
+                            	2:开启视频之旅的景区
+                            	3.热门景区
+                            */
+                for (i = 0; i < filterScenery.length; i++) {
+                  if (filterScenery[i].isOpen === 1 && i !== 0) {
+                    temp = filterScenery.splice(i, 1);
+                    if (filterScenery[0].isLocation === 1) {
+                      filterScenery.splice.apply(filterScenery, [insert++, 0].concat(_toConsumableArray(temp)));
+                    } else {
+                      filterScenery.splice.apply(filterScenery, [insert++ - 1, 0].concat(_toConsumableArray(temp)));
+                    }
+                  }
+                }
+                _this3.hotSceneryList = filterScenery;case 7:case "end":return _context4.stop();}}}, _callee4);}))();
+
     },
 
-    // 判断当前所属景区是否弹出对话框
-    getCurrentScenery: function getCurrentScenery() {var _this4 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee5() {var _getApp$globalData2, lon, lat, res;return _regenerator.default.wrap(function _callee5$(_context5) {while (1) {switch (_context5.prev = _context5.next) {case 0:_getApp$globalData2 =
+    // 判断当前所属景区
+    getCurrentScenery: function getCurrentScenery() {var _this4 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee5() {var _getApp$globalData2, lon, lat, res, manualLon, manualLat;return _regenerator.default.wrap(function _callee5$(_context5) {while (1) {switch (_context5.prev = _context5.next) {case 0:_getApp$globalData2 =
 
 
 
@@ -277,21 +294,27 @@ var _home = __webpack_require__(/*! ../../api/home.js */ 43);function _interopRe
 
                   (0, _home.queryCurrentScenery)({
                     lon: lon,
-                    lat: lat,
-                    sceneryId: '' }));case 4:res = _context5.sent;
+                    lat: lat }));case 4:res = _context5.sent;
 
-                if (res.value.flag === 1) {
-                  // 储存景区id为全局可用
+                // 如果定位到景区 ,则更新sceneryId
+                if (res.value.id) {
+                  // 更新全局的sceneryId
                   getApp().globalData.sceneryId = res.value.id;
-                  // 传输景区名给对话框
-                  _this4.sceneryName = res.value.name;
-                  _this4.showDialog = true;
+                  _this4.getHotSceneryList(lon, lat);
+                } else {
+                  // 未定位到景区时,如果用户在景区列表页面已经手动定位 使用手动定位
+                  manualLon = getApp().globalData.manualLocation.lon;
+                  manualLat = getApp().globalData.manualLocation.lat;
+                  if (manualLon && manualLat) {
+                    _this4.getHotSceneryList(manualLon, manualLat);
+                  } else {
+                    _this4.getHotSceneryList(lon, lat);
+                  }
                 }_context5.next = 11;break;case 8:_context5.prev = 8;_context5.t0 = _context5["catch"](1);
 
 
+
                 console.log(_context5.t0);case 11:case "end":return _context5.stop();}}}, _callee5, null, [[1, 8]]);}))();
-
-
 
     },
 

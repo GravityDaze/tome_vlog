@@ -22,7 +22,7 @@
 		</view>
 		<!-- 菜单 -->
 		<menubar class="menubar" />
-		<!-- 热门景区 -->
+		<!-- 精选景区 -->
 		<hotScenery :hotSceneryData="hotSceneryList" />
 		<!-- 精彩瞬间瀑布流 -->
 		<moment ref="moment" @loadFinish="done = true" />
@@ -41,7 +41,8 @@
 	import {
 		queryBannerList,
 		queryHotScenery,
-		queryCurrentScenery
+		queryCurrentScenery,
+		queryCard
 	} from '../../api/home.js'
 	// 公用导航组件
 	import navbar from '../../components/nav.vue'
@@ -55,34 +56,33 @@
 				bannerList: [],
 				hotSceneryList: [],
 				immersive: true, //导航条是否处于沉浸式状态
-				done: false, // 瀑布流数据加载是否完毕
-				showDialog: false, //是否展示对话框
-				sceneryName: "", //对话框中的景区名
+				done: false // 瀑布流数据加载是否完毕
 			}
 		},
 		onLoad() {
-			// 获取用户定位
-			this.getLocation()
 			// 获取banner数据
 			this.getBannerList()
-			// 获取热门景区数据，默认会获取到天府广场的坐标
-			this.getHotSceneryList()
-			// // 获取当前所属景区
-			// this.getCurrentScenery()
 		},
 		onShow() {
 			// 自定义tabBar mixin 详见https://developers.weixin.qq.com/community/develop/article/doc/0000047ece8448712589b28525b413
 			this.setTabBarIndex(0)
+			// 获取用户定位
+			this.getLocation()
 		},
 		methods: {
 			async getLocation() {
 				const [err, res] = await uni.getLocation({
 					type: 'gcj02'
 				})
-				// 检测到用户拒绝了地理位置授权 , 引导用户打开权限设置
 				if (err) {
+					// 定位获取失败时,精选景区会默认以麦田中心的经纬度为基准
+					const {
+						lon,
+						lat
+					} = getApp().globalData
+					this.getHotSceneryList(lon,lat)
+					// 检查是否是拒绝授权造成的定位失败
 					const [err, res] = await uni.getSetting()
-					console.log(res.authSetting['scope.userLocation'])
 					if (res.authSetting['scope.userLocation'] === false) {
 						uni.showModal({
 							title: '提示',
@@ -96,8 +96,7 @@
 								} else {
 									uni.showToast({
 										title: '授权失败',
-										icon: 'none',
-										duration: 1000
+										icon: 'none'
 									})
 								}
 							}
@@ -108,10 +107,9 @@
 					console.log('授权地理位置成功')
 					getApp().globalData.lat = res.latitude
 					getApp().globalData.lon = res.longitude
-					// 获取到用户地理位置后，重新获取热门景区数据
-					this.getHotSceneryList()
 					// 获取当前所属景区
 					this.getCurrentScenery()
+
 				}
 			},
 
@@ -119,19 +117,38 @@
 				const res = await queryBannerList()
 				this.bannerList = res.value
 			},
-			async getHotSceneryList() {
-				const {
-					lon,
-					lat
-				} = getApp().globalData
-				const res = await queryHotScenery({
+			async getHotSceneryList(lon,lat) {
+				const res = await queryCard({
 					lon,
 					lat
 				})
-				this.hotSceneryList = res.value
+				// 过滤出景区( 条件为热门景区 + 开启了视频之旅 + 已定位的景区 ) 满足一个条件即可
+				const filterScenery = res.value.filter(v => {
+					return v.hotStatus === 1 || v.isOpen === 1 || v.isLocation === 1
+				})
+				// 应该插入的索引
+				let insert = 1
+				/*
+					按优先级排序
+					1:定位景区
+					2:开启视频之旅的景区
+					3.热门景区
+				*/
+				for (let i = 0; i < filterScenery.length; i++) {
+					if (filterScenery[i].isOpen === 1 && i !== 0) {
+						let temp = filterScenery.splice(i, 1)
+						if (filterScenery[0].isLocation === 1) {
+							filterScenery.splice(insert++, 0, ...temp)
+						} else {
+							filterScenery.splice(insert++ - 1, 0, ...temp)
+						}
+					}
+				}
+				this.hotSceneryList = filterScenery
+
 			},
 
-			// 判断当前所属景区是否弹出对话框
+			// 判断当前所属景区
 			async getCurrentScenery() {
 				const {
 					lon,
@@ -140,22 +157,28 @@
 				try {
 					const res = await queryCurrentScenery({
 						lon,
-						lat,
-						sceneryId: ''
+						lat
 					})
-					if (res.value.flag === 1) {
-						// 储存景区id为全局可用
+					// 如果定位到景区 ,则更新sceneryId
+					if (res.value.id) {
+						// 更新全局的sceneryId
 						getApp().globalData.sceneryId = res.value.id
-						// 传输景区名给对话框
-						this.sceneryName = res.value.name
-						this.showDialog = true
+						this.getHotSceneryList(lon,lat)
+					}else{
+						// 未定位到景区时,如果用户在景区列表页面已经手动定位 使用手动定位
+						const manualLon = getApp().globalData.manualLocation.lon
+						const manualLat = getApp().globalData.manualLocation.lat
+						if(manualLon && manualLat){
+							this.getHotSceneryList(manualLon,manualLat)
+						}else{
+							this.getHotSceneryList(lon,lat)
+						}
 					}
-
+					
+					
 				} catch (err) {
 					console.log(err)
 				}
-
-
 			},
 
 			// 点击搜索框跳转到景区列表页面
@@ -210,9 +233,9 @@
 			transform: rotate(1turn);
 		}
 	}
-	
-	.home{
-		padding-bottom:150rpx;
+
+	.home {
+		padding-bottom: 150rpx;
 	}
 
 	.search {

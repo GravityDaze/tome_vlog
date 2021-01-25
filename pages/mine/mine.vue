@@ -15,21 +15,16 @@
 						<image :src="userInfo.avatarUrl" class="avatar"></image>
 						<text>{{userInfo.nickName}}</text>
 					</view>
-
 					<view class="btn" @click="toLogin" v-else>
 						<text>登录</text>
 					</view>
 				</view>
-				<!-- <view class="message" data-onreadmsg="{{msgHit.onReadMsg}}" bindtap="navigateToMsgFn">
-					<view wx:if="{{msgHit.onReadMsg == 1}}" class="hit"></view>
-					<image src="/imgs/message.png" class="icon_message"></image>
-				</view> -->
 			</view>
 		</view>
 		<view class="content-box">
 			<!-- 按钮面板 -->
 			<view class="panel">
-				<view class="single-item">
+				<view class="single-item" @click="goFacePage">
 					<image src="../../static/mine01.png" class="icons"></image>
 					<text>人脸采集</text>
 				</view>
@@ -49,9 +44,7 @@
 				<view class="title">
 					<view class="text">
 						<text>我的游记</text>
-						<view class="remind">
-							<text>2</text>
-						</view>
+						<view class="remind"></view>
 					</view>
 					<view class="title-underline"></view>
 					<view class="tips">
@@ -79,11 +72,11 @@
 	export default {
 		data() {
 			return {
-				topHeight: 0,
-				immersive: true,
+				topHeight: 0,  
+				immersive: true, //是否沉浸式导航栏
 				isLogin: false, //判断是否登录
-				userInfo: {},
-				travelList: []
+				userInfo: {}, //用户信息
+				travelList: [] //游记数据
 			}
 		},
 		onLoad() {
@@ -92,7 +85,6 @@
 		},
 		onShow() {
 			this.setTabBarIndex(2)
-
 			// 判断是否登录
 			this.checkLoginStatus()
 		},
@@ -110,7 +102,7 @@
 				const token = uni.getStorageSync('access_token')
 				const userInfo = uni.getStorageSync('userInfo')
 				if (token && userInfo) {
-					this.userInfo = JSON.parse(userInfo)
+					this.userInfo = userInfo
 					this.isLogin = true
 					// 获取游记数据
 					const res = await queryTravel()
@@ -126,11 +118,16 @@
 					url: '/pages/login/login'
 				})
 			},
-			logout() {
-				uni.clearStorageSync()
-				uni.reLaunch({
-					url: "/pages/index/index"
-				})
+			
+			// 跳转至人脸采集
+			goFacePage(){
+				if(!this.isLogin){
+					this.toLogin()
+				}else{
+					uni.navigateTo({
+						url:'/pages/face/face'
+					})
+				}
 			},
 		},
 		onPageScroll(e) {
@@ -298,16 +295,12 @@
 					}
 
 					.remind {
-						margin-left: 12rpx;
+						width: 10rpx;
+						height: 10rpx;
 						background: #FC4541;
-						display: flex;
-						width: 36rpx;
-						height: 36rpx;
+						box-shadow: 0px 0px 20rpx 1rpx rgba(244, 40, 35, 0.29);
 						border-radius: 50%;
-						align-items: center;
-						justify-content: center;
-						color: #fff;
-						font-size: 24rpx;
+						margin-left:12rpx;
 					}
 				}
 

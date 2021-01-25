@@ -100,10 +100,9 @@
 			// 获取到景区id 链接参数中如果没有 就去globalData中寻找
 			const sceneryId = options.id?options.id:getApp().globalData.sceneryId
 			// 如果在globalData中都没有
-			console.log(getApp().globalData.sceneryId)
 			if( sceneryId === ""){
 				return uni.redirectTo({
-					url:"/pages/sceneryList/sceneryList"
+					url:"/pages/sceneryList/sceneryList?type=assert"
 				})
 			}
 			// 查询景区数据( 景区id为进入本页面的前置条件 )

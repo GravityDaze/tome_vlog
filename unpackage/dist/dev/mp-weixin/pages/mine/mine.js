@@ -198,25 +198,18 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-
-
-
-
-
-
-var _mine = __webpack_require__(/*! ../../api/mine.js */ 61);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var navbar = function navbar() {__webpack_require__.e(/*! require.ensure | components/nav */ "components/nav").then((function () {return resolve(__webpack_require__(/*! ../../components/nav.vue */ 105));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var list = function list() {__webpack_require__.e(/*! require.ensure | pages/mine/components/list */ "pages/mine/components/list").then((function () {return resolve(__webpack_require__(/*! ./components/list.vue */ 175));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+var _mine = __webpack_require__(/*! ../../api/mine.js */ 61);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var navbar = function navbar() {__webpack_require__.e(/*! require.ensure | components/nav */ "components/nav").then((function () {return resolve(__webpack_require__(/*! ../../components/nav.vue */ 114));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var list = function list() {__webpack_require__.e(/*! require.ensure | pages/mine/components/list */ "pages/mine/components/list").then((function () {return resolve(__webpack_require__(/*! ./components/list.vue */ 185));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
 
 
 {
   data: function data() {
     return {
       topHeight: 0,
-      immersive: true,
+      immersive: true, //是否沉浸式导航栏
       isLogin: false, //判断是否登录
-      userInfo: {},
-      travelList: [] };
-
+      userInfo: {}, //用户信息
+      travelList: [] //游记数据
+    };
   },
   onLoad: function onLoad() {
     // 获取到导航栏高度
@@ -224,7 +217,6 @@ var _mine = __webpack_require__(/*! ../../api/mine.js */ 61);function _interopRe
   },
   onShow: function onShow() {
     this.setTabBarIndex(2);
-
     // 判断是否登录
     this.checkLoginStatus();
   },
@@ -242,7 +234,7 @@ var _mine = __webpack_require__(/*! ../../api/mine.js */ 61);function _interopRe
                 token = uni.getStorageSync('access_token');
                 userInfo = uni.getStorageSync('userInfo');if (!(
                 token && userInfo)) {_context.next = 11;break;}
-                _this.userInfo = JSON.parse(userInfo);
+                _this.userInfo = userInfo;
                 _this.isLogin = true;
                 // 获取游记数据
                 _context.next = 7;return (0, _mine.queryTravel)();case 7:res = _context.sent;
@@ -258,11 +250,16 @@ var _mine = __webpack_require__(/*! ../../api/mine.js */ 61);function _interopRe
         url: '/pages/login/login' });
 
     },
-    logout: function logout() {
-      uni.clearStorageSync();
-      uni.reLaunch({
-        url: "/pages/index/index" });
 
+    // 跳转至人脸采集
+    goFacePage: function goFacePage() {
+      if (!this.isLogin) {
+        this.toLogin();
+      } else {
+        uni.navigateTo({
+          url: '/pages/face/face' });
+
+      }
     } },
 
   onPageScroll: function onPageScroll(e) {

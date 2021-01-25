@@ -11,3 +11,6 @@ export const queryMoment = data => http.post('/videoapp/video/goodMoment',data)
 
 // 判断当前所属景区
 export const queryCurrentScenery = data => http.post('/videoapp/scenery/locationConfirm',data)
+
+// 查询热门景区 新
+export const queryCard = data => http.post('/videoapp/scenery/queryCard',data)

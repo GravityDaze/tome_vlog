@@ -184,12 +184,21 @@ var _sceneryList = __webpack_require__(/*! ../../api/sceneryList.js */ 70);funct
 {
   data: function data() {
     return {
+      assert: false, // 选择景区时否作为定位景区
       originList: [], //原始数据 用于清空key后恢复数据
       activeList: [], //动态数据 用于检索
       id: '' //当前选择的景区ID
     };
   },
-  onLoad: function onLoad() {
+  onLoad: function onLoad(options) {
+    // 如果type是assert 则选择的景区会作为定位景区
+    if (options.type === 'assert') {
+      uni.showModal({
+        content: '未定位到景区，请手动选择您所在的景区',
+        showCancel: false });
+
+      this.assert = true;
+    }
     this.getSceneryList();
   },
   methods: {
@@ -216,7 +225,13 @@ var _sceneryList = __webpack_require__(/*! ../../api/sceneryList.js */ 70);funct
     },
     // 带参数跳转
     navigate: function navigate(item) {
-      uni.navigateTo({
+      if (this.assert) {
+        getApp().globalData.sceneryId = item.id;
+        // 保存用户手动定位的景区经纬度
+        getApp().globalData.manualLocation.lon = item.lon;
+        getApp().globalData.manualLocation.lat = item.lat;
+      }
+      uni.redirectTo({
         url: "/pages/shoot/shoot?id=".concat(item.id) });
 
     } } };exports.default = _default;
