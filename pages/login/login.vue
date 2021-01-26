@@ -17,13 +17,20 @@
 
 <script>
 	import {
-		login
+		login,
+		initParams
 	} from "../../api/index.js"
+	import {
+		queryFace,
+	} from '../../api/face.js'
 	export default {
 		data() {
 			return {
 
 			}
+		},
+		onLoad() {
+
 		},
 		methods: {
 			getUserInfo(e) {
@@ -51,12 +58,35 @@
 							})
 							uni.setStorageSync('refresh_token', res.value.refresh_token)
 							uni.setStorageSync('access_token', res.value.access_token)
-							// 登录成功跳转回'我的页面'
-							uni.switchTab({
-								url: '/pages/mine/mine'
-							})
+							// 获取初始化参数
+							const params = await initParams()
+							getApp().globalData.initParams = params.value
 
+							// 检测是否录入了人脸
+							const face = await queryFace()
+							if (!face.value.frontFace) {
+								uni.redirectTo({
+									url: '/pages/face/face'
+								})
+							}else{
+								// 如果存在全局返回路径
+								const { returnPath } = getApp().globalData
+								if(returnPath){	
+									uni.redirectTo({
+										url:returnPath,
+										success:_=>{
+											getApp().globalData.returnPath = ''
+										}
+									})	
+								}else{
+									uni.switchTab({
+										url: '/pages/mine/mine'
+									})
+								}
+							}
+							
 						} catch (err) {
+							console.log(err)
 							uni.showToast({
 								icon: 'none',
 								title: '登陆失败'
@@ -116,11 +146,11 @@
 				margin-right: 12rpx;
 			}
 		}
-		
-		.tips{
-			position:fixed;
-			width:100%;
-			bottom:47rpx;
+
+		.tips {
+			position: fixed;
+			width: 100%;
+			bottom: 47rpx;
 			text-align: center;
 			// left:50%;
 			// transform:translateX(-50%);

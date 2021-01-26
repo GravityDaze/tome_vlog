@@ -127,7 +127,7 @@
 					return v.hotStatus === 1 || v.isOpen === 1 || v.isLocation === 1
 				})
 				// 应该插入的索引
-				let insert = 1
+				let insert = 0
 				/*
 					按优先级排序
 					1:定位景区
@@ -138,9 +138,9 @@
 					if (filterScenery[i].isOpen === 1 && i !== 0) {
 						let temp = filterScenery.splice(i, 1)
 						if (filterScenery[0].isLocation === 1) {
-							filterScenery.splice(insert++, 0, ...temp)
+							filterScenery.splice(++insert, 0, ...temp)
 						} else {
-							filterScenery.splice(insert++ - 1, 0, ...temp)
+							filterScenery.splice(insert, 0, ...temp)
 						}
 					}
 				}

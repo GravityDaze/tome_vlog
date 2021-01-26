@@ -26,6 +26,15 @@ Component({
 			const data = e.currentTarget.dataset
 			const url = data.path
 			if(data.index === 1){
+				// 判断是否登录
+				const token = wx.getStorageSync('access_token')
+				if(!token){
+					// 设置全局返回路径 确保登录成功后能返回到开拍页面
+					getApp().globalData.returnPath = '/pages/shoot/shoot'
+					return wx.navigateTo({
+						url:'/pages/login/login'
+					})
+				}
 				wx.navigateTo({
 					url
 				})

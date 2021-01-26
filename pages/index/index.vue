@@ -30,7 +30,7 @@
 					// 没有刷新token 获取授权数据以重新登录
 					this.getAuthData()
 				} else {
-					// 有刷新token 将access刷新
+					// 有刷新token 将token刷新
 					this.freshenToken(refreshToken)
 				}
 			},
@@ -41,17 +41,10 @@
 					const res = await refreshAccessToken({
 						refreshToken
 					})
-					console.log(res)
 					// 缓存refresh_token
-					wx.setStorageSync(
-						'refresh_token',
-						res.value.refresh_token,
-					)
+					uni.setStorageSync('refresh_token',res.value.refresh_token)
 					// 缓存access_token
-					wx.setStorageSync(
-						"access_token",
-						res.value.access_token,
-					)
+					uni.setStorageSync("access_token",res.value.access_token)
 					// 获取初始化参数
 					this.initParamFn()
 					//  查询用户的消息提示
@@ -81,12 +74,12 @@
 								},
 								fail: () => {
 									// 获取用户信息失败
-									this.initParamFn()
+									// this.initParamFn()
 								}
 							})
 						} else {
 							// 用户未授权
-							this.initParamFn()
+							// this.initParamFn()
 						}
 					}
 				})
@@ -100,7 +93,7 @@
 					}) => {
 						//发起网络请求
 						try {
-							const userInfo =uni.getStorageSync('userInfo')
+							const userInfo = uni.getStorageSync('userInfo')
 							const res = await login({
 								code,
 								...userInfo

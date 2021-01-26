@@ -73,7 +73,7 @@
 							if (confirm) {
 								uni.openSetting({
 									complete: _ => {
-
+										// 逻辑待完成
 									}
 								})
 							} else {
@@ -132,13 +132,27 @@
 							await editFace({
 								frontFace: key
 							})
-							// 处理是退出还是开启视频之旅
-							uni.hideLoading()
-							
+							// 如果存在全局返回路径
+							const {
+								returnPath
+							} = getApp().globalData
+							if (returnPath) {
+								uni.redirectTo({
+									url: returnPath,
+									success: _ => {
+										getApp().globalData.returnPath = ''
+									}
+								})
+							} else {
+								uni.navigateBack()
+							}
+
+
 						} catch (err) {
-							uni.hideLoading()
 							console.log(err)
-						} 
+						} finally {
+							uni.hideLoading()
+						}
 					}
 				})
 			},

@@ -56,7 +56,7 @@
 		</view>
 			
 		<view class="bottom-bar">
-			<view class="btn">
+			<view class="btn" @click="start">
 				<text>开启视频之旅</text>
 			</view>
 		</view>
@@ -67,7 +67,8 @@
 <script>
 	import navbar from '../../components/nav.vue'
 	import {
-		querySceneryInfo
+		querySceneryInfo,
+		startTrip
 	} from '../../api/shoot.js'
 	export default {
 		data() {
@@ -98,7 +99,7 @@
 		},
 		onLoad(options) {
 			// 获取到景区id 链接参数中如果没有 就去globalData中寻找
-			const sceneryId = options.id?options.id:getApp().globalData.sceneryId
+			const sceneryId = options.id || getApp().globalData.sceneryId
 			// 如果在globalData中都没有
 			if( sceneryId === ""){
 				return uni.redirectTo({
@@ -108,7 +109,6 @@
 			// 查询景区数据( 景区id为进入本页面的前置条件 )
 			this.getSceneryInfo(sceneryId)
 
-
 		},
 		methods: {
 			async getSceneryInfo(id) {
@@ -116,6 +116,37 @@
 					id
 				})
 				this.sceneryInfo = res.value
+			},
+			// 开启视频之旅
+			async start(){
+				uni.showLoading({
+					title:'开启中',
+					mask:true
+				})
+				try{
+					await startTrip({
+						sceneryId:this.sceneryInfo.id
+					})
+					// 订阅模板消息
+					const { composeSuccessSubscribeTmplId } = getApp().globalData.initParams 
+					wx.requestSubscribeMessage({
+						tmplIds:[composeSuccessSubscribeTmplId],
+						complete:_=>{
+							uni.showModal(_>{
+								content:'开启成功'
+							})
+						}
+					})
+				}catch(err){
+					uni.showModal({
+						content:err.toString()
+					})
+				}finally{
+					uni.hideLoading()
+					
+				}
+				
+				
 			},
 		},
 		onPageScroll(e) {

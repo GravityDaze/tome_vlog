@@ -210,7 +210,7 @@ var _face = __webpack_require__(/*! ../../api/face.js */ 111);function _interopR
                       if (confirm) {
                         uni.openSetting({
                           complete: function complete(_) {
-
+                            // 逻辑待完成
                           } });
 
                       } else {
@@ -260,7 +260,7 @@ var _face = __webpack_require__(/*! ../../api/face.js */ 111);function _interopR
         header: {
           "content-type": "multiple/form-data" },
 
-        success: function () {var _success = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee4(res) {var _JSON$parse, key;return _regenerator.default.wrap(function _callee4$(_context4) {while (1) {switch (_context4.prev = _context4.next) {case 0:_context4.prev = 0;_JSON$parse =
+        success: function () {var _success = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee4(res) {var _JSON$parse, key, returnPath;return _regenerator.default.wrap(function _callee4$(_context4) {while (1) {switch (_context4.prev = _context4.next) {case 0:_context4.prev = 0;_JSON$parse =
 
 
 
@@ -269,12 +269,26 @@ var _face = __webpack_require__(/*! ../../api/face.js */ 111);function _interopR
                     _context4.next = 4;return (0, _face.editFace)({
                       frontFace: key });case 4:
 
-                    // 处理是退出还是开启视频之旅
-                    uni.hideLoading();_context4.next = 11;break;case 7:_context4.prev = 7;_context4.t0 = _context4["catch"](0);
+                    // 如果存在全局返回路径
+
+                    returnPath =
+                    getApp().globalData.returnPath;
+                    if (returnPath) {
+                      uni.redirectTo({
+                        url: returnPath,
+                        success: function success(_) {
+                          getApp().globalData.returnPath = '';
+                        } });
+
+                    } else {
+                      uni.navigateBack();
+                    }_context4.next = 11;break;case 8:_context4.prev = 8;_context4.t0 = _context4["catch"](0);
 
 
-                    uni.hideLoading();
-                    console.log(_context4.t0);case 11:case "end":return _context4.stop();}}}, _callee4, null, [[0, 7]]);}));function success(_x) {return _success.apply(this, arguments);}return success;}() });
+
+                    console.log(_context4.t0);case 11:_context4.prev = 11;
+
+                    uni.hideLoading();return _context4.finish(11);case 14:case "end":return _context4.stop();}}}, _callee4, null, [[0, 8, 11, 14]]);}));function success(_x) {return _success.apply(this, arguments);}return success;}() });
 
 
 

@@ -210,6 +210,7 @@ __webpack_require__.r(__webpack_exports__);
 var _shoot = __webpack_require__(/*! ../../api/shoot.js */ 52);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var navbar = function navbar() {__webpack_require__.e(/*! require.ensure | components/nav */ "components/nav").then((function () {return resolve(__webpack_require__(/*! ../../components/nav.vue */ 114));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
 
 
+
 {
   data: function data() {
     return {
@@ -239,7 +240,7 @@ var _shoot = __webpack_require__(/*! ../../api/shoot.js */ 52);function _interop
   },
   onLoad: function onLoad(options) {
     // 获取到景区id 链接参数中如果没有 就去globalData中寻找
-    var sceneryId = options.id ? options.id : getApp().globalData.sceneryId;
+    var sceneryId = options.id || getApp().globalData.sceneryId;
     // 如果在globalData中都没有
     if (sceneryId === "") {
       return uni.redirectTo({
@@ -249,7 +250,6 @@ var _shoot = __webpack_require__(/*! ../../api/shoot.js */ 52);function _interop
     // 查询景区数据( 景区id为进入本页面的前置条件 )
     this.getSceneryInfo(sceneryId);
 
-
   },
   methods: {
     getSceneryInfo: function getSceneryInfo(id) {var _this = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var res;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:_context.next = 2;return (
@@ -257,6 +257,37 @@ var _shoot = __webpack_require__(/*! ../../api/shoot.js */ 52);function _interop
                     id: id }));case 2:res = _context.sent;
 
                 _this.sceneryInfo = res.value;case 4:case "end":return _context.stop();}}}, _callee);}))();
+    },
+    // 开启视频之旅
+    start: function start() {var _this2 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2() {var composeSuccessSubscribeTmplId;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:
+                uni.showLoading({
+                  title: '开启中',
+                  mask: true });_context2.prev = 1;_context2.next = 4;return (
+
+
+                  (0, _shoot.startTrip)({
+                    sceneryId: _this2.sceneryInfo.id }));case 4:
+
+                // 订阅模板消息
+                composeSuccessSubscribeTmplId = getApp().globalData.initParams.composeSuccessSubscribeTmplId;
+                wx.requestSubscribeMessage({
+                  tmplIds: [composeSuccessSubscribeTmplId],
+                  complete: function complete(_) {
+                    uni.showModal(_ > {
+                      content: '开启成功' });
+
+                  } });_context2.next = 11;break;case 8:_context2.prev = 8;_context2.t0 = _context2["catch"](1);
+
+
+                uni.showModal({
+                  content: _context2.t0.toString() });case 11:_context2.prev = 11;
+
+
+                uni.hideLoading();return _context2.finish(11);case 14:case "end":return _context2.stop();}}}, _callee2, null, [[1, 8, 11, 14]]);}))();
+
+
+
+
     } },
 
   onPageScroll: function onPageScroll(e) {

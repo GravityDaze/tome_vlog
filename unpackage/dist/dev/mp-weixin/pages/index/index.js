@@ -162,7 +162,7 @@ var _index = __webpack_require__(/*! ../../api/index.js */ 20);function _interop
         // 没有刷新token 获取授权数据以重新登录
         this.getAuthData();
       } else {
-        // 有刷新token 将access刷新
+        // 有刷新token 将token刷新
         this.freshenToken(refreshToken);
       }
     },
@@ -173,27 +173,20 @@ var _index = __webpack_require__(/*! ../../api/index.js */ 20);function _interop
                   (0, _index.refreshAccessToken)({
                     refreshToken: refreshToken }));case 3:res = _context.sent;
 
-                console.log(res);
                 // 缓存refresh_token
-                wx.setStorageSync(
-                'refresh_token',
-                res.value.refresh_token);
-
+                uni.setStorageSync('refresh_token', res.value.refresh_token);
                 // 缓存access_token
-                wx.setStorageSync(
-                "access_token",
-                res.value.access_token);
-
+                uni.setStorageSync("access_token", res.value.access_token);
                 // 获取初始化参数
                 _this.initParamFn();
                 //  查询用户的消息提示
-                _this.selectMsgHitFn();_context.next = 16;break;case 11:_context.prev = 11;_context.t0 = _context["catch"](0);
+                _this.selectMsgHitFn();_context.next = 15;break;case 10:_context.prev = 10;_context.t0 = _context["catch"](0);
 
                 console.log(_context.t0);
                 // 刷新失败时清除token
                 uni.clearStorageSync();
                 // 刷新失败 判断用户是否有授权,如有授权,仍然可以调用登录方法
-                _this.getAuthData();case 16:case "end":return _context.stop();}}}, _callee, null, [[0, 11]]);}))();
+                _this.getAuthData();case 15:case "end":return _context.stop();}}}, _callee, null, [[0, 10]]);}))();
 
     },
 
@@ -213,12 +206,12 @@ var _index = __webpack_require__(/*! ../../api/index.js */ 20);function _interop
               },
               fail: function fail() {
                 // 获取用户信息失败
-                _this2.initParamFn();
+                // this.initParamFn()
               } });
 
           } else {
             // 用户未授权
-            _this2.initParamFn();
+            // this.initParamFn()
           }
         } });
 
