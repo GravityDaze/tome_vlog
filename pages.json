@@ -65,6 +65,12 @@
 			"style": {
 				"navigationBarTitleText": "人脸采集"
 			}
+		},
+		{
+			"path": "pages/about/about",
+			"style": {
+				"navigationBarTitleText": "关于我们"
+			}
 		}
 	],
 	  "tabBar": {

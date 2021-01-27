@@ -46,9 +46,12 @@
 					// 缓存access_token
 					uni.setStorageSync("access_token",res.value.access_token)
 					// 获取初始化参数
-					this.initParamFn()
-					//  查询用户的消息提示
+					const params = await initParams()
+					getApp().globalData.initParams = params.value
+					// 查询用户的消息提示
 					this.selectMsgHitFn()
+					// 跳转
+					this.transfer()
 				} catch (err) {
 					console.log(err)
 					// 刷新失败时清除token
@@ -73,13 +76,11 @@
 									this.loginFn()
 								},
 								fail: () => {
-									// 获取用户信息失败
-									// this.initParamFn()
+									this.transfer()
 								}
 							})
 						} else {
-							// 用户未授权
-							// this.initParamFn()
+							this.transfer()
 						}
 					}
 				})
@@ -87,7 +88,7 @@
 
 			// 登录方法
 			loginFn() {
-				wx.login({
+				uni.login({
 					success: async ({
 						code
 					}) => {
@@ -100,56 +101,28 @@
 							})
 							uni.setStorageSync('refresh_token', res.value.refresh_token)
 							uni.setStorageSync('access_token', res.value.access_token)
-							this.initParamFn()
+							// 获取初始化参数
+							const params = await initParams()
+							getApp().globalData.initParams = params.value
 							// 登录成功，查询用户的消息提示
 							this.selectMsgHitFn()
 						} catch (err) {
-							this.initParamFn()
+							console.log(err)
+						} finally{
+							this.transfer()
 						}
 					},
 					fail: () => {
-						this.initParamFn()
+						this.transfer()
 					}
 				})
 			},
 
 			// 获取初始化参数
-			initParamFn() {
-				//     try {
-				//       const res = await initParams()
-				//       getApp().globalData.noBuyVideoLook = res.value.noBuyVideoLook / 100
-				//       getApp().globalData.uploadVideoMaxSize = res.value.uploadVideoMaxSize
-				//       getApp().globalData.uploadVideoDuration = res.value.uploadVideoDuration
-				//       getApp().globalData.uploadVideoMaxNum = res.value.uploadVideoMaxNum
-				//       getApp().globalData.composeSuccessSubscribeTmplId = res.value.composeSuccessSubscribeTmplId
-
-				//         setTimeout( _=>{
-				//           if (this.data.options.type === 2) {
-				//             wx.reLaunch({
-				//               url: '/pages/mine/mine',
-				//             })
-				//           } else {
-				console.log('here')
+			transfer() {
 				uni.reLaunch({
 					url: '/pages/home/home',
 				})
-				// }
-				// },300 )
-
-				//     } catch (err) {
-				// 		console.log(err)
-				//       wx.showToast({
-
-
-
-
-
-				//         title: '初始化失败',
-				//         icon: 'none',
-				//         duration: 2000,
-				//         mask: true
-				//       })
-				//     }
 			},
 
 			// 查询消息提示

@@ -1,9 +1,9 @@
 <!-- '我的'视频详情页面 -->
 <template>
 	<view v-if="Object.keys(videoInfo).length">
-		<video @timeupdate="timeupdate" id="video" style="width:100%" autoplay :controls="controls" :src="videoInfo.url" objectFit="fill">
-			<cover-view class="tips" v-if="videoInfo.buyStatus === 0">
-				<cover-view>{{ controls? '试看中':'试看结束'}}，查看完整版请</cover-view>
+		<video @timeupdate="timeupdate" @ended="ended" id="video" style="width:100%" autoplay :controls="controls" :src="videoInfo.url" objectFit="fill">
+			<cover-view class="tips" v-if="videoInfo.buyStatus === 0 && availableTime !== 0">
+				<cover-view>{{ controls? `试看${availableTime}秒`:'试看结束'}}，查看完整版请</cover-view>
 				<cover-view style="color: rgba(252, 69, 65, 1);margin-left:15rpx" @click="buy">立即购买</cover-view>
 			</cover-view>
 		</video>
@@ -88,7 +88,8 @@
 				mask: false, //是否展开遮罩
 				showModal: false, // 是否展开分享
 				publishModal: false, // 发布至途咪
-				controls:true
+				controls:true,
+				availableTime:0
 			}
 		},
 		onLoad(options) {
@@ -118,14 +119,23 @@
 			timeupdate(e){
 				if(!this.videoInfo.buyStatus){
 					const { currentTime,duration } = e.detail
-					const availableTime = duration * 1/3
-					if( currentTime >  availableTime ){
+					// 指定未购买的视频能播放多少秒
+					const { noBuyVideoLook } = getApp().globalData.initParams
+					this.availableTime = Math.ceil(duration * (noBuyVideoLook/100))
+					if( currentTime >  this.availableTime ){
 						 const ctx = uni.createVideoContext('video')
 						 // 试看结束
 						 this.controls = false
 						 ctx.stop()
 					}
 				}
+			},
+			
+			// 视频播放结束回调
+			ended(){
+				const ctx = uni.createVideoContext('video')
+				ctx.seek(0)
+				ctx.stop()
 			},
 			
 

@@ -57,7 +57,7 @@
 								<text>未在景区摄像头中识别到您的图像
 									请查看头像采集是否清晰</text>
 							</view>
-							<view class="panel-btn fail-status">
+							<view class="panel-btn fail-status" @click="checkFace">
 								<text>查看人脸采集</text>
 							</view>
 						</template>
@@ -87,6 +87,11 @@
 				const type = item.buyStatus
 				uni.navigateTo({
 					url:`/pages/myVideo/myVideo?videoId=${item.videoId}&type=${type}`
+				})
+			},
+			checkFace(){
+				uni.navigateTo({
+					url:"/pages/face/face"
 				})
 			}
 		}

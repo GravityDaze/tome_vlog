@@ -168,7 +168,7 @@ var _index = __webpack_require__(/*! ../../api/index.js */ 20);function _interop
     },
 
     // 刷新accecctoken
-    freshenToken: function freshenToken(refreshToken) {var _this = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var res;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:_context.prev = 0;_context.next = 3;return (
+    freshenToken: function freshenToken(refreshToken) {var _this = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var res, params;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:_context.prev = 0;_context.next = 3;return (
 
                   (0, _index.refreshAccessToken)({
                     refreshToken: refreshToken }));case 3:res = _context.sent;
@@ -178,15 +178,18 @@ var _index = __webpack_require__(/*! ../../api/index.js */ 20);function _interop
                 // 缓存access_token
                 uni.setStorageSync("access_token", res.value.access_token);
                 // 获取初始化参数
-                _this.initParamFn();
-                //  查询用户的消息提示
-                _this.selectMsgHitFn();_context.next = 15;break;case 10:_context.prev = 10;_context.t0 = _context["catch"](0);
+                _context.next = 8;return (0, _index.initParams)();case 8:params = _context.sent;
+                getApp().globalData.initParams = params.value;
+                // 查询用户的消息提示
+                _this.selectMsgHitFn();
+                // 跳转
+                _this.transfer();_context.next = 19;break;case 14:_context.prev = 14;_context.t0 = _context["catch"](0);
 
                 console.log(_context.t0);
                 // 刷新失败时清除token
                 uni.clearStorageSync();
                 // 刷新失败 判断用户是否有授权,如有授权,仍然可以调用登录方法
-                _this.getAuthData();case 15:case "end":return _context.stop();}}}, _callee, null, [[0, 10]]);}))();
+                _this.getAuthData();case 19:case "end":return _context.stop();}}}, _callee, null, [[0, 14]]);}))();
 
     },
 
@@ -205,13 +208,11 @@ var _index = __webpack_require__(/*! ../../api/index.js */ 20);function _interop
                 _this2.loginFn();
               },
               fail: function fail() {
-                // 获取用户信息失败
-                // this.initParamFn()
+                _this2.transfer();
               } });
 
           } else {
-            // 用户未授权
-            // this.initParamFn()
+            _this2.transfer();
           }
         } });
 
@@ -219,8 +220,8 @@ var _index = __webpack_require__(/*! ../../api/index.js */ 20);function _interop
 
     // 登录方法
     loginFn: function loginFn() {var _this3 = this;
-      wx.login({
-        success: function () {var _success = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2(_ref) {var code, userInfo, res;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:
+      uni.login({
+        success: function () {var _success = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2(_ref) {var code, userInfo, res, params;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:
                     code = _ref.code;_context2.prev = 1;
 
 
@@ -232,56 +233,28 @@ var _index = __webpack_require__(/*! ../../api/index.js */ 20);function _interop
 
                     uni.setStorageSync('refresh_token', res.value.refresh_token);
                     uni.setStorageSync('access_token', res.value.access_token);
-                    _this3.initParamFn();
+                    // 获取初始化参数
+                    _context2.next = 10;return (0, _index.initParams)();case 10:params = _context2.sent;
+                    getApp().globalData.initParams = params.value;
                     // 登录成功，查询用户的消息提示
-                    _this3.selectMsgHitFn();_context2.next = 15;break;case 12:_context2.prev = 12;_context2.t0 = _context2["catch"](1);
+                    _this3.selectMsgHitFn();_context2.next = 18;break;case 15:_context2.prev = 15;_context2.t0 = _context2["catch"](1);
 
-                    _this3.initParamFn();case 15:case "end":return _context2.stop();}}}, _callee2, null, [[1, 12]]);}));function success(_x) {return _success.apply(this, arguments);}return success;}(),
+                    console.log(_context2.t0);case 18:_context2.prev = 18;
+
+                    _this3.transfer();return _context2.finish(18);case 21:case "end":return _context2.stop();}}}, _callee2, null, [[1, 15, 18, 21]]);}));function success(_x) {return _success.apply(this, arguments);}return success;}(),
 
 
         fail: function fail() {
-          _this3.initParamFn();
+          _this3.transfer();
         } });
 
     },
 
     // 获取初始化参数
-    initParamFn: function initParamFn() {
-      //     try {
-      //       const res = await initParams()
-      //       getApp().globalData.noBuyVideoLook = res.value.noBuyVideoLook / 100
-      //       getApp().globalData.uploadVideoMaxSize = res.value.uploadVideoMaxSize
-      //       getApp().globalData.uploadVideoDuration = res.value.uploadVideoDuration
-      //       getApp().globalData.uploadVideoMaxNum = res.value.uploadVideoMaxNum
-      //       getApp().globalData.composeSuccessSubscribeTmplId = res.value.composeSuccessSubscribeTmplId
-
-      //         setTimeout( _=>{
-      //           if (this.data.options.type === 2) {
-      //             wx.reLaunch({
-      //               url: '/pages/mine/mine',
-      //             })
-      //           } else {
-      console.log('here');
+    transfer: function transfer() {
       uni.reLaunch({
         url: '/pages/home/home' });
 
-      // }
-      // },300 )
-
-      //     } catch (err) {
-      // 		console.log(err)
-      //       wx.showToast({
-
-
-
-
-
-      //         title: '初始化失败',
-      //         icon: 'none',
-      //         duration: 2000,
-      //         mask: true
-      //       })
-      //     }
     },
 
     // 查询消息提示

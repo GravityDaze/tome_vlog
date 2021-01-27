@@ -9,7 +9,8 @@
     "pages/myVideo/myVideo",
     "pages/map/map",
     "pages/login/login",
-    "pages/face/face"
+    "pages/face/face",
+    "pages/about/about"
   ],
   "subPackages": [],
   "window": {
@@ -45,5 +46,5 @@
     }
   },
   "usingComponents": {},
-  "sitemapLocation": "sitemap53.json"
+  "sitemapLocation": "sitemap34.json"
 }

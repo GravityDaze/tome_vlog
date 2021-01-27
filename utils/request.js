@@ -29,7 +29,7 @@ http.interceptors.response.use(res => {
 	if (resultCode === '0000') {
 		return res.data
 	} else {
-		return Promise.reject(new Error(res.data.resultStatus.resultMessage))
+		return Promise.reject(res.data.resultStatus)
 	}
 }, err => {
 	const {
@@ -39,6 +39,6 @@ http.interceptors.response.use(res => {
 		console.log('登录失效')
 		uni.clearStorageSync()
 	} else {
-		return Promise.reject(new Error(err.data.resultStatus.resultMessage))
+		return Promise.reject(err.data.resultStatus)
 	}
 })

@@ -5,3 +5,6 @@ export const querySceneryInfo = data => http.get('/videoapp/scenery/get',{ param
 
 // 开启视频之旅
 export const startTrip = data => http.post('/videoapp/video/startTrip',data )
+
+// 是否开启视频之旅
+export const isStartTrip = data => http.post('/videoapp/video/isStartTrip',data)

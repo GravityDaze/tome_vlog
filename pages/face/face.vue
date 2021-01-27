@@ -41,7 +41,7 @@
 				showComfirm: false //是否显示确认头像按钮
 			}
 		},
-		onLoad() {
+		onLoad(options) {
 			this.getFace()
 		},
 		methods: {

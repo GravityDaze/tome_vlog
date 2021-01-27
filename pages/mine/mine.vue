@@ -30,10 +30,9 @@
 				</view>
 				<view class="single-item">
 					<image src="../../static/mine02.png" class="icons"></image>
-					<!-- <view class="notice-dot"></view> -->
-					<text>已购视频</text>
+					<text>游玩攻略</text>
 				</view>
-				<view class="single-item">
+				<view class="single-item" @click="aboutUs">
 					<image src="../../static/mine03_.png" class="icons"></image>
 					<text>关于途咪</text>
 				</view>
@@ -72,7 +71,7 @@
 	export default {
 		data() {
 			return {
-				topHeight: 0,  
+				topHeight: 0,
 				immersive: true, //是否沉浸式导航栏
 				isLogin: false, //判断是否登录
 				userInfo: {}, //用户信息
@@ -118,17 +117,24 @@
 					url: '/pages/login/login'
 				})
 			},
-			
+
 			// 跳转至人脸采集
-			goFacePage(){
-				if(!this.isLogin){
+			goFacePage() {
+				if (!this.isLogin) {
 					this.toLogin()
-				}else{
+				} else {
 					uni.navigateTo({
-						url:'/pages/face/face'
+						url: '/pages/face/face'
 					})
 				}
 			},
+
+			// 跳转至已购视频
+			aboutUs() {
+				uni.navigateTo({
+					url: '/pages/about/about'
+				})
+			}
 		},
 		onPageScroll(e) {
 			if (e.scrollTop > 50) {
@@ -300,7 +306,7 @@
 						background: #FC4541;
 						box-shadow: 0px 0px 20rpx 1rpx rgba(244, 40, 35, 0.29);
 						border-radius: 50%;
-						margin-left:12rpx;
+						margin-left: 12rpx;
 					}
 				}
 

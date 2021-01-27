@@ -214,7 +214,7 @@ var _jsencrypt = __webpack_require__(/*! ../../utils/jsencrypt.js */ 79);
 
 
 
-var _video = __webpack_require__(/*! ../../api/video.js */ 80);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var shareModal = function shareModal() {__webpack_require__.e(/*! require.ensure | pages/myVideo/componets/shareModal */ "pages/myVideo/componets/shareModal").then((function () {return resolve(__webpack_require__(/*! ./componets/shareModal.vue */ 200));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+var _video = __webpack_require__(/*! ../../api/video.js */ 80);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var shareModal = function shareModal() {__webpack_require__.e(/*! require.ensure | pages/myVideo/componets/shareModal */ "pages/myVideo/componets/shareModal").then((function () {return resolve(__webpack_require__(/*! ./componets/shareModal.vue */ 211));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
 
 
 
@@ -229,7 +229,8 @@ var _video = __webpack_require__(/*! ../../api/video.js */ 80);function _interop
       mask: false, //是否展开遮罩
       showModal: false, // 是否展开分享
       publishModal: false, // 发布至途咪
-      controls: true };
+      controls: true,
+      availableTime: 0 };
 
   },
   onLoad: function onLoad(options) {
@@ -259,14 +260,23 @@ var _video = __webpack_require__(/*! ../../api/video.js */ 80);function _interop
     timeupdate: function timeupdate(e) {
       if (!this.videoInfo.buyStatus) {var _e$detail =
         e.detail,currentTime = _e$detail.currentTime,duration = _e$detail.duration;
-        var availableTime = duration * 1 / 3;
-        if (currentTime > availableTime) {
+        // 指定未购买的视频能播放多少秒
+        var noBuyVideoLook = getApp().globalData.initParams.noBuyVideoLook;
+        this.availableTime = Math.ceil(duration * (noBuyVideoLook / 100));
+        if (currentTime > this.availableTime) {
           var ctx = uni.createVideoContext('video');
           // 试看结束
           this.controls = false;
           ctx.stop();
         }
       }
+    },
+
+    // 视频播放结束回调
+    ended: function ended() {
+      var ctx = uni.createVideoContext('video');
+      ctx.seek(0);
+      ctx.stop();
     },
 
 

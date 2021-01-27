@@ -1,5 +1,5 @@
 <template>
-	<view class="shoot">
+	<view class="shoot" v-if="Object.keys(sceneryInfo).length">
 		<navbar showBack :immersive="immersive">
 			<view slot="center">
 				<text>{{sceneryInfo.name}}</text>
@@ -7,27 +7,44 @@
 		</navbar>
 		<view class="cover">
 			<view class="bkg" :style="{backgroundImage:`url(${sceneryInfo.coverUrl})`}"></view>
-			<view class="mask" v-if="Object.keys(sceneryInfo).length"></view>
-			<view class="text">
+			<view :class="isStartTrip?'mask-full':'mask'"></view>
+			<!-- 未开启视频之旅显示的文字 -->
+			<view class="text" v-if="!isStartTrip">
 				<text class="name">{{sceneryInfo.name}}</text>
 				<view class="desc">
 					<text>{{sceneryInfo.describe}}</text>
 				</view>
 			</view>
+			<!-- 已开启视频之旅显示的文字 -->
+			<view class="text-start" v-else>
+				<image src="../../static/camera.png"></image>
+				<text>{{sceneryInfo.name}}视频之旅已开启</text>
+				<text>快去景区留下你的足迹吧</text>
+			</view>
 		</view>
 		<view class="panel">
+			<!-- 特别说明 -->
+			<view class="special" v-if="isStartTrip">
+				<text>特别说明</text>
+				<text>录制开始，可退出小程序，不会停止视频录制，待游玩结束重新进入小程序，去“我的”中查看即可。</text>
+			</view>
+
+
 			<!-- 引导视频 -->
-			<view class="title1">
-				<text>打卡攻略</text>
-			</view>
-			<view class="guide">
-				<text>在开拍前，可观看此视频进行操作指引哟~</text>
-				<view class="guide-cover">
-					<image class="cover" src="https://tomevideo.zhihuiquanyu.com/20210120142357.jpg"></image>
-					<image class="play" src="../../static/play_guide.png" mode=""></image>
+			<template v-else>
+				<view class="title1">
+					<text>打卡攻略</text>
 				</view>
-			</view>
-			
+				<view class="guide">
+					<text>在开拍前，可观看此视频进行操作指引哟~</text>
+					<view class="guide-cover">
+						<image class="cover" src="https://tomevideo.zhihuiquanyu.com/20210120142357.jpg"></image>
+						<image class="play" src="../../static/play_guide.png" mode=""></image>
+					</view>
+				</view>
+			</template>
+
+
 			<!-- 文字2 -->
 			<view class="title2">
 				<text>自动录像点</text>
@@ -36,7 +53,7 @@
 					<image src="../../static/arrow.png" mode=""></image>
 				</view>
 			</view>
-			
+
 			<!-- 自动录像点 -->
 			<view class="poi">
 				<view class="box" v-for="(item,index) in testData" :key="index">
@@ -52,12 +69,12 @@
 					</view>
 				</view>
 			</view>
-			
+
 		</view>
-			
+
 		<view class="bottom-bar">
-			<view class="btn" @click="start">
-				<text>开启视频之旅</text>
+			<view :class="isStartTrip?'btn-start':'btn'" @click="start">
+				<text>{{isStartTrip?'浏览其他精彩VLOG':'开启视频之旅'}}</text>
 			</view>
 		</view>
 
@@ -68,31 +85,33 @@
 	import navbar from '../../components/nav.vue'
 	import {
 		querySceneryInfo,
-		startTrip
+		startTrip,
+		isStartTrip
 	} from '../../api/shoot.js'
 	export default {
 		data() {
 			return {
 				sceneryInfo: {},
+				isStartTrip: false,
 				latitude: "",
 				longitude: "",
-				immersive:true,
-				testData:[
-					{
-						img:"https://img1.qunarzz.com/travel/d5/1801/d0/6a8fbbdf116efcb5.jpg_r_720x480x95_bef77a31.jpg",
-						name:"敬请期待",
-						desc:"打卡点未开放，敬请期待"
-						
+				immersive: true,
+				startNow:"",//是否立即开启视频之旅
+				testData: [{
+						img: "https://img1.qunarzz.com/travel/d5/1801/d0/6a8fbbdf116efcb5.jpg_r_720x480x95_bef77a31.jpg",
+						name: "敬请期待",
+						desc: "打卡点未开放，敬请期待"
+
 					},
 					{
-						img:"https://youimg1.c-ctrip.com/target/100ghk133vsycxbk0D1D9.jpg",
-						name:"敬请期待",
-						desc:"打卡点未开放，敬请期待"
+						img: "https://youimg1.c-ctrip.com/target/100ghk133vsycxbk0D1D9.jpg",
+						name: "敬请期待",
+						desc: "打卡点未开放，敬请期待"
 					},
 					{
-						img:"https://youimg1.c-ctrip.com/target//100h16000000yzfy6C1F2.jpg",
-						name:"敬请期待",
-						desc:"打卡点未开放，敬请期待"
+						img: "https://youimg1.c-ctrip.com/target//100h16000000yzfy6C1F2.jpg",
+						name: "敬请期待",
+						desc: "打卡点未开放，敬请期待"
 					}
 				]
 			}
@@ -100,61 +119,131 @@
 		onLoad(options) {
 			// 获取到景区id 链接参数中如果没有 就去globalData中寻找
 			const sceneryId = options.id || getApp().globalData.sceneryId
-			// 如果在globalData中都没有
-			if( sceneryId === ""){
+			// 如果在globalData中都没有 说明用户不在景区或者拒绝了地理位置授权 需要手动选择所在景区
+			if (sceneryId === "") {
 				return uni.redirectTo({
-					url:"/pages/sceneryList/sceneryList?type=assert"
+					url: "/pages/sceneryList/sceneryList?type=assert"
 				})
 			}
-			// 查询景区数据( 景区id为进入本页面的前置条件 )
+			// 指示回到本页面是否立即开启视频之旅
+			this.startNow = options.start
+			
+			// 查询景区数据
 			this.getSceneryInfo(sceneryId)
 
 		},
 		methods: {
 			async getSceneryInfo(id) {
-				const res = await querySceneryInfo({
-					id
-				})
-				this.sceneryInfo = res.value
-			},
-			// 开启视频之旅
-			async start(){
 				uni.showLoading({
-					title:'开启中',
-					mask:true
+					title: '加载中'
 				})
-				try{
+				// 同时请求是否开启视频之旅接口和景区信息
+				const query = [
+					querySceneryInfo({
+						id
+					}),
+					isStartTrip({
+						sceneryId: id
+					})
+				]
+				try {
+					const [res1, res2] = await Promise.all(query)
+					this.sceneryInfo = res1.value
+					this.isStartTrip = res2.value
+					if(this.startNow){
+						// 防止循环开启
+						this.startNow = ''
+						this.start()
+					}
+				} catch (err) {
+					console.log(err)
+				} finally {
+					uni.hideLoading()
+				}
+
+			},
+
+			// 开启视频之旅
+			async start() {
+				// 如果已开启视频之旅 点击该按钮跳转回首页
+				if (this.isStartTrip) {
+					return uni.switchTab({
+						url: '/pages/home/home'
+					})
+				}
+
+				uni.showLoading({
+					title: '开启中',
+					mask: true
+				})
+				try {
 					await startTrip({
-						sceneryId:this.sceneryInfo.id
+						sceneryId: this.sceneryInfo.id
 					})
 					// 订阅模板消息
-					const { composeSuccessSubscribeTmplId } = getApp().globalData.initParams 
-					wx.requestSubscribeMessage({
-						tmplIds:[composeSuccessSubscribeTmplId],
-						complete:_=>{
-							uni.showModal(_>{
-								content:'开启成功'
+					const {
+						composeSuccessSubscribeTmplId
+					} = getApp().globalData.initParams
+					uni.requestSubscribeMessage({
+						tmplIds: [composeSuccessSubscribeTmplId],
+						complete: _ => {
+							uni.showModal({
+								content: '视频之旅开启成功，快去景区游玩吧',
+								showCancel: false,
+								success: _ => {
+									this.getSceneryInfo(this.sceneryInfo.id)
+								}
 							})
 						}
 					})
-				}catch(err){
-					uni.showModal({
-						content:err.toString()
-					})
-				}finally{
+				} catch (err) {
+					this.handleErr(err)
+				} finally {
 					uni.hideLoading()
-					
 				}
-				
-				
 			},
+
+			// 开启失败时的错误处理
+			handleErr(err) {
+				if (err.resultCode === '0012') {
+					uni.showModal({
+						content: '一小时内只能同时开启两个视频之旅哟~',
+						showCancel: false
+					})
+				} else if (err.resultCode === '0011') {
+					// 未采集人脸
+					getApp().globalData.returnPath = `/pages/shoot/shoot?id=${this.sceneryInfo.id}&start=1`
+					uni.redirectTo({
+						url: '/pages/face/face'
+					})
+				} else if (err.resultCode === '0014') {
+					uni.showModal({
+						content: '该景区未开启视频服务，请重新选择',
+						showCancel: false,
+						success: _ => {
+							uni.switchTab({
+								url: '/pages/home/home'
+							})
+						}
+					})
+				} else if (code === "0013") {
+					// 用户指定景区视频之旅已提交
+					uni.showModal({
+						showCancel: false,
+						content: "您已开启了该景区视频之旅，请勿重复开启",
+						success:_=>{
+							this.getSceneryInfo(this.sceneryInfo.id)
+						}
+					})
+				}
+			}
 		},
 		onPageScroll(e) {
 			if (e.scrollTop > 50) {
 				// 防止频繁修改
 				if (!this.immersive) return
 				this.immersive = false
-		
+
 			} else {
 				if (this.immersive) return
 				this.immersive = true
@@ -182,12 +271,21 @@
 
 			}
 
+
 			.mask {
 				position: absolute;
 				height: 145rpx;
 				width: 100%;
 				bottom: 0;
 				background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, .8));
+			}
+
+			.mask-full {
+				position: absolute;
+				top: 0;
+				bottom: 0;
+				background: rgba(0, 0, 0, .52);
+				width: 100%;
 			}
 
 			.text {
@@ -210,7 +308,37 @@
 					margin-top: 5rpx;
 					font-size: 24rpx;
 				}
+			}
 
+			.text-start {
+				position: absolute;
+				z-index: 10;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+				width: 100%;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				flex-flow: column;
+				color: #FEFEFE;
+
+				image {
+					width: 95rpx;
+					height: 60rpx;
+				}
+
+				text:first-of-type {
+					font-size: 45rpx;
+					font-weight: 800;
+					margin-top: 18rpx;
+				}
+
+				text:last-of-type {
+					font-size: 28rpx;
+					font-weight: bold;
+					margin-top: 10rpx;
+				}
 
 			}
 		}
@@ -222,6 +350,22 @@
 			transform: translateY(-35rpx);
 			border-radius: 27rpx 27rpx 0px 0px;
 			padding: 30rpx 30rpx 150rpx;
+
+			.special {
+				display: flex;
+				flex-flow: column;
+				color: #999;
+				line-height: 1.8;
+
+				text:first-child {
+					font-size: 28rpx;
+					font-weight: bold;
+				}
+
+				text:last-child {
+					font-size: 26rpx;
+				}
+			}
 
 			.guide {
 				font-size: 26rpx;
@@ -237,7 +381,7 @@
 						width: 100%;
 						box-shadow: 0px 8rpx 27rpx 0px rgba(0, 0, 0, 0.06);
 						border-radius: 27rpx;
-						
+
 					}
 
 					.play {
@@ -250,30 +394,31 @@
 				}
 
 			}
-			.title1{
-				padding:10rpx 0rpx 5rpx;
+
+			.title1 {
+				padding: 10rpx 0rpx 5rpx;
 				font-size: 36rpx;
 				font-family: PingFang SC;
 				font-weight: 500;
 				color: #333332;
 			}
-			
-			.title2{
+
+			.title2 {
 				display: flex;
 				justify-content: space-between;
-				padding:30rpx 0;
+				padding: 30rpx 0;
 				font-size: 36rpx;
 				font-family: PingFang SC;
 				font-weight: 500;
 				color: #333332;
-				
-				.goMap{
+
+				.goMap {
 					display: flex;
 					align-items: center;
 					font-size: 22rpx;
 					font-weight: 400;
 					color: #B5B3B2;
-					
+
 					image {
 						padding-left: 8rpx;
 						width: 13rpx;
@@ -281,54 +426,54 @@
 					}
 				}
 			}
-			
-			.poi{
-				display:grid;
-				grid-template-columns: repeat(2,1fr);
+
+			.poi {
+				display: grid;
+				grid-template-columns: repeat(2, 1fr);
 				gap: 28rpx;
-				
-				.box{
-					image{
+
+				.box {
+					image {
 						width: 337rpx;
 						height: 225rpx;
 						border-radius: 18rpx;
 					}
-					
-					.desc{
-						.top{
-							display:flex;
+
+					.desc {
+						.top {
+							display: flex;
 							justify-content: space-between;
-							
-							text:first-child{
+
+							text:first-child {
 								font-size: 28rpx;
 								font-weight: bold;
 								color: #333332;
 							}
-							
-							text:last-child{
+
+							text:last-child {
 								font-size: 24rpx;
 								font-family: PingFang SC;
 								font-weight: 400;
 								color: #979797;
 							}
 						}
-						
-						.bottom{
+
+						.bottom {
 							font-size: 24rpx;
 							font-weight: 400;
 							color: #808080;
-							margin-top:8rpx;
+							margin-top: 8rpx;
 						}
 					}
 				}
-				
+
 			}
 
 		}
 
 		.bottom-bar {
 			position: fixed;
-			z-index:99;
+			z-index: 99;
 			display: flex;
 			align-items: center;
 			justify-content: center;
@@ -338,15 +483,24 @@
 			box-shadow: 0 5rpx 19rpx rgba(0, 0, 0, 0.15);
 			background: #fff;
 
-			.btn {
+			view {
 				display: flex;
 				align-items: center;
 				justify-content: center;
 				width: calc(100% - 60rpx);
 				height: 88rpx;
+				border-radius: 44rpx;
+			}
+
+			.btn {
 				background: #FBC32A;
 				box-shadow: 0px 8rpx 16rpx 0px rgba(239, 181, 22, 0.48);
-				border-radius: 44rpx;
+			}
+
+			.btn-start {
+				background: #6ADB26;
+				box-shadow: 0px 8rpx 16rpx 0px rgba(83, 178, 25, 0.48);
+				color: #fff;
 			}
 		}
 
