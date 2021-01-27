@@ -200,9 +200,8 @@ var _default =
 
   methods: {
     watchVideo: function watchVideo(item) {
-      var type = item.buyStatus;
       uni.navigateTo({
-        url: "/pages/myVideo/myVideo?videoId=".concat(item.videoId, "&type=").concat(type) });
+        url: "/pages/myVideo/myVideo?videoId=".concat(item.videoId) });
 
     },
     checkFace: function checkFace() {

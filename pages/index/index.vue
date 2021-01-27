@@ -121,7 +121,7 @@
 			// 获取初始化参数
 			transfer() {
 				uni.reLaunch({
-					url: '/pages/home/home',
+					url: '/pages/upload/upload',
 				})
 			},
 

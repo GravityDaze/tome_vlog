@@ -1,14 +1,11 @@
 .tab-bar {
   position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  bottom:env(safe-area-inset-bottom);
   height: 110rpx;
   width:750rpx;
   background: url('https://res.paquapp.com/popmartvip/home/nav_bar_bg_2x.png') no-repeat center center;
   background-size:cover;
   display: flex;
-  padding-bottom: env(safe-area-inset-bottom);
 }
 
 
@@ -37,3 +34,10 @@
   transform:translateY(-55rpx);
 }
 
+.safe-area{
+	position: fixed;
+	bottom:0;
+	height: env(safe-area-inset-bottom);
+	width:750rpx;
+	background: #fff;
+}

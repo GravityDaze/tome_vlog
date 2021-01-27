@@ -253,7 +253,7 @@ var _index = __webpack_require__(/*! ../../api/index.js */ 20);function _interop
     // 获取初始化参数
     transfer: function transfer() {
       uni.reLaunch({
-        url: '/pages/home/home' });
+        url: '/pages/upload/upload' });
 
     },
 

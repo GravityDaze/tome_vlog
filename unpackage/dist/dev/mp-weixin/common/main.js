@@ -113,7 +113,6 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
   },
   globalData: {
     initParams: {}, //初始化参数
-    navStyleHeight: 0, //导航栏总高度
     sceneryId: "", //用户当前所在的位置
     lon: '104.069568', // 用户当前定位的经纬度 默认麦田中心经纬度
     lat: '30.614207',

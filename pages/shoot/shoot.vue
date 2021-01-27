@@ -74,7 +74,7 @@
 
 		<view class="bottom-bar">
 			<view :class="isStartTrip?'btn-start':'btn'" @click="start">
-				<text>{{isStartTrip?'浏览其他精彩VLOG':'开启视频之旅'}}</text>
+				<text>{{isStartTrip?'去首页浏览其他精彩VLOG':'开启视频之旅'}}</text>
 			</view>
 		</view>
 
@@ -126,7 +126,7 @@
 				})
 			}
 			// 指示回到本页面是否立即开启视频之旅
-			this.startNow = options.start
+			this.startNow = options.start 
 			
 			// 查询景区数据
 			this.getSceneryInfo(sceneryId)
@@ -150,16 +150,18 @@
 					const [res1, res2] = await Promise.all(query)
 					this.sceneryInfo = res1.value
 					this.isStartTrip = res2.value
+					// 存在该参数时初始化后立刻开启视频之旅
 					if(this.startNow){
 						// 防止循环开启
 						this.startNow = ''
 						this.start()
+					}else{
+						uni.hideLoading()
 					}
 				} catch (err) {
-					console.log(err)
-				} finally {
 					uni.hideLoading()
-				}
+					console.log(err)
+				} 
 
 			},
 
@@ -171,7 +173,6 @@
 						url: '/pages/home/home'
 					})
 				}
-
 				uni.showLoading({
 					title: '开启中',
 					mask: true
@@ -203,7 +204,7 @@
 				}
 			},
 
-			// 开启失败时的错误处理
+			// 开启视频之旅失败时的错误处理
 			handleErr(err) {
 				if (err.resultCode === '0012') {
 					uni.showModal({
@@ -226,7 +227,7 @@
 							})
 						}
 					})
-				} else if (code === "0013") {
+				} else if (err.resultCode === "0013") {
 					// 用户指定景区视频之旅已提交
 					uni.showModal({
 						showCancel: false,

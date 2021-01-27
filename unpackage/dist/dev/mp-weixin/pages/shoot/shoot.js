@@ -291,15 +291,17 @@ var _shoot = __webpack_require__(/*! ../../api/shoot.js */ 52);function _interop
                   Promise.all(query));case 5:_yield$Promise$all = _context.sent;_yield$Promise$all2 = _slicedToArray(_yield$Promise$all, 2);res1 = _yield$Promise$all2[0];res2 = _yield$Promise$all2[1];
                 _this.sceneryInfo = res1.value;
                 _this.isStartTrip = res2.value;
+                // 存在该参数时初始化后立刻开启视频之旅
                 if (_this.startNow) {
                   // 防止循环开启
                   _this.startNow = '';
                   _this.start();
-                }_context.next = 17;break;case 14:_context.prev = 14;_context.t0 = _context["catch"](2);
+                } else {
+                  uni.hideLoading();
+                }_context.next = 18;break;case 14:_context.prev = 14;_context.t0 = _context["catch"](2);
 
-                console.log(_context.t0);case 17:_context.prev = 17;
-
-                uni.hideLoading();return _context.finish(17);case 20:case "end":return _context.stop();}}}, _callee, null, [[2, 14, 17, 20]]);}))();
+                uni.hideLoading();
+                console.log(_context.t0);case 18:case "end":return _context.stop();}}}, _callee, null, [[2, 14]]);}))();
 
 
     },
@@ -310,7 +312,6 @@ var _shoot = __webpack_require__(/*! ../../api/shoot.js */ 52);function _interop
                 _this2.isStartTrip) {_context2.next = 2;break;}return _context2.abrupt("return",
                 uni.switchTab({
                   url: '/pages/home/home' }));case 2:
-
 
 
                 uni.showLoading({
@@ -344,7 +345,7 @@ var _shoot = __webpack_require__(/*! ../../api/shoot.js */ 52);function _interop
 
     },
 
-    // 开启失败时的错误处理
+    // 开启视频之旅失败时的错误处理
     handleErr: function handleErr(err) {var _this3 = this;
       if (err.resultCode === '0012') {
         uni.showModal({
@@ -367,7 +368,7 @@ var _shoot = __webpack_require__(/*! ../../api/shoot.js */ 52);function _interop
 
           } });
 
-      } else if (code === "0013") {
+      } else if (err.resultCode === "0013") {
         // 用户指定景区视频之旅已提交
         uni.showModal({
           showCancel: false,

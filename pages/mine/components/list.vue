@@ -84,9 +84,8 @@
 		},
 		methods:{
 			watchVideo(item){
-				const type = item.buyStatus
 				uni.navigateTo({
-					url:`/pages/myVideo/myVideo?videoId=${item.videoId}&type=${type}`
+					url:`/pages/myVideo/myVideo?videoId=${item.videoId}`
 				})
 			},
 			checkFace(){

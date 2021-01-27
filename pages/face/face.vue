@@ -130,7 +130,7 @@
 							} = JSON.parse(res.data);
 							// 保存至服务器
 							await editFace({
-								frontFace: key
+								frontFace:key
 							})
 							// 如果存在全局返回路径
 							const {
