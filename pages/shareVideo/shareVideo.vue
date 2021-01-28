@@ -26,7 +26,7 @@
 		<!-- 评论区 -->
 		<comment />
 		<!-- 我也要拍 -->
-		<view class="btn">
+		<view class="btn" @click="shoot">
 			<text>我也要拍</text>
 		</view>
 	</view>
@@ -68,7 +68,21 @@
 				}
 				res.value.url = encryptByRsa(res.value.url, getApp().globalData.encryptKey)
 				return res.value
-			}
+			},
+			shoot(){
+				// 判断是否登录
+				const token = wx.getStorageSync('access_token')
+				if(!token){
+					// 设置全局返回路径 确保登录成功后能返回到开拍页面
+					getApp().globalData.returnPath = '/pages/shoot/shoot'
+					return wx.navigateTo({
+						url:'/pages/login/login'
+					})
+				}
+				uni.navigateTo({
+					url:'/pages/shoot/shoot'
+				})
+			},
 		},
 		components: {
 			comment

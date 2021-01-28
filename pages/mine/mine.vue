@@ -135,6 +135,7 @@
 					url: '/pages/about/about'
 				})
 			}
+			
 		},
 		onPageScroll(e) {
 			if (e.scrollTop > 50) {

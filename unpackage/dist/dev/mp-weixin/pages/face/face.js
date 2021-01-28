@@ -257,9 +257,6 @@ var _face = __webpack_require__(/*! ../../api/face.js */ 103);function _interopR
         formData: {
           token: token },
 
-        header: {
-          "content-type": "multiple/form-data" },
-
         success: function () {var _success = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee4(res) {var _JSON$parse, key, returnPath;return _regenerator.default.wrap(function _callee4$(_context4) {while (1) {switch (_context4.prev = _context4.next) {case 0:_context4.prev = 0;_JSON$parse =
 
 

@@ -37,7 +37,7 @@
 								<text>“视频之旅”已开启</text>
 								<text>上传本地视频，还可以合成个性游记哦 </text>
 							</view>
-							<view class="panel-btn">
+							<view class="panel-btn" @click="goUpload(subItem.videoInfo,item.sceneryName)">
 								<text>上传自拍视频</text>
 							</view>
 						</template>
@@ -92,7 +92,12 @@
 				uni.navigateTo({
 					url:"/pages/face/face"
 				})
-			}
+			},
+			goUpload(item,sceneryName){
+				uni.navigateTo({
+					url:`/pages/upload/upload?customerNeedId=${item[0].customerNeedId}&sceneryName=${sceneryName}`
+				})
+			},
 		}
 	}
 </script>

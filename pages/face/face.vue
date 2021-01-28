@@ -120,9 +120,6 @@
 					formData: {
 						token
 					},
-					header: {
-						"content-type": "multiple/form-data",
-					},
 					success: async res => {
 						try {
 							const {

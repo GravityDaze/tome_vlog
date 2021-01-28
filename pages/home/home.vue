@@ -191,7 +191,7 @@
 			// 点击banner跳转到视频详情
 			navigate(item) {
 				uni.navigateTo({
-					url: `/pages/video/video?videoShareId=${item.videoShareId}&type=0`
+					url: `/pages/shareVideo/shareVideo?videoShareId=${item.videoShareId}`
 				})
 			},
 
