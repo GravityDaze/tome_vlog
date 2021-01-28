@@ -9722,7 +9722,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.queryCard = exports.queryCurrentScenery = exports.queryMoment = exports.queryHotScenery = exports.queryBannerList = void 0;var _request = __webpack_require__(/*! @/utils/request.js */ 21);
+Object.defineProperty(exports, "__esModule", { value: true });exports.like = exports.queryCard = exports.queryCurrentScenery = exports.queryMoment = exports.queryHotScenery = exports.queryBannerList = void 0;var _request = __webpack_require__(/*! @/utils/request.js */ 21);
 
 // 获取banner视频
 var queryBannerList = function queryBannerList() {return _request.http.get('/videoapp/video/top');};
@@ -9737,7 +9737,10 @@ exports.queryHotScenery = queryHotScenery;var queryMoment = function queryMoment
 exports.queryMoment = queryMoment;var queryCurrentScenery = function queryCurrentScenery(data) {return _request.http.post('/videoapp/scenery/locationConfirm', data);};
 
 // 查询热门景区 新
-exports.queryCurrentScenery = queryCurrentScenery;var queryCard = function queryCard(data) {return _request.http.post('/videoapp/scenery/queryCard', data);};exports.queryCard = queryCard;
+exports.queryCurrentScenery = queryCurrentScenery;var queryCard = function queryCard(data) {return _request.http.post('/videoapp/scenery/queryCard', data);};
+
+// 点赞
+exports.queryCard = queryCard;var like = function like(data) {return _request.http.post('/videoapp/laud/add', data);};exports.like = like;
 
 /***/ }),
 /* 44 */,
@@ -9784,10 +9787,13 @@ exports.startTrip = startTrip;var isStartTrip = function isStartTrip(data) {retu
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.queryTravel = void 0;var _request = __webpack_require__(/*! @/utils/request.js */ 21);
+Object.defineProperty(exports, "__esModule", { value: true });exports.queryMsg = exports.queryTravel = void 0;var _request = __webpack_require__(/*! @/utils/request.js */ 21);
 
 // 获取游记
-var queryTravel = function queryTravel(data) {return _request.http.get('/videoapp/me/queryMyVideos', { params: data });};exports.queryTravel = queryTravel;
+var queryTravel = function queryTravel(data) {return _request.http.get('/videoapp/me/queryMyVideos', { params: data });};
+
+// 查询消息提示
+exports.queryTravel = queryTravel;var queryMsg = function queryMsg() {return _request.http.get('/videoapp/me/getMyVideoNoReadNum');};exports.queryMsg = queryMsg;
 
 /***/ }),
 /* 62 */,

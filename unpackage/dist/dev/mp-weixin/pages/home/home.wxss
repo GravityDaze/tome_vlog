@@ -45,7 +45,7 @@ to {
 }
 }
 .home.data-v-92bb8f34 {
-  padding-bottom: 150rpx;
+  padding-bottom: calc( 150rpx +  env(safe-area-inset-bottom));
 }
 .search.data-v-92bb8f34 {
   display: -webkit-box;

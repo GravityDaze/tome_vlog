@@ -259,6 +259,7 @@ var _default =
       this.topArr = arr;
       this.num = 0;
       this.oldNum = 0;
+      this.height = 0;
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

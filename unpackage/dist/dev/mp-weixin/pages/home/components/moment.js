@@ -158,7 +158,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 var _home = __webpack_require__(/*! ../../../api/home.js */ 43);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _toConsumableArray(arr) {return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();}function _nonIterableSpread() {throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");}function _unsupportedIterableToArray(o, minLen) {if (!o) return;if (typeof o === "string") return _arrayLikeToArray(o, minLen);var n = Object.prototype.toString.call(o).slice(8, -1);if (n === "Object" && o.constructor) n = o.constructor.name;if (n === "Map" || n === "Set") return Array.from(o);if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);}function _iterableToArray(iter) {if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter);}function _arrayWithoutHoles(arr) {if (Array.isArray(arr)) return _arrayLikeToArray(arr);}function _arrayLikeToArray(arr, len) {if (len == null || len > arr.length) len = arr.length;for (var i = 0, arr2 = new Array(len); i < len; i++) {arr2[i] = arr[i];}return arr2;}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var waterfallsFlow = function waterfallsFlow() {__webpack_require__.e(/*! require.ensure | components/maramlee-waterfalls-flow */ "components/maramlee-waterfalls-flow").then((function () {return resolve(__webpack_require__(/*! ../../../components/maramlee-waterfalls-flow.vue */ 230));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+
 
 
 {
@@ -210,8 +212,32 @@ var _home = __webpack_require__(/*! ../../../api/home.js */ 43);function _intero
 
     },
     // 点赞
-    like: function like() {
-      console.log('执行点赞');
+    like: function like(item, index) {var _this2 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2() {return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:if (!
+                item.laudMe) {_context2.next = 4;break;}
+                uni.showToast({
+                  title: '您已点赞',
+                  icon: 'none' });_context2.next = 16;break;case 4:_context2.prev = 4;
+
+
+
+                // 直接修改数据
+                _this2.momentList[index].laudMe = 1;
+                _this2.momentList[index].laudTimes++;_context2.next = 9;return (
+                  (0, _home.like)({
+                    videoShareId: item.videoShareId }));case 9:_context2.next = 16;break;case 11:_context2.prev = 11;_context2.t0 = _context2["catch"](4);
+
+
+                console.log(_context2.t0);
+                _this2.momentList[index].laudMe = 0;
+                _this2.momentList[index].laudTimes--;case 16:case "end":return _context2.stop();}}}, _callee2, null, [[4, 11]]);}))();
+
+
+
+    },
+    // 刷新
+    refresh: function refresh() {
+      // this.$refs.waterfallsFlow.refresh()
+      // this.getMomentList()
     } },
 
   components: {

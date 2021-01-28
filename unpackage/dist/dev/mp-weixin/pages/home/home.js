@@ -205,6 +205,9 @@ var _home = __webpack_require__(/*! ../../api/home.js */ 43);function _interopRe
     this.setTabBarIndex(0);
     // 获取用户定位
     this.getLocation();
+
+    // 刷新瀑布流
+    // this.$refs.moment.refresh()
   },
   methods: {
     getLocation: function getLocation() {var _this = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2() {var _yield$uni$getLocatio, _yield$uni$getLocatio2, err, res, _getApp$globalData, lon, lat, _yield$uni$getSetting, _yield$uni$getSetting2, _err, _res;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:_context2.next = 2;return (

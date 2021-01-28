@@ -14,3 +14,6 @@ export const queryCurrentScenery = data => http.post('/videoapp/scenery/location
 
 // 查询热门景区 新
 export const queryCard = data => http.post('/videoapp/scenery/queryCard',data)
+
+// 点赞
+export const like = data => http.post('/videoapp/laud/add',data)

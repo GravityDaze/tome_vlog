@@ -1,67 +1,67 @@
 <template>
-  <view class="waterfalls-box" :style="{ height: height + 'px' }">
-    <!--  #ifdef  MP-WEIXIN -->
-    <view
-      v-for="(item, index) of list"
-      class="waterfalls-list"
-      :key="item[idKey]"
-      :id="'waterfalls-list-id-' + item[idKey]"
-      :ref="'waterfalls-list-id-' + item[idKey]"
-      :style="{
-        '--offset': offset + 'px',
-        '--cols': cols,
-        top: allPositionArr[index].top || 0,
-        left: allPositionArr[index].left || 0,
-      }"
-      @click="$emit('wapper-lick', item)"
-    >
-      <image
-        class="waterfalls-list-image"
-        mode="widthFix"
-        :class="{ single }"
-        :style="imageStyle"
-        :src="item[imageSrcKey] || ' '"
-        @load="imageLoadHandle(index)"
-        @error="imageLoadHandle(index)"
-        @click="$emit('image-click', item)"
-      />
-	 <!-- <view class="recommend" :style="{top:`${allHeightArr[index] - 5}rpx`}" v-if="item.recommend">
-	  	<text>推荐</text>
-	  </view> -->
-	  <image src="../static/play_small.png" class="play"></image>
-      <slot name="slot{{index}}" />
-    </view>
-    <!--  #endif -->
+	<view style="padding:0 30rpx;overflow: hidden;">
+		<view class="waterfalls-box" :style="{ height: height + 'px' }">
+		  <!--  #ifdef  MP-WEIXIN -->
+		  <view
+		    v-for="(item, index) of list"
+		    class="waterfalls-list"
+		    :key="item[idKey]"
+		    :id="'waterfalls-list-id-' + item[idKey]"
+		    :ref="'waterfalls-list-id-' + item[idKey]"
+		    :style="{
+		      '--offset': offset + 'px',
+		      '--cols': cols,
+		      top: allPositionArr[index].top || 0,
+		      left: allPositionArr[index].left || 0,
+		    }"
+		    @click="$emit('wapper-lick', item)"
+		  >
+		    <image
+		      class="waterfalls-list-image"
+		      mode="widthFix"
+		      :class="{ single }"
+		      :style="imageStyle"
+		      :src="item[imageSrcKey] || ' '"
+		      @load="imageLoadHandle(index)"
+		      @error="imageLoadHandle(index)"
+		      @click="$emit('image-click', item)"
+		    />
+		    <image src="../static/play_small.png" class="play"></image>
+		    <slot name="slot{{index}}" />
+		  </view>
+		  <!--  #endif -->
+		
+		  <!--  #ifndef  MP-WEIXIN -->
+		  <view
+		    v-for="(item, index) of list"
+		    class="waterfalls-list"
+		    :key="item[idKey]"
+		    :id="'waterfalls-list-id-' + item[idKey]"
+		    :ref="'waterfalls-list-id-' + item[idKey]"
+		    :style="{
+		      '--offset': offset + 'px',
+		      '--cols': cols,
+		      ...listStyle,
+		      ...(allPositionArr[index] || {}),
+		    }"
+		    @click="$emit('wapper-lick', item)"
+		  >
+		    <image
+		      class="waterfalls-list-image"
+		      :class="{ single }"
+		      mode="widthFix"
+		      :style="imageStyle"
+		      :src="item[imageSrcKey] || ' '"
+		      @load="imageLoadHandle(index)"
+		      @error="imageLoadHandle(index)"
+		      @click="$emit('image-click', item)"
+		    />
+		    <slot v-bind="item" />
+		  </view>
+		  <!--  #endif -->
+		</view>
+	</view>
 
-    <!--  #ifndef  MP-WEIXIN -->
-    <view
-      v-for="(item, index) of list"
-      class="waterfalls-list"
-      :key="item[idKey]"
-      :id="'waterfalls-list-id-' + item[idKey]"
-      :ref="'waterfalls-list-id-' + item[idKey]"
-      :style="{
-        '--offset': offset + 'px',
-        '--cols': cols,
-        ...listStyle,
-        ...(allPositionArr[index] || {}),
-      }"
-      @click="$emit('wapper-lick', item)"
-    >
-      <image
-        class="waterfalls-list-image"
-        :class="{ single }"
-        mode="widthFix"
-        :style="imageStyle"
-        :src="item[imageSrcKey] || ' '"
-        @load="imageLoadHandle(index)"
-        @error="imageLoadHandle(index)"
-        @click="$emit('image-click', item)"
-      />
-      <slot v-bind="item" />
-    </view>
-    <!--  #endif -->
-  </view>
 </template>
 <script>
 export default {
@@ -143,19 +143,17 @@ export default {
       this.topArr = arr;
       this.num = 0;
       this.oldNum = 0;
+      this.height = 0;
     },
   },
 };
 </script>
 <style lang="scss" scoped>
-// 这里可以自行配置
 $border-radius: 18rpx;
 
 .waterfalls-box {
   position: relative;
   width: 100%;
- // margin:0 30rpx;
-  overflow: hidden;
   
   // 播放图标
   .play{
@@ -165,16 +163,6 @@ $border-radius: 18rpx;
 	  width: 33rpx;
 	  height: 33rpx;
 	  z-index: 99;
-  }
-  
-  // 推荐标志
-  .recommend{
-	  position:absolute;
-	  left:0;
-	  font-size:20rpx;
-	  background:#FDB314;
-	  padding:5rpx 10rpx;
-	  border-radius: 5rpx 5rpx 5rpx 0;
   }
   
   .waterfalls-list {

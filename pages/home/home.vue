@@ -68,6 +68,9 @@
 			this.setTabBarIndex(0)
 			// 获取用户定位
 			this.getLocation()
+			
+			// 刷新瀑布流
+			// this.$refs.moment.refresh()
 		},
 		methods: {
 			async getLocation() {
@@ -235,7 +238,7 @@
 	}
 
 	.home {
-		padding-bottom: 150rpx;
+		padding-bottom: calc( 150rpx +  env(safe-area-inset-bottom) );
 	}
 
 	.search {

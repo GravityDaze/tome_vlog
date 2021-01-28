@@ -4,7 +4,7 @@
 			<text class="title">VLOG精彩放送</text>
 		</view>
 		<!-- 瀑布流 -->
-		<view style="padding:0 30rpx">
+		<view>
 			<waterfallsFlow ref="waterfallsFlow" :list="momentList" imageSrcKey="coverUrl" idKey="videoId" @image-load="imageLoad" @wapper-lick="test" >
 				<view class="box" v-for="(item, index) of momentList" :key="index" slot="slot{{index}}">
 					<view class="content">
@@ -23,12 +23,13 @@
 						<!-- 用户 & 点赞 -->
 						<view class="bottom">
 							<view class="user">
-								<image :src="item.headUrl" mode=""></image>
+								<image :src="item.headUrl" ></image>
 								<text>{{item.shareCustomer}}</text>
 							</view>
 
-							<view class="like" @click.stop="like">
-								<image src="../../../static/like.png" mode=""></image>
+							<view class="like" @click.stop="like(item,index)">
+								<image v-if="!item.laudMe" src="../../../static/like.png"></image>
+								<image v-else src="../../../static/like2.jpg"></image>
 								<text>{{item.laudTimes}}</text>
 							</view>
 						</view>
@@ -43,7 +44,8 @@
 <script>
 	import waterfallsFlow from '../../../components/maramlee-waterfalls-flow.vue'
 	import {
-		queryMoment
+		queryMoment,
+		like
 	} from '../../../api/home.js'
 	export default {
 		data() {
@@ -94,8 +96,32 @@
 				})
 			},
 			// 点赞
-			like(){
-				console.log('执行点赞')
+			async like(item,index){
+				if(item.laudMe){
+					uni.showToast({
+						title:'您已点赞',
+						icon:'none'
+					})
+				}else{
+					try{
+						// 直接修改数据
+						this.momentList[index].laudMe = 1
+						this.momentList[index].laudTimes++
+						await like({
+							videoShareId:item.videoShareId
+						})
+					}catch(err){
+						console.log(err)
+						this.momentList[index].laudMe = 0
+						this.momentList[index].laudTimes--
+					}
+					
+				}
+			},
+			// 刷新
+			refresh(){
+				// this.$refs.waterfallsFlow.refresh()
+				// this.getMomentList()
 			}
 		},
 		components: {
@@ -121,25 +147,13 @@
 
 		}
 
-		.list {
-			padding: 0 30rpx;
-			display: grid;
-			grid-template-columns: repeat(2, 1fr);
-			gap: 20rpx;
-		}
-
 		.box {
 			position: relative;
 			// margin: 15rpx;
 			background: #FFFFFF;
 			box-shadow: 0px 8rpx 27rpx 0px rgba(0, 0, 0, 0.06);
 			border-radius: 18rpx;
-			overflow: hidden;
-			
-			
-			  
-			
-			
+			// overflow: hidden;	
 
 			.pic {
 				position: relative;

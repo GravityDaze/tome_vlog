@@ -43,7 +43,7 @@
 				<view class="title">
 					<view class="text">
 						<text>我的游记</text>
-						<view class="remind"></view>
+						<view class="remind" v-if="redPoint"></view>
 					</view>
 					<view class="title-underline"></view>
 					<view class="tips">
@@ -66,12 +66,14 @@
 	import list from './components/list.vue'
 	// 查询游记接口
 	import {
-		queryTravel
+		queryTravel,
+		queryMsg
 	} from '../../api/mine.js'
 	export default {
 		data() {
 			return {
 				topHeight: 0,
+				redPoint:false,
 				immersive: true, //是否沉浸式导航栏
 				isLogin: false, //判断是否登录
 				userInfo: {}, //用户信息
@@ -103,6 +105,9 @@
 				if (token && userInfo) {
 					this.userInfo = userInfo
 					this.isLogin = true
+					// 获取消息提示
+					const msg = await queryMsg()
+					this.redPoint = !!msg.value.noReadCount
 					// 获取游记数据
 					const res = await queryTravel()
 					this.travelList = res.value.info

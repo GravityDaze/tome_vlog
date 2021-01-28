@@ -200,10 +200,12 @@ __webpack_require__.r(__webpack_exports__);
 var _mine = __webpack_require__(/*! ../../api/mine.js */ 61);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var navbar = function navbar() {__webpack_require__.e(/*! require.ensure | components/nav */ "components/nav").then((function () {return resolve(__webpack_require__(/*! ../../components/nav.vue */ 131));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var list = function list() {__webpack_require__.e(/*! require.ensure | pages/mine/components/list */ "pages/mine/components/list").then((function () {return resolve(__webpack_require__(/*! ./components/list.vue */ 209));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
 
 
+
 {
   data: function data() {
     return {
       topHeight: 0,
+      redPoint: false,
       immersive: true, //是否沉浸式导航栏
       isLogin: false, //判断是否登录
       userInfo: {}, //用户信息
@@ -229,17 +231,20 @@ var _mine = __webpack_require__(/*! ../../api/mine.js */ 61);function _interopRe
     },
 
     // 检查登录状态
-    checkLoginStatus: function checkLoginStatus() {var _this = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var token, userInfo, res;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
+    checkLoginStatus: function checkLoginStatus() {var _this = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var token, userInfo, msg, res;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
                 token = uni.getStorageSync('access_token');
                 userInfo = uni.getStorageSync('userInfo');if (!(
-                token && userInfo)) {_context.next = 11;break;}
+                token && userInfo)) {_context.next = 15;break;}
                 _this.userInfo = userInfo;
                 _this.isLogin = true;
+                // 获取消息提示
+                _context.next = 7;return (0, _mine.queryMsg)();case 7:msg = _context.sent;
+                _this.redPoint = !!msg.value.noReadCount;
                 // 获取游记数据
-                _context.next = 7;return (0, _mine.queryTravel)();case 7:res = _context.sent;
-                _this.travelList = res.value.info;_context.next = 12;break;case 11:
+                _context.next = 11;return (0, _mine.queryTravel)();case 11:res = _context.sent;
+                _this.travelList = res.value.info;_context.next = 16;break;case 15:
 
-                _this.isLogin = false;case 12:case "end":return _context.stop();}}}, _callee);}))();
+                _this.isLogin = false;case 16:case "end":return _context.stop();}}}, _callee);}))();
 
     },
 
