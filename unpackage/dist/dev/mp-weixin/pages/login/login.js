@@ -123,13 +123,16 @@ var _face = __webpack_require__(/*! ../../api/face.js */ 103);function _interopR
 
                     } else {
                       // 如果存在全局返回路径
-                      returnPath = getApp().globalData.returnPath;
+
+                      returnPath =
+                      getApp().globalData.returnPath;
                       if (returnPath) {
                         uni.redirectTo({
                           url: returnPath,
-                          success: function success(_) {
-                            getApp().globalData.returnPath = '';
-                          } });
+                          fail: function fail(_) {return uni.switchTab({ url: returnPath });},
+                          complete: function complete(_) {return getApp().globalData.returnPath = '';} });
+
+
 
                       } else {
                         uni.switchTab({

@@ -221,20 +221,15 @@
 					uni.showModal({
 						content: '该景区未开启视频服务，请重新选择',
 						showCancel: false,
-						success: _ => {
-							uni.switchTab({
-								url: '/pages/home/home'
-							})
-						}
+						success: _ => uni.switchTab({ url: '/pages/home/home' })
+						
 					})
 				} else if (err.resultCode === "0013") {
 					// 用户指定景区视频之旅已提交
 					uni.showModal({
 						showCancel: false,
 						content: "您已开启了该景区视频之旅，请勿重复开启",
-						success:_=>{
-							this.getSceneryInfo(this.sceneryInfo.id)
-						}
+						success:_=> this.getSceneryInfo(this.sceneryInfo.id)
 					})
 				}
 			}

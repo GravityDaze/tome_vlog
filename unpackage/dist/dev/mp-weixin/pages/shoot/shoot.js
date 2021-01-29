@@ -362,20 +362,15 @@ var _shoot = __webpack_require__(/*! ../../api/shoot.js */ 52);function _interop
         uni.showModal({
           content: '该景区未开启视频服务，请重新选择',
           showCancel: false,
-          success: function success(_) {
-            uni.switchTab({
-              url: '/pages/home/home' });
+          success: function success(_) {return uni.switchTab({ url: '/pages/home/home' });} });
 
-          } });
 
       } else if (err.resultCode === "0013") {
         // 用户指定景区视频之旅已提交
         uni.showModal({
           showCancel: false,
           content: "您已开启了该景区视频之旅，请勿重复开启",
-          success: function success(_) {
-            _this3.getSceneryInfo(_this3.sceneryInfo.id);
-          } });
+          success: function success(_) {return _this3.getSceneryInfo(_this3.sceneryInfo.id);} });
 
       }
     } },

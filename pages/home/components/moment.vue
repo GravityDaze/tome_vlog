@@ -97,6 +97,14 @@
 			},
 			// 点赞
 			async like(item,index){
+				
+				if(!uni.getStorageSync('access_token')){
+					getApp().globalData.returnPath = '/pages/home/home'
+					return uni.navigateTo({
+						url:'/pages/login/login'
+					}) 
+				}
+				
 				if(item.laudMe){
 					uni.showToast({
 						title:'您已点赞',
@@ -111,6 +119,10 @@
 							videoShareId:item.videoShareId
 						})
 					}catch(err){
+						uni.showToast({
+							title:'点赞失败',
+							icon:'none'
+						})
 						console.log(err)
 						this.momentList[index].laudMe = 0
 						this.momentList[index].laudTimes--

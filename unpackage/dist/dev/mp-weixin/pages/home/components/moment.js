@@ -212,24 +212,36 @@ var _home = __webpack_require__(/*! ../../../api/home.js */ 43);function _intero
 
     },
     // 点赞
-    like: function like(item, index) {var _this2 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2() {return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:if (!
-                item.laudMe) {_context2.next = 4;break;}
+    like: function like(item, index) {var _this2 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2() {return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:if (
+
+                uni.getStorageSync('access_token')) {_context2.next = 3;break;}
+                getApp().globalData.returnPath = '/pages/home/home';return _context2.abrupt("return",
+                uni.navigateTo({
+                  url: '/pages/login/login' }));case 3:if (!
+
+
+
+                item.laudMe) {_context2.next = 7;break;}
                 uni.showToast({
                   title: '您已点赞',
-                  icon: 'none' });_context2.next = 16;break;case 4:_context2.prev = 4;
+                  icon: 'none' });_context2.next = 20;break;case 7:_context2.prev = 7;
 
 
 
                 // 直接修改数据
                 _this2.momentList[index].laudMe = 1;
-                _this2.momentList[index].laudTimes++;_context2.next = 9;return (
+                _this2.momentList[index].laudTimes++;_context2.next = 12;return (
                   (0, _home.like)({
-                    videoShareId: item.videoShareId }));case 9:_context2.next = 16;break;case 11:_context2.prev = 11;_context2.t0 = _context2["catch"](4);
+                    videoShareId: item.videoShareId }));case 12:_context2.next = 20;break;case 14:_context2.prev = 14;_context2.t0 = _context2["catch"](7);
 
+
+                uni.showToast({
+                  title: '点赞失败',
+                  icon: 'none' });
 
                 console.log(_context2.t0);
                 _this2.momentList[index].laudMe = 0;
-                _this2.momentList[index].laudTimes--;case 16:case "end":return _context2.stop();}}}, _callee2, null, [[4, 11]]);}))();
+                _this2.momentList[index].laudTimes--;case 20:case "end":return _context2.stop();}}}, _callee2, null, [[7, 14]]);}))();
 
 
 

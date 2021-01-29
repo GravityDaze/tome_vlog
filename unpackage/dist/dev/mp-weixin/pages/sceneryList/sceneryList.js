@@ -192,13 +192,13 @@ var _sceneryList = __webpack_require__(/*! ../../api/sceneryList.js */ 70);funct
   },
   onLoad: function onLoad(options) {
     // 如果type是assert 则选择的景区会作为定位景区
-    if (options.type === 'assert') {
-      uni.showModal({
-        content: '未定位到景区，请手动选择您所在的景区',
-        showCancel: false });
-
-      this.assert = true;
-    }
+    // if(options.type === 'assert'){   
+    // 	uni.showModal({
+    // 		content:'未定位到景区，请手动选择您所在的景区',
+    // 		showCancel:false
+    // 	})
+    // 	this.assert = true
+    // }
     this.getSceneryList();
   },
   methods: {
@@ -225,15 +225,34 @@ var _sceneryList = __webpack_require__(/*! ../../api/sceneryList.js */ 70);funct
     },
     // 带参数跳转
     navigate: function navigate(item) {
-      if (this.assert) {
-        getApp().globalData.sceneryId = item.id;
-        // 保存用户手动定位的景区经纬度
-        getApp().globalData.manualLocation.lon = item.lon;
-        getApp().globalData.manualLocation.lat = item.lat;
-      }
-      uni.redirectTo({
-        url: "/pages/shoot/shoot?id=".concat(item.id) });
+      getApp().globalData.sceneryId = item.id;
+      getApp().globalData.sceneryName = item.name;
+      // 保存用户手动定位的景区经纬度
+      getApp().globalData.manual = {
+        lon: item.lon,
+        lat: item.lat };var
 
+      returnPath = getApp().globalData.returnPath;
+      if (returnPath) {
+        uni.redirectTo({
+          url: returnPath,
+          fail: function fail(_) {return uni.switchTab({ url: returnPath });},
+          complete: function complete(_) {return getApp().globalData.returnPath = '';} });
+
+      }
+
+      // if(this.assert){
+      // 	getApp().globalData.sceneryId = item.id
+      // 	getApp().globalData.sceneryName = item.name
+      // 	// 保存用户手动定位的景区经纬度
+      // 	getApp().globalData.manualLocation = {
+      // 		lon:item.lon,
+      // 		lat:item.lat
+      // 	}
+      // }
+      // uni.redirectTo({
+      // 	url: `/pages/shoot/shoot?id=${item.id}`
+      // })
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

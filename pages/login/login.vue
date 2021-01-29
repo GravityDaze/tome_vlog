@@ -68,23 +68,26 @@
 								uni.redirectTo({
 									url: '/pages/face/face'
 								})
-							}else{
+							} else {
 								// 如果存在全局返回路径
-								const { returnPath } = getApp().globalData
-								if(returnPath){	
+								const {
+									returnPath
+								} = getApp().globalData
+								if (returnPath) {
 									uni.redirectTo({
-										url:returnPath,
-										success:_=>{
-											getApp().globalData.returnPath = ''
-										}
-									})	
-								}else{
+										url: returnPath,
+										fail: _ => uni.switchTab({ url: returnPath }),
+										complete: _ => getApp().globalData.returnPath = ''
+									})
+
+
+								} else {
 									uni.switchTab({
 										url: '/pages/mine/mine'
 									})
 								}
 							}
-							
+
 						} catch (err) {
 							console.log(err)
 							uni.showToast({

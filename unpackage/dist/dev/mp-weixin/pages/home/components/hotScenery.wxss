@@ -60,7 +60,7 @@
 }
 .hot-scenery .scenery-list.data-v-26e0b9e8 {
   padding-left: 30rpx;
-  height: 180rpx;
+  height: 185rpx;
 }
 .hot-scenery .scenery-list .card-wrapper.data-v-26e0b9e8 {
   padding-right: 15rpx;
@@ -68,6 +68,9 @@
   display: -webkit-flex;
   display: flex;
   height: 100%;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
 }
 .hot-scenery .scenery-list .list.data-v-26e0b9e8 {
   display: -webkit-box;
@@ -90,10 +93,11 @@
 }
 .hot-scenery .scenery-list .list .scenery-card > image.data-v-26e0b9e8 {
   position: absolute;
-  right: 15rpx;
-  top: 15rpx;
-  width: 23rpx;
-  height: 25rpx;
+  left: 20rpx;
+  top: -7rpx;
+  width: 45rpx;
+  height: 62rpx;
+  z-index: 99;
 }
 .hot-scenery .scenery-list .list .scenery-card .mask.data-v-26e0b9e8 {
   position: absolute;

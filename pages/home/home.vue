@@ -2,11 +2,15 @@
 	<view class="home">
 		<!-- 导航条 -->
 		<navbar :immersive="immersive">
-			<view class="search" slot="left" :style="{background:immersive?'rgba(240, 240, 240, 0.48)':'#F0F0F0'}">
-				<view class="search-inner" @click="queryScenery">
-					<icon color="#0E0E0E" type="search" size="32rpx" />
-					<text>搜索景区 马上打卡</text>
+			<view class="location" slot="left" v-if="immersive">
+				<view class="inner" @click="queryScenery">
+					<image src="../../static/location.png" mode=""></image>
+					<text>{{ sceneryName || '定位中' }}</text>
+					<image src="../../static/sj.png" mode=""></image>
 				</view>
+			</view>
+			<view v-else slot="center">
+				<text>首页</text>
 			</view>
 		</navbar>
 		<!-- banner -->
@@ -56,7 +60,9 @@
 				bannerList: [],
 				hotSceneryList: [],
 				immersive: true, //导航条是否处于沉浸式状态
-				done: false // 瀑布流数据加载是否完毕
+				done: false, // 瀑布流数据加载是否完毕
+				sceneryName: '',
+				repeatModal: true //是否重复弹框
 			}
 		},
 		onLoad() {
@@ -68,7 +74,8 @@
 			this.setTabBarIndex(0)
 			// 获取用户定位
 			this.getLocation()
-			
+			// 获取用户在全局保存的景区名
+			this.sceneryName = getApp().globalData.sceneryName
 			// 刷新瀑布流
 			// this.$refs.moment.refresh()
 		},
@@ -83,7 +90,7 @@
 						lon,
 						lat
 					} = getApp().globalData
-					this.getHotSceneryList(lon,lat)
+					this.getHotSceneryList(lon, lat)
 					// 检查是否是拒绝授权造成的定位失败
 					const [err, res] = await uni.getSetting()
 					if (res.authSetting['scope.userLocation'] === false) {
@@ -120,36 +127,6 @@
 				const res = await queryBannerList()
 				this.bannerList = res.value
 			},
-			async getHotSceneryList(lon,lat) {
-				const res = await queryCard({
-					lon,
-					lat
-				})
-				// 过滤出景区( 条件为热门景区 + 开启了视频之旅 + 已定位的景区 ) 满足一个条件即可
-				const filterScenery = res.value.filter(v => {
-					return v.hotStatus === 1 || v.isOpen === 1 || v.isLocation === 1
-				})
-				// 应该插入的索引
-				let insert = 0
-				/*
-					按优先级排序
-					1:定位景区
-					2:开启视频之旅的景区
-					3.热门景区
-				*/
-				for (let i = 0; i < filterScenery.length; i++) {
-					if (filterScenery[i].isOpen === 1 && i !== 0) {
-						let temp = filterScenery.splice(i, 1)
-						if (filterScenery[0].isLocation === 1) {
-							filterScenery.splice(++insert, 0, ...temp)
-						} else {
-							filterScenery.splice(insert, 0, ...temp)
-						}
-					}
-				}
-				this.hotSceneryList = filterScenery
-
-			},
 
 			// 判断当前所属景区
 			async getCurrentScenery() {
@@ -162,30 +139,100 @@
 						lon,
 						lat
 					})
-					// 如果定位到景区 ,则更新sceneryId
-					if (res.value.id) {
-						// 更新全局的sceneryId
-						getApp().globalData.sceneryId = res.value.id
-						this.getHotSceneryList(lon,lat)
-					}else{
+					const {
+						name,
+						id
+					} = res.value
+
+					// 如果定位到景区
+					if (id) {
+						// 判断用户当前是否进行了手动定位
+						const manualLon = getApp().globalData.manual.lon
+						const manualLat = getApp().globalData.manual.lat
+						const {
+							sceneryName
+						} = getApp().globalData
+						// 如果用户手动定位的景区和GPS定位的景区不一致 提示用户进行选择
+						if (manualLon && sceneryName !== name) {
+							// 如果用户取消过一次该弹窗 就不再弹出
+							if (this.repeatModal) {
+								uni.showModal({
+									content: `检测到您当前位于${name}，是否切换至${name}？`,
+									success: ({
+										confirm
+									}) => {
+										if (confirm) {
+											// 按照GPS进行更新
+											getApp().globalData.sceneryId = id
+											// 更新当前页面的景区名
+											this.sceneryName = name
+											// 获取到周边景区列表
+											this.getHotSceneryList(lon, lat)
+										} else {
+											this.repeatModal = false
+											// 按照用户手动定位进行更新
+											this.getHotSceneryList(manualLon, manualLat)
+										}
+									}
+								})
+							}else{
+								// 按照用户手动定位进行更新
+								this.getHotSceneryList(manualLon, manualLat)
+							}
+
+
+
+						} else {
+							// 更新全局的sceneryId
+							getApp().globalData.sceneryId = res.value.id
+							// 更新景区名
+							this.sceneryName = res.value.name
+							// 获取到周边景区列表
+							this.getHotSceneryList(lon, lat)
+						}
+
+
+					} else {
 						// 未定位到景区时,如果用户在景区列表页面已经手动定位 使用手动定位
-						const manualLon = getApp().globalData.manualLocation.lon
-						const manualLat = getApp().globalData.manualLocation.lat
-						if(manualLon && manualLat){
-							this.getHotSceneryList(manualLon,manualLat)
-						}else{
-							this.getHotSceneryList(lon,lat)
+						const manualLon = getApp().globalData.manual.lon
+						const manualLat = getApp().globalData.manual.lat
+						if (manualLon) {
+							// 以用户手动定位经纬度查询周边景区
+							this.getHotSceneryList(manualLon, manualLat)
+						} else {
+							this.sceneryName = res.value.name = '未定位到景区'
+							// 以当前用户经纬度周边景区
+							this.getHotSceneryList(lon, lat)
 						}
 					}
-					
-					
+
+
 				} catch (err) {
 					console.log(err)
 				}
 			},
 
+			async getHotSceneryList(lon, lat) {
+				const res = await queryCard({
+					lon,
+					lat
+				})
+
+				const sceneryList = res.value
+				// 应该插入的索引
+				let insert = 0
+				for (let i = 0; i < sceneryList.length; i++) {
+					if (sceneryList[i].isOpen === 1) {
+						const temp = sceneryList.splice(i, 1)
+						sceneryList.splice(insert++, 1, ...temp)
+					}
+				}
+				this.hotSceneryList = sceneryList
+			},
+
 			// 点击搜索框跳转到景区列表页面
 			queryScenery() {
+				getApp().globalData.returnPath = "/pages/home/home"
 				uni.navigateTo({
 					url: '/pages/sceneryList/sceneryList'
 				})
@@ -238,32 +285,44 @@
 	}
 
 	.home {
-		padding-bottom: calc( 150rpx +  env(safe-area-inset-bottom) );
+		padding-bottom: calc(150rpx + env(safe-area-inset-bottom));
 	}
 
-	.search {
+	.location {
 
 		display: flex;
 		align-items: center;
-		box-sizing: border-box;
-		padding-left: 26rpx;
 		height: 100%;
-		width: 336rpx;
-		background: rgba(240, 240, 240, 0.48);
-		box-shadow: 0px 8rpx 16rpx 0px rgba(49, 49, 48, 0.1);
-		border-radius: 32rpx;
 
-		.search-inner {
+
+		.inner {
 			display: flex;
 			align-items: center;
+			background: rgba(51, 51, 51, .48);
+			border-radius: 30rpx;
+			height: 90%;
+			padding: 0 25rpx;
+
+			image:first-of-type {
+				width: 21rpx;
+				height: 25rpx;
+			}
+
+			image:last-of-type {
+				width: 13rpx;
+				height: 11rpx;
+			}
+
+			text {
+				font-size: 24rpx;
+				font-weight: 500;
+				color: #fff;
+				margin-left: 15rpx;
+				margin: 0 8rpx;
+			}
 		}
 
-		text {
-			font-size: 28rpx;
-			font-weight: 500;
-			color: #0E0E0E;
-			margin-left: 15rpx;
-		}
+
 	}
 
 	.banner {

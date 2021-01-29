@@ -2,11 +2,11 @@
 	<view class="hot-scenery">
 		<view class="title-bar">
 
-			<text class="title">精选景区</text>
-			<view class="more" @click="seeMore">
+			<text class="title">周边景区</text>
+			<!-- <view class="more" @click="seeMore">
 				<text>查看全部</text>
 				<image src="../../../static/arrow.png"></image>
-			</view>
+			</view> -->
 		</view>
 
 		<view class="scenery-list">
@@ -15,7 +15,7 @@
 					<navigator :url="`/pages/shoot/shoot?id=${item.id}`" v-for="(item,index) in hotSceneryData" :key="index" class="scenery-card"
 					 :style="{backgroundImage:`url(${item.coverUrl})`,border:item.isOpen===1?'1rpx solid #FFB90C':'none'}">
 						<view class="mask"></view>
-						<image v-if="item.isLocation === 1 && index === 0" src="../../../static/local2.png"></image>
+						<image v-if="item.hotStatus === 1" src="../../../static/recommend.png"></image>
 						<view class="text">
 							<view class="name">
 								<text>{{handleText(item.name,5)}}</text>
@@ -87,18 +87,19 @@
 
 		.scenery-list {
 			padding-left: 30rpx;
-			height: 180rpx;
+			height: 185rpx;
 
 			.card-wrapper {
 				padding-right: 15rpx;
 				display: flex;
 				height: 100%;
+				align-items: center;
 			}
 
 			.list {
 				display: flex;
 				height: 100%;
-
+				// align-items: center;
 
 				.scenery-card {
 					flex-shrink: 0;
@@ -114,10 +115,11 @@
 
 					&>image{
 						position:absolute;
-						right:15rpx;
-						top:15rpx;
-						width: 23rpx;
-						height: 25rpx;
+						left:20rpx;
+						top:-7rpx;
+						width: 45rpx;
+						height: 62rpx;
+						z-index:99;
 					}
 
 					.mask {

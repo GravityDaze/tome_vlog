@@ -175,6 +175,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
 var _home = __webpack_require__(/*! ../../api/home.js */ 43);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _toConsumableArray(arr) {return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();}function _nonIterableSpread() {throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");}function _iterableToArray(iter) {if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter);}function _arrayWithoutHoles(arr) {if (Array.isArray(arr)) return _arrayLikeToArray(arr);}function _slicedToArray(arr, i) {return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();}function _nonIterableRest() {throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");}function _unsupportedIterableToArray(o, minLen) {if (!o) return;if (typeof o === "string") return _arrayLikeToArray(o, minLen);var n = Object.prototype.toString.call(o).slice(8, -1);if (n === "Object" && o.constructor) n = o.constructor.name;if (n === "Map" || n === "Set") return Array.from(o);if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);}function _arrayLikeToArray(arr, len) {if (len == null || len > arr.length) len = arr.length;for (var i = 0, arr2 = new Array(len); i < len; i++) {arr2[i] = arr[i];}return arr2;}function _iterableToArrayLimit(arr, i) {if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return;var _arr = [];var _n = true;var _d = false;var _e = undefined;try {for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {_arr.push(_s.value);if (i && _arr.length === i) break;}} catch (err) {_d = true;_e = err;} finally {try {if (!_n && _i["return"] != null) _i["return"]();} finally {if (_d) throw _e;}}return _arr;}function _arrayWithHoles(arr) {if (Array.isArray(arr)) return arr;}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var navbar = function navbar() {__webpack_require__.e(/*! require.ensure | components/nav */ "components/nav").then((function () {return resolve(__webpack_require__(/*! ../../components/nav.vue */ 131));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var menubar = function menubar() {Promise.all(/*! require.ensure | pages/home/components/menubar */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pages/home/components/menubar")]).then((function () {return resolve(__webpack_require__(/*! ./components/menubar.vue */ 138));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var hotScenery = function hotScenery() {Promise.all(/*! require.ensure | pages/home/components/hotScenery */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pages/home/components/hotScenery")]).then((function () {return resolve(__webpack_require__(/*! ./components/hotScenery.vue */ 194));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var moment = function moment() {__webpack_require__.e(/*! require.ensure | pages/home/components/moment */ "pages/home/components/moment").then((function () {return resolve(__webpack_require__(/*! ./components/moment.vue */ 202));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
 
 
@@ -193,7 +197,9 @@ var _home = __webpack_require__(/*! ../../api/home.js */ 43);function _interopRe
       bannerList: [],
       hotSceneryList: [],
       immersive: true, //导航条是否处于沉浸式状态
-      done: false // 瀑布流数据加载是否完毕
+      done: false, // 瀑布流数据加载是否完毕
+      sceneryName: '',
+      repeatModal: true //是否重复弹框
     };
   },
   onLoad: function onLoad() {
@@ -205,7 +211,8 @@ var _home = __webpack_require__(/*! ../../api/home.js */ 43);function _interopRe
     this.setTabBarIndex(0);
     // 获取用户定位
     this.getLocation();
-
+    // 获取用户在全局保存的景区名
+    this.sceneryName = getApp().globalData.sceneryName;
     // 刷新瀑布流
     // this.$refs.moment.refresh()
   },
@@ -257,72 +264,112 @@ var _home = __webpack_require__(/*! ../../api/home.js */ 43);function _interopRe
                   (0, _home.queryBannerList)());case 2:res = _context3.sent;
                 _this2.bannerList = res.value;case 4:case "end":return _context3.stop();}}}, _callee3);}))();
     },
-    getHotSceneryList: function getHotSceneryList(lon, lat) {var _this3 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee4() {var res, filterScenery, insert, i, temp;return _regenerator.default.wrap(function _callee4$(_context4) {while (1) {switch (_context4.prev = _context4.next) {case 0:_context4.next = 2;return (
-                  (0, _home.queryCard)({
-                    lon: lon,
-                    lat: lat }));case 2:res = _context4.sent;
-
-                // 过滤出景区( 条件为热门景区 + 开启了视频之旅 + 已定位的景区 ) 满足一个条件即可
-                filterScenery = res.value.filter(function (v) {
-                  return v.hotStatus === 1 || v.isOpen === 1 || v.isLocation === 1;
-                });
-                // 应该插入的索引
-                insert = 0;
-                /*
-                            	按优先级排序
-                            	1:定位景区
-                            	2:开启视频之旅的景区
-                            	3.热门景区
-                            */
-                for (i = 0; i < filterScenery.length; i++) {
-                  if (filterScenery[i].isOpen === 1 && i !== 0) {
-                    temp = filterScenery.splice(i, 1);
-                    if (filterScenery[0].isLocation === 1) {
-                      filterScenery.splice.apply(filterScenery, [++insert, 0].concat(_toConsumableArray(temp)));
-                    } else {
-                      filterScenery.splice.apply(filterScenery, [insert, 0].concat(_toConsumableArray(temp)));
-                    }
-                  }
-                }
-                _this3.hotSceneryList = filterScenery;case 7:case "end":return _context4.stop();}}}, _callee4);}))();
-
-    },
 
     // 判断当前所属景区
-    getCurrentScenery: function getCurrentScenery() {var _this4 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee5() {var _getApp$globalData2, lon, lat, res, manualLon, manualLat;return _regenerator.default.wrap(function _callee5$(_context5) {while (1) {switch (_context5.prev = _context5.next) {case 0:_getApp$globalData2 =
+    getCurrentScenery: function getCurrentScenery() {var _this3 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee4() {var _getApp$globalData2, lon, lat, res, _res$value, name, id, manualLon, manualLat, sceneryName, _manualLon, _manualLat;return _regenerator.default.wrap(function _callee4$(_context4) {while (1) {switch (_context4.prev = _context4.next) {case 0:_getApp$globalData2 =
 
 
 
-                getApp().globalData, lon = _getApp$globalData2.lon, lat = _getApp$globalData2.lat;_context5.prev = 1;_context5.next = 4;return (
+                getApp().globalData, lon = _getApp$globalData2.lon, lat = _getApp$globalData2.lat;_context4.prev = 1;_context4.next = 4;return (
 
                   (0, _home.queryCurrentScenery)({
                     lon: lon,
-                    lat: lat }));case 4:res = _context5.sent;
+                    lat: lat }));case 4:res = _context4.sent;_res$value =
 
-                // 如果定位到景区 ,则更新sceneryId
-                if (res.value.id) {
-                  // 更新全局的sceneryId
-                  getApp().globalData.sceneryId = res.value.id;
-                  _this4.getHotSceneryList(lon, lat);
+
+
+
+                res.value, name = _res$value.name, id = _res$value.id;
+
+                // 如果定位到景区
+                if (id) {
+                  // 判断用户当前是否进行了手动定位
+                  manualLon = getApp().globalData.manual.lon;
+                  manualLat = getApp().globalData.manual.lat;
+
+                  sceneryName =
+                  getApp().globalData.sceneryName;
+                  // 如果用户手动定位的景区和GPS定位的景区不一致 提示用户进行选择
+                  if (manualLon && sceneryName !== name) {
+                    // 如果用户取消过一次该弹窗 就不再弹出
+                    if (_this3.repeatModal) {
+                      uni.showModal({
+                        content: "\u68C0\u6D4B\u5230\u60A8\u5F53\u524D\u4F4D\u4E8E".concat(name, "\uFF0C\u662F\u5426\u5207\u6362\u81F3").concat(name, "\uFF1F"),
+                        success: function success(_ref2)
+
+                        {var confirm = _ref2.confirm;
+                          if (confirm) {
+                            // 按照GPS进行更新
+                            getApp().globalData.sceneryId = id;
+                            // 更新当前页面的景区名
+                            _this3.sceneryName = name;
+                            // 获取到周边景区列表
+                            _this3.getHotSceneryList(lon, lat);
+                          } else {
+                            _this3.repeatModal = false;
+                            // 按照用户手动定位进行更新
+                            _this3.getHotSceneryList(manualLon, manualLat);
+                          }
+                        } });
+
+                    } else {
+                      // 按照用户手动定位进行更新
+                      _this3.getHotSceneryList(manualLon, manualLat);
+                    }
+
+
+
+                  } else {
+                    // 更新全局的sceneryId
+                    getApp().globalData.sceneryId = res.value.id;
+                    // 更新景区名
+                    _this3.sceneryName = res.value.name;
+                    // 获取到周边景区列表
+                    _this3.getHotSceneryList(lon, lat);
+                  }
+
+
                 } else {
                   // 未定位到景区时,如果用户在景区列表页面已经手动定位 使用手动定位
-                  manualLon = getApp().globalData.manualLocation.lon;
-                  manualLat = getApp().globalData.manualLocation.lat;
-                  if (manualLon && manualLat) {
-                    _this4.getHotSceneryList(manualLon, manualLat);
+                  _manualLon = getApp().globalData.manual.lon;
+                  _manualLat = getApp().globalData.manual.lat;
+                  if (_manualLon) {
+                    // 以用户手动定位经纬度查询周边景区
+                    _this3.getHotSceneryList(_manualLon, _manualLat);
                   } else {
-                    _this4.getHotSceneryList(lon, lat);
+                    _this3.sceneryName = res.value.name = '未定位到景区';
+                    // 以当前用户经纬度周边景区
+                    _this3.getHotSceneryList(lon, lat);
                   }
-                }_context5.next = 11;break;case 8:_context5.prev = 8;_context5.t0 = _context5["catch"](1);
+                }_context4.next = 12;break;case 9:_context4.prev = 9;_context4.t0 = _context4["catch"](1);
 
 
 
-                console.log(_context5.t0);case 11:case "end":return _context5.stop();}}}, _callee5, null, [[1, 8]]);}))();
+                console.log(_context4.t0);case 12:case "end":return _context4.stop();}}}, _callee4, null, [[1, 9]]);}))();
 
+    },
+
+    getHotSceneryList: function getHotSceneryList(lon, lat) {var _this4 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee5() {var res, sceneryList, insert, i, temp;return _regenerator.default.wrap(function _callee5$(_context5) {while (1) {switch (_context5.prev = _context5.next) {case 0:_context5.next = 2;return (
+                  (0, _home.queryCard)({
+                    lon: lon,
+                    lat: lat }));case 2:res = _context5.sent;
+
+
+                sceneryList = res.value;
+                // 应该插入的索引
+                insert = 0;
+                for (i = 0; i < sceneryList.length; i++) {
+                  if (sceneryList[i].isOpen === 1) {
+                    temp = sceneryList.splice(i, 1);
+                    sceneryList.splice.apply(sceneryList, [insert++, 1].concat(_toConsumableArray(temp)));
+                  }
+                }
+                _this4.hotSceneryList = sceneryList;case 7:case "end":return _context5.stop();}}}, _callee5);}))();
     },
 
     // 点击搜索框跳转到景区列表页面
     queryScenery: function queryScenery() {
+      getApp().globalData.returnPath = "/pages/home/home";
       uni.navigateTo({
         url: '/pages/sceneryList/sceneryList' });
 

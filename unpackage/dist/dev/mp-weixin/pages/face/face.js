@@ -273,9 +273,7 @@ var _face = __webpack_require__(/*! ../../api/face.js */ 103);function _interopR
                     if (returnPath) {
                       uni.redirectTo({
                         url: returnPath,
-                        success: function success(_) {
-                          getApp().globalData.returnPath = '';
-                        } });
+                        success: function success(_) {return getApp().globalData.returnPath = '';} });
 
                     } else {
                       uni.navigateBack();

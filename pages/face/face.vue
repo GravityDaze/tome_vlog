@@ -136,9 +136,7 @@
 							if (returnPath) {
 								uni.redirectTo({
 									url: returnPath,
-									success: _ => {
-										getApp().globalData.returnPath = ''
-									}
+									success: _ => getApp().globalData.returnPath = ''
 								})
 							} else {
 								uni.navigateBack()
