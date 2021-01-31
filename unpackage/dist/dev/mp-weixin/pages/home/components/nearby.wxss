@@ -24,7 +24,7 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
-.hot-scenery .title-bar.data-v-26e0b9e8 {
+.hot-scenery .title-bar.data-v-05917e21 {
   padding: 35rpx 30rpx;
   box-sizing: border-box;
   display: -webkit-box;
@@ -37,12 +37,12 @@
   -webkit-align-items: center;
           align-items: center;
 }
-.hot-scenery .title-bar .title.data-v-26e0b9e8 {
+.hot-scenery .title-bar .title.data-v-05917e21 {
   font-size: 32rpx;
   font-weight: bold;
   color: #333332;
 }
-.hot-scenery .title-bar .more.data-v-26e0b9e8 {
+.hot-scenery .title-bar .more.data-v-05917e21 {
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
@@ -53,16 +53,16 @@
   font-weight: 400;
   color: #B5B3B2;
 }
-.hot-scenery .title-bar .more image.data-v-26e0b9e8 {
+.hot-scenery .title-bar .more image.data-v-05917e21 {
   padding-left: 8rpx;
   width: 13rpx;
   height: 24rpx;
 }
-.hot-scenery .scenery-list.data-v-26e0b9e8 {
+.hot-scenery .scenery-list.data-v-05917e21 {
   padding-left: 30rpx;
   height: 185rpx;
 }
-.hot-scenery .scenery-list .card-wrapper.data-v-26e0b9e8 {
+.hot-scenery .scenery-list .card-wrapper.data-v-05917e21 {
   padding-right: 15rpx;
   display: -webkit-box;
   display: -webkit-flex;
@@ -72,13 +72,13 @@
   -webkit-align-items: center;
           align-items: center;
 }
-.hot-scenery .scenery-list .list.data-v-26e0b9e8 {
+.hot-scenery .scenery-list .list.data-v-05917e21 {
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
   height: 100%;
 }
-.hot-scenery .scenery-list .list .scenery-card.data-v-26e0b9e8 {
+.hot-scenery .scenery-list .list .scenery-card.data-v-05917e21 {
   -webkit-flex-shrink: 0;
           flex-shrink: 0;
   position: relative;
@@ -91,7 +91,7 @@
   margin-right: 15rpx;
   box-sizing: border-box;
 }
-.hot-scenery .scenery-list .list .scenery-card > image.data-v-26e0b9e8 {
+.hot-scenery .scenery-list .list .scenery-card > image.data-v-05917e21 {
   position: absolute;
   left: 20rpx;
   top: -7rpx;
@@ -99,7 +99,7 @@
   height: 62rpx;
   z-index: 99;
 }
-.hot-scenery .scenery-list .list .scenery-card .mask.data-v-26e0b9e8 {
+.hot-scenery .scenery-list .list .scenery-card .mask.data-v-05917e21 {
   position: absolute;
   background: rgba(57, 57, 57, 0.25);
   top: 0;
@@ -107,7 +107,7 @@
   width: 100%;
   border-radius: 18rpx;
 }
-.hot-scenery .scenery-list .list .scenery-card .text.data-v-26e0b9e8 {
+.hot-scenery .scenery-list .list .scenery-card .text.data-v-05917e21 {
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
@@ -123,7 +123,7 @@
           align-items: center;
   height: 100%;
 }
-.hot-scenery .scenery-list .list .scenery-card .text .name.data-v-26e0b9e8 {
+.hot-scenery .scenery-list .list .scenery-card .text .name.data-v-05917e21 {
   color: #fff;
   font-size: 28rpx;
   font-weight: 800;
@@ -132,7 +132,7 @@
   white-space: nowrap;
   margin-bottom: 5rpx;
 }
-.hot-scenery .scenery-list .list .scenery-card .text .desc.data-v-26e0b9e8 {
+.hot-scenery .scenery-list .list .scenery-card .text .desc.data-v-05917e21 {
   background: rgba(40, 40, 40, 0.5);
   border-radius: 16rpx;
   font-size: 22rpx;
@@ -140,7 +140,7 @@
   color: #FFFFFF;
   padding: 3rpx 15rpx;
 }
-.hot-scenery .scenery-list .list .scenery-card .text .open.data-v-26e0b9e8 {
+.hot-scenery .scenery-list .list .scenery-card .text .open.data-v-05917e21 {
   background: #FFB90C;
 }
 

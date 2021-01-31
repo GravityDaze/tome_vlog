@@ -96,7 +96,7 @@
 				latitude: "",
 				longitude: "",
 				immersive: true,
-				startNow:"",//是否立即开启视频之旅
+				startNow: "", //是否立即开启视频之旅
 				testData: [{
 						img: "https://img1.qunarzz.com/travel/d5/1801/d0/6a8fbbdf116efcb5.jpg_r_720x480x95_bef77a31.jpg",
 						name: "敬请期待",
@@ -117,64 +117,61 @@
 			}
 		},
 		onLoad(options) {
-			// 获取到景区id 链接参数中如果没有 就去globalData中寻找
-			const sceneryId = options.id || getApp().globalData.sceneryId
-			// 如果在globalData中都没有 说明用户不在景区或者拒绝了地理位置授权 需要手动选择所在景区
-			if (sceneryId === "") {
-				return uni.redirectTo({
-					url: "/pages/sceneryList/sceneryList?type=assert"
-				})
-			}
 			// 指示回到本页面是否立即开启视频之旅
-			this.startNow = options.start 
-			
-			// 查询景区数据
-			this.getSceneryInfo(sceneryId)
+			this.startNow = options.start
+			// 查询该页面数据
+			this.getPageInfo(options.id || getApp().globalData.sceneryId)
 
 		},
 		methods: {
-			async getSceneryInfo(id) {
+			async getPageInfo(id) {
 				uni.showLoading({
 					title: '加载中'
 				})
-				// 同时请求是否开启视频之旅接口和景区信息
-				const query = [
-					querySceneryInfo({
-						id
-					}),
-					isStartTrip({
+				// 如果登录 则请求是否开启视频之旅信息
+				if (uni.getStorageSync('access_token')) {
+					const res = await isStartTrip({
 						sceneryId: id
 					})
-				]
-				try {
-					const [res1, res2] = await Promise.all(query)
-					this.sceneryInfo = res1.value
-					this.isStartTrip = res2.value
-					// 存在该参数时初始化后立刻开启视频之旅
-					if(this.startNow){
-						// 防止循环开启
-						this.startNow = ''
-						this.start()
-					}else{
-						uni.hideLoading()
-					}
-				} catch (err) {
+					this.isStartTrip = res.value
+				}
+				// 请求景区信息
+				const res = await querySceneryInfo({
+					id
+				})
+				this.sceneryInfo = res.value
+
+				// 存在该参数时初始化后立刻开启视频之旅
+				if (this.startNow) {
+					// 防止循环开启
+					this.start()
+				} else {
 					uni.hideLoading()
-					console.log(err)
-				} 
+				}
+
 
 			},
 
 			// 开启视频之旅
 			async start() {
 				// 如果已开启视频之旅 点击该按钮跳转回首页
-				if (this.isStartTrip) {
+				if (this.isStartTrip && !this.startNow) {
 					return uni.switchTab({
 						url: '/pages/home/home'
 					})
 				}
+				
+				// 如果未登录
+				if (!uni.getStorageSync('access_token')){
+					getApp().globalData.returnPath = `/pages/shoot/shoot?id=${this.sceneryInfo.id}&start=1`
+					return uni.redirectTo({
+						url: '/pages/login/login?action=shoot'
+					})
+				}
+				// 防止频繁开启
+				this.startNow = ''
 				uni.showLoading({
-					title: '开启中',
+					title: '视频之旅开启中',
 					mask: true
 				})
 				try {
@@ -192,7 +189,7 @@
 								content: '视频之旅开启成功，快去景区游玩吧',
 								showCancel: false,
 								success: _ => {
-									this.getSceneryInfo(this.sceneryInfo.id)
+									this.getPageInfo(this.sceneryInfo.id)
 								}
 							})
 						}
@@ -221,15 +218,17 @@
 					uni.showModal({
 						content: '该景区未开启视频服务，请重新选择',
 						showCancel: false,
-						success: _ => uni.switchTab({ url: '/pages/home/home' })
-						
+						success: _ => uni.switchTab({
+							url: '/pages/home/home'
+						})
+
 					})
 				} else if (err.resultCode === "0013") {
 					// 用户指定景区视频之旅已提交
 					uni.showModal({
 						showCancel: false,
 						content: "您已开启了该景区视频之旅，请勿重复开启",
-						success:_=> this.getSceneryInfo(this.sceneryInfo.id)
+						success: _ => this.getSceneryInfo(this.sceneryInfo.id)
 					})
 				}
 			}

@@ -5,7 +5,7 @@
 		</view>
 		<!-- 瀑布流 -->
 		<view>
-			<waterfallsFlow ref="waterfallsFlow" :list="momentList" imageSrcKey="coverUrl" idKey="videoId" @image-load="imageLoad" @wapper-lick="test" >
+			<waterfallsFlow ref="waterfallsFlow" :list="momentList" imageSrcKey="coverUrl" idKey="videoId" @image-load="imageLoad" @wapper-lick="watchVideo" >
 				<view class="box" v-for="(item, index) of momentList" :key="index" slot="slot{{index}}">
 					<view class="content">
 						<!-- 地点 -->
@@ -79,7 +79,9 @@
 			},
 			// 图片加载完成
 			imageLoad(){
+				// 如果数据已经全部加载完成
 				if(this.finish){
+					// 提示父组件显示加载结束字样
 					this.$emit("loadFinish")
 				}
 			},
@@ -90,9 +92,9 @@
 				this.getMomentList()
 			},
 			// 跳转到视频播放
-			test(e){
+			watchVideo(e){
 				uni.navigateTo({
-					url:`/pages/shareVideo/shareVideo?videoShareId=${e.videoShareId}&type=0`
+					url:`/pages/shareVideo/shareVideo?videoShareId=${e.videoShareId}`
 				})
 			},
 			// 点赞
@@ -130,10 +132,26 @@
 					
 				}
 			},
+			
+			// 更新点赞数据
+			updateLikeData(){
+				const index = this.momentList.findIndex( v=>v.videoShareId === getApp().globalData.updateLikeId )
+				this.momentList[index].laudMe = 1
+				this.momentList[index].laudTimes++ 
+				// 清空全局
+				getApp().globalData.updateLikeId = ''
+			},
+			
 			// 刷新
 			refresh(){
-				// this.$refs.waterfallsFlow.refresh()
-				// this.getMomentList()
+				// 初始化数据
+				this.finish = false
+				this.momentList = []
+				// 刷新瀑布流高度
+				this.$refs.waterfallsFlow.refresh()
+				// 重新获取瀑布流数据
+				this.pageNum = 1
+				this.getMomentList()
 			}
 		},
 		components: {

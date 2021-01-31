@@ -17,8 +17,9 @@
 					<image :src="videoInfo.headUrl"></image>
 					<text>{{videoInfo.shareCustomer}}</text>
 				</view>
-				<view class="like">
-					<image src="../../static/like.png"></image>
+				<view class="like"  @click="like(videoInfo)">
+					<image v-if="!videoInfo.laudMe" src="../../static/like.png"></image>
+					<image v-else src="../../static/like2.jpg"></image>
 					<text>{{videoInfo.laudTimes}}</text>
 				</view>
 			</view>
@@ -40,11 +41,20 @@
 	import {
 		queryShareVideoInfo
 	} from '../../api/video.js'
+	import {
+		like
+	} from '../../api/home.js'
 	import comment from './components/comment.vue'
 	export default {
 		data() {
 			return {
 				videoInfo: {}
+			}
+		},
+		onShow(){
+			// 如果存在videoInfo 则是登录返回
+			if(Object.keys(this.videoInfo).length){
+				this.getShareVideoInfo(this.videoInfo.videoShareId)
 			}
 		},
 		onLoad(options) {
@@ -69,20 +79,61 @@
 				res.value.url = encryptByRsa(res.value.url, getApp().globalData.encryptKey)
 				return res.value
 			},
+			// 开拍按钮
 			shoot(){
-				// 判断是否登录
-				const token = wx.getStorageSync('access_token')
-				if(!token){
-					// 设置全局返回路径 确保登录成功后能返回到开拍页面
+				// 判断是否定位
+				const {
+					sceneryId
+				} = getApp().globalData
+				if (!sceneryId) {
+					// 设置全局返回路径 确保选择景区后能返回到开拍页面
 					getApp().globalData.returnPath = '/pages/shoot/shoot'
 					return wx.navigateTo({
-						url:'/pages/login/login'
+						url: '/pages/sceneryList/sceneryList?type=select'
 					})
 				}
 				uni.navigateTo({
 					url:'/pages/shoot/shoot'
 				})
 			},
+			
+			// 点赞
+			async like(item){
+				if(!uni.getStorageSync('access_token')){
+					// getApp().globalData.returnPath = `/pages/shareVideo/shareVideo?videoShareId=${item.videoShareId}`
+					return uni.navigateTo({
+						url:'/pages/login/login'
+					}) 
+				}
+				
+				if(item.laudMe){
+					uni.showToast({
+						title:'您已点赞',
+						icon:'none'
+					})
+				}else{
+					try{
+						// 直接修改数据
+						item.laudMe = 1
+						item.laudTimes++
+						await like({
+							videoShareId:item.videoShareId
+						})
+						// 通知首页瀑布流卡片更新点赞数据
+						getApp().globalData.updateLikeId = item.videoShareId
+					}catch(err){
+						uni.showToast({
+							title:'点赞失败',
+							icon:'none'
+						})
+						console.log(err)
+						titem.laudMe = 0
+						item.laudTimes--
+					}
+					
+				}
+			},
+			
 		},
 		components: {
 			comment

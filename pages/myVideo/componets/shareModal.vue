@@ -180,7 +180,7 @@
 <style lang="scss" scoped>
 	// 过渡类名
 	.out {
-		bottom: -100vh !important;
+		bottom: -100% !important;
 	}
 
 	.shareModal {

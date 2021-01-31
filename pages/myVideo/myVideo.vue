@@ -226,6 +226,8 @@
 
 			// 组件发布时改变分享状态
 			changeShareStatus() {
+				// 刷新瀑布流
+				getApp().globalData.refreshWaterFall = true
 				this.$set(this.videoInfo, 'shareStatus', true)
 			},
 
@@ -246,6 +248,9 @@
 								uni.showToast({
 									title: '取消成功'
 								})
+								// 刷新瀑布流
+								getApp().globalData.refreshWaterFall = true
+								
 								// 更改状态
 								this.getVideoInfo(this.videoInfo.id)
 							} catch {

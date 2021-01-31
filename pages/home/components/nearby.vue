@@ -12,7 +12,7 @@
 		<view class="scenery-list">
 			<scroll-view scroll-x enable-flex class="list" enhanced :show-scrollbar="false">
 				<view class="card-wrapper">
-					<navigator :url="`/pages/shoot/shoot?id=${item.id}`" v-for="(item,index) in hotSceneryData" :key="index" class="scenery-card"
+					<navigator :url="`/pages/shoot/shoot?id=${item.id}`" v-for="(item,index) in list" :key="index" class="scenery-card"
 					 :style="{backgroundImage:`url(${item.coverUrl})`,border:item.isOpen===1?'1rpx solid #FFB90C':'none'}">
 						<view class="mask"></view>
 						<image v-if="item.hotStatus === 1" src="../../../static/recommend.png"></image>
@@ -37,7 +37,7 @@
 	} from '../../../utils/handleText.js'
 	export default {
 		props: {
-			hotSceneryData: {
+			list: {
 				type: Array,
 				default: []
 			}

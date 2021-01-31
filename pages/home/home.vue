@@ -26,11 +26,11 @@
 		</view>
 		<!-- 菜单 -->
 		<menubar class="menubar" />
-		<!-- 精选景区 -->
-		<hotScenery :hotSceneryData="hotSceneryList" />
+		<!-- 周边景区 -->
+		<nearby :list="nearbyList" />
 		<!-- 精彩瞬间瀑布流 -->
 		<moment ref="moment" @loadFinish="done = true" />
-		<!-- 瀑布流加载提示 -->
+		<!-- 瀑布流下方加载提示 -->
 		<view class="load">
 			<image v-if="!done" src="../../static/load.png"></image>
 			<view class="empty" v-else>
@@ -44,7 +44,6 @@
 	// api
 	import {
 		queryBannerList,
-		queryHotScenery,
 		queryCurrentScenery,
 		queryCard
 	} from '../../api/home.js'
@@ -52,13 +51,13 @@
 	import navbar from '../../components/nav.vue'
 	// 页面内组件
 	import menubar from './components/menubar.vue'
-	import hotScenery from './components/hotScenery.vue'
+	import nearby from './components/nearby.vue'
 	import moment from './components/moment.vue'
 	export default {
 		data() {
 			return {
 				bannerList: [],
-				hotSceneryList: [],
+				nearbyList: [],//周边景区列表
 				immersive: true, //导航条是否处于沉浸式状态
 				done: false, // 瀑布流数据加载是否完毕
 				sceneryName: '',
@@ -72,12 +71,20 @@
 		onShow() {
 			// 自定义tabBar mixin 详见https://developers.weixin.qq.com/community/develop/article/doc/0000047ece8448712589b28525b413
 			this.setTabBarIndex(0)
+			// 提示moment组件刷新瀑布流
+			if( getApp().globalData.refreshWaterFall ){
+				getApp().globalData.refreshWaterFall = false
+				this.done = false
+				this.$refs.moment.refresh()
+			}
+			// 提示moment组件更新用户点赞数据
+			if( getApp().globalData.updateLikeId ){
+				this.$refs.moment.updateLikeData()
+			}
 			// 获取用户定位
 			this.getLocation()
 			// 获取用户在全局保存的景区名
 			this.sceneryName = getApp().globalData.sceneryName
-			// 刷新瀑布流
-			// this.$refs.moment.refresh()
 		},
 		methods: {
 			async getLocation() {
@@ -85,12 +92,20 @@
 					type: 'gcj02'
 				})
 				if (err) {
-					// 定位获取失败时,精选景区会默认以麦田中心的经纬度为基准
+					// 定位获取失败时,周边景区会默认以麦田中心的经纬度为基准
 					const {
 						lon,
 						lat
 					} = getApp().globalData
-					this.getHotSceneryList(lon, lat)
+					const manualLon = getApp().globalData.manual.lon
+					const manualLat = getApp().globalData.manual.lat
+					this.getNearbyList(lon, lat)
+					// 在定位失败的情况下 如果不存在手动定位 则提示未定位到景区
+					if(!manualLon){
+						this.sceneryName = '未定位到景区'
+						getApp().globalData.sceneryName = '未定位到景区'
+					}
+					
 					// 检查是否是拒绝授权造成的定位失败
 					const [err, res] = await uni.getSetting()
 					if (res.authSetting['scope.userLocation'] === false) {
@@ -143,76 +158,72 @@
 						name,
 						id
 					} = res.value
-
+					// 判断用户当前是否进行了手动定位
+					const manualLon = getApp().globalData.manual.lon
+					const manualLat = getApp().globalData.manual.lat
 					// 如果定位到景区
 					if (id) {
-						// 判断用户当前是否进行了手动定位
-						const manualLon = getApp().globalData.manual.lon
-						const manualLat = getApp().globalData.manual.lat
 						const {
 							sceneryName
 						} = getApp().globalData
-						// 如果用户手动定位的景区和GPS定位的景区不一致 提示用户进行选择
-						if (manualLon && sceneryName !== name) {
-							// 如果用户取消过一次该弹窗 就不再弹出
-							if (this.repeatModal) {
+						// 如果用户存在手动定位
+						if (manualLon) {
+							// 用户已经定位在了新的景区
+							if (sceneryName !== name) {
 								uni.showModal({
-									content: `检测到您当前位于${name}，是否切换至${name}？`,
+									title:`定位到您在${name}`,
+									content: `是否切换至${name}？`,
+									confirmText: '切换',
 									success: ({
 										confirm
 									}) => {
 										if (confirm) {
-											// 按照GPS进行更新
-											getApp().globalData.sceneryId = id
-											// 更新当前页面的景区名
+											// 清除用户的手动定位
+											 getApp().globalData.manual = {}
+											// 进行自动定位更新周边景区
 											this.sceneryName = name
-											// 获取到周边景区列表
-											this.getHotSceneryList(lon, lat)
+											getApp().globalData.sceneryName = name
+											getApp().globalData.sceneryId = id
+											this.getNearbyList(lon, lat)
 										} else {
-											this.repeatModal = false
 											// 按照用户手动定位进行更新
-											this.getHotSceneryList(manualLon, manualLat)
+											this.getNearbyList(manualLon, manualLat)
 										}
 									}
 								})
-							}else{
-								// 按照用户手动定位进行更新
-								this.getHotSceneryList(manualLon, manualLat)
+							} else {
+								// 用户定位的景区和之前选择的景区一致 按照用户手动定位进行更新
+								this.getNearbyList(manualLon, manualLat)
 							}
 
-
-
 						} else {
-							// 更新全局的sceneryId
-							getApp().globalData.sceneryId = res.value.id
-							// 更新景区名
-							this.sceneryName = res.value.name
-							// 获取到周边景区列表
-							this.getHotSceneryList(lon, lat)
+							this.sceneryName = name
+							getApp().globalData.sceneryName = name
+							getApp().globalData.sceneryId = id
+							// 进行自动定位更新周边景区
+							this.getNearbyList(lon, lat)
 						}
-
 
 					} else {
 						// 未定位到景区时,如果用户在景区列表页面已经手动定位 使用手动定位
-						const manualLon = getApp().globalData.manual.lon
-						const manualLat = getApp().globalData.manual.lat
 						if (manualLon) {
 							// 以用户手动定位经纬度查询周边景区
-							this.getHotSceneryList(manualLon, manualLat)
+							this.getNearbyList(manualLon, manualLat)
 						} else {
-							this.sceneryName = res.value.name = '未定位到景区'
+							this.sceneryName = '未定位到景区'
+							getApp().globalData.sceneryName = '未定位到景区'
 							// 以当前用户经纬度周边景区
-							this.getHotSceneryList(lon, lat)
+							this.getNearbyList(lon, lat)
 						}
 					}
-
 
 				} catch (err) {
 					console.log(err)
 				}
 			},
+			
 
-			async getHotSceneryList(lon, lat) {
+			async getNearbyList(lon, lat) {
 				const res = await queryCard({
 					lon,
 					lat
@@ -227,7 +238,7 @@
 						sceneryList.splice(insert++, 1, ...temp)
 					}
 				}
-				this.hotSceneryList = sceneryList
+				this.nearbyList = sceneryList
 			},
 
 			// 点击搜索框跳转到景区列表页面
@@ -267,7 +278,7 @@
 		components: {
 			navbar,
 			menubar,
-			hotScenery,
+			nearby,
 			moment
 		}
 	}
@@ -360,7 +371,7 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
-
+		
 
 
 		&>image {

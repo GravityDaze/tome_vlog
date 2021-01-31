@@ -78,12 +78,12 @@ var _face = __webpack_require__(/*! ../../api/face.js */ 103);function _interopR
 
 {
   data: function data() {
-    return {};
-
+    return {
+      action: '' };
 
   },
-  onLoad: function onLoad() {
-
+  onLoad: function onLoad(options) {
+    this.action = options.action;
   },
   methods: {
     getUserInfo: function getUserInfo(e) {
@@ -93,7 +93,7 @@ var _face = __webpack_require__(/*! ../../api/face.js */ 103);function _interopR
         this.loginFn();
       }
     },
-    loginFn: function loginFn() {
+    loginFn: function loginFn() {var _this = this;
       uni.showLoading({
         title: '登录中',
         mask: true });
@@ -115,40 +115,44 @@ var _face = __webpack_require__(/*! ../../api/face.js */ 103);function _interopR
                     _context.next = 10;return (0, _index.initParams)();case 10:params = _context.sent;
                     getApp().globalData.initParams = params.value;
 
-                    // 检测是否录入了人脸
-                    _context.next = 14;return (0, _face.queryFace)();case 14:face = _context.sent;
-                    if (!face.value.frontFace) {
+                    // 如果是从开拍页面登录 则需要检测是否录入了人脸
+                    if (!(_this.action === 'shoot')) {_context.next = 18;break;}_context.next = 15;return (
+                      (0, _face.queryFace)());case 15:face = _context.sent;if (
+                    face.value.frontFace) {_context.next = 18;break;}return _context.abrupt("return",
+                    uni.redirectTo({
+                      url: '/pages/face/face' }));case 18:
+
+
+
+
+                    // 提示首页瀑布流刷新
+                    getApp().globalData.refreshWaterFall = true;
+
+                    // 如果存在全局返回路径
+
+                    returnPath =
+                    getApp().globalData.returnPath;
+                    if (returnPath) {
                       uni.redirectTo({
-                        url: '/pages/face/face' });
+                        url: returnPath,
+                        fail: function fail(_) {return uni.switchTab({
+                            url: returnPath });},
+
+                        complete: function complete(_) {return getApp().globalData.returnPath = '';} });
+
 
                     } else {
-                      // 如果存在全局返回路径
-
-                      returnPath =
-                      getApp().globalData.returnPath;
-                      if (returnPath) {
-                        uni.redirectTo({
-                          url: returnPath,
-                          fail: function fail(_) {return uni.switchTab({ url: returnPath });},
-                          complete: function complete(_) {return getApp().globalData.returnPath = '';} });
-
-
-
-                      } else {
-                        uni.switchTab({
-                          url: '/pages/mine/mine' });
-
-                      }
-                    }_context.next = 22;break;case 18:_context.prev = 18;_context.t0 = _context["catch"](1);
+                      uni.navigateBack();
+                    }_context.next = 27;break;case 23:_context.prev = 23;_context.t0 = _context["catch"](1);
 
 
                     console.log(_context.t0);
                     uni.showToast({
                       icon: 'none',
-                      title: '登陆失败' });case 22:_context.prev = 22;
+                      title: '登陆失败' });case 27:_context.prev = 27;
 
 
-                    uni.hideLoading();return _context.finish(22);case 25:case "end":return _context.stop();}}}, _callee, null, [[1, 18, 22, 25]]);}));function success(_x) {return _success.apply(this, arguments);}return success;}(),
+                    uni.hideLoading();return _context.finish(27);case 30:case "end":return _context.stop();}}}, _callee, null, [[1, 23, 27, 30]]);}));function success(_x) {return _success.apply(this, arguments);}return success;}(),
 
 
         fail: function fail() {

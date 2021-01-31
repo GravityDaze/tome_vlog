@@ -26,11 +26,11 @@
 	export default {
 		data() {
 			return {
-
+				action: ''
 			}
 		},
-		onLoad() {
-
+		onLoad(options) {
+			this.action = options.action
 		},
 		methods: {
 			getUserInfo(e) {
@@ -62,30 +62,34 @@
 							const params = await initParams()
 							getApp().globalData.initParams = params.value
 
-							// 检测是否录入了人脸
-							const face = await queryFace()
-							if (!face.value.frontFace) {
-								uni.redirectTo({
-									url: '/pages/face/face'
-								})
-							} else {
-								// 如果存在全局返回路径
-								const {
-									returnPath
-								} = getApp().globalData
-								if (returnPath) {
-									uni.redirectTo({
-										url: returnPath,
-										fail: _ => uni.switchTab({ url: returnPath }),
-										complete: _ => getApp().globalData.returnPath = ''
-									})
-
-
-								} else {
-									uni.switchTab({
-										url: '/pages/mine/mine'
+							// 如果是从开拍页面登录 则需要检测是否录入了人脸
+							if (this.action === 'shoot') {
+								const face = await queryFace()
+								if (!face.value.frontFace) {
+									return uni.redirectTo({
+										url: '/pages/face/face'
 									})
 								}
+							}
+							
+							// 提示首页瀑布流刷新
+							getApp().globalData.refreshWaterFall = true
+							
+							// 如果存在全局返回路径
+							const {
+								returnPath
+							} = getApp().globalData
+							if (returnPath) {
+								uni.redirectTo({
+									url: returnPath,
+									fail: _ => uni.switchTab({
+										url: returnPath
+									}),
+									complete: _ => getApp().globalData.returnPath = ''
+								})
+
+							} else {
+								uni.navigateBack()
 							}
 
 						} catch (err) {

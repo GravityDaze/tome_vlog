@@ -191,14 +191,13 @@ var _sceneryList = __webpack_require__(/*! ../../api/sceneryList.js */ 70);funct
     };
   },
   onLoad: function onLoad(options) {
-    // 如果type是assert 则选择的景区会作为定位景区
-    // if(options.type === 'assert'){   
-    // 	uni.showModal({
-    // 		content:'未定位到景区，请手动选择您所在的景区',
-    // 		showCancel:false
-    // 	})
-    // 	this.assert = true
-    // }
+    // 如果type是select 说明是从开拍按钮进入
+    if (options.type === 'select') {
+      uni.showModal({
+        content: '请选择您要打卡的景区',
+        showCancel: false });
+
+    }
     this.getSceneryList();
   },
   methods: {

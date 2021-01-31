@@ -166,10 +166,14 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 var _jsencrypt = __webpack_require__(/*! ../../utils/jsencrypt.js */ 79);
 
 
-var _video = __webpack_require__(/*! ../../api/video.js */ 80);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var comment = function comment() {__webpack_require__.e(/*! require.ensure | pages/shareVideo/components/comment */ "pages/shareVideo/components/comment").then((function () {return resolve(__webpack_require__(/*! ./components/comment.vue */ 216));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+var _video = __webpack_require__(/*! ../../api/video.js */ 80);
+
+
+var _home = __webpack_require__(/*! ../../api/home.js */ 43);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var comment = function comment() {__webpack_require__.e(/*! require.ensure | pages/shareVideo/components/comment */ "pages/shareVideo/components/comment").then((function () {return resolve(__webpack_require__(/*! ./components/comment.vue */ 217));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
 
 
 
@@ -178,6 +182,12 @@ var _video = __webpack_require__(/*! ../../api/video.js */ 80);function _interop
     return {
       videoInfo: {} };
 
+  },
+  onShow: function onShow() {
+    // 如果存在videoInfo 则是登录返回
+    if (Object.keys(this.videoInfo).length) {
+      this.getShareVideoInfo(this.videoInfo.videoShareId);
+    }
   },
   onLoad: function onLoad(options) {
     this.getShareVideoInfo(options.videoShareId);
@@ -201,20 +211,61 @@ var _video = __webpack_require__(/*! ../../api/video.js */ 80);function _interop
       res.value.url = encryptByRsa(res.value.url, getApp().globalData.encryptKey);
       return res.value;
     },
+    // 开拍按钮
     shoot: function shoot() {
-      // 判断是否登录
-      var token = wx.getStorageSync('access_token');
-      if (!token) {
-        // 设置全局返回路径 确保登录成功后能返回到开拍页面
+      // 判断是否定位
+      var
+      sceneryId =
+      getApp().globalData.sceneryId;
+      if (!sceneryId) {
+        // 设置全局返回路径 确保选择景区后能返回到开拍页面
         getApp().globalData.returnPath = '/pages/shoot/shoot';
         return wx.navigateTo({
-          url: '/pages/login/login' });
+          url: '/pages/sceneryList/sceneryList?type=select' });
 
       }
       uni.navigateTo({
         url: '/pages/shoot/shoot' });
 
+    },
+
+    // 点赞
+    like: function like(item) {return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2() {return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:if (
+                uni.getStorageSync('access_token')) {_context2.next = 2;break;}return _context2.abrupt("return",
+
+                uni.navigateTo({
+                  url: '/pages/login/login' }));case 2:if (!
+
+
+
+                item.laudMe) {_context2.next = 6;break;}
+                uni.showToast({
+                  title: '您已点赞',
+                  icon: 'none' });_context2.next = 20;break;case 6:_context2.prev = 6;
+
+
+
+                // 直接修改数据
+                item.laudMe = 1;
+                item.laudTimes++;_context2.next = 11;return (
+                  (0, _home.like)({
+                    videoShareId: item.videoShareId }));case 11:
+
+                // 通知首页瀑布流卡片更新点赞数据
+                getApp().globalData.updateLikeId = item.videoShareId;_context2.next = 20;break;case 14:_context2.prev = 14;_context2.t0 = _context2["catch"](6);
+
+                uni.showToast({
+                  title: '点赞失败',
+                  icon: 'none' });
+
+                console.log(_context2.t0);
+                titem.laudMe = 0;
+                item.laudTimes--;case 20:case "end":return _context2.stop();}}}, _callee2, null, [[6, 14]]);}))();
+
+
+
     } },
+
 
   components: {
     comment: comment } };exports.default = _default;

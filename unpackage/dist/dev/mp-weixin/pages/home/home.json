@@ -5,7 +5,7 @@
   "usingComponents": {
     "navbar": "/components/nav",
     "menubar": "/pages/home/components/menubar",
-    "hot-scenery": "/pages/home/components/hotScenery",
+    "nearby": "/pages/home/components/nearby",
     "moment": "/pages/home/components/moment"
   }
 }

@@ -224,7 +224,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var _shoot = __webpack_require__(/*! ../../api/shoot.js */ 52);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _slicedToArray(arr, i) {return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();}function _nonIterableRest() {throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");}function _unsupportedIterableToArray(o, minLen) {if (!o) return;if (typeof o === "string") return _arrayLikeToArray(o, minLen);var n = Object.prototype.toString.call(o).slice(8, -1);if (n === "Object" && o.constructor) n = o.constructor.name;if (n === "Map" || n === "Set") return Array.from(o);if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);}function _arrayLikeToArray(arr, len) {if (len == null || len > arr.length) len = arr.length;for (var i = 0, arr2 = new Array(len); i < len; i++) {arr2[i] = arr[i];}return arr2;}function _iterableToArrayLimit(arr, i) {if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return;var _arr = [];var _n = true;var _d = false;var _e = undefined;try {for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {_arr.push(_s.value);if (i && _arr.length === i) break;}} catch (err) {_d = true;_e = err;} finally {try {if (!_n && _i["return"] != null) _i["return"]();} finally {if (_d) throw _e;}}return _arr;}function _arrayWithHoles(arr) {if (Array.isArray(arr)) return arr;}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var navbar = function navbar() {__webpack_require__.e(/*! require.ensure | components/nav */ "components/nav").then((function () {return resolve(__webpack_require__(/*! ../../components/nav.vue */ 131));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+var _shoot = __webpack_require__(/*! ../../api/shoot.js */ 52);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var navbar = function navbar() {__webpack_require__.e(/*! require.ensure | components/nav */ "components/nav").then((function () {return resolve(__webpack_require__(/*! ../../components/nav.vue */ 131));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
 
 
 
@@ -258,69 +258,66 @@ var _shoot = __webpack_require__(/*! ../../api/shoot.js */ 52);function _interop
 
   },
   onLoad: function onLoad(options) {
-    // 获取到景区id 链接参数中如果没有 就去globalData中寻找
-    var sceneryId = options.id || getApp().globalData.sceneryId;
-    // 如果在globalData中都没有 说明用户不在景区或者拒绝了地理位置授权 需要手动选择所在景区
-    if (sceneryId === "") {
-      return uni.redirectTo({
-        url: "/pages/sceneryList/sceneryList?type=assert" });
-
-    }
     // 指示回到本页面是否立即开启视频之旅
     this.startNow = options.start;
-
-    // 查询景区数据
-    this.getSceneryInfo(sceneryId);
+    // 查询该页面数据
+    this.getPageInfo(options.id || getApp().globalData.sceneryId);
 
   },
   methods: {
-    getSceneryInfo: function getSceneryInfo(id) {var _this = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var query, _yield$Promise$all, _yield$Promise$all2, res1, res2;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
+    getPageInfo: function getPageInfo(id) {var _this = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var _res, res;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
                 uni.showLoading({
                   title: '加载中' });
 
-                // 同时请求是否开启视频之旅接口和景区信息
-                query = [
-                (0, _shoot.querySceneryInfo)({
-                  id: id }),
+                // 如果登录 则请求是否开启视频之旅信息
+                if (!uni.getStorageSync('access_token')) {_context.next = 6;break;}_context.next = 4;return (
+                  (0, _shoot.isStartTrip)({
+                    sceneryId: id }));case 4:_res = _context.sent;
 
-                (0, _shoot.isStartTrip)({
-                  sceneryId: id })];_context.prev = 2;_context.next = 5;return (
-
+                _this.isStartTrip = _res.value;case 6:_context.next = 8;return (
 
 
-                  Promise.all(query));case 5:_yield$Promise$all = _context.sent;_yield$Promise$all2 = _slicedToArray(_yield$Promise$all, 2);res1 = _yield$Promise$all2[0];res2 = _yield$Promise$all2[1];
-                _this.sceneryInfo = res1.value;
-                _this.isStartTrip = res2.value;
+                  (0, _shoot.querySceneryInfo)({
+                    id: id }));case 8:res = _context.sent;
+
+                _this.sceneryInfo = res.value;
+
                 // 存在该参数时初始化后立刻开启视频之旅
                 if (_this.startNow) {
                   // 防止循环开启
-                  _this.startNow = '';
                   _this.start();
                 } else {
                   uni.hideLoading();
-                }_context.next = 18;break;case 14:_context.prev = 14;_context.t0 = _context["catch"](2);
-
-                uni.hideLoading();
-                console.log(_context.t0);case 18:case "end":return _context.stop();}}}, _callee, null, [[2, 14]]);}))();
+                }case 11:case "end":return _context.stop();}}}, _callee);}))();
 
 
     },
 
     // 开启视频之旅
-    start: function start() {var _this2 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2() {var composeSuccessSubscribeTmplId;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:if (!
+    start: function start() {var _this2 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2() {var composeSuccessSubscribeTmplId;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:if (!(
 
-                _this2.isStartTrip) {_context2.next = 2;break;}return _context2.abrupt("return",
+                _this2.isStartTrip && !_this2.startNow)) {_context2.next = 2;break;}return _context2.abrupt("return",
                 uni.switchTab({
-                  url: '/pages/home/home' }));case 2:
+                  url: '/pages/home/home' }));case 2:if (
 
 
+
+
+                uni.getStorageSync('access_token')) {_context2.next = 5;break;}
+                getApp().globalData.returnPath = "/pages/shoot/shoot?id=".concat(_this2.sceneryInfo.id, "&start=1");return _context2.abrupt("return",
+                uni.redirectTo({
+                  url: '/pages/login/login?action=shoot' }));case 5:
+
+
+                // 防止频繁开启
+                _this2.startNow = '';
                 uni.showLoading({
-                  title: '开启中',
-                  mask: true });_context2.prev = 3;_context2.next = 6;return (
+                  title: '视频之旅开启中',
+                  mask: true });_context2.prev = 7;_context2.next = 10;return (
 
 
                   (0, _shoot.startTrip)({
-                    sceneryId: _this2.sceneryInfo.id }));case 6:
+                    sceneryId: _this2.sceneryInfo.id }));case 10:
 
                 // 订阅模板消息
 
@@ -333,15 +330,15 @@ var _shoot = __webpack_require__(/*! ../../api/shoot.js */ 52);function _interop
                       content: '视频之旅开启成功，快去景区游玩吧',
                       showCancel: false,
                       success: function success(_) {
-                        _this2.getSceneryInfo(_this2.sceneryInfo.id);
+                        _this2.getPageInfo(_this2.sceneryInfo.id);
                       } });
 
-                  } });_context2.next = 13;break;case 10:_context2.prev = 10;_context2.t0 = _context2["catch"](3);
+                  } });_context2.next = 17;break;case 14:_context2.prev = 14;_context2.t0 = _context2["catch"](7);
 
 
-                _this2.handleErr(_context2.t0);case 13:_context2.prev = 13;
+                _this2.handleErr(_context2.t0);case 17:_context2.prev = 17;
 
-                uni.hideLoading();return _context2.finish(13);case 16:case "end":return _context2.stop();}}}, _callee2, null, [[3, 10, 13, 16]]);}))();
+                uni.hideLoading();return _context2.finish(17);case 20:case "end":return _context2.stop();}}}, _callee2, null, [[7, 14, 17, 20]]);}))();
 
     },
 
@@ -362,7 +359,9 @@ var _shoot = __webpack_require__(/*! ../../api/shoot.js */ 52);function _interop
         uni.showModal({
           content: '该景区未开启视频服务，请重新选择',
           showCancel: false,
-          success: function success(_) {return uni.switchTab({ url: '/pages/home/home' });} });
+          success: function success(_) {return uni.switchTab({
+              url: '/pages/home/home' });} });
+
 
 
       } else if (err.resultCode === "0013") {
