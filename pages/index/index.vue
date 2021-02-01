@@ -120,9 +120,17 @@
 
 			// 获取初始化参数
 			transfer() {
-				uni.reLaunch({
-					url: '/pages/home/home',
-				})
+				if(true){
+					uni.reLaunch({
+						url: '/pages/home/home',
+					})
+				}
+				// else{
+				// 	uni.reLaunch({
+				// 		url: '/pages/shoot/shoot?id=55',
+				// 	})
+				// }
+				
 			},
 
 			// 查询消息提示

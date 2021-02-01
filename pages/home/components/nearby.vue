@@ -10,12 +10,14 @@
 		</view>
 
 		<view class="scenery-list">
-			<scroll-view scroll-x enable-flex class="list" enhanced :show-scrollbar="false">
+			<scroll-view v-if="list.length" scroll-x enable-flex class="list" enhanced :show-scrollbar="false">
 				<view class="card-wrapper">
 					<navigator :url="`/pages/shoot/shoot?id=${item.id}`" v-for="(item,index) in list" :key="index" class="scenery-card"
 					 :style="{backgroundImage:`url(${item.coverUrl})`,border:item.isOpen===1?'1rpx solid #FFB90C':'none'}">
 						<view class="mask"></view>
-						<image v-if="item.hotStatus === 1" src="../../../static/recommend.png"></image>
+						<view class="hot" v-if="item.hotStatus === 1">
+							<text>热门</text>
+						</view>
 						<view class="text">
 							<view class="name">
 								<text>{{handleText(item.name,5)}}</text>
@@ -26,6 +28,9 @@
 						</view>
 					</navigator>
 				</view>
+			</scroll-view>
+			<scroll-view enable-flex class="load" v-else >
+				<view class="load-block" v-for="(_,index) in 3" :key="index"></view>
 			</scroll-view>
 		</view>
 	</view>
@@ -56,6 +61,33 @@
 </script>
 
 <style lang="scss" scoped>
+	@keyframes rota {
+		from {
+			transform: rotate(0);
+		}
+	
+		to {
+			transform: rotate(1turn);
+		}
+	}
+	
+	.load {
+		
+		height:185rpx;
+		display:flex;
+		
+	
+		.load-block{
+			background:#e2e2e2;
+			width: 238rpx;
+			height: 168rpx;
+			border-radius: 18rpx;
+			margin-right: 15rpx;
+			flex-shrink: 0;
+		}
+	
+	}
+	
 	.hot-scenery {
 		.title-bar {
 			padding: 35rpx 30rpx;
@@ -109,17 +141,23 @@
 					border-radius: 18rpx;
 					background-size: cover;
 					background-position: center center;
-					box-shadow: 0px 4rpx 10rpx 0px rgba(0, 0, 0, 0.27);
+					box-shadow: 1rpx 1rpx 8rpx 2rpx rgba(0, 0, 0, 0.27);
 					margin-right: 15rpx;
 					box-sizing: border-box;
 
-					&>image{
-						position:absolute;
-						left:20rpx;
-						top:-7rpx;
-						width: 45rpx;
-						height: 62rpx;
-						z-index:99;
+					.hot {
+						position: absolute;
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						background: linear-gradient(199deg, #FFA012, #FFDA05);
+						box-shadow: 0px 2rpx 5rpx 0px rgba(121, 93, 11, 0.3);
+						right: 10rpx;
+						top: 10rpx;
+						z-index: 99;
+						padding: 3rpx 8rpx;
+						border-radius: 8rpx;
+						font-size: 20rpx;
 					}
 
 					.mask {
@@ -160,8 +198,8 @@
 							color: #FFFFFF;
 							padding: 3rpx 15rpx;
 						}
-						
-						.open{
+
+						.open {
 							background: #FFB90C;
 						}
 

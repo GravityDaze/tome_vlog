@@ -1,0 +1,9 @@
+{
+  "navigationStyle": "custom",
+  "navigationBarBackgroundColor": "#000000",
+  "navigationBarTextStyle": "white",
+  "usingComponents": {
+    "navbar": "/components/nav",
+    "list": "/pages/mine/components/list"
+  }
+}

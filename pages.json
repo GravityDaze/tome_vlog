@@ -51,7 +51,7 @@
 		{
 			"path":"pages/map/map",
 			"style":{
-				"navigationBarTitleText": "地图"
+				"navigationBarTitleText": "打卡点"
 			}
 		},
 		{

@@ -105,11 +105,11 @@
 /******/
 /******/
 /******/ 		// mini-css-extract-plugin CSS loading
-/******/ 		var cssChunks = {"pages/home/components/menubar":1,"pages/home/components/nearby":1,"components/nav":1,"pages/home/components/moment":1,"pages/mine/components/list":1,"pages/shareVideo/components/comment":1,"pages/myVideo/componets/shareModal":1,"components/maramlee-waterfalls-flow":1};
+/******/ 		var cssChunks = {"pages/home/components/menubar":1,"pages/home/components/nearby":1,"components/nav":1,"pages/home/components/moment":1,"pages/shoot/components/tips":1,"pages/mine/components/list":1,"pages/shareVideo/components/comment":1,"pages/myVideo/componets/shareModal":1,"components/maramlee-waterfalls-flow":1};
 /******/ 		if(installedCssChunks[chunkId]) promises.push(installedCssChunks[chunkId]);
 /******/ 		else if(installedCssChunks[chunkId] !== 0 && cssChunks[chunkId]) {
 /******/ 			promises.push(installedCssChunks[chunkId] = new Promise(function(resolve, reject) {
-/******/ 				var href = "" + ({"pages/home/components/menubar":"pages/home/components/menubar","pages/home/components/nearby":"pages/home/components/nearby","components/nav":"components/nav","pages/home/components/moment":"pages/home/components/moment","pages/mine/components/list":"pages/mine/components/list","pages/shareVideo/components/comment":"pages/shareVideo/components/comment","pages/myVideo/componets/shareModal":"pages/myVideo/componets/shareModal","components/maramlee-waterfalls-flow":"components/maramlee-waterfalls-flow"}[chunkId]||chunkId) + ".wxss";
+/******/ 				var href = "" + ({"pages/home/components/menubar":"pages/home/components/menubar","pages/home/components/nearby":"pages/home/components/nearby","components/nav":"components/nav","pages/home/components/moment":"pages/home/components/moment","pages/shoot/components/tips":"pages/shoot/components/tips","pages/mine/components/list":"pages/mine/components/list","pages/shareVideo/components/comment":"pages/shareVideo/components/comment","pages/myVideo/componets/shareModal":"pages/myVideo/componets/shareModal","components/maramlee-waterfalls-flow":"components/maramlee-waterfalls-flow"}[chunkId]||chunkId) + ".wxss";
 /******/ 				var fullhref = __webpack_require__.p + href;
 /******/ 				var existingLinkTags = document.getElementsByTagName("link");
 /******/ 				for(var i = 0; i < existingLinkTags.length; i++) {

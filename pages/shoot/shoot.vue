@@ -37,7 +37,7 @@
 				</view>
 				<view class="guide">
 					<text>在开拍前，可观看此视频进行操作指引哟~</text>
-					<view class="guide-cover">
+					<view class="guide-cover" @click="watchTipsVideo">
 						<image class="cover" src="https://tomevideo.zhihuiquanyu.com/20210120142357.jpg"></image>
 						<image class="play" src="../../static/play_guide.png" mode=""></image>
 					</view>
@@ -48,7 +48,7 @@
 			<!-- 文字2 -->
 			<view class="title2">
 				<text>自动录像点</text>
-				<view class="goMap">
+				<view class="go-map" @click="goMap">
 					<text>查看地图</text>
 					<image src="../../static/arrow.png" mode=""></image>
 				</view>
@@ -77,12 +77,15 @@
 				<text>{{isStartTrip?'去首页浏览其他精彩VLOG':'开启视频之旅'}}</text>
 			</view>
 		</view>
+		
+		<tips @touchmove.stop.prevent="moveHandle" :show="showVideo" @close="showVideo=false" />
 
 	</view>
 </template>
 
 <script>
 	import navbar from '../../components/nav.vue'
+	import tips from './components/tips.vue'
 	import {
 		querySceneryInfo,
 		startTrip,
@@ -96,6 +99,7 @@
 				latitude: "",
 				longitude: "",
 				immersive: true,
+				showVideo:false, //是否展示攻略视频
 				startNow: "", //是否立即开启视频之旅
 				testData: [{
 						img: "https://img1.qunarzz.com/travel/d5/1801/d0/6a8fbbdf116efcb5.jpg_r_720x480x95_bef77a31.jpg",
@@ -231,7 +235,25 @@
 						success: _ => this.getSceneryInfo(this.sceneryInfo.id)
 					})
 				}
+			},
+			
+			// 观看攻略视频
+			watchTipsVideo(){
+				this.showVideo = true
+			},
+			
+			// 防止滑动穿透
+			moveHandle(){
+				return
+			},
+			
+			// 地图页面
+			goMap(){
+				uni.navigateTo({
+					url:'/pages/map/map'
+				})
 			}
+			
 		},
 		onPageScroll(e) {
 			if (e.scrollTop > 50) {
@@ -245,7 +267,8 @@
 			}
 		},
 		components: {
-			navbar
+			navbar,
+			tips
 		}
 	}
 </script>
@@ -407,7 +430,7 @@
 				font-weight: 500;
 				color: #333332;
 
-				.goMap {
+				.go-map {
 					display: flex;
 					align-items: center;
 					font-size: 22rpx;

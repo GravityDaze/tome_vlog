@@ -116,8 +116,7 @@
 								confirm
 							}) => {
 								if (confirm) {
-									const [err, res] = await uni.openSetting()
-									res.authSetting['scope.userLocation'] && this.getLocation()
+									await uni.openSetting()
 								} else {
 									uni.showToast({
 										title: '授权失败',
@@ -212,6 +211,7 @@
 						} else {
 							this.sceneryName = '未定位到景区'
 							getApp().globalData.sceneryName = '未定位到景区'
+							getApp().globalData.sceneryId = ''
 							// 以当前用户经纬度周边景区
 							this.getNearbyList(lon, lat)
 						}
@@ -222,7 +222,8 @@
 				}
 			},
 			
-
+			
+			// 根据用当前景区获取到周边景区
 			async getNearbyList(lon, lat) {
 				const res = await queryCard({
 					lon,
@@ -235,13 +236,13 @@
 				for (let i = 0; i < sceneryList.length; i++) {
 					if (sceneryList[i].isOpen === 1) {
 						const temp = sceneryList.splice(i, 1)
-						sceneryList.splice(insert++, 1, ...temp)
+						sceneryList.splice(insert++, 0, ...temp)
 					}
 				}
 				this.nearbyList = sceneryList
 			},
 
-			// 点击搜索框跳转到景区列表页面
+			// 点击定位框跳转到景区列表页面
 			queryScenery() {
 				getApp().globalData.returnPath = "/pages/home/home"
 				uni.navigateTo({

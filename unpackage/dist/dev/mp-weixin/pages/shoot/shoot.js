@@ -98,6 +98,13 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   var g0 = Object.keys(_vm.sceneryInfo)
+
+  if (!_vm._isMounted) {
+    _vm.e0 = function($event) {
+      _vm.showVideo = false
+    }
+  }
+
   _vm.$mp.data = Object.assign(
     {},
     {
@@ -224,7 +231,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var _shoot = __webpack_require__(/*! ../../api/shoot.js */ 52);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var navbar = function navbar() {__webpack_require__.e(/*! require.ensure | components/nav */ "components/nav").then((function () {return resolve(__webpack_require__(/*! ../../components/nav.vue */ 131));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+
+
+
+var _shoot = __webpack_require__(/*! ../../api/shoot.js */ 52);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var navbar = function navbar() {__webpack_require__.e(/*! require.ensure | components/nav */ "components/nav").then((function () {return resolve(__webpack_require__(/*! ../../components/nav.vue */ 131));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var tips = function tips() {__webpack_require__.e(/*! require.ensure | pages/shoot/components/tips */ "pages/shoot/components/tips").then((function () {return resolve(__webpack_require__(/*! ./components/tips.vue */ 210));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
 
 
 
@@ -237,6 +247,7 @@ var _shoot = __webpack_require__(/*! ../../api/shoot.js */ 52);function _interop
       latitude: "",
       longitude: "",
       immersive: true,
+      showVideo: false, //是否展示攻略视频
       startNow: "", //是否立即开启视频之旅
       testData: [{
         img: "https://img1.qunarzz.com/travel/d5/1801/d0/6a8fbbdf116efcb5.jpg_r_720x480x95_bef77a31.jpg",
@@ -372,7 +383,25 @@ var _shoot = __webpack_require__(/*! ../../api/shoot.js */ 52);function _interop
           success: function success(_) {return _this3.getSceneryInfo(_this3.sceneryInfo.id);} });
 
       }
+    },
+
+    // 观看攻略视频
+    watchTipsVideo: function watchTipsVideo() {
+      this.showVideo = true;
+    },
+
+    // 防止滑动穿透
+    moveHandle: function moveHandle() {
+      return;
+    },
+
+    // 地图页面
+    goMap: function goMap() {
+      uni.navigateTo({
+        url: '/pages/map/map' });
+
     } },
+
 
   onPageScroll: function onPageScroll(e) {
     if (e.scrollTop > 50) {
@@ -386,7 +415,8 @@ var _shoot = __webpack_require__(/*! ../../api/shoot.js */ 52);function _interop
     }
   },
   components: {
-    navbar: navbar } };exports.default = _default;
+    navbar: navbar,
+    tips: tips } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),

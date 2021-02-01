@@ -81,18 +81,19 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  var l0 = _vm.__map(_vm.list, function(item, index) {
-    var $orig = _vm.__get_orig(item)
+  var l0 = _vm.list.length
+    ? _vm.__map(_vm.list, function(item, index) {
+        var $orig = _vm.__get_orig(item)
 
-    var m0 = _vm.handleText(item.name, 5)
-    var m1 = !(item.isOpen === 1) ? _vm.handleText(item.describe, 6) : null
-    return {
-      $orig: $orig,
-      m0: m0,
-      m1: m1
-    }
-  })
-
+        var m0 = _vm.handleText(item.name, 5)
+        var m1 = !(item.isOpen === 1) ? _vm.handleText(item.describe, 6) : null
+        return {
+          $orig: $orig,
+          m0: m0,
+          m1: m1
+        }
+      })
+    : null
   _vm.$mp.data = Object.assign(
     {},
     {
@@ -168,7 +169,17 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
 var _handleText2 = __webpack_require__(/*! ../../../utils/handleText.js */ 200); //
+//
+//
+//
+//
+//
 //
 //
 //

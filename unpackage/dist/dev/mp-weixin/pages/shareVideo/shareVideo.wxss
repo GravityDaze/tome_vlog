@@ -125,4 +125,8 @@
   -webkit-transform: translateX(-50%);
           transform: translateX(-50%);
 }
+.block.data-v-0f776dc6 {
+  background: #000;
+  height: 225px;
+}
 

@@ -102,6 +102,8 @@
 			async checkLoginStatus() {
 				const token = uni.getStorageSync('access_token')
 				const userInfo = uni.getStorageSync('userInfo')
+				console.log(token)
+				console.log(userInfo)
 				if (token && userInfo) {
 					this.userInfo = userInfo
 					this.isLogin = true

@@ -1,0 +1,43 @@
+.tab-bar {
+  position: fixed;
+  bottom:env(safe-area-inset-bottom);
+  height: 110rpx;
+  width:750rpx;
+  background: url('https://res.paquapp.com/popmartvip/home/nav_bar_bg_2x.png') no-repeat center center;
+  background-size:cover;
+  display: flex;
+}
+
+
+.tab-bar-item {
+  flex: 1;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.tab-bar-item image {
+  width: 53rpx;
+  height: 47rpx;
+}
+
+.tab-bar-item view {
+  font-size: 20rpx;
+  margin-top:8rpx;
+}
+
+.tab-bar-item .middle {
+  width:105rpx;
+  height:105rpx;
+  transform:translateY(-55rpx);
+}
+
+.safe-area{
+	position: fixed;
+	bottom:0;
+	height: env(safe-area-inset-bottom);
+	width:750rpx;
+	background: #fff;
+}

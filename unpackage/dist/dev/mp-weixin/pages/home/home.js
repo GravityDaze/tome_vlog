@@ -249,16 +249,15 @@ var _home = __webpack_require__(/*! ../../api/home.js */ 43);function _interopRe
                   uni.showModal({
                     title: '提示',
                     content: '检测到您拒绝了地理位置授权，这将无法为您提供VLOG服务，请打开设置界面手动开启权限。 ',
-                    success: function () {var _success = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee(_ref) {var confirm, _yield$uni$openSettin, _yield$uni$openSettin2, _err2, _res2;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
+                    success: function () {var _success = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee(_ref) {var confirm;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
                                 confirm = _ref.confirm;if (!
 
-                                confirm) {_context.next = 11;break;}_context.next = 4;return (
-                                  uni.openSetting());case 4:_yield$uni$openSettin = _context.sent;_yield$uni$openSettin2 = _slicedToArray(_yield$uni$openSettin, 2);_err2 = _yield$uni$openSettin2[0];_res2 = _yield$uni$openSettin2[1];
-                                _res2.authSetting['scope.userLocation'] && _this.getLocation();_context.next = 12;break;case 11:
+                                confirm) {_context.next = 6;break;}_context.next = 4;return (
+                                  uni.openSetting());case 4:_context.next = 7;break;case 6:
 
                                 uni.showToast({
                                   title: '授权失败',
-                                  icon: 'none' });case 12:case "end":return _context.stop();}}}, _callee);}));function success(_x) {return _success.apply(this, arguments);}return success;}() });
+                                  icon: 'none' });case 7:case "end":return _context.stop();}}}, _callee);}));function success(_x) {return _success.apply(this, arguments);}return success;}() });
 
 
 
@@ -349,6 +348,7 @@ var _home = __webpack_require__(/*! ../../api/home.js */ 43);function _interopRe
                   } else {
                     _this3.sceneryName = '未定位到景区';
                     getApp().globalData.sceneryName = '未定位到景区';
+                    getApp().globalData.sceneryId = '';
                     // 以当前用户经纬度周边景区
                     _this3.getNearbyList(lon, lat);
                   }
@@ -360,6 +360,7 @@ var _home = __webpack_require__(/*! ../../api/home.js */ 43);function _interopRe
     },
 
 
+    // 根据用当前景区获取到周边景区
     getNearbyList: function getNearbyList(lon, lat) {var _this4 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee5() {var res, sceneryList, insert, i, temp;return _regenerator.default.wrap(function _callee5$(_context5) {while (1) {switch (_context5.prev = _context5.next) {case 0:_context5.next = 2;return (
                   (0, _home.queryCard)({
                     lon: lon,
@@ -372,13 +373,13 @@ var _home = __webpack_require__(/*! ../../api/home.js */ 43);function _interopRe
                 for (i = 0; i < sceneryList.length; i++) {
                   if (sceneryList[i].isOpen === 1) {
                     temp = sceneryList.splice(i, 1);
-                    sceneryList.splice.apply(sceneryList, [insert++, 1].concat(_toConsumableArray(temp)));
+                    sceneryList.splice.apply(sceneryList, [insert++, 0].concat(_toConsumableArray(temp)));
                   }
                 }
                 _this4.nearbyList = sceneryList;case 7:case "end":return _context5.stop();}}}, _callee5);}))();
     },
 
-    // 点击搜索框跳转到景区列表页面
+    // 点击定位框跳转到景区列表页面
     queryScenery: function queryScenery() {
       getApp().globalData.returnPath = "/pages/home/home";
       uni.navigateTo({

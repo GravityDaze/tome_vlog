@@ -175,7 +175,7 @@
   font-weight: 500;
   color: #333332;
 }
-.shoot .panel .title2 .goMap.data-v-12276a74 {
+.shoot .panel .title2 .go-map.data-v-12276a74 {
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
@@ -186,7 +186,7 @@
   font-weight: 400;
   color: #B5B3B2;
 }
-.shoot .panel .title2 .goMap image.data-v-12276a74 {
+.shoot .panel .title2 .go-map image.data-v-12276a74 {
   padding-left: 8rpx;
   width: 13rpx;
   height: 24rpx;

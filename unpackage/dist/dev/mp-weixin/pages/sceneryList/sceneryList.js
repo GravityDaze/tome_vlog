@@ -184,7 +184,6 @@ var _sceneryList = __webpack_require__(/*! ../../api/sceneryList.js */ 70);funct
 {
   data: function data() {
     return {
-      assert: false, // 选择景区时否作为定位景区
       originList: [], //原始数据 用于清空key后恢复数据
       activeList: [], //动态数据 用于检索
       id: '' //当前选择的景区ID
@@ -231,11 +230,15 @@ var _sceneryList = __webpack_require__(/*! ../../api/sceneryList.js */ 70);funct
         lon: item.lon,
         lat: item.lat };var
 
-      returnPath = getApp().globalData.returnPath;
+
+      returnPath =
+      getApp().globalData.returnPath;
       if (returnPath) {
         uni.redirectTo({
           url: returnPath,
-          fail: function fail(_) {return uni.switchTab({ url: returnPath });},
+          fail: function fail(_) {return uni.switchTab({
+              url: returnPath });},
+
           complete: function complete(_) {return getApp().globalData.returnPath = '';} });
 
       }

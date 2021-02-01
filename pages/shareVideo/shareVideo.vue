@@ -1,7 +1,8 @@
 <!-- 视频详情页面 -->
 <template>
 	<view>
-		<video id="video" style="width:100%" autoplay :src="videoInfo.url" objectFit="fill"></video>
+		<video v-if="videoInfo.url" id="video" style="width:100%" autoplay :src="videoInfo.url" objectFit="fill"></video>
+		<view v-else class="block"></view>
 		<!-- 视频详细信息面板 -->
 		<view class="details">
 			<view class="top-info">
@@ -223,5 +224,10 @@
 		bottom: 40rpx;
 		left: 50%;
 		transform: translateX(-50%);
+	}
+	
+	.block{
+		background:#000;
+		height:225px;
 	}
 </style>

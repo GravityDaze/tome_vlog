@@ -1,0 +1,13 @@
+<!--miniprogram/custom-tab-bar/index.wxml-->
+<view class="tab-bar">
+  <view wx:for="{{list}}" wx:key="index" class="tab-bar-item" data-path="{{item.pagePath}}" data-index="{{index}}" bindtap="switchTab">
+	<block wx:if="{{index !== 1}}">
+		<image src="{{selected === index ? item.selectedIconPath : item.iconPath}}"></image>
+		<view style="color: {{selected === index ? selectedColor : color}}">{{item.text}}</view>
+	</block>
+	<block wx:else>
+		<image class="middle" src="{{item.iconPath}}"></image>
+	</block>
+  </view>
+</view>
+<view class="safe-area"></view>

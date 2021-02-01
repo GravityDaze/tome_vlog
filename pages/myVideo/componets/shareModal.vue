@@ -144,7 +144,7 @@
 				}
 			},
 			// 分享朋友圈
-			shareToMoments() {
+			async shareToMoments() {
 				uni.showToast({
 					title: '暂未开放',
 					icon: 'none'
@@ -154,12 +154,12 @@
 				// 	mask: true
 				// })
 
-				// 生成不同类型的二维码
+				// // 生成不同类型的二维码
 				// let scene
 				// let pagePath
 				// if (this.videoInfo.shareStatus === 0) {
 				// 	// 未发布
-				// 	pagePath = "pages/shareVideo/shareVideo";
+				// 	pagePath = "pages/myVideo/myVideo";
 				// 	scene = this.videoInfo.id;
 				// } else {
 				// 	// 已发布

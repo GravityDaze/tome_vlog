@@ -1,0 +1,51 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/home/home",
+    "pages/shoot/shoot",
+    "pages/mine/mine",
+    "pages/sceneryList/sceneryList",
+    "pages/shareVideo/shareVideo",
+    "pages/myVideo/myVideo",
+    "pages/map/map",
+    "pages/login/login",
+    "pages/face/face",
+    "pages/about/about",
+    "pages/upload/upload"
+  ],
+  "subPackages": [],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "途咪VLOG",
+    "navigationBarBackgroundColor": "#F8F8F8",
+    "backgroundColor": "#F8F8F8",
+    "onReachBottomDistance": 100
+  },
+  "tabBar": {
+    "custom": true,
+    "color": "#000",
+    "selectedColor": "#F8C137",
+    "borderStyle": "black",
+    "list": [
+      {
+        "iconPath": "static/1.png",
+        "selectedIconPath": "static/2.png",
+        "pagePath": "pages/home/home",
+        "text": "首页"
+      },
+      {
+        "iconPath": "static/3.png",
+        "selectedIconPath": "static/4.png",
+        "pagePath": "pages/mine/mine",
+        "text": "我的"
+      }
+    ]
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "给我位置"
+    }
+  },
+  "usingComponents": {},
+  "sitemapLocation": "sitemap.json"
+}

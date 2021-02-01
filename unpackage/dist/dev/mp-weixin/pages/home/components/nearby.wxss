@@ -24,6 +24,41 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
+@-webkit-keyframes rota-data-v-05917e21 {
+from {
+    -webkit-transform: rotate(0);
+            transform: rotate(0);
+}
+to {
+    -webkit-transform: rotate(1turn);
+            transform: rotate(1turn);
+}
+}
+@keyframes rota-data-v-05917e21 {
+from {
+    -webkit-transform: rotate(0);
+            transform: rotate(0);
+}
+to {
+    -webkit-transform: rotate(1turn);
+            transform: rotate(1turn);
+}
+}
+.load.data-v-05917e21 {
+  height: 185rpx;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+}
+.load .load-block.data-v-05917e21 {
+  background: #e2e2e2;
+  width: 238rpx;
+  height: 168rpx;
+  border-radius: 18rpx;
+  margin-right: 15rpx;
+  -webkit-flex-shrink: 0;
+          flex-shrink: 0;
+}
 .hot-scenery .title-bar.data-v-05917e21 {
   padding: 35rpx 30rpx;
   box-sizing: border-box;
@@ -87,17 +122,30 @@
   border-radius: 18rpx;
   background-size: cover;
   background-position: center center;
-  box-shadow: 0px 4rpx 10rpx 0px rgba(0, 0, 0, 0.27);
+  box-shadow: 1rpx 1rpx 8rpx 2rpx rgba(0, 0, 0, 0.27);
   margin-right: 15rpx;
   box-sizing: border-box;
 }
-.hot-scenery .scenery-list .list .scenery-card > image.data-v-05917e21 {
+.hot-scenery .scenery-list .list .scenery-card .hot.data-v-05917e21 {
   position: absolute;
-  left: 20rpx;
-  top: -7rpx;
-  width: 45rpx;
-  height: 62rpx;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+  background: -webkit-linear-gradient(251deg, #FFA012, #FFDA05);
+  background: linear-gradient(199deg, #FFA012, #FFDA05);
+  box-shadow: 0px 2rpx 5rpx 0px rgba(121, 93, 11, 0.3);
+  right: 10rpx;
+  top: 10rpx;
   z-index: 99;
+  padding: 3rpx 8rpx;
+  border-radius: 8rpx;
+  font-size: 20rpx;
 }
 .hot-scenery .scenery-list .list .scenery-card .mask.data-v-05917e21 {
   position: absolute;

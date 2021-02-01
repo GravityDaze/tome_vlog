@@ -1,7 +1,8 @@
 <!-- '我的'视频详情页面 -->
 <template>
 	<view v-if="Object.keys(videoInfo).length">
-		<video @timeupdate="timeupdate" @ended="ended" id="video" style="width:100%" autoplay :controls="controls" :src="videoInfo.url" objectFit="fill">
+		<video @timeupdate="timeupdate" @ended="ended" id="video" style="width:100%" autoplay :controls="controls" :src="videoInfo.url"
+		 objectFit="fill">
 			<cover-view class="tips" v-if="videoInfo.buyStatus === 0 && availableTime !== 0">
 				<cover-view>{{ controls? `试看${availableTime}秒`:'试看结束'}}，查看完整版请</cover-view>
 				<cover-view style="color: rgba(252, 69, 65, 1);margin-left:15rpx" @click="buy">立即购买</cover-view>
@@ -27,7 +28,7 @@
 				</view>
 			</view>
 		</view>
-		<view class="bottom-bar">
+		<view class="bottom-bar" v-if="!type">
 			<!-- 已购视频 -->
 			<view class="bought " v-if="videoInfo.buyStatus === 1">
 				<view class="cancel-share" v-if="videoInfo.shareStatus" @click="cancelShare">
@@ -84,20 +85,23 @@
 	export default {
 		data() {
 			return {
+				type:'',//进入本页面的类型
 				videoInfo: {},
 				mask: false, //是否展开遮罩
 				showModal: false, // 是否展开分享
 				publishModal: false, // 发布至途咪
-				controls:true,
-				availableTime:0
+				controls: true,
+				availableTime: 0
 			}
 		},
 		onLoad(options) {
+			this.type = options.type
 			this.getVideoInfo(options.videoId)
 		},
 		methods: {
 			// 获取分享视频
 			async getVideoInfo(videoId) {
+				
 				const res = await queryVideoInfo({
 					videoId
 				})
@@ -114,30 +118,35 @@
 				res.value.url = encryptByRsa(res.value.url, getApp().globalData.encryptKey)
 				return res.value
 			},
-			
+
 			// 视频播放回调
-			timeupdate(e){
-				if(!this.videoInfo.buyStatus){
-					const { currentTime,duration } = e.detail
+			timeupdate(e) {
+				if (!this.videoInfo.buyStatus) {
+					const {
+						currentTime,
+						duration
+					} = e.detail
 					// 指定未购买的视频能播放多少秒
-					const { noBuyVideoLook } = getApp().globalData.initParams
-					this.availableTime = Math.ceil(duration * (noBuyVideoLook/100))
-					if( currentTime >  this.availableTime ){
-						 const ctx = uni.createVideoContext('video')
-						 // 试看结束
-						 this.controls = false
-						 ctx.stop()
+					const {
+						noBuyVideoLook
+					} = getApp().globalData.initParams
+					this.availableTime = Math.ceil(duration * (noBuyVideoLook / 100))
+					if (currentTime > this.availableTime) {
+						const ctx = uni.createVideoContext('video')
+						// 试看结束
+						this.controls = false
+						ctx.stop()
 					}
 				}
 			},
-			
+
 			// 视频播放结束回调
-			ended(){
+			ended() {
 				const ctx = uni.createVideoContext('video')
 				ctx.seek(0)
 				ctx.stop()
 			},
-			
+
 
 			// 分享视频
 			share() {
@@ -250,7 +259,7 @@
 								})
 								// 刷新瀑布流
 								getApp().globalData.refreshWaterFall = true
-								
+
 								// 更改状态
 								this.getVideoInfo(this.videoInfo.id)
 							} catch {
@@ -307,7 +316,7 @@
 								this.controls = true
 								uni.showModal({
 									content: '购买成功，快去分享吧~',
-									showCancel:false
+									showCancel: false
 								})
 							}
 						})
@@ -320,6 +329,25 @@
 					}
 				}
 			}
+		},
+		onShareAppMessage(res) {
+
+			// 来自页面内转发按钮
+			let path
+			if (!this.videoInfo.shareStatus) {
+				path = `/pages/myVideo/myVideo?videoId=${this.videoInfo.id}&type=share` 
+			} else {
+				// 已发布
+				path = `/pages/shareVideo/shareVideo?videoShareId=${this.videoInfo.videoShareId}`
+			}
+			
+			return {
+				path,
+				title: `这是我在${this.videoInfo.sceneryName}的VLOG，快来看看吧`,
+				imageUrl: this.videoInfo.coverUrl
+			}
+
+
 		},
 		components: {
 			shareModal

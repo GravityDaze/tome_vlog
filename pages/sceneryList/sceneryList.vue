@@ -32,7 +32,6 @@
 	export default {
 		data() {
 			return {
-				assert: false, // 选择景区时否作为定位景区
 				originList: [], //原始数据 用于清空key后恢复数据
 				activeList: [], //动态数据 用于检索
 				id: '' //当前选择的景区ID
@@ -40,10 +39,10 @@
 		},
 		onLoad(options) {
 			// 如果type是select 说明是从开拍按钮进入
-			if(options.type === 'select'){   
+			if (options.type === 'select') {
 				uni.showModal({
-					content:'请选择您要打卡的景区',
-					showCancel:false
+					content: '请选择您要打卡的景区',
+					showCancel: false
 				})
 			}
 			this.getSceneryList()
@@ -79,12 +78,16 @@
 					lon: item.lon,
 					lat: item.lat
 				}
-				const { returnPath } = getApp().globalData
+				const {
+					returnPath
+				} = getApp().globalData
 				if (returnPath) {
 					uni.redirectTo({
 						url: returnPath,
-						fail:_=>uni.switchTab( { url:returnPath } ),
-						complete:_=>getApp().globalData.returnPath = ''
+						fail: _ => uni.switchTab({
+							url: returnPath
+						}),
+						complete: _ => getApp().globalData.returnPath = ''
 					})
 				}
 

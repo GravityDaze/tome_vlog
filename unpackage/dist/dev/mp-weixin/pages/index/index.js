@@ -252,8 +252,16 @@ var _index = __webpack_require__(/*! ../../api/index.js */ 20);function _interop
 
     // 获取初始化参数
     transfer: function transfer() {
-      uni.reLaunch({
-        url: '/pages/home/home' });
+      if (true) {
+        uni.reLaunch({
+          url: '/pages/home/home' });
+
+      }
+      // else{
+      // 	uni.reLaunch({
+      // 		url: '/pages/shoot/shoot?id=55',
+      // 	})
+      // }
 
     },
 
