@@ -85,7 +85,7 @@ to {
 }
 .banner.data-v-92bb8f34 {
   position: relative;
-  height: 430rpx;
+  height: 450rpx;
 }
 .banner .swiper.data-v-92bb8f34 {
   height: 100%;

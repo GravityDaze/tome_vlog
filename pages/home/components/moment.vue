@@ -1,7 +1,7 @@
 <template>
 	<view class="moment">
 		<view class="title-bar">
-			<text class="title">VLOG精彩放送</text>
+			<text class="title">精彩游记</text>
 		</view>
 		<!-- 瀑布流 -->
 		<view>
@@ -163,7 +163,7 @@
 <style lang="scss" scoped>
 	.moment {	
 		.title-bar {
-			padding: 25rpx 30rpx 30rpx;
+			padding: 0rpx 30rpx 30rpx;
 			box-sizing: border-box;
 			display: flex;
 			justify-content: space-between;

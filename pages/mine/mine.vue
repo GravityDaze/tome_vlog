@@ -8,52 +8,46 @@
 		</navbar>
 		<!-- 用户资料 -->
 		<view class="user-bg" :style="{paddingTop:`${topHeight}px`}">
-			<image src="../../static/minebg.jpg" mode="aspectFill"></image>
-			<view class="user-container">
+			<!-- <image src="http://i1.fuimg.com/733051/d7f65285bdafdcd6.jpg" mode="aspectFill"></image> -->
+			<view class="mask"></view>
+			<view class="user-container" v-if="isLogin">
 				<view class="user-info">
-					<view class="user" v-if="isLogin">
-						<image :src="userInfo.avatarUrl" class="avatar"></image>
+					<view class="user">
+						<image @click="goFacePage" :src="userInfo.avatarUrl" class="avatar"></image>
 						<text>{{userInfo.nickName}}</text>
 					</view>
-					<view class="btn" @click="toLogin" v-else>
-						<text>登录</text>
+
+				</view>
+			</view>
+			<view class="tabs" v-if="isLogin">
+				<view class="item">
+					<view :class="['single-item',{ active: current === 0 }]" @click="current = 0">
+						<text>我的游记</text>
+					</view>
+					<view :class="['single-item',{ active: current === 1 }]" @click="current = 1">
+						<text>已购视频</text>
 					</view>
 				</view>
 			</view>
 		</view>
-		<view class="content-box">
-			<!-- 按钮面板 -->
-			<view class="panel">
-				<view class="single-item" @click="goFacePage">
-					<image src="../../static/mine01.png" class="icons"></image>
-					<text>人脸采集</text>
-				</view>
-				<view class="single-item">
-					<image src="../../static/mine02.png" class="icons"></image>
-					<text>游玩攻略</text>
-				</view>
-				<view class="single-item" @click="aboutUs">
-					<image src="../../static/mine03_.png" class="icons"></image>
-					<text>关于途咪</text>
-				</view>
-			</view>
+		
+		<view class="tips" v-if="isLogin">
+			<text v-if="current === 0">视频最长保留一周，请及时购买</text>
+			<text v-if="current === 1">已购买的视频都在这哟~</text>
+		</view>
 
+		<view class="content-box" v-if="isLogin">
 			<!-- 我的游记 -->
-			<view class="my-travel">
-				<view class="title">
-					<view class="text">
-						<text>我的游记</text>
-						<view class="remind" v-if="redPoint"></view>
-					</view>
-					<view class="title-underline"></view>
-					<view class="tips">
-						<text>{{isLogin?'视频最长保留一周，请及时下载':'请登录后查看游记'}}</text>
-					</view>
-				</view>
-
-				<!-- 游记列表 -->
-				<list :dataList="travelList" />
-
+			<list :dataList="travelList" v-show="current === 0" />
+			<!-- 已购视频 -->
+			<buyList :dataList="buyListData" v-show="current === 1"></buyList>
+		</view>
+		<!-- 未登录提示 -->
+		<view class="login-tips" v-else>
+			<image src="../../static/login-tips.png" mode=""></image>
+			<text>您还没有登录途咪哦~</text>
+			<view class="btn" @click="toLogin">
+				<text>登 录</text>
 			</view>
 		</view>
 	</view>
@@ -64,20 +58,25 @@
 	import navbar from '../../components/nav.vue'
 	// 游记列表组件
 	import list from './components/list.vue'
+	// 已购视频组件
+	import buyList from './components/buyList.vue'
 	// 查询游记接口
 	import {
 		queryTravel,
-		queryMsg
+		queryMsg,
+		queryBuyList
 	} from '../../api/mine.js'
 	export default {
 		data() {
 			return {
+				current: 0,
 				topHeight: 0,
-				redPoint:false,
+				redPoint: false,
 				immersive: true, //是否沉浸式导航栏
 				isLogin: false, //判断是否登录
 				userInfo: {}, //用户信息
-				travelList: [] //游记数据
+				travelList: [], //游记数据
+				buyListData: []
 			}
 		},
 		onLoad() {
@@ -89,6 +88,15 @@
 			// 判断是否登录
 			this.checkLoginStatus()
 		},
+		watch: {
+			async current(val) {
+				if (val === 1 && !this.buyListData.length) {
+					const res = await queryBuyList()
+					this.buyListData = res.value.list
+				}
+			}
+		},
+
 		methods: {
 			// 获取到导航栏高度
 			getNavHeight() {
@@ -102,8 +110,6 @@
 			async checkLoginStatus() {
 				const token = uni.getStorageSync('access_token')
 				const userInfo = uni.getStorageSync('userInfo')
-				console.log(token)
-				console.log(userInfo)
 				if (token && userInfo) {
 					this.userInfo = userInfo
 					this.isLogin = true
@@ -142,7 +148,7 @@
 					url: '/pages/about/about'
 				})
 			}
-			
+
 		},
 		onPageScroll(e) {
 			if (e.scrollTop > 50) {
@@ -157,7 +163,8 @@
 		},
 		components: {
 			navbar,
-			list
+			list,
+			buyList
 		}
 	}
 </script>
@@ -168,21 +175,27 @@
 	}
 
 	.user-bg {
-		height: 260rpx;
+		height: 300rpx;
 		position: relative;
+		// background:url(http://i2.tiimg.com/733051/b46f91c023c4b145.jpg) no-repeat center center;
+		background: url(https://desk-fd.zol-img.com.cn/t_s1920x1080c5/g6/M00/0E/08/ChMkKV9v-8eIHjBqAC7N3ADENtoAAC5uwGEmzYALs30241.jpg) no-repeat center center;
+		background-size: cover;
+		// background-position:center center;
 
-		&>image {
+		.mask {
 			width: 100%;
 			height: 100%;
 			position: absolute;
 			top: 0;
 			left: 0;
-			z-index: -1;
+			background: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
 		}
 
 
 
 		.user-container {
+			position: relative;
+			z-index: 1;
 			display: flex;
 			justify-content: space-between;
 			align-items: center;
@@ -194,6 +207,7 @@
 				width: 100%;
 
 				.user {
+					position: relative;
 					display: flex;
 					flex-direction: column;
 					align-items: center;
@@ -202,141 +216,110 @@
 					font-size: 34rpx;
 					font-weight: 700;
 
-					.avatar {
+					image {
 						width: 130rpx;
 						height: 130rpx;
-						margin-bottom: 20rpx;
+						margin-bottom: 15rpx;
 						border-radius: 50%;
 					}
 				}
 
 
 
-				.btn {
-					display: flex;
-					justify-content: center;
-					align-items: center;
-					margin: 0 auto;
-					width: 265rpx;
-					margin-top: 50rpx;
-					height: 75rpx;
-					background: #fff;
-					border-radius: 44rpx;
-					color: #4D4A45;
-					box-shadow: 0px 7px 7px 0px rgba(78, 78, 78, 0.19);
 
-					text {
-						font-size: 30rpx;
-						font-family: PingFang SC;
-						font-weight: bold;
-					}
-				}
 
 			}
 		}
 
-	}
+		.tabs {
+			position: relative;
+			z-index: 1;
+			width: 450rpx;
+			margin: 35rpx auto 0;
 
+			.item {
+
+				display: flex;
+				justify-content: space-around;
+
+				.single-item {
+					font-size: 30rpx;
+					color: #202020;
+				}
+
+				.active {
+					position: relative;
+
+					&::after {
+						content: '';
+						position: absolute;
+						bottom: -8rpx;
+						left: 50%;
+						transform: translateX(-50%);
+						width: 85rpx;
+						height: 5rpx;
+						background: #FFD305;
+					}
+				}
+			}
+
+		}
+
+	}
+	
+	.tips {
+		font-size: 24rpx;
+		font-family: Source Han Sans CN;
+		font-weight: 400;
+		color: #B9B9B9;
+		text-align: center;
+		padding:20rpx 0;
+	
+	}
+	
 	.content-box {
 		position: relative;
 		z-index: 99;
 		background: #fff;
-		transform: translateY(-25rpx);
-		border-radius: 27rpx 27rpx 0px 0px;
-		padding: 0 55rpx;
+		// margin-top: 80rpx;
+	}
 
-		.panel {
-			position: relative;
-			background: #fff;
+
+	.login-tips {
+		display: flex;
+		flex-flow: column;
+		align-items: center;
+		justify-content: center;
+		font-size: 24rpx;
+		font-family: Source Han Sans CN;
+		font-weight: 400;
+		color: #B9B9B9;
+		height: 50vh;
+
+		image {
+			width: 300rpx;
+			height: 185rpx;
+			margin-bottom: 30rpx;
+		}
+
+		.btn {
 			display: flex;
-			justify-content: space-between;
+			justify-content: center;
 			align-items: center;
-			font-size: 26rpx;
-			color: #999;
-			padding: 55rpx 55rpx;
+			margin: 0 auto;
+			width: 265rpx;
+			margin-top: 50rpx;
+			height: 75rpx;
+			background: #FFD305;
+			border-radius: 44rpx;
+			color: #4D4A45;
 
-
-			&::after {
-				content: '';
-				position: absolute;
-				bottom: 0;
-				width: 546rpx;
-				height: 0.5rpx;
-				background: #E2E2E2;
-			}
-
-			.single-item {
-				position: relative;
-				display: flex;
-				flex-direction: column;
-				align-items: center;
-				justify-content: space-between;
-
-				.icons {
-					width: 79rpx;
-					height: 79rpx;
-					margin-bottom: 30rpx;
-				}
-
-				/* 通知圆点 */
-				.notice-dot {
-					position: absolute;
-					top: 0;
-					width: 14rpx;
-					height: 14rpx;
-					background: rgba(251, 60, 56, 1);
-					box-shadow: 0px 0px 19rpx 2rpx rgba(244, 40, 35, 0.29);
-					border-radius: 50%;
-					right: 0;
-				}
-			}
-		}
-
-		.my-travel {
-			margin-top: 65rpx;
-			margin-bottom: 55rpx;
-
-			.title {
-				position: relative;
-
-
-				.text {
-					display: flex;
-
-					&>text {
-						font-size: 40rpx;
-						font-weight: 700;
-					}
-
-					.remind {
-						width: 10rpx;
-						height: 10rpx;
-						background: #FC4541;
-						box-shadow: 0px 0px 20rpx 1rpx rgba(244, 40, 35, 0.29);
-						border-radius: 50%;
-						margin-left: 12rpx;
-					}
-				}
-
-				.title-underline {
-					width: 38rpx;
-					height: 8rpx;
-					background: rgba(250, 200, 60, 1);
-					margin-top: 12rpx;
-					border-radius: 3rpx;
-				}
-
-				.tips {
-					font-size: 30rpx;
-					color: #999;
-					margin-top: 18rpx;
-				}
-
-
+			text {
+				font-size: 28rpx;
+				font-family: PingFang SC;
+				font-weight: bold;
 
 			}
 		}
-
-
 	}
 </style>

@@ -4,7 +4,6 @@
   "navigationBarTextStyle": "white",
   "usingComponents": {
     "navbar": "/components/nav",
-    "menubar": "/pages/home/components/menubar",
     "nearby": "/pages/home/components/nearby",
     "moment": "/pages/home/components/moment"
   }

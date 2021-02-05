@@ -89,6 +89,10 @@
 	}
 	
 	.hot-scenery {
+		border-radius:27rpx 27rpx 0 0;
+		transform:translateY(-35rpx);
+		background:#fff;
+		
 		.title-bar {
 			padding: 35rpx 30rpx;
 			box-sizing: border-box;

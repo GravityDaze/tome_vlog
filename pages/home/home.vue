@@ -25,7 +25,7 @@
 			</swiper>
 		</view>
 		<!-- 菜单 -->
-		<menubar class="menubar" />
+		<!-- <menubar class="menubar" /> -->
 		<!-- 周边景区 -->
 		<nearby :list="nearbyList" />
 		<!-- 精彩瞬间瀑布流 -->
@@ -50,7 +50,7 @@
 	// 公用导航组件
 	import navbar from '../../components/nav.vue'
 	// 页面内组件
-	import menubar from './components/menubar.vue'
+	// import menubar from './components/menubar.vue' 菜单组件目前无跳转路径 暂时隐藏
 	import nearby from './components/nearby.vue'
 	import moment from './components/moment.vue'
 	export default {
@@ -278,7 +278,7 @@
 		},
 		components: {
 			navbar,
-			menubar,
+			// menubar,
 			nearby,
 			moment
 		}
@@ -339,7 +339,7 @@
 
 	.banner {
 		position: relative;
-		height: 430rpx;
+		height: 450rpx;
 
 		.swiper {
 			height: 100%;

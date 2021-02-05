@@ -17,11 +17,40 @@
 		queryMsgHit,
 		refreshAccessToken
 	} from '../../api/index.js'
+	import { querySceneryInfo } from '../../api/shoot.js'
+	import { parseQueryString } from '../../utils/parseQs.js'
 	export default {
-		onLoad() {
+		onLoad(options) {
+			// 对于二维码中携带了景区信息的 处理两种风格的二维码 
+			if(options.sceneryId){
+				// 小程序码
+				this.id = options.sceneryId
+				this.getSceneryInfo(this.id)
+			}else if(options.q){
+				// 普通二维码
+				const q = decodeURIComponent(options.q)
+				const params = parseQueryString(q)
+				this.id = params.sceneryId
+				this.getSceneryInfo(this.id)
+			}
+			
+			
 			this.handleRefreshToken()
 		},
+		data(){
+			return{
+				id:""
+			}
+		},
 		methods: {
+			async getSceneryInfo(id){
+				const res = await querySceneryInfo({id})
+				getApp().globalData.manual.lon = res.value.lon
+				getApp().globalData.manual.lat = res.value.lat
+				getApp().globalData.sceneryId = id
+				getApp().globalData.sceneryName = res.value.name 
+			},
+			
 			// 判断刷新Token还是重新登录
 			handleRefreshToken() {
 				// 查询缓存中是否有刷新用的缓存token
@@ -120,16 +149,15 @@
 
 			// 获取初始化参数
 			transfer() {
-				if(true){
+				if(this.id){
+					uni.reLaunch({
+						url: `/pages/shoot/shoot?id=${this.id}`
+					})
+				}else{
 					uni.reLaunch({
 						url: '/pages/home/home',
 					})
 				}
-				// else{
-				// 	uni.reLaunch({
-				// 		url: '/pages/shoot/shoot?id=55',
-				// 	})
-				// }
 				
 			},
 

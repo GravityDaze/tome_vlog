@@ -1,7 +1,7 @@
 <template>
 	<view class="record-position">
-		<swiper class="swiper" next-margin="109rpx" @change="change">
-			<swiper-item v-for="(item,index) in positionData"  :key="index">
+		<swiper v-if="showNativeComponents" class="swiper" next-margin="109rpx" @change="change" :current="current">
+			<swiper-item v-for="(item,index) in positionData" :key="index">
 				<view class="swiper-item">
 					<view class="cover" :style="{backgroundImage: `url(${item.img})`}"></view>
 					<view class="desc">
@@ -17,7 +17,7 @@
 				</view>
 			</swiper-item>
 		</swiper>
-		<map id="map" :latitude="lat" :longitude="lon" :markers="markers"></map>
+		<map v-if="showNativeComponents" id="map" :latitude="lat" :longitude="lon" :markers="markers" @markertap="markertap"></map>
 	</view>
 </template>
 
@@ -25,71 +25,99 @@
 	export default {
 		data() {
 			return {
-				lon:"",
-				lat:"",
-				current:0,
-				markers:[],
+				lon: "",
+				lat: "",
+				current: 0,
+				markers: [],
+				showNativeComponents:false,
 				positionData: [{
 						img: "https://img1.qunarzz.com/travel/d5/1801/d0/6a8fbbdf116efcb5.jpg_r_720x480x95_bef77a31.jpg",
-						name: "敬请期待",
+						name: "广场",
 						desc: "打卡点开放，敬请期待",
-						lon:104.069321,
-						lat:30.614256
+						lon: 104.069321,
+						lat: 30.614256
 					},
 					{
 						img: "https://youimg1.c-ctrip.com/target/100ghk133vsycxbk0D1D9.jpg",
-						name: "敬请期待",
+						name: "咖啡厅",
 						desc: "打卡点未开放，敬请期待",
-						lon:104.070277,
-						lat:30.614491
+						lon: 104.070277,
+						lat: 30.614491
 					},
 					{
 						img: "https://youimg1.c-ctrip.com/target//100h16000000yzfy6C1F2.jpg",
-						name: "敬请期待",
+						name: "博物馆",
 						desc: "打卡点未开放，敬请期待",
-						lon:104.069076,
-						lat:30.613932
+						lon: 104.069076,
+						lat: 30.613932
 					}
-				]
+				],
+				includePoints: []
 			}
 		},
 		onLoad(options) {
-			// 初始化设定中心经纬度为第一个
-			const {  lon , lat } =  this.positionData[0]
-			this.updateLocation(lon,lat)
-			// 初始化marker
-			this.initMarkers()
+			// 延时调用原生组件
+			setTimeout( _=>this.showNativeComponents = true,300 )
+			// 初始化swiper索引
+			this.current = parseInt(options.index)
+			// 初始化
+			this.initPoints()
+			// 初始化经纬度
+			this.initLocation()
+			// 设置marker
+			this.setMarkers()
 		},
 		methods: {
-			change(e){
-				this.current = e.detail.current
-				const {  lon , lat } =  this.positionData[e.detail.current]
-				// 修改markers的callout
-				for(let i = 0;i<this.markers.length;i++){
-					this.markers[i].label.color = "#000"
+			change(e) {
+				if(e.detail.source === "touch"){
+					this.current = e.detail.current
 				}
-				this.markers[e.detail.current].label.color = '#FF0000'
-				this.updateLocation(lon,lat)
+				this.setMarkers()
 			},
-			updateLocation(lon,lat){
+			
+			markertap(e){
+				this.current = e.detail.markerId
+				this.setMarkers()
+			},
+			
+			initPoints() {
+				const ctx = uni.createMapContext("map", this)
+				ctx.includePoints({
+					points: this.positionData.map(v => ({
+						latitude: v.lat,
+						longitude: v.lon
+					})),
+					padding: [50, 50, 50, 50]
+				})
+			},
+			initLocation() {
+				const {
+					lon,
+					lat
+				} = this.positionData[0]
 				this.lon = lon
 				this.lat = lat
 			},
-			initMarkers(){
-				this.markers = this.positionData.map( (v,i)=>{
+			setMarkers() {
+				this.markers = this.positionData.map((v, i) => {
 					return {
-						id:i++,
-						longitude:v.lon,
-						latitude:v.lat,
-						iconPath:"/static/position.png",
-						label:{
-							content:v.name,
-							color:--i === 0?'#FF0000':'#000',
-							textAlign:'center'
+						id: i,
+						longitude: v.lon,
+						latitude: v.lat,
+						iconPath: this.current === i ? "/static/position.png" : "/static/position2.png",
+						width: parseInt(47 / 1.5),
+						height: parseInt(70 / 1.5),
+						callout: {
+							borderRadius: 14 / 1.5,
+							bgColor: "#3C3C3C9E",
+							content: v.name,
+							color: "#FFFFFF",
+							padding: 12 / 1.5,
+							display: "ALWAYS",
+							fontSize: 22 / 1.5
 						}
 					}
-				} )
-				
+				})
 			}
 		}
 	}
@@ -116,18 +144,18 @@
 				.cover {
 					width: 240rpx;
 					height: 100%;
-					background-size:cover;
-					background-position:center center;
+					background-size: cover;
+					background-position: center center;
 					border-radius: 18rpx 0 0 18rpx;
 
-					
+
 				}
 
 				.desc {
 					flex: 1;
 					display: flex;
 					flex-flow: column;
-					padding:20rpx 0 0 15rpx;
+					padding: 20rpx 0 0 15rpx;
 					box-sizing: border-box;
 
 					.text {
@@ -140,7 +168,7 @@
 							font-family: PingFang SC;
 							font-weight: 800;
 							color: #000000;
-							padding-bottom:10rpx;
+							padding-bottom: 10rpx;
 
 						}
 

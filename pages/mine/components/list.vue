@@ -97,15 +97,17 @@
 				uni.navigateTo({
 					url:`/pages/upload/upload?customerNeedId=${item[0].customerNeedId}&sceneryName=${sceneryName}`
 				})
-			},
+			}
 		}
 	}
 </script>
 
 <style lang="scss" scoped>
 	.list {
+		padding:0 55rpx;
+		
 		.list-item {
-			margin-top: 50rpx;
+			margin-bottom: 50rpx;
 
 			// 时间线
 			.timeline {

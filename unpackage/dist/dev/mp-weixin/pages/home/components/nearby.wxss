@@ -59,6 +59,12 @@ to {
   -webkit-flex-shrink: 0;
           flex-shrink: 0;
 }
+.hot-scenery.data-v-05917e21 {
+  border-radius: 27rpx 27rpx 0 0;
+  -webkit-transform: translateY(-35rpx);
+          transform: translateY(-35rpx);
+  background: #fff;
+}
 .hot-scenery .title-bar.data-v-05917e21 {
   padding: 35rpx 30rpx;
   box-sizing: border-box;

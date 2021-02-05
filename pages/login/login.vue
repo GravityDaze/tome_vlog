@@ -61,19 +61,23 @@
 							// 获取初始化参数
 							const params = await initParams()
 							getApp().globalData.initParams = params.value
+							// 提示首页瀑布流刷新
+							getApp().globalData.refreshWaterFall = true
 
 							// 如果是从开拍页面登录 则需要检测是否录入了人脸
 							if (this.action === 'shoot') {
 								const face = await queryFace()
+								// 不存在人脸则跳转到人脸
 								if (!face.value.frontFace) {
 									return uni.redirectTo({
-										url: '/pages/face/face'
+										url: '/pages/face/face?actions=shoot'
 									})
+								}else{
+									getApp().globalData.handler = 'start'
+									return uni.navigateBack()
 								}
 							}
 							
-							// 提示首页瀑布流刷新
-							getApp().globalData.refreshWaterFall = true
 							
 							// 如果存在全局返回路径
 							const {

@@ -76,7 +76,11 @@
 				this.capsuleHeight = menuButton.height
 			},
 			back() {
-				uni.navigateBack()
+				uni.navigateBack({
+					fail:_=>uni.switchTab({
+						url:'/pages/home/home'
+					})
+				})
 			}
 		}
 	}

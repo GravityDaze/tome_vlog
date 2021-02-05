@@ -48,7 +48,7 @@
 			<!-- 文字2 -->
 			<view class="title2">
 				<text>自动录像点</text>
-				<view class="go-map" @click="goMap">
+				<view class="go-map" @click="goMap(0)">
 					<text>查看地图</text>
 					<image src="../../static/arrow.png" mode=""></image>
 				</view>
@@ -56,7 +56,7 @@
 
 			<!-- 自动录像点 -->
 			<view class="poi">
-				<view class="box" v-for="(item,index) in testData" :key="index">
+				<view class="box" v-for="(item,index) in testData" :key="index" @click="goMap(index)">
 					<image :src="item.img"></image>
 					<view class="desc">
 						<view class="top">
@@ -103,29 +103,32 @@
 				startNow: "", //是否立即开启视频之旅
 				testData: [{
 						img: "https://img1.qunarzz.com/travel/d5/1801/d0/6a8fbbdf116efcb5.jpg_r_720x480x95_bef77a31.jpg",
-						name: "敬请期待",
+						name: "广场",
 						desc: "打卡点未开放，敬请期待"
 
 					},
 					{
 						img: "https://youimg1.c-ctrip.com/target/100ghk133vsycxbk0D1D9.jpg",
-						name: "敬请期待",
+						name: "咖啡厅",
 						desc: "打卡点未开放，敬请期待"
 					},
 					{
 						img: "https://youimg1.c-ctrip.com/target//100h16000000yzfy6C1F2.jpg",
-						name: "敬请期待",
+						name: "博物馆",
 						desc: "打卡点未开放，敬请期待"
 					}
 				]
 			}
 		},
 		onLoad(options) {
-			// 指示回到本页面是否立即开启视频之旅
-			this.startNow = options.start
 			// 查询该页面数据
 			this.getPageInfo(options.id || getApp().globalData.sceneryId)
 
+		},
+		onShow(){
+			if (getApp().globalData.handler === 'start') {
+				this.start()
+			}
 		},
 		methods: {
 			async getPageInfo(id) {
@@ -144,22 +147,13 @@
 					id
 				})
 				this.sceneryInfo = res.value
-
-				// 存在该参数时初始化后立刻开启视频之旅
-				if (this.startNow) {
-					// 防止循环开启
-					this.start()
-				} else {
-					uni.hideLoading()
-				}
-
-
+				uni.hideLoading()
 			},
 
 			// 开启视频之旅
 			async start() {
 				// 如果已开启视频之旅 点击该按钮跳转回首页
-				if (this.isStartTrip && !this.startNow) {
+				if (this.isStartTrip && getApp().globalData.handler !== 'start') {
 					return uni.switchTab({
 						url: '/pages/home/home'
 					})
@@ -167,13 +161,11 @@
 				
 				// 如果未登录
 				if (!uni.getStorageSync('access_token')){
-					getApp().globalData.returnPath = `/pages/shoot/shoot?id=${this.sceneryInfo.id}&start=1`
-					return uni.redirectTo({
-						url: '/pages/login/login?action=shoot'
+					return uni.navigateTo({
+						url: `/pages/login/login?action=shoot`
 					})
 				}
-				// 防止频繁开启
-				this.startNow = ''
+				
 				uni.showLoading({
 					title: '视频之旅开启中',
 					mask: true
@@ -189,18 +181,17 @@
 					uni.requestSubscribeMessage({
 						tmplIds: [composeSuccessSubscribeTmplId],
 						complete: _ => {
+							this.isStartTrip = true
 							uni.showModal({
 								content: '视频之旅开启成功，快去景区游玩吧',
-								showCancel: false,
-								success: _ => {
-									this.getPageInfo(this.sceneryInfo.id)
-								}
+								showCancel: false
 							})
 						}
 					})
 				} catch (err) {
 					this.handleErr(err)
 				} finally {
+					getApp().globalData.handler = ''
 					uni.hideLoading()
 				}
 			},
@@ -214,9 +205,8 @@
 					})
 				} else if (err.resultCode === '0011') {
 					// 未采集人脸
-					getApp().globalData.returnPath = `/pages/shoot/shoot?id=${this.sceneryInfo.id}&start=1`
-					uni.redirectTo({
-						url: '/pages/face/face'
+					uni.navigateTo({
+						url: `/pages/face/face?action=shoot`
 					})
 				} else if (err.resultCode === '0014') {
 					uni.showModal({
@@ -228,11 +218,11 @@
 
 					})
 				} else if (err.resultCode === "0013") {
+					this.isStartTrip = true
 					// 用户指定景区视频之旅已提交
 					uni.showModal({
 						showCancel: false,
-						content: "您已开启了该景区视频之旅，请勿重复开启",
-						success: _ => this.getSceneryInfo(this.sceneryInfo.id)
+						content: "您已开启了该景区视频之旅，请勿重复开启"
 					})
 				}
 			},
@@ -248,9 +238,9 @@
 			},
 			
 			// 地图页面
-			goMap(){
+			goMap(index){
 				uni.navigateTo({
-					url:'/pages/map/map'
+					url:`/pages/map/map?index=${index}`
 				})
 			}
 			

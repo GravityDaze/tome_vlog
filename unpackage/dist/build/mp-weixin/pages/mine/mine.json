@@ -4,6 +4,7 @@
   "navigationBarTextStyle": "white",
   "usingComponents": {
     "navbar": "/components/nav",
-    "list": "/pages/mine/components/list"
+    "list": "/pages/mine/components/list",
+    "buy-list": "/pages/mine/components/buyList"
   }
 }
