@@ -1,7 +1,7 @@
 <!-- 视频详情页面 -->
 <template>
 	<view>
-		<video v-if="videoInfo.url" id="video" style="width:100%" autoplay :src="videoInfo.url" objectFit="fill"></video>
+		<video v-if="videoInfo.url" id="video" style="width:100%" autoplay @fullscreenchange="fullScreenChange" :src="videoInfo.url" :objectFit="fullScreen?'contain':'cover'" ></video>
 		<view v-else class="block"></view>
 		<!-- 视频详细信息面板 -->
 		<view class="details">
@@ -49,7 +49,8 @@
 	export default {
 		data() {
 			return {
-				videoInfo: {}
+				videoInfo: {},
+				fullScreen:false //是否全屏
 			}
 		},
 		onShow(){
@@ -80,6 +81,12 @@
 				res.value.url = encryptByRsa(res.value.url, getApp().globalData.encryptKey)
 				return res.value
 			},
+			
+			fullScreenChange(e){
+				this.fullScreen = e.detail.fullScreen
+				console.log(e)
+			},
+			
 			// 开拍按钮
 			shoot(){
 				// 判断是否定位

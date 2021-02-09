@@ -144,14 +144,17 @@
 			
 			// 刷新
 			refresh(){
-				// 初始化数据
-				this.finish = false
-				this.momentList = []
-				// 刷新瀑布流高度
-				this.$refs.waterfallsFlow.refresh()
-				// 重新获取瀑布流数据
-				this.pageNum = 1
-				this.getMomentList()
+				
+				if( this.momentList.length ){
+					// 初始化数据
+					this.finish = false
+					this.momentList = []
+					// 刷新瀑布流高度
+					this.$refs.waterfallsFlow.refresh()
+					// 重新获取瀑布流数据
+					this.pageNum = 1
+					this.getMomentList()
+				}
 			}
 		},
 		components: {

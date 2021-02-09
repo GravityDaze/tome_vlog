@@ -30,7 +30,7 @@
 .user-bg.data-v-dcbcfe34 {
   height: 300rpx;
   position: relative;
-  background: url(https://desk-fd.zol-img.com.cn/t_s1920x1080c5/g6/M00/0E/08/ChMkKV9v-8eIHjBqAC7N3ADENtoAAC5uwGEmzYALs30241.jpg) no-repeat center center;
+  background: url(https://tomevideo.zhihuiquanyu.com/20210208150344.jpg) no-repeat center center;
   background-size: cover;
 }
 .user-bg .mask.data-v-dcbcfe34 {
@@ -48,13 +48,12 @@
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-          justify-content: space-between;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-flow: column;
+          flex-flow: column;
   padding: 0 35rpx;
+  height: 100%;
 }
 .user-bg .user-container .user-info.data-v-dcbcfe34 {
   display: -webkit-box;
@@ -70,10 +69,6 @@
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: column;
-          flex-direction: column;
   -webkit-box-align: center;
   -webkit-align-items: center;
           align-items: center;
@@ -82,33 +77,98 @@
   font-size: 34rpx;
   font-weight: 700;
 }
-.user-bg .user-container .user-info .user image.data-v-dcbcfe34 {
+.user-bg .user-container .user-info .user > image.data-v-dcbcfe34 {
   width: 130rpx;
   height: 130rpx;
-  margin-bottom: 15rpx;
+  margin-right: 15rpx;
   border-radius: 50%;
 }
-.user-bg .tabs.data-v-dcbcfe34 {
-  position: relative;
-  z-index: 1;
-  width: 450rpx;
-  margin: 35rpx auto 0;
+.user-bg .user-container .bottom.data-v-dcbcfe34 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+          flex: 1;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+          justify-content: space-between;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
 }
-.user-bg .tabs .item.data-v-dcbcfe34 {
+.user-bg .user-container .bottom .data.data-v-dcbcfe34 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  margin-left: 32rpx;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+}
+.user-bg .user-container .bottom .data > view.data-v-dcbcfe34 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  margin-right: 50rpx;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-flow: column;
+          flex-flow: column;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  font-size: 28rpx;
+  font-family: Source Han Sans CN;
+  font-weight: 400;
+  color: grey;
+}
+.user-bg .user-container .bottom .data > view text.data-v-dcbcfe34:first-child {
+  font-weight: bold;
+  color: #202020;
+  font-size: 30rpx;
+}
+.user-bg .user-container .bottom .edit.data-v-dcbcfe34 {
+  width: 170rpx;
+  height: 50rpx;
+  background: #FFCB3E;
+  border-radius: 30rpx;
+  font-size: 24rpx;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+}
+.user-bg .user-container .bottom .edit image.data-v-dcbcfe34 {
+  width: 26rpx;
+  height: 26rpx;
+  margin-right: 8rpx;
+}
+.tabs.data-v-dcbcfe34 {
+  width: 450rpx;
+  margin: auto;
+}
+.tabs .item.data-v-dcbcfe34 {
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
   -webkit-justify-content: space-around;
           justify-content: space-around;
 }
-.user-bg .tabs .item .single-item.data-v-dcbcfe34 {
+.tabs .item .single-item.data-v-dcbcfe34 {
   font-size: 30rpx;
   color: #202020;
 }
-.user-bg .tabs .item .active.data-v-dcbcfe34 {
+.tabs .item .active.data-v-dcbcfe34 {
+  font-weight: bold;
   position: relative;
 }
-.user-bg .tabs .item .active.data-v-dcbcfe34::after {
+.tabs .item .active.data-v-dcbcfe34::after {
   content: '';
   position: absolute;
   bottom: -8rpx;

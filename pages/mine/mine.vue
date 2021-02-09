@@ -8,18 +8,43 @@
 		</navbar>
 		<!-- 用户资料 -->
 		<view class="user-bg" :style="{paddingTop:`${topHeight}px`}">
-			<!-- <image src="http://i1.fuimg.com/733051/d7f65285bdafdcd6.jpg" mode="aspectFill"></image> -->
 			<view class="mask"></view>
 			<view class="user-container" v-if="isLogin">
 				<view class="user-info">
 					<view class="user">
-						<image @click="goFacePage" :src="userInfo.avatarUrl" class="avatar"></image>
+						<image :src="userInfo.avatarUrl" class="avatar"></image>
 						<text>{{userInfo.nickName}}</text>
 					</view>
-
 				</view>
+				<view class="bottom">
+					<view class="data">
+						<view>
+							<text>{{count.scenery}}</text>
+							<text>景点</text>
+						</view>
+
+						<view @click="checkMsg(0)"> 
+							<text>{{count.comment}}</text>
+							<text>回复</text>
+						</view>
+
+						<view @click="checkMsg(1)">
+							<text>{{count.like}}</text>
+							<text>点赞</text>
+						</view>
+					</view>
+
+					<view class="edit" @click="goFacePage">
+						<image src="../../static/edit.png" mode=""></image>
+						<text>编辑人脸</text>
+					</view>
+				</view>
+
 			</view>
-			<view class="tabs" v-if="isLogin">
+		</view>
+		
+		<template v-if="isLogin">
+			<view class="tabs">
 				<view class="item">
 					<view :class="['single-item',{ active: current === 0 }]" @click="current = 0">
 						<text>我的游记</text>
@@ -29,22 +54,22 @@
 					</view>
 				</view>
 			</view>
-		</view>
+			<view class="tips">
+				<text v-show="current === 0">视频最长保留一周，请及时购买</text>
+				<text v-show="current === 1">已购买的视频都在这哟~</text>
+			</view>
+			
+			<view class="content-box">
+				<!-- 我的游记 -->
+				<list :dataList="travelList" v-show="current === 0" />
+				<!-- 已购视频 -->
+				<buyList :dataList="buyListData" v-show="current === 1"></buyList>
+			</view>
+		</template>
 		
-		<view class="tips" v-if="isLogin">
-			<text v-if="current === 0">视频最长保留一周，请及时购买</text>
-			<text v-if="current === 1">已购买的视频都在这哟~</text>
-		</view>
-
-		<view class="content-box" v-if="isLogin">
-			<!-- 我的游记 -->
-			<list :dataList="travelList" v-show="current === 0" />
-			<!-- 已购视频 -->
-			<buyList :dataList="buyListData" v-show="current === 1"></buyList>
-		</view>
 		<!-- 未登录提示 -->
 		<view class="login-tips" v-else>
-			<image src="../../static/login-tips.png" mode=""></image>
+			<image src="../../static/login-tips.png"></image>
 			<text>您还没有登录途咪哦~</text>
 			<view class="btn" @click="toLogin">
 				<text>登 录</text>
@@ -64,19 +89,22 @@
 	import {
 		queryTravel,
 		queryMsg,
-		queryBuyList
+		queryBuyList,
+		queryMySceneryCount,
+		queryCommentCount,
+		queryLikeCount
 	} from '../../api/mine.js'
 	export default {
 		data() {
 			return {
 				current: 0,
 				topHeight: 0,
-				redPoint: false,
 				immersive: true, //是否沉浸式导航栏
 				isLogin: false, //判断是否登录
 				userInfo: {}, //用户信息
 				travelList: [], //游记数据
-				buyListData: []
+				buyListData: [], //已购买的视频数据
+				count:{} //统计数据
 			}
 		},
 		onLoad() {
@@ -114,16 +142,31 @@
 					this.userInfo = userInfo
 					this.isLogin = true
 					// 获取消息提示
-					const msg = await queryMsg()
-					this.redPoint = !!msg.value.noReadCount
+					// const msg = await queryMsg()
+					// this.redPoint = !!msg.value.noReadCount
 					// 获取游记数据
 					const res = await queryTravel()
 					this.travelList = res.value.info
+					// 获取消息数据
+					this.getMsg()
+					
 				} else {
 					this.isLogin = false
 				}
 			},
-
+			
+			
+			async getMsg(){
+				const commentData = await queryCommentCount()
+				const likeData = await queryLikeCount()
+				const sceneryData = await queryMySceneryCount()
+				this.count = {
+					comment:commentData.value,
+					like:likeData.value,
+					scenery:sceneryData.value
+				}
+			},
+			
 			// 跳转至登录界面
 			toLogin() {
 				uni.navigateTo({
@@ -133,19 +176,21 @@
 
 			// 跳转至人脸采集
 			goFacePage() {
-				if (!this.isLogin) {
-					this.toLogin()
-				} else {
-					uni.navigateTo({
-						url: '/pages/face/face'
-					})
-				}
+				uni.navigateTo({
+					url: '/pages/face/face'
+				})
 			},
 
 			// 跳转至已购视频
 			aboutUs() {
 				uni.navigateTo({
 					url: '/pages/about/about'
+				})
+			},
+			// 跳转至消息页面
+			checkMsg(type){
+				uni.navigateTo({
+					url: `/pages/message/message?type=${type}`
 				})
 			}
 
@@ -178,7 +223,7 @@
 		height: 300rpx;
 		position: relative;
 		// background:url(http://i2.tiimg.com/733051/b46f91c023c4b145.jpg) no-repeat center center;
-		background: url(https://desk-fd.zol-img.com.cn/t_s1920x1080c5/g6/M00/0E/08/ChMkKV9v-8eIHjBqAC7N3ADENtoAAC5uwGEmzYALs30241.jpg) no-repeat center center;
+		background: url(https://tomevideo.zhihuiquanyu.com/20210208150344.jpg) no-repeat center center;
 		background-size: cover;
 		// background-position:center center;
 
@@ -197,9 +242,9 @@
 			position: relative;
 			z-index: 1;
 			display: flex;
-			justify-content: space-between;
-			align-items: center;
+			flex-flow: column;
 			padding: 0 35rpx;
+			height: 100%;
 
 			.user-info {
 				display: flex;
@@ -209,74 +254,118 @@
 				.user {
 					position: relative;
 					display: flex;
-					flex-direction: column;
 					align-items: center;
 					height: 100%;
 					width: 100%;
 					font-size: 34rpx;
 					font-weight: 700;
 
-					image {
+					&>image {
 						width: 130rpx;
 						height: 130rpx;
-						margin-bottom: 15rpx;
+						margin-right: 15rpx;
 						border-radius: 50%;
 					}
 				}
-
-
-
-
-
 			}
-		}
 
-		.tabs {
-			position: relative;
-			z-index: 1;
-			width: 450rpx;
-			margin: 35rpx auto 0;
-
-			.item {
-
+			.bottom {
 				display: flex;
-				justify-content: space-around;
+				flex: 1;
+				justify-content: space-between;
+				align-items: center;
 
-				.single-item {
-					font-size: 30rpx;
-					color: #202020;
+				.data {
+					display: flex;
+					margin-left: 32rpx;
+					align-items: center;
+
+					&>view {
+						display: flex;
+						margin-right: 50rpx;
+						flex-flow: column;
+						align-items: center;
+						font-size: 28rpx;
+						font-family: Source Han Sans CN;
+						font-weight: 400;
+						color: grey;
+
+						text:first-child {
+							font-weight: bold;
+							color: #202020;
+							font-size: 30rpx;
+						}
+					}
 				}
 
-				.active {
-					position: relative;
+				.edit {
+					width: 170rpx;
+					height: 50rpx;
+					background: #FFCB3E;
+					border-radius: 30rpx;
+					font-size: 24rpx;
+					display: flex;
+					justify-content: center;
+					align-items: center;
+					// box-shadow: 0 0 20rpx 5rpx rgba(0, 0, 0, 0.2);
 
-					&::after {
-						content: '';
-						position: absolute;
-						bottom: -8rpx;
-						left: 50%;
-						transform: translateX(-50%);
-						width: 85rpx;
-						height: 5rpx;
-						background: #FFD305;
+					image {
+						width: 26rpx;
+						height: 26rpx;
+						margin-right: 8rpx;
 					}
 				}
 			}
 
 		}
 
+
 	}
-	
+
+
+	.tabs {
+		width: 450rpx;
+		margin: auto;
+
+		.item {
+
+			display: flex;
+			justify-content: space-around;
+
+			.single-item {
+				font-size: 30rpx;
+				color: #202020;
+			}
+
+			.active {
+				font-weight: bold;
+				position: relative;
+
+				&::after {
+					content: '';
+					position: absolute;
+					bottom: -8rpx;
+					left: 50%;
+					transform: translateX(-50%);
+					width: 85rpx;
+					height: 5rpx;
+					background: #FFD305;
+				}
+			}
+		}
+
+	}
+
 	.tips {
 		font-size: 24rpx;
 		font-family: Source Han Sans CN;
 		font-weight: 400;
 		color: #B9B9B9;
 		text-align: center;
-		padding:20rpx 0;
-	
+		padding: 20rpx 0;
+
 	}
-	
+
 	.content-box {
 		position: relative;
 		z-index: 99;

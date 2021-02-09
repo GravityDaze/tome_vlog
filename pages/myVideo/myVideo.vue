@@ -237,7 +237,7 @@
 			changeShareStatus() {
 				// 刷新瀑布流
 				getApp().globalData.refreshWaterFall = true
-				this.$set(this.videoInfo, 'shareStatus', true)
+				this.videoInfo.shareStatus = 1
 			},
 
 			// 取消发布
@@ -261,7 +261,9 @@
 								getApp().globalData.refreshWaterFall = true
 
 								// 更改状态
-								this.getVideoInfo(this.videoInfo.id)
+								// this.$set(this.videoInfo, 'shareStatus', 0)
+								this.videoInfo.shareStatus = 0
+								// this.getVideoInfo(this.videoInfo.id)
 							} catch {
 								uni.showToast({
 									title: '取消失败',

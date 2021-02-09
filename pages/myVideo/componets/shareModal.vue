@@ -14,7 +14,7 @@
 			</view>
 
 			<view class="item" @click="showPublishModal = true" v-if="videoInfo.shareStatus === 0">
-				<image src="../../../static/tmicon.png"></image>
+				<image src="../../../static/zbicon.png"></image>
 				<text class="publish">发布至途咪</text>
 			</view>
 		</view>

@@ -67,15 +67,15 @@
 			}
 		},
 		{
-			"path": "pages/about/about",
-			"style": {
-				"navigationBarTitleText": "关于我们"
-			}
-		},
-		{
 			"path": "pages/upload/upload",
 			"style": {
 				"navigationBarTitleText": "定制上传"
+			}
+		},
+		{
+			"path": "pages/message/message",
+			"style": {
+				"navigationBarTitleText": ""
 			}
 		}
 	],

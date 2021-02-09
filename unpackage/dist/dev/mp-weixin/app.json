@@ -10,8 +10,8 @@
     "pages/map/map",
     "pages/login/login",
     "pages/face/face",
-    "pages/about/about",
-    "pages/upload/upload"
+    "pages/upload/upload",
+    "pages/message/message"
   ],
   "subPackages": [],
   "window": {
@@ -46,5 +46,6 @@
       "desc": "给我位置"
     }
   },
-  "usingComponents": {}
+  "usingComponents": {},
+  "sitemapLocation": "sitemap92.json"
 }

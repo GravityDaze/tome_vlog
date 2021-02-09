@@ -1,0 +1,244 @@
+<template>
+	<view class="msg-box">
+		<template v-for="(item,index) in list">
+			<view class="single_momment_box" :key="index" @click="goVideo(item.videoShareId)">
+				<view class="single_row1">
+					<view class="single_row1_left">
+						<image :src="item.headUrl || item.customerHeadUrl" class="icon_head"></image>
+						<view class="name_date">
+							<text>{{item.customerNickName || item.nickName }}</text>
+							<text>{{item.createDatetime || item.laudDatetime}}</text>
+						</view>
+					</view>
+				</view>
+
+				<!-- 点赞 -->
+				<template v-if="type === '1'">
+					<view class="single_row2">
+						<text>{{item.content}}</text>
+					</view>
+					<view class="single_row3">
+						<view class="tnt">
+							<text>{{item.describe}}</text>
+						</view>
+					</view>
+				</template>
+
+				<!-- 回复 -->
+				<template v-if="type === '0'">
+					<view class="single_row2">
+						<text>{{item.content}}</text>
+					</view>
+					<view class="single_row3">
+						<view class="tnt">
+							<text>{{item.beCustomerNickName}} :</text>
+							<text> {{item.beContent}}</text>
+						</view>
+					</view>
+				</template>
+
+			</view>
+		</template>
+		<!-- <view class="hint" wx:if="{{commentMsgArr.length == 0}}">
+			<text>无评论消息</text>
+		</view>
+		<view class="hint" wx:if="{{commentMsgArr.length > 0 && isSelectCommentMsg}}">
+			<text>加载中...</text>
+		</view>
+		<view class="hint" wx:if="{{commentMsgArr.length > 0 && !isContinueSelectCommentMsg}}">
+			<text>-已加载全部</text>
+		</view> -->
+	</view>
+</template>
+
+<script>
+	import {
+		queryComment,
+		queryLike
+	} from '../../api/message.js'
+	export default {
+		data() {
+			return {
+				type: '0',
+				list: []
+			}
+		},
+		onLoad(options) {
+			this.type = options.type
+			if (this.type === '0') {
+				uni.setNavigationBarTitle({ title: '回复' })
+				this.getCommentData()
+			} else {
+				uni.setNavigationBarTitle({ title: '点赞' })
+				this.getLikeData()
+			}
+		},
+		methods: {
+			async getCommentData() {
+				const res = await queryComment({})
+				this.list = res.value.list
+			},
+			async getLikeData() {
+				const res = await queryLike({})
+				this.list = res.value.list
+			},
+			goVideo(videoShareId){
+				uni.navigateTo({
+					url:`/pages/shareVideo/shareVideo?videoShareId=${videoShareId}`
+				})
+			}
+		}
+	}
+</script>
+
+<style>
+	.msg-box {}
+
+	.row_box2 {
+		border: 1px soild purple;
+	}
+
+	.single_momment_box {
+		/* border: 1px solid red; */
+		padding: 0 30rpx;
+	}
+
+	.single_row1 {
+		font-size: 26rpx;
+		color: #999;
+	}
+
+	.icon_head {
+		width: 58rpx;
+		height: 58rpx;
+		background-size: 100% 100%;
+		border-radius: 29rpx;
+		margin-right: 10rpx;
+	}
+
+	.name_date {
+		/* border: 1px solid red; */
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: flex-start;
+	}
+
+	.icon_huifu {
+		width: 25rpx;
+		height: 25rpx;
+		background-size: 100% 100%;
+	}
+
+	.single_row1 {
+		/* border: 1px solid blue; */
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 10rpx 0;
+	}
+
+	.single_row1_left {
+		/* border:1px solid yellow; */
+		display: flex;
+		justify-content: flex-start;
+		align-items: center;
+	}
+
+	.single_row1_right {
+		/* border:1px solid red; */
+		min-width: 90rpx;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	.dianzan_hiddenhuifu {
+		opacity: 0;
+	}
+
+	.single_row2 {
+		padding: 10rpx 0;
+		font-size: 30rpx;
+		color: black;
+		padding-left: 70rpx;
+		word-wrap: break-word;
+		word-break: break-all;
+		white-space: pre-line;
+	}
+
+	.single_row3 {
+		font-size: 26rpx;
+		color: #999;
+		padding-left: 70rpx;
+	}
+
+	.single_row3>.tnt:last-child {
+		border-bottom: 1px solid rgba(230, 230, 230, 1);
+		padding-bottom: 25rpx;
+	}
+
+	.tnt {
+		padding: 5rpx 0
+	}
+
+	.hint {
+		padding-top: 40rpx;
+	}
+
+	.hint text {
+		margin-bottom: 20rpx;
+		color: gray;
+		font-size: 25rpx;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.row_box5 {
+		background-color: rgba(0, 0, 0, 0.5);
+		width: 100vw;
+		height: 100vh;
+		position: fixed;
+		top: 0;
+		left: 0;
+		z-index: 999;
+	}
+
+	.huifu_dialog_box {
+		background-color: white;
+		border-radius: 30rpx 30rpx 0 0;
+		width: calc(100% - 50rpx);
+		height: 290rpx;
+		padding: 25rpx;
+		position: fixed;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		transition: 0.05s;
+	}
+
+	.row_box5_2 {
+		border: 1px solid rgba(250, 200, 60, 1);
+		background-color: rgba(250, 200, 60, 1);
+		width: 160rpx;
+		height: 68rpx;
+		border-radius: 34rpx;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		align-self: flex-end;
+		margin-top: 30rpx;
+	}
+
+	.textarea3 {
+		background-color: rgba(220, 220, 220, 0.3);
+		border-radius: 15rpx 15rpx 0 0;
+		width: 700rpx;
+		height: 180rpx;
+		margin: 0 auto;
+		box-sizing: border-box;
+		padding: 10rpx;
+	}
+</style>

@@ -202,7 +202,35 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var _mine = __webpack_require__(/*! ../../api/mine.js */ 62);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var navbar = function navbar() {__webpack_require__.e(/*! require.ensure | components/nav */ "components/nav").then((function () {return resolve(__webpack_require__(/*! ../../components/nav.vue */ 136));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var list = function list() {__webpack_require__.e(/*! require.ensure | pages/mine/components/list */ "pages/mine/components/list").then((function () {return resolve(__webpack_require__(/*! ./components/list.vue */ 165));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var buyList = function buyList() {__webpack_require__.e(/*! require.ensure | pages/mine/components/buyList */ "pages/mine/components/buyList").then((function () {return resolve(__webpack_require__(/*! ./components/buyList.vue */ 172));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var _mine = __webpack_require__(/*! ../../api/mine.js */ 62);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var navbar = function navbar() {__webpack_require__.e(/*! require.ensure | components/nav */ "components/nav").then((function () {return resolve(__webpack_require__(/*! ../../components/nav.vue */ 137));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var list = function list() {__webpack_require__.e(/*! require.ensure | pages/mine/components/list */ "pages/mine/components/list").then((function () {return resolve(__webpack_require__(/*! ./components/list.vue */ 166));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var buyList = function buyList() {__webpack_require__.e(/*! require.ensure | pages/mine/components/buyList */ "pages/mine/components/buyList").then((function () {return resolve(__webpack_require__(/*! ./components/buyList.vue */ 173));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+
+
+
 
 
 
@@ -212,13 +240,13 @@ var _mine = __webpack_require__(/*! ../../api/mine.js */ 62);function _interopRe
     return {
       current: 0,
       topHeight: 0,
-      redPoint: false,
       immersive: true, //是否沉浸式导航栏
       isLogin: false, //判断是否登录
       userInfo: {}, //用户信息
       travelList: [], //游记数据
-      buyListData: [] };
-
+      buyListData: [], //已购买的视频数据
+      count: {} //统计数据
+    };
   },
   onLoad: function onLoad() {
     // 获取到导航栏高度
@@ -248,20 +276,35 @@ var _mine = __webpack_require__(/*! ../../api/mine.js */ 62);function _interopRe
     },
 
     // 检查登录状态
-    checkLoginStatus: function checkLoginStatus() {var _this2 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2() {var token, userInfo, msg, res;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:
+    checkLoginStatus: function checkLoginStatus() {var _this2 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2() {var token, userInfo, res;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:
                 token = uni.getStorageSync('access_token');
                 userInfo = uni.getStorageSync('userInfo');if (!(
-                token && userInfo)) {_context2.next = 15;break;}
+                token && userInfo)) {_context2.next = 12;break;}
                 _this2.userInfo = userInfo;
                 _this2.isLogin = true;
                 // 获取消息提示
-                _context2.next = 7;return (0, _mine.queryMsg)();case 7:msg = _context2.sent;
-                _this2.redPoint = !!msg.value.noReadCount;
+                // const msg = await queryMsg()
+                // this.redPoint = !!msg.value.noReadCount
                 // 获取游记数据
-                _context2.next = 11;return (0, _mine.queryTravel)();case 11:res = _context2.sent;
-                _this2.travelList = res.value.info;_context2.next = 16;break;case 15:
+                _context2.next = 7;return (0, _mine.queryTravel)();case 7:res = _context2.sent;
+                _this2.travelList = res.value.info;
+                // 获取消息数据
+                _this2.getMsg();_context2.next = 13;break;case 12:
 
-                _this2.isLogin = false;case 16:case "end":return _context2.stop();}}}, _callee2);}))();
+
+                _this2.isLogin = false;case 13:case "end":return _context2.stop();}}}, _callee2);}))();
+
+    },
+
+
+    getMsg: function getMsg() {var _this3 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee3() {var commentData, likeData, sceneryData;return _regenerator.default.wrap(function _callee3$(_context3) {while (1) {switch (_context3.prev = _context3.next) {case 0:_context3.next = 2;return (
+                  (0, _mine.queryCommentCount)());case 2:commentData = _context3.sent;_context3.next = 5;return (
+                  (0, _mine.queryLikeCount)());case 5:likeData = _context3.sent;_context3.next = 8;return (
+                  (0, _mine.queryMySceneryCount)());case 8:sceneryData = _context3.sent;
+                _this3.count = {
+                  comment: commentData.value,
+                  like: likeData.value,
+                  scenery: sceneryData.value };case 10:case "end":return _context3.stop();}}}, _callee3);}))();
 
     },
 
@@ -274,19 +317,21 @@ var _mine = __webpack_require__(/*! ../../api/mine.js */ 62);function _interopRe
 
     // 跳转至人脸采集
     goFacePage: function goFacePage() {
-      if (!this.isLogin) {
-        this.toLogin();
-      } else {
-        uni.navigateTo({
-          url: '/pages/face/face' });
+      uni.navigateTo({
+        url: '/pages/face/face' });
 
-      }
     },
 
     // 跳转至已购视频
     aboutUs: function aboutUs() {
       uni.navigateTo({
         url: '/pages/about/about' });
+
+    },
+    // 跳转至消息页面
+    checkMsg: function checkMsg(type) {
+      uni.navigateTo({
+        url: "/pages/message/message?type=".concat(type) });
 
     } },
 
