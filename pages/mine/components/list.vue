@@ -14,7 +14,7 @@
 							<view class="video-box" :key="videoItem.videoId"  @click="watchVideo(videoItem)">
 								<view class="cover" :style="{backgroundImage:`url(${videoItem.coverUrl})`}">
 									<view v-if="videoItem.newRead === 0" class="new">
-										<text>NEW !</text>
+										<text>NEW</text>
 									</view>
 									<view class="duration">
 										<text>{{videoItem.duration}}</text>
@@ -75,6 +75,7 @@
 </template>
 
 <script>
+	import { updateNewVideoStatus } from '../../../api/mine.js'
 	export default {
 		props: {
 			dataList: {
@@ -85,7 +86,14 @@
 		methods:{
 			watchVideo(item){
 				uni.navigateTo({
-					url:`/pages/myVideo/myVideo?videoId=${item.videoId}`
+					url:`/pages/myVideo/myVideo?videoId=${item.videoId}`,
+					success:async _=>{
+						if(item.newRead === 0){
+							await updateNewVideoStatus({
+								videoId:item.videoId
+							})
+						}
+					}
 				})
 			},
 			checkFace(){
@@ -141,6 +149,8 @@
 						display: flex;
 						flex-direction: column;
 						align-items: center;
+						
+						
 
 						.cover {
 							position: relative;
@@ -151,22 +161,39 @@
 							display: flex;
 							box-shadow: 10rpx 0 50rpx rgba(0, 0, 0, 0.2);
 							
+							
+							
 							.new{
 								position:absolute;
-								top:0;
-								left:0;
 								width: 74rpx;
 								height: 32rpx;
-								background: linear-gradient(199deg, #FFB70D, #FFD505);
-								box-shadow: 0px 4rpx 5rpx 0px rgba(70, 50, 0, 0.24);
-								border-radius:15rpx 0 15rpx 0;
-								font-size: 18rpx;
-								font-family: San Francisco Display;
-								font-weight: bold;
+								background: linear-gradient(199deg, #97ce1e, #96ce1d);
+								right: 10rpx;
+								 top: 10rpx;
+								font-size: 20rpx;
 								color: #FFFFFF;
 								display:flex;
 								justify-content: center;
 								align-items: center;
+								border-radius: 8rpx;
+								
+								background:linear-gradient(
+								 100deg,
+								 rgba(255,255,255,0) 40%,
+								 rgba(255,255,255,.5) 50%,
+								 rgba(255,255,255,0) 60%
+								 ) #97ce1e;
+								background-size: 200% 100%;
+								background-position-x: 150%;
+								animation: 1.5s light ease-in-out infinite;
+								
+							}
+			
+							
+							@keyframes light{
+								to{
+									background-position-x: -20%;
+								}
 							}
 
 							.duration {

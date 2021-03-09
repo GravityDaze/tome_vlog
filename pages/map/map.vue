@@ -3,15 +3,15 @@
 		<swiper v-if="showNativeComponents" class="swiper" next-margin="109rpx" @change="change" :current="current">
 			<swiper-item v-for="(item,index) in positionData" :key="index">
 				<view class="swiper-item">
-					<view class="cover" :style="{backgroundImage: `url(${item.img})`}"></view>
+					<view class="cover" :style="{backgroundImage: `url(${item.picUrl})`}"></view>
 					<view class="desc">
 						<view class="text">
 							<text>{{item.name}}</text>
-							<text>{{item.desc}}</text>
+							<text>{{item.description}}</text>
 						</view>
 						<view class="line"></view>
 						<view class="distance">
-							<text>距离0m</text>
+							<!-- <text>距离0m</text> -->
 						</view>
 					</view>
 				</view>
@@ -22,6 +22,10 @@
 </template>
 
 <script>
+	import gcoord from '../../libs/gcoord/index.js';
+	import {
+		queryPointList
+	} from "../../api/shoot.js"
 	export default {
 		data() {
 			return {
@@ -29,66 +33,62 @@
 				lat: "",
 				current: 0,
 				markers: [],
-				showNativeComponents:false,
-				positionData: [{
-						img: "https://img1.qunarzz.com/travel/d5/1801/d0/6a8fbbdf116efcb5.jpg_r_720x480x95_bef77a31.jpg",
-						name: "广场",
-						desc: "打卡点开放，敬请期待",
-						lon: 104.069321,
-						lat: 30.614256
-					},
-					{
-						img: "https://youimg1.c-ctrip.com/target/100ghk133vsycxbk0D1D9.jpg",
-						name: "咖啡厅",
-						desc: "打卡点未开放，敬请期待",
-						lon: 104.070277,
-						lat: 30.614491
-					},
-					{
-						img: "https://youimg1.c-ctrip.com/target//100h16000000yzfy6C1F2.jpg",
-						name: "博物馆",
-						desc: "打卡点未开放，敬请期待",
-						lon: 104.069076,
-						lat: 30.613932
-					}
-				],
+				showNativeComponents: false,
+				positionData: [],
 				includePoints: []
 			}
 		},
 		onLoad(options) {
 			// 延时调用原生组件
-			setTimeout( _=>this.showNativeComponents = true,300 )
+			setTimeout(_ => this.showNativeComponents = true, 300)
 			// 初始化swiper索引
 			this.current = parseInt(options.index)
 			// 初始化
-			this.initPoints()
-			// 初始化经纬度
-			this.initLocation()
+			this.initPoints(options.id)
+
 			// 设置marker
 			this.setMarkers()
 		},
 		methods: {
 			change(e) {
-				if(e.detail.source === "touch"){
+				if (e.detail.source === "touch") {
 					this.current = e.detail.current
 				}
 				this.setMarkers()
 			},
-			
-			markertap(e){
+
+			bd2Gcj02(lonValue, latValue) {
+				return gcoord.transform([lonValue, latValue], gcoord.BD09, gcoord.GCJ02)
+			},
+
+			markertap(e) {
 				this.current = e.detail.markerId
 				this.setMarkers()
 			},
-			
-			initPoints() {
-				const ctx = uni.createMapContext("map", this)
-				ctx.includePoints({
-					points: this.positionData.map(v => ({
-						latitude: v.lat,
-						longitude: v.lon
-					})),
-					padding: [50, 50, 50, 50]
+
+			async initPoints(id) {
+				const res = await queryPointList({
+					sceneryId: id,
+					status: 1
 				})
+				if (res.value.list.length) {
+					this.positionData = res.value.list.map(v => ({
+						...v,
+						lat: gcoord.transform([v.lat, v.lon], gcoord.BD09, gcoord.GCJ02)[0],
+						lon: gcoord.transform([v.lat, v.lon], gcoord.BD09, gcoord.GCJ02)[1]
+					}))
+					console.log(this.positionData)
+					this.initLocation()
+					this.setMarkers()
+					const ctx = uni.createMapContext("map", this)
+					ctx.includePoints({
+						points: this.positionData.map(v => ({
+							latitude: v.lat,
+							longitude: v.lon
+						})),
+						padding: [50, 50, 50, 50]
+					})
+				}
 			},
 			initLocation() {
 				const {

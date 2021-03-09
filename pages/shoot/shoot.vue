@@ -7,9 +7,9 @@
 		</navbar>
 		<view class="cover">
 			<view class="bkg" :style="{backgroundImage:`url(${sceneryInfo.coverUrl})`}"></view>
-			<view :class="isStartTrip?'mask-full':'mask'"></view>
+			<view :class="hasStartTrip?'mask-full':'mask'"></view>
 			<!-- 未开启视频之旅显示的文字 -->
-			<view class="text" v-if="!isStartTrip">
+			<view class="text" v-if="!hasStartTrip">
 				<text class="name">{{sceneryInfo.name}}</text>
 				<view class="desc">
 					<text>{{sceneryInfo.describe}}</text>
@@ -24,7 +24,7 @@
 		</view>
 		<view class="panel">
 			<!-- 特别说明 -->
-			<view class="special" v-if="isStartTrip">
+			<view class="special" v-if="hasStartTrip">
 				<text>特别说明</text>
 				<text>录制开始，可退出小程序，不会停止视频录制，待游玩结束重新进入小程序，去“我的”中查看即可。</text>
 			</view>
@@ -47,37 +47,41 @@
 
 			<!-- 文字2 -->
 			<view class="title2">
-				<text>自动录像点</text>
-				<view class="go-map" @click="goMap(0)">
+				<text>打卡点</text>
+				<view class="go-map" @click="goMap(0)" v-if="pointList.length">
 					<text>查看地图</text>
 					<image src="../../static/arrow.png" mode=""></image>
 				</view>
 			</view>
 
 			<!-- 自动录像点 -->
-			<view class="poi">
-				<view class="box" v-for="(item,index) in testData" :key="index" @click="goMap(index)">
-					<image :src="item.img"></image>
+			<view class="poi" v-if="pointList.length">
+				<view class="box" v-for="(item,index) in pointList" :key="index" @click="goMap(index)">
+					<image :src="item.picUrl"></image>
 					<view class="desc">
 						<view class="top">
 							<text>{{item.name}}</text>
-							<text>0m</text>
+							<!-- <text>??m</text> -->
 						</view>
 						<view class="bottom">
-							<text>{{item.desc}}</text>
+							<text>{{item.description}}</text>
 						</view>
 					</view>
 				</view>
+			</view>
+			
+			<view v-else style="text-align: center; font-size:22rpx;padding-top:50rpx;color: #B2B2B2">
+				<text>暂无打卡点信息</text>
 			</view>
 
 		</view>
 
 		<view class="bottom-bar">
-			<view :class="isStartTrip?'btn-start':'btn'" @click="start">
-				<text>{{isStartTrip?'去首页浏览其他精彩VLOG':'开启视频之旅'}}</text>
+			<view :class="hasStartTrip?'btn-start':'btn'" @click="start">
+				<text>{{hasStartTrip?'去首页浏览其他精彩VLOG':'开启视频之旅'}}</text>
 			</view>
 		</view>
-		
+
 		<tips @touchmove.stop.prevent="moveHandle" :show="showVideo" @close="showVideo=false" />
 
 	</view>
@@ -89,83 +93,74 @@
 	import {
 		querySceneryInfo,
 		startTrip,
-		isStartTrip
+		hasStartTrip,
+		queryPointList
 	} from '../../api/shoot.js'
 	export default {
 		data() {
 			return {
 				sceneryInfo: {},
-				isStartTrip: false,
+				hasStartTrip: false,
 				latitude: "",
 				longitude: "",
 				immersive: true,
-				showVideo:false, //是否展示攻略视频
-				startNow: "", //是否立即开启视频之旅
-				testData: [{
-						img: "https://img1.qunarzz.com/travel/d5/1801/d0/6a8fbbdf116efcb5.jpg_r_720x480x95_bef77a31.jpg",
-						name: "广场",
-						desc: "打卡点未开放，敬请期待"
-
-					},
-					{
-						img: "https://youimg1.c-ctrip.com/target/100ghk133vsycxbk0D1D9.jpg",
-						name: "咖啡厅",
-						desc: "打卡点未开放，敬请期待"
-					},
-					{
-						img: "https://youimg1.c-ctrip.com/target//100h16000000yzfy6C1F2.jpg",
-						name: "博物馆",
-						desc: "打卡点未开放，敬请期待"
-					}
-				]
+				showVideo: false, //是否展示攻略视频
+				pointList: []
 			}
 		},
 		onLoad(options) {
 			// 查询该页面数据
-			this.getPageInfo(options.id || getApp().globalData.sceneryId)
+			this._id = options.id || getApp().globalData.sceneryId
+			this.getPageInfo(this._id)
+			// 查询打卡点
+			this.getPositionPoint(this._id)
 
-		},
-		onShow(){
-			if (getApp().globalData.handler === 'start') {
-				this.start()
-			}
 		},
 		methods: {
 			async getPageInfo(id) {
 				uni.showLoading({
 					title: '加载中'
 				})
-				// 如果登录 则请求是否开启视频之旅信息
-				if (uni.getStorageSync('access_token')) {
-					const res = await isStartTrip({
-						sceneryId: id
+				if (!uni.getStorageSync('access_token')) {
+					const res = await querySceneryInfo({
+						id
 					})
-					this.isStartTrip = res.value
+					this.sceneryInfo = res.value
+				} else {
+					const [res, res2] = await Promise.all([querySceneryInfo({
+						id
+					}), hasStartTrip({
+						sceneryId: id
+					})])
+					this.sceneryInfo = res.value
+					this.hasStartTrip = res2.value
 				}
-				// 请求景区信息
-				const res = await querySceneryInfo({
-					id
-				})
-				this.sceneryInfo = res.value
 				uni.hideLoading()
 			},
-
+			
+			async getPositionPoint(id){
+				const res = await queryPointList({sceneryId:id,status:1})
+				if(res.value.list.length){
+					this.pointList = res.value.list
+				}
+			},
+			
 			// 开启视频之旅
 			async start() {
 				// 如果已开启视频之旅 点击该按钮跳转回首页
-				if (this.isStartTrip && getApp().globalData.handler !== 'start') {
+				if (this.hasStartTrip) {
 					return uni.switchTab({
 						url: '/pages/home/home'
 					})
 				}
-				
+
 				// 如果未登录
-				if (!uni.getStorageSync('access_token')){
+				if (!uni.getStorageSync('access_token')) {
 					return uni.navigateTo({
 						url: `/pages/login/login?action=shoot`
 					})
 				}
-				
+
 				uni.showLoading({
 					title: '视频之旅开启中',
 					mask: true
@@ -181,7 +176,7 @@
 					uni.requestSubscribeMessage({
 						tmplIds: [composeSuccessSubscribeTmplId],
 						complete: _ => {
-							this.isStartTrip = true
+							this.hasStartTrip = true
 							uni.showModal({
 								content: '视频之旅开启成功，快去景区游玩吧',
 								showCancel: false
@@ -191,59 +186,62 @@
 				} catch (err) {
 					this.handleErr(err)
 				} finally {
-					getApp().globalData.handler = ''
 					uni.hideLoading()
 				}
 			},
 
 			// 开启视频之旅失败时的错误处理
 			handleErr(err) {
-				if (err.resultCode === '0012') {
-					uni.showModal({
-						content: '一小时内只能同时开启两个视频之旅哟~',
-						showCancel: false
-					})
-				} else if (err.resultCode === '0011') {
-					// 未采集人脸
-					uni.navigateTo({
-						url: `/pages/face/face?action=shoot`
-					})
-				} else if (err.resultCode === '0014') {
-					uni.showModal({
-						content: '该景区未开启视频服务，请重新选择',
-						showCancel: false,
-						success: _ => uni.switchTab({
-							url: '/pages/home/home'
+				switch (err.resultCode) {
+					case '0012':
+						uni.showModal({
+							content: '一小时内只能同时开启两个视频之旅哟~',
+							showCancel: false
 						})
-
-					})
-				} else if (err.resultCode === "0013") {
-					this.isStartTrip = true
-					// 用户指定景区视频之旅已提交
-					uni.showModal({
-						showCancel: false,
-						content: "您已开启了该景区视频之旅，请勿重复开启"
-					})
+						break
+					case '0011':
+						// 未采集人脸
+						uni.navigateTo({
+							url: `/pages/face/face?action=shoot`
+						})
+						break
+					case '0014':
+						uni.showModal({
+							content: '该景区未开启视频服务，请重新选择',
+							showCancel: false,
+							success: _ => uni.switchTab({
+								url: '/pages/home/home'
+							})
+						})
+						break
+					case '0013':
+						this.hasStartTrip = true
+						// 用户指定景区视频之旅已提交
+						uni.showModal({
+							showCancel: false,
+							content: "您已开启了该景区视频之旅，请勿重复开启"
+						})
 				}
+
 			},
-			
+
 			// 观看攻略视频
-			watchTipsVideo(){
+			watchTipsVideo() {
 				this.showVideo = true
 			},
-			
+
 			// 防止滑动穿透
-			moveHandle(){
+			moveHandle() {
 				return
 			},
-			
+
 			// 地图页面
-			goMap(index){
+			goMap(index) {
 				uni.navigateTo({
-					url:`/pages/map/map?index=${index}`
+					url: `/pages/map/map?index=${index}&id=${this._id}`
 				})
 			}
-			
+
 		},
 		onPageScroll(e) {
 			if (e.scrollTop > 50) {
@@ -256,6 +254,17 @@
 				this.immersive = true
 			}
 		},
+		
+		onShareAppMessage() {
+			// 来自页面内转发按钮
+			return {
+				path:`/pages/index/index?sceneryId=${ this.sceneryInfo.id }`,
+				title: `快来跟我一起开启${this.sceneryInfo.name}的视频之旅吧`,
+				imageUrl: this.sceneryInfo.coverUrl
+			}
+		
+		},
+		
 		components: {
 			navbar,
 			tips
@@ -501,9 +510,11 @@
 			}
 
 			.btn {
-				background: #FBC32A;
+				background-color: #FBC32A;
 				box-shadow: 0px 8rpx 16rpx 0px rgba(239, 181, 22, 0.48);
+
 			}
+
 
 			.btn-start {
 				background: #6ADB26;

@@ -61,8 +61,8 @@
 							// 获取初始化参数
 							const params = await initParams()
 							getApp().globalData.initParams = params.value
-							// 提示首页瀑布流刷新
-							getApp().globalData.refreshWaterFall = true
+							// 刷新瀑布流
+							uni.$emit("refreshWaterfall")
 
 							// 如果是从开拍页面登录 则需要检测是否录入了人脸
 							if (this.action === 'shoot') {
@@ -73,28 +73,14 @@
 										url: '/pages/face/face?actions=shoot'
 									})
 								}else{
-									getApp().globalData.handler = 'start'
-									return uni.navigateBack()
+									const pages = getCurrentPages()
+									const prevPage = pages[pages.length - 2]
+									prevPage.$vm.start()
 								}
 							}
 							
-							
-							// 如果存在全局返回路径
-							const {
-								returnPath
-							} = getApp().globalData
-							if (returnPath) {
-								uni.redirectTo({
-									url: returnPath,
-									fail: _ => uni.switchTab({
-										url: returnPath
-									}),
-									complete: _ => getApp().globalData.returnPath = ''
-								})
-
-							} else {
 								uni.navigateBack()
-							}
+							
 
 						} catch (err) {
 							console.log(err)

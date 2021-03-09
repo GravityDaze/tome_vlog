@@ -28,7 +28,7 @@
 				</view>
 			</view>
 		</view>
-		<view class="bottom-bar" v-if="!type">
+		<view class="bottom-bar" v-if="!shareMode">
 			<!-- 已购视频 -->
 			<view class="bought " v-if="videoInfo.buyStatus === 1">
 				<view class="cancel-share" v-if="videoInfo.shareStatus" @click="cancelShare">
@@ -64,7 +64,7 @@
 		<!-- 遮罩 -->
 		<view class="mask" v-if="mask" @click="cancel"></view>
 		<!-- 分享组件 -->
-		<shareModal @close="cancel" @change="changeShareStatus" :videoInfo="videoInfo" :show="showModal" />
+		<shareModal @close="cancel" @publish-success="changeShareStatus" :videoInfo="videoInfo" :show="showModal" />
 	</view>
 </template>
 
@@ -72,7 +72,7 @@
 	// 解密视频url
 	import {
 		JSEncrypt
-	} from '../../utils/jsencrypt.js';
+	} from '../../libs/jsencrypt/index.js';
 	// API
 	import {
 		queryVideoInfo,
@@ -85,17 +85,16 @@
 	export default {
 		data() {
 			return {
-				type:'',//进入本页面的类型
+				shareMode:false,//从分享框进入本页面
 				videoInfo: {},
 				mask: false, //是否展开遮罩
 				showModal: false, // 是否展开分享
-				publishModal: false, // 发布至途咪
 				controls: true,
 				availableTime: 0
 			}
 		},
 		onLoad(options) {
-			this.type = options.type
+			this.shareMode = options.type === "share"
 			this.getVideoInfo(options.videoId)
 		},
 		methods: {
@@ -105,11 +104,11 @@
 				const res = await queryVideoInfo({
 					videoId
 				})
-				this.videoInfo = this.handleVideoUrl(res)
+				this.videoInfo = this.decryptVideoUrl(res)
 			},
 
 			// 解密视频url
-			handleVideoUrl(res) {
+			decryptVideoUrl(res) {
 				const encryptByRsa = (text, privateKey) => {
 					const encrypt = new JSEncrypt();
 					encrypt.setPrivateKey(privateKey);
@@ -132,10 +131,9 @@
 					} = getApp().globalData.initParams
 					this.availableTime = Math.ceil(duration * (noBuyVideoLook / 100))
 					if (currentTime > this.availableTime) {
-						const ctx = uni.createVideoContext('video')
 						// 试看结束
 						this.controls = false
-						ctx.stop()
+						this.ended() 
 					}
 				}
 			},
@@ -233,11 +231,17 @@
 				this.showModal = false
 			},
 
-			// 组件发布时改变分享状态
-			changeShareStatus() {
+			// 组件改变分享状态
+			changeShareStatus(status = 1) {
 				// 刷新瀑布流
-				getApp().globalData.refreshWaterFall = true
-				this.videoInfo.shareStatus = 1
+				uni.$emit("refreshWaterfall")
+				// 刷新我的页面已购视频
+				const pages = getCurrentPages()
+				const prevPage = pages[pages.length - 2]
+				if(prevPage.$vm.buyListData.length){
+					prevPage.$vm.getBuyList()
+				}
+				this.videoInfo.shareStatus = status
 			},
 
 			// 取消发布
@@ -257,13 +261,7 @@
 								uni.showToast({
 									title: '取消成功'
 								})
-								// 刷新瀑布流
-								getApp().globalData.refreshWaterFall = true
-
-								// 更改状态
-								// this.$set(this.videoInfo, 'shareStatus', 0)
-								this.videoInfo.shareStatus = 0
-								// this.getVideoInfo(this.videoInfo.id)
+								this.changeShareStatus(0)
 							} catch {
 								uni.showToast({
 									title: '取消失败',
@@ -280,9 +278,7 @@
 				uni.showModal({
 					content: '购买视频后开启下载、分享功能 是否立即购买视频？',
 					success: res => {
-						if (res.confirm) {
-							this.buy()
-						}
+						res.confirm && this.buy()
 					}
 				})
 			},
@@ -291,7 +287,6 @@
 			async buy() {
 				uni.showLoading({
 					title: '生成订单中',
-					icon: 'none',
 					mask: true
 				})
 				const res = await confirmOrder({
@@ -322,12 +317,12 @@
 								})
 							}
 						})
+						uni.hideLoading()
 					} catch (err) {
+						uni.hideLoading()
 						uni.showModal({
 							content: err.toString()
 						})
-					} finally {
-						uni.hideLoading()
 					}
 				}
 			}
@@ -440,6 +435,7 @@
 		position: fixed;
 		width: 100%;
 		bottom: 0;
+		padding-bottom: env(safe-area-inset-bottom);
 		height: 97rpx;
 		background: #FFFFFF;
 		box-shadow: 0px 1rpx 15rpx 3rpx rgba(62, 62, 62, 0.19);

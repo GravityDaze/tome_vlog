@@ -8,7 +8,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.createApp = createApp;exports.createComponent = createComponent;exports.createPage = createPage;exports.default = void 0;var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _slicedToArray(arr, i) {return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();}function _nonIterableRest() {throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");}function _iterableToArrayLimit(arr, i) {if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return;var _arr = [];var _n = true;var _d = false;var _e = undefined;try {for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {_arr.push(_s.value);if (i && _arr.length === i) break;}} catch (err) {_d = true;_e = err;} finally {try {if (!_n && _i["return"] != null) _i["return"]();} finally {if (_d) throw _e;}}return _arr;}function _arrayWithHoles(arr) {if (Array.isArray(arr)) return arr;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}function _toConsumableArray(arr) {return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();}function _nonIterableSpread() {throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");}function _unsupportedIterableToArray(o, minLen) {if (!o) return;if (typeof o === "string") return _arrayLikeToArray(o, minLen);var n = Object.prototype.toString.call(o).slice(8, -1);if (n === "Object" && o.constructor) n = o.constructor.name;if (n === "Map" || n === "Set") return Array.from(o);if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);}function _iterableToArray(iter) {if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter);}function _arrayWithoutHoles(arr) {if (Array.isArray(arr)) return _arrayLikeToArray(arr);}function _arrayLikeToArray(arr, len) {if (len == null || len > arr.length) len = arr.length;for (var i = 0, arr2 = new Array(len); i < len; i++) {arr2[i] = arr[i];}return arr2;}
+Object.defineProperty(exports, "__esModule", { value: true });exports.createApp = createApp;exports.createComponent = createComponent;exports.createPage = createPage;exports.createSubpackageApp = createSubpackageApp;exports.default = void 0;var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _slicedToArray(arr, i) {return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();}function _nonIterableRest() {throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");}function _iterableToArrayLimit(arr, i) {if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return;var _arr = [];var _n = true;var _d = false;var _e = undefined;try {for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {_arr.push(_s.value);if (i && _arr.length === i) break;}} catch (err) {_d = true;_e = err;} finally {try {if (!_n && _i["return"] != null) _i["return"]();} finally {if (_d) throw _e;}}return _arr;}function _arrayWithHoles(arr) {if (Array.isArray(arr)) return arr;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}function _toConsumableArray(arr) {return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();}function _nonIterableSpread() {throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");}function _unsupportedIterableToArray(o, minLen) {if (!o) return;if (typeof o === "string") return _arrayLikeToArray(o, minLen);var n = Object.prototype.toString.call(o).slice(8, -1);if (n === "Object" && o.constructor) n = o.constructor.name;if (n === "Map" || n === "Set") return Array.from(o);if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);}function _iterableToArray(iter) {if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter);}function _arrayWithoutHoles(arr) {if (Array.isArray(arr)) return _arrayLikeToArray(arr);}function _arrayLikeToArray(arr, len) {if (len == null || len > arr.length) len = arr.length;for (var i = 0, arr2 = new Array(len); i < len; i++) {arr2[i] = arr[i];}return arr2;}
 
 var _toString = Object.prototype.toString;
 var hasOwnProperty = Object.prototype.hasOwnProperty;
@@ -241,7 +241,7 @@ var promiseInterceptor = {
 
 
 var SYNC_API_RE =
-/^\$|sendNativeEvent|restoreGlobal|getCurrentSubNVue|getMenuButtonBoundingClientRect|^report|interceptors|Interceptor$|getSubNVueById|requireNativePlugin|upx2px|hideKeyboard|canIUse|^create|Sync$|Manager$|base64ToArrayBuffer|arrayBufferToBase64/;
+/^\$|Window$|WindowStyle$|sendNativeEvent|restoreGlobal|getCurrentSubNVue|getMenuButtonBoundingClientRect|^report|interceptors|Interceptor$|getSubNVueById|requireNativePlugin|upx2px|hideKeyboard|canIUse|^create|Sync$|Manager$|base64ToArrayBuffer|arrayBufferToBase64/;
 
 var CONTEXT_API_RE = /^create|Manager$/;
 
@@ -432,7 +432,19 @@ var previewImage = {
   } };
 
 
-// import navigateTo from 'uni-helpers/navigate-to'
+var UUID_KEY = '__DC_STAT_UUID';
+var deviceId;
+function addUuid(result) {
+  deviceId = deviceId || wx.getStorageSync(UUID_KEY);
+  if (!deviceId) {
+    deviceId = Date.now() + '' + Math.floor(Math.random() * 1e7);
+    wx.setStorage({
+      key: UUID_KEY,
+      data: deviceId });
+
+  }
+  result.deviceId = deviceId;
+}
 
 function addSafeAreaInsets(result) {
   if (result.safeArea) {
@@ -445,16 +457,22 @@ function addSafeAreaInsets(result) {
 
   }
 }
+
+var getSystemInfo = {
+  returnValue: function returnValue(result) {
+    addUuid(result);
+    addSafeAreaInsets(result);
+  } };
+
+
+// import navigateTo from 'uni-helpers/navigate-to'
+
 var protocols = {
   redirectTo: redirectTo,
   // navigateTo,  // 由于在微信开发者工具的页面参数，会显示__id__参数，因此暂时关闭mp-weixin对于navigateTo的AOP
   previewImage: previewImage,
-  getSystemInfo: {
-    returnValue: addSafeAreaInsets },
-
-  getSystemInfoSync: {
-    returnValue: addSafeAreaInsets } };
-
+  getSystemInfo: getSystemInfo,
+  getSystemInfoSync: getSystemInfo };
 
 var todos = [
 'vibrate',
@@ -686,16 +704,19 @@ function initHook(name, options) {
     };
   }
 }
+if (!MPPage.__$wrappered) {
+  MPPage.__$wrappered = true;
+  Page = function Page() {var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    initHook('onLoad', options);
+    return MPPage(options);
+  };
+  Page.after = MPPage.after;
 
-Page = function Page() {var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-  initHook('onLoad', options);
-  return MPPage(options);
-};
-
-Component = function Component() {var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-  initHook('created', options);
-  return MPComponent(options);
-};
+  Component = function Component() {var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    initHook('created', options);
+    return MPComponent(options);
+  };
+}
 
 var PAGE_EVENT_HOOKS = [
 'onPullDownRefresh',
@@ -801,7 +822,7 @@ function initData(vueOptions, context) {
     try {
       data = data.call(context); // 支持 Vue.prototype 上挂的数据
     } catch (e) {
-      if (Object({"NODE_ENV":"development","VUE_APP_NAME":"tome_vlog","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"NODE_ENV":"development","VUE_APP_NAME":"途咪vlog","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.warn('根据 Vue 的 data 函数初始化小程序 data 失败，请尽量确保 data 函数中不访问 vm 对象，否则可能影响首次数据渲染速度。', data);
       }
     }
@@ -1214,9 +1235,13 @@ function handleEvent(event) {var _this = this;
           isCustom,
           methodName);
 
+          params = Array.isArray(params) ? params : [];
           // 参数尾部增加原始事件对象用于复杂表达式内获取额外数据
-          // eslint-disable-next-line no-sparse-arrays
-          ret.push(handler.apply(handlerCtx, (Array.isArray(params) ? params : []).concat([,,,,,,,,,, event])));
+          if (/=\s*\S+\.eventParams\s*\|\|\s*\S+\[['"]event-params['"]\]/.test(handler.toString())) {
+            // eslint-disable-next-line no-sparse-arrays
+            params = params.concat([,,,,,,,,,, event]);
+          }
+          ret.push(handler.apply(handlerCtx, params));
         }
       });
     }
@@ -1231,6 +1256,19 @@ function handleEvent(event) {var _this = this;
   }
 }
 
+var eventChannels = {};
+
+var eventChannelStack = [];
+
+function getEventChannel(id) {
+  if (id) {
+    var eventChannel = eventChannels[id];
+    delete eventChannels[id];
+    return eventChannel;
+  }
+  return eventChannelStack.shift();
+}
+
 var hooks = [
 'onShow',
 'onHide',
@@ -1240,10 +1278,28 @@ var hooks = [
 'onUnhandledRejection'];
 
 
+function initEventChannel() {
+  _vue.default.prototype.getOpenerEventChannel = function () {
+    // 微信小程序使用自身getOpenerEventChannel
+    {
+      return this.$scope.getOpenerEventChannel();
+    }
+  };
+  var callHook = _vue.default.prototype.__call_hook;
+  _vue.default.prototype.__call_hook = function (hook, args) {
+    if (hook === 'onLoad' && args && args.__id__) {
+      this.__eventChannel__ = getEventChannel(args.__id__);
+      delete args.__id__;
+    }
+    return callHook.call(this, hook, args);
+  };
+}
+
 function parseBaseApp(vm, _ref3)
 
 
 {var mocks = _ref3.mocks,initRefs = _ref3.initRefs;
+  initEventChannel();
   if (vm.$options.store) {
     _vue.default.prototype.$store = vm.$options.store;
   }
@@ -1412,34 +1468,7 @@ function parseApp(vm) {
 
 }
 
-var eventChannels = {};
-
-var eventChannelStack = [];
-
-function getEventChannel(id) {
-  if (id) {
-    var eventChannel = eventChannels[id];
-    delete eventChannels[id];
-    return eventChannel;
-  }
-  return eventChannelStack.shift();
-}
-
 function createApp(vm) {
-  _vue.default.prototype.getOpenerEventChannel = function () {
-    // 微信小程序使用自身getOpenerEventChannel
-    {
-      return this.$scope.getOpenerEventChannel();
-    }
-  };
-  var callHook = _vue.default.prototype.__call_hook;
-  _vue.default.prototype.__call_hook = function (hook, args) {
-    if (hook === 'onLoad' && args && args.__id__) {
-      this.__eventChannel__ = getEventChannel(args.__id__);
-      delete args.__id__;
-    }
-    return callHook.call(this, hook, args);
-  };
   App(parseApp(vm));
   return vm;
 }
@@ -1642,6 +1671,41 @@ function createComponent(vueOptions) {
   }
 }
 
+function createSubpackageApp(vm) {
+  var appOptions = parseApp(vm);
+  var app = getApp({
+    allowDefault: true });
+
+  var globalData = app.globalData;
+  if (globalData) {
+    Object.keys(appOptions.globalData).forEach(function (name) {
+      if (!hasOwn(globalData, name)) {
+        globalData[name] = appOptions.globalData[name];
+      }
+    });
+  }
+  Object.keys(appOptions).forEach(function (name) {
+    if (!hasOwn(app, name)) {
+      app[name] = appOptions[name];
+    }
+  });
+  if (isFn(appOptions.onShow) && wx.onAppShow) {
+    wx.onAppShow(function () {for (var _len5 = arguments.length, args = new Array(_len5), _key5 = 0; _key5 < _len5; _key5++) {args[_key5] = arguments[_key5];}
+      appOptions.onShow.apply(app, args);
+    });
+  }
+  if (isFn(appOptions.onHide) && wx.onAppHide) {
+    wx.onAppHide(function () {for (var _len6 = arguments.length, args = new Array(_len6), _key6 = 0; _key6 < _len6; _key6++) {args[_key6] = arguments[_key6];}
+      appOptions.onHide.apply(app, args);
+    });
+  }
+  if (isFn(appOptions.onLaunch)) {
+    var args = wx.getLaunchOptionsSync && wx.getLaunchOptionsSync();
+    appOptions.onLaunch.call(app, args);
+  }
+  return vm;
+}
+
 todos.forEach(function (todoApi) {
   protocols[todoApi] = false;
 });
@@ -1721,6 +1785,7 @@ if (typeof Proxy !== 'undefined' && "mp-weixin" !== 'app-plus') {
 wx.createApp = createApp;
 wx.createPage = createPage;
 wx.createComponent = createComponent;
+wx.createSubpackageApp = createSubpackageApp;
 
 var uni$1 = uni;var _default =
 
@@ -1857,7 +1922,7 @@ function normalizeComponent (
 
 /***/ }),
 
-/***/ 106:
+/***/ 107:
 /*!************************************************************!*\
   !*** C:/Users/11632/Desktop/project/tome_vlog/api/face.js ***!
   \************************************************************/
@@ -1881,7 +1946,7 @@ exports.get7nToken = get7nToken;var checkFace = function checkFace(data) {return
 
 /***/ }),
 
-/***/ 113:
+/***/ 114:
 /*!***************************************************************!*\
   !*** C:/Users/11632/Desktop/project/tome_vlog/static/err.png ***!
   \***************************************************************/
@@ -1892,7 +1957,7 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAgYAAAIGCAYAAAAv
 
 /***/ }),
 
-/***/ 114:
+/***/ 115:
 /*!****************************************************************!*\
   !*** C:/Users/11632/Desktop/project/tome_vlog/static/cabg.png ***!
   \****************************************************************/
@@ -1903,7 +1968,7 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAgYAAAIGCAYAAAAv
 
 /***/ }),
 
-/***/ 125:
+/***/ 126:
 /*!**************************************************************!*\
   !*** C:/Users/11632/Desktop/project/tome_vlog/api/upload.js ***!
   \**************************************************************/
@@ -1924,7 +1989,7 @@ exports.submit = submit;var get7nToken = function get7nToken() {return _request.
 
 /***/ }),
 
-/***/ 134:
+/***/ 135:
 /*!***************************************************************!*\
   !*** C:/Users/11632/Desktop/project/tome_vlog/api/message.js ***!
   \***************************************************************/
@@ -1942,7 +2007,7 @@ exports.queryComment = queryComment;var queryLike = function queryLike(data) {re
 
 /***/ }),
 
-/***/ 149:
+/***/ 150:
 /*!********************************************************************!*\
   !*** C:/Users/11632/Desktop/project/tome_vlog/utils/handleText.js ***!
   \********************************************************************/
@@ -2775,7 +2840,7 @@ if (hadRuntime) {
 __webpack_require__.r(__webpack_exports__);
 /* WEBPACK VAR INJECTION */(function(global) {/*!
  * Vue.js v2.6.11
- * (c) 2014-2020 Evan You
+ * (c) 2014-2021 Evan You
  * Released under the MIT License.
  */
 /*  */
@@ -5419,7 +5484,7 @@ function renderList (
       var iterator = val[Symbol.iterator]();
       var result = iterator.next();
       while (!result.done) {
-        ret.push(render(result.value, ret.length, i++, i)); // fixed by xxxxxx
+        ret.push(render(result.value, ret.length, i, i++)); // fixed by xxxxxx
         result = iterator.next();
       }
     } else {
@@ -8290,7 +8355,7 @@ function type(obj) {
 
 function flushCallbacks$1(vm) {
     if (vm.__next_tick_callbacks && vm.__next_tick_callbacks.length) {
-        if (Object({"NODE_ENV":"development","VUE_APP_NAME":"tome_vlog","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+        if (Object({"NODE_ENV":"development","VUE_APP_NAME":"途咪vlog","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:flushCallbacks[' + vm.__next_tick_callbacks.length + ']');
@@ -8311,14 +8376,14 @@ function nextTick$1(vm, cb) {
     //1.nextTick 之前 已 setData 且 setData 还未回调完成
     //2.nextTick 之前存在 render watcher
     if (!vm.__next_tick_pending && !hasRenderWatcher(vm)) {
-        if(Object({"NODE_ENV":"development","VUE_APP_NAME":"tome_vlog","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"NODE_ENV":"development","VUE_APP_NAME":"途咪vlog","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:nextVueTick');
         }
         return nextTick(cb, vm)
     }else{
-        if(Object({"NODE_ENV":"development","VUE_APP_NAME":"tome_vlog","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"NODE_ENV":"development","VUE_APP_NAME":"途咪vlog","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance$1 = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance$1.is || mpInstance$1.route) + '][' + vm._uid +
                 ']:nextMPTick');
@@ -8404,7 +8469,7 @@ var patch = function(oldVnode, vnode) {
     });
     var diffData = this.$shouldDiffData === false ? data : diff(data, mpData);
     if (Object.keys(diffData).length) {
-      if (Object({"NODE_ENV":"development","VUE_APP_NAME":"tome_vlog","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"NODE_ENV":"development","VUE_APP_NAME":"途咪vlog","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + this._uid +
           ']差量更新',
           JSON.stringify(diffData));
@@ -8734,6 +8799,7 @@ var LIFECYCLE_HOOKS$1 = [
     'onError',
     'onUnhandledRejection',
     //Page
+    'onInit',
     'onLoad',
     // 'onShow',
     'onReady',
@@ -9831,7 +9897,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.isStartTrip = exports.startTrip = exports.querySceneryInfo = void 0;var _request = __webpack_require__(/*! @/utils/request.js */ 21);
+Object.defineProperty(exports, "__esModule", { value: true });exports.queryPointList = exports.hasStartTrip = exports.startTrip = exports.querySceneryInfo = void 0;var _request = __webpack_require__(/*! @/utils/request.js */ 21);
 
 // 查询景区详情
 var querySceneryInfo = function querySceneryInfo(data) {return _request.http.get('/videoapp/scenery/get', { params: data });};
@@ -9840,7 +9906,10 @@ var querySceneryInfo = function querySceneryInfo(data) {return _request.http.get
 exports.querySceneryInfo = querySceneryInfo;var startTrip = function startTrip(data) {return _request.http.post('/videoapp/video/startTrip', data);};
 
 // 是否开启视频之旅
-exports.startTrip = startTrip;var isStartTrip = function isStartTrip(data) {return _request.http.post('/videoapp/video/isStartTrip', data);};exports.isStartTrip = isStartTrip;
+exports.startTrip = startTrip;var hasStartTrip = function hasStartTrip(data) {return _request.http.post('/videoapp/video/isStartTrip', data);};
+
+// 查询打卡点
+exports.hasStartTrip = hasStartTrip;var queryPointList = function queryPointList(data) {return _request.http.post('/videomis/point/query', data);};exports.queryPointList = queryPointList;
 
 /***/ }),
 
@@ -9916,7 +9985,7 @@ exports.queryCard = queryCard;var like = function like(data) {return _request.ht
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.queryLikeCount = exports.queryCommentCount = exports.queryMySceneryCount = exports.queryBuyList = exports.queryMsg = exports.queryTravel = void 0;var _request = __webpack_require__(/*! @/utils/request.js */ 21);
+Object.defineProperty(exports, "__esModule", { value: true });exports.updateNewVideoStatus = exports.updateBuyVideoStatus = exports.queryLikeCount = exports.queryCommentCount = exports.queryMySceneryCount = exports.queryBuyList = exports.queryMsg = exports.queryTravel = void 0;var _request = __webpack_require__(/*! @/utils/request.js */ 21);
 
 // 获取游记
 var queryTravel = function queryTravel(data) {return _request.http.get('/videoapp/me/queryMyVideos', { params: data });};
@@ -9934,7 +10003,13 @@ exports.queryBuyList = queryBuyList;var queryMySceneryCount = function queryMySc
 exports.queryMySceneryCount = queryMySceneryCount;var queryCommentCount = function queryCommentCount() {return _request.http.get('/videoapp/me/queryCommentMsgCount');};
 
 //  查询点赞数量
-exports.queryCommentCount = queryCommentCount;var queryLikeCount = function queryLikeCount() {return _request.http.get('/videoapp/me/queryLaudMsgCount');};exports.queryLikeCount = queryLikeCount;
+exports.queryCommentCount = queryCommentCount;var queryLikeCount = function queryLikeCount() {return _request.http.get('/videoapp/me/queryLaudMsgCount');};
+
+// 修改购买视频的阅读状态为已读
+exports.queryLikeCount = queryLikeCount;var updateBuyVideoStatus = function updateBuyVideoStatus(data) {return _request.http.post('/videoapp/me/updateVideoBuyReadStatus', data);};
+
+// 修改新视频的阅读状态为已读
+exports.updateBuyVideoStatus = updateBuyVideoStatus;var updateNewVideoStatus = function updateNewVideoStatus(data) {return _request.http.post('/videoapp/me/updateVideoNewReadStatus', data);};exports.updateNewVideoStatus = updateNewVideoStatus;
 
 /***/ }),
 
@@ -9954,9 +10029,9 @@ var queryNearby = function queryNearby(data) {return _request.http.post('/videoa
 /***/ }),
 
 /***/ 80:
-/*!*******************************************************************!*\
-  !*** C:/Users/11632/Desktop/project/tome_vlog/utils/jsencrypt.js ***!
-  \*******************************************************************/
+/*!************************************************************************!*\
+  !*** C:/Users/11632/Desktop/project/tome_vlog/libs/jsencrypt/index.js ***!
+  \************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -15374,6 +15449,35 @@ exports.getQrCode = getQrCode;var confirmOrder = function confirmOrder(data) {re
 
 // 购买
 exports.confirmOrder = confirmOrder;var buy = function buy(data) {return _request.http.post('/videoapp/order/create', data);};exports.buy = buy;
+
+/***/ }),
+
+/***/ 98:
+/*!*********************************************************************!*\
+  !*** C:/Users/11632/Desktop/project/tome_vlog/libs/gcoord/index.js ***!
+  \*********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* @preserve
+ * gcoord 0.3.1, geographic coordinate library
+ * Copyright (c) 2021 Jiulong Hu <me@hujiulong.com>
+ */
+!function (e, t) { true ? module.exports = t() : undefined;}(this, function () {"use strict";
+  /*! *****************************************************************************
+                                                                                                                                                                                                                                                                                  Copyright (c) Microsoft Corporation.
+                                                                                                                                                                                                                                                                              
+                                                                                                                                                                                                                                                                                  Permission to use, copy, modify, and/or distribute this software for any
+                                                                                                                                                                                                                                                                                  purpose with or without fee is hereby granted.
+                                                                                                                                                                                                                                                                              
+                                                                                                                                                                                                                                                                                  THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+                                                                                                                                                                                                                                                                                  REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+                                                                                                                                                                                                                                                                                  AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+                                                                                                                                                                                                                                                                                  INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+                                                                                                                                                                                                                                                                                  LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+                                                                                                                                                                                                                                                                                  OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+                                                                                                                                                                                                                                                                                  PERFORMANCE OF THIS SOFTWARE.
+                                                                                                                                                                                                                                                                                  ***************************************************************************** */var _e = function e() {return (_e = Object.assign || function (e) {for (var t, r = 1, n = arguments.length; r < n; r++) {for (var o in t = arguments[r]) {Object.prototype.hasOwnProperty.call(t, o) && (e[o] = t[o]);}}return e;}).apply(this, arguments);},t = Math.sin,r = Math.cos,n = Math.sqrt,o = Math.abs,a = Math.PI,i = 6378245,u = .006693421622965823;function f(e, t) {return e >= 72.004 && e <= 137.8347 && t >= .8293 && t <= 55.8271;}function c(e, f) {var c,l,s,h = (s = 300 + (c = e - 105) + 2 * (l = f - 35) + .1 * c * c + .1 * c * l + .1 * n(o(c)), s += 2 * (20 * t(6 * c * a) + 20 * t(2 * c * a)) / 3, (s += 2 * (20 * t(c * a) + 40 * t(c / 3 * a)) / 3) + 2 * (150 * t(c / 12 * a) + 300 * t(c / 30 * a)) / 3),g = function (e, r) {var i = 2 * e - 100 + 3 * r + .2 * r * r + .1 * e * r + .2 * n(o(e));return i += 2 * (20 * t(6 * e * a) + 20 * t(2 * e * a)) / 3, i += 2 * (20 * t(r * a) + 40 * t(r / 3 * a)) / 3, i + 2 * (160 * t(r / 12 * a) + 320 * t(r * a / 30)) / 3;}(e - 105, f - 35),M = f / 180 * a,d = t(M),v = n(d = 1 - u * d * d);return [h = 180 * h / (i / v * r(M) * a), g = 180 * g / (i * (1 - u) / (d * v) * a)];}function l(e) {var t = e[0],r = e[1];if (!f(t, r)) return [t, r];var n = c(t, r);return [t + n[0], r + n[1]];}function s(e) {var t = e[0],r = e[1];if (!f(t, r)) return [t, r];for (var n = [t, r], a = n[0], i = n[1], u = l([a, i]), c = u[0] - t, s = u[1] - r; o(c) > 1e-6 || o(s) > 1e-6;) {c = (u = l([a -= c, i -= s]))[0] - t, s = u[1] - r;}return [a, i];}var h = Math.sin,g = Math.cos,M = Math.atan2,d = Math.sqrt,v = 3e3 * Math.PI / 180;function p(e) {var t = e[0] - .0065,r = e[1] - .006,n = d(t * t + r * r) - 2e-5 * h(r * v),o = M(r, t) - 3e-6 * g(t * v);return [n * g(o), n * h(o)];}function G(e) {var t = e[0],r = e[1],n = d(t * t + r * r) + 2e-5 * h(r * v),o = M(r, t) + 3e-6 * g(t * v);return [n * g(o) + .0065, n * h(o) + .006];}var y = 180 / Math.PI,S = Math.PI / 180,P = 6378137,b = 20037508.342789244;function B(e) {return [e[0] * y / P, (.5 * Math.PI - 2 * Math.atan(Math.exp(-e[1] / P))) * y];}function m(e) {var t = Math.abs(e[0]) <= 180 ? e[0] : e[0] - 360 * (e[0] < 0 ? -1 : 1),r = [P * t * S, P * Math.log(Math.tan(.25 * Math.PI + .5 * e[1] * S))];return r[0] > b && (r[0] = b), r[0] < -b && (r[0] = -b), r[1] > b && (r[1] = b), r[1] < -b && (r[1] = -b), r;}var C,D,E,w,I,W,x = Math.abs,k = [12890594.86, 8362377.87, 5591021, 3481989.83, 1678043.12, 0],J = [75, 60, 45, 30, 15, 0],T = [[1.410526172116255e-8, 898305509648872e-20, -1.9939833816331, 200.9824383106796, -187.2403703815547, 91.6087516669843, -23.38765649603339, 2.57121317296198, -.03801003308653, 17337981.2], [-7.435856389565537e-9, 8983055097726239e-21, -.78625201886289, 96.32687599759846, -1.85204757529826, -59.36935905485877, 47.40033549296737, -16.50741931063887, 2.28786674699375, 10260144.86], [-3.030883460898826e-8, 898305509983578e-20, .30071316287616, 59.74293618442277, 7.357984074871, -25.38371002664745, 13.45380521110908, -3.29883767235584, .32710905363475, 6856817.37], [-1.981981304930552e-8, 8983055099779535e-21, .03278182852591, 40.31678527705744, .65659298677277, -4.44255534477492, .85341911805263, .12923347998204, -.04625736007561, 4482777.06], [3.09191371068437e-9, 8983055096812155e-21, 6995724062e-14, 23.10934304144901, -.00023663490511, -.6321817810242, -.00663494467273, .03430082397953, -.00466043876332, 2555164.4], [2.890871144776878e-9, 8983055095805407e-21, -3.068298e-8, 7.47137025468032, -353937994e-14, -.02145144861037, -1234426596e-14, .00010322952773, -323890364e-14, 826088.5]],j = [[-.0015702102444, 111320.7020616939, 0x60e374c3105a3, -0x24bb4115e2e164, 0x5cc55543bb0ae8, -0x7ce070193f3784, 0x5e7ca61ddf8150, -0x261a578d8b24d0, 0x665d60f3742ca, 82.5], [.0008277824516172526, 111320.7020463578, 647795574.6671607, -4082003173.641316, 10774905663.51142, -15171875531.51559, 12053065338.62167, -5124939663.577472, 913311935.9512032, 67.5], [.00337398766765, 111320.7020202162, 4481351.045890365, -23393751.19931662, 79682215.47186455, -115964993.2797253, 97236711.15602145, -43661946.33752821, 8477230.501135234, 52.5], [.00220636496208, 111320.7020209128, 51751.86112841131, 3796837.749470245, 992013.7397791013, -1221952.21711287, 1340652.697009075, -620943.6990984312, 144416.9293806241, 37.5], [-.0003441963504368392, 111320.7020576856, 278.2353980772752, 2485758.690035394, 6070.750963243378, 54821.18345352118, 9540.606633304236, -2710.55326746645, 1405.483844121726, 22.5], [-.0003218135878613132, 111320.7020701615, .00369383431289, 823725.6402795718, .46104986909093, 2351.343141331292, 1.58060784298199, 8.77738589078284, .37238884252424, 7.45]];function L(e, t, r) {var n = x(t) / r[9],o = r[0] + r[1] * x(e),a = r[2] + r[3] * n + r[4] * Math.pow(n, 2) + r[5] * Math.pow(n, 3) + r[6] * Math.pow(n, 4) + r[7] * Math.pow(n, 5) + r[8] * Math.pow(n, 6);return [o *= e < 0 ? -1 : 1, a *= t < 0 ? -1 : 1];}function N(e) {for (var t = e[0], r = e[1], n = [], o = 0; o < J.length; o++) {if (x(r) > J[o]) {n = j[o];break;}}return L(t, r, n);}function q(e) {for (var t = e[0], r = e[1], n = [], o = 0; o < k.length; o++) {if (r >= k[o]) {n = T[o];break;}}return L(t, r, n);}function O(e, t) {if (!e) throw new Error(t);}function A(e) {return !!e && "[object Array]" === Object.prototype.toString.call(e);}function F(e) {return !Number.isNaN(Number(e)) && null !== e && !A(e);}function R() {for (var e = [], t = 0; t < arguments.length; t++) {e[t] = arguments[t];}var r = e.length - 1;return function () {for (var t = [], n = 0; n < arguments.length; n++) {t[n] = arguments[n];}for (var o = r, a = e[r].apply(null, t); o--;) {a = e[o].call(null, a);}return a;};}function U(e, t, r) {if (void 0 === r && (r = !1), null !== e) for (var n, o, a, i, u, f, c, l, s = 0, h = 0, g = e.type, M = "FeatureCollection" === g, d = "Feature" === g, v = M ? e.features.length : 1, p = 0; p < v; p++) {u = (l = !!(c = M ? e.features[p].geometry : d ? e.geometry : e) && "GeometryCollection" === c.type) ? c.geometries.length : 1;for (var G = 0; G < u; G++) {var y = 0,S = 0;if (null !== (i = l ? c.geometries[G] : c)) {var P = i.type;switch (s = !r || "Polygon" !== P && "MultiPolygon" !== P ? 0 : 1, P) {case null:break;case "Point":if (!1 === t(f = i.coordinates, h, p, y, S)) return !1;h++, y++;break;case "LineString":case "MultiPoint":for (f = i.coordinates, n = 0; n < f.length; n++) {if (!1 === t(f[n], h, p, y, S)) return !1;h++, "MultiPoint" === P && y++;}"LineString" === P && y++;break;case "Polygon":case "MultiLineString":for (f = i.coordinates, n = 0; n < f.length; n++) {for (o = 0; o < f[n].length - s; o++) {if (!1 === t(f[n][o], h, p, y, S)) return !1;h++;}"MultiLineString" === P && y++, "Polygon" === P && S++;}"Polygon" === P && y++;break;case "MultiPolygon":for (f = i.coordinates, n = 0; n < f.length; n++) {for (S = 0, o = 0; o < f[n].length; o++) {for (a = 0; a < f[n][o].length - s; a++) {if (!1 === t(f[n][o][a], h, p, y, S)) return !1;h++;}S++;}y++;}break;case "GeometryCollection":for (n = 0; n < i.geometries.length; n++) {if (!1 === U(i.geometries[n], t, r)) return !1;}break;default:throw new Error("Unknown Geometry Type");}}}}}!function (e) {e.WGS84 = "WGS84", e.WGS1984 = "WGS84", e.EPSG4326 = "WGS84", e.GCJ02 = "GCJ02", e.AMap = "GCJ02", e.BD09 = "BD09", e.BD09LL = "BD09", e.Baidu = "BD09", e.BMap = "BD09", e.BD09MC = "BD09MC", e.BD09Meter = "BD09MC", e.EPSG3857 = "EPSG3857", e.EPSG900913 = "EPSG3857", e.EPSG102100 = "EPSG3857", e.WebMercator = "EPSG3857", e.WM = "EPSG3857";}(W || (W = {}));var z = { WGS84: { to: (C = {}, C[W.GCJ02] = l, C[W.BD09] = R(G, l), C[W.BD09MC] = R(N, G, l), C[W.EPSG3857] = m, C) }, GCJ02: { to: (D = {}, D[W.WGS84] = s, D[W.BD09] = G, D[W.BD09MC] = R(N, G), D[W.EPSG3857] = R(m, s), D) }, BD09: { to: (E = {}, E[W.WGS84] = R(s, p), E[W.GCJ02] = p, E[W.EPSG3857] = R(m, s, p), E[W.BD09MC] = N, E) }, EPSG3857: { to: (w = {}, w[W.WGS84] = B, w[W.GCJ02] = R(l, B), w[W.BD09] = R(G, l, B), w[W.BD09MC] = R(N, G, l, B), w) }, BD09MC: { to: (I = {}, I[W.WGS84] = R(s, p, q), I[W.GCJ02] = R(p, q), I[W.EPSG3857] = R(m, s, p, q), I[W.BD09] = q, I) } };return _e(_e({}, W), { CRSTypes: W, transform: function transform(e, t, r) {if (O(!!e, "The args[0] input coordinate is required"), O(!!t, "The args[1] original coordinate system is required"), O(!!r, "The args[2] target coordinate system is required"), t === r) return e;var n = z[t];O(!!n, "Invalid original coordinate system: " + t);var o = n.to[r];O(!!o, "Invalid target coordinate system: " + r);var a = typeof e;if (O("string" === a || "object" === a, "Invalid input coordinate type: " + a), "string" === a) try {e = JSON.parse(e);} catch (t) {throw new Error("Invalid input coordinate: " + e);}var i = !1;A(e) && (O(e.length >= 2, "Invalid input coordinate: " + e), O(F(e[0]) && F(e[1]), "Invalid input coordinate: " + e), e = e.map(Number), i = !0);var u = o;return i ? u(e) : (U(e, function (e) {var t;t = u(e), e[0] = t[0], e[1] = t[1];}), e);} });});
 
 /***/ })
 

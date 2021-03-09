@@ -32,9 +32,7 @@
 	export default {
 		data() {
 			return {
-				originList: [], //原始数据 用于清空key后恢复数据
-				activeList: [], //动态数据 用于检索
-				id: '' //当前选择的景区ID
+				activeList: [] // 检索数据
 			}
 		},
 		onLoad(options) {
@@ -44,6 +42,8 @@
 					content: '请选择您要打卡的景区',
 					showCancel: false
 				})
+				// 选择景区后应当返回开拍页面
+				this._redirectToShoot = true
 			}
 			this.getSceneryList()
 		},
@@ -57,16 +57,16 @@
 					lon,
 					lat
 				})
-				this.originList = res.value
+				this._originList = res.value
 				this.activeList = res.value
 			},
 			// 检索关键词
 			input(e) {
 				const key = e.detail.value
 				if (key === "") {
-					this.activeList = this.originList
+					this.activeList = this._originList
 				} else {
-					this.activeList = this.originList.filter(v => v.name.includes(key))
+					this.activeList = this._originList.filter(v => v.name.includes(key))
 				}
 			},
 			// 带参数跳转
@@ -78,37 +78,17 @@
 					lon: item.lon,
 					lat: item.lat
 				}
-				const {
-					returnPath
-				} = getApp().globalData
-				if (returnPath) {
+				this._redirectToShoot ?
 					uni.redirectTo({
-						url: returnPath,
-						fail: _ => uni.switchTab({
-							url: returnPath
-						}),
-						complete: _ => getApp().globalData.returnPath = ''
-					})
-				}
-
-				// if(this.assert){
-				// 	getApp().globalData.sceneryId = item.id
-				// 	getApp().globalData.sceneryName = item.name
-				// 	// 保存用户手动定位的景区经纬度
-				// 	getApp().globalData.manualLocation = {
-				// 		lon:item.lon,
-				// 		lat:item.lat
-				// 	}
-				// }
-				// uni.redirectTo({
-				// 	url: `/pages/shoot/shoot?id=${item.id}`
-				// })
-			},
+						url: '/pages/shoot/shoot'
+					}) :
+					uni.navigateBack()
+			}
 		}
 	}
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 	.scenery-list {
 		height: 100vh;
 		display: flex;

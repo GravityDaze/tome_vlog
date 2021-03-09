@@ -117,6 +117,7 @@
   position: fixed;
   width: 100%;
   bottom: 0;
+  padding-bottom: env(safe-area-inset-bottom);
   height: 97rpx;
   background: #FFFFFF;
   box-shadow: 0px 1rpx 15rpx 3rpx rgba(62, 62, 62, 0.19);

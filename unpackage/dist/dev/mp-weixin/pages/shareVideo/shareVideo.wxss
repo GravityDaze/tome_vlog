@@ -100,8 +100,8 @@
   color: #999896;
 }
 .details .bottom-info .like image.data-v-0f776dc6 {
-  width: 32rpx;
-  height: 29rpx;
+  width: 30rpx;
+  height: 28rpx;
   margin-right: 9rpx;
 }
 .btn.data-v-0f776dc6 {

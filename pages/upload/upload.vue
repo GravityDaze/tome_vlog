@@ -97,7 +97,7 @@
 				const [err, res] = await uni.chooseVideo({
 					sourceType: ['album', 'camera'], // 视频选择的来源
 					maxDuration: this.initParams.uploadVideoDuration, // 拍摄视频最长拍摄时间，单位秒
-					compressed: false, // 是否压缩所选择的视频文件
+					compressed: false // 是否压缩所选择的视频文件
 				})
 
 				// 如果用户取消上传或者添加视频失败
@@ -191,7 +191,6 @@
 			del(index) {
 				// 删除掉uploadData中的数据
 				const origin = this.uploadData.splice(index, 1)[0]
-				console.log(this.uploadData)
 				
 				if (origin.id) {
 					// 如果删除的数据存在id 说明是后台返回的 加入到delList中

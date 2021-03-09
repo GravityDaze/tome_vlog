@@ -101,7 +101,6 @@
 			async like(item,index){
 				
 				if(!uni.getStorageSync('access_token')){
-					getApp().globalData.returnPath = '/pages/home/home'
 					return uni.navigateTo({
 						url:'/pages/login/login'
 					}) 
@@ -134,12 +133,10 @@
 			},
 			
 			// 更新点赞数据
-			updateLikeData(){
-				const index = this.momentList.findIndex( v=>v.videoShareId === getApp().globalData.updateLikeId )
+			updateLikeData(id){
+				const index = this.momentList.findIndex( v=>v.videoShareId === id )
 				this.momentList[index].laudMe = 1
 				this.momentList[index].laudTimes++ 
-				// 清空全局
-				getApp().globalData.updateLikeId = ''
 			},
 			
 			// 刷新

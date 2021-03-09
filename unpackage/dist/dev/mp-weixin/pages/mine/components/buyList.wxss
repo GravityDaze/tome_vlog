@@ -37,7 +37,44 @@
   -webkit-flex: 2;
           flex: 2;
 }
-.list .item .left view.data-v-74f0a79e {
+.list .item .left .hint.data-v-74f0a79e {
+  position: absolute;
+  width: 74rpx;
+  height: 32rpx;
+  background: -webkit-linear-gradient(251deg, #97ce1e, #96ce1d);
+  background: linear-gradient(199deg, #97ce1e, #96ce1d);
+  right: 10rpx;
+  top: 10rpx;
+  font-size: 20rpx;
+  color: #FFFFFF;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  border-radius: 8rpx;
+  background: -webkit-linear-gradient(350deg, rgba(255, 255, 255, 0) 40%, rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0) 60%) #97ce1e;
+  background: linear-gradient(100deg, rgba(255, 255, 255, 0) 40%, rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0) 60%) #97ce1e;
+  background-size: 200% 100%;
+  background-position-x: 150%;
+  -webkit-animation: 1.5s light-data-v-74f0a79e ease-in-out infinite;
+          animation: 1.5s light-data-v-74f0a79e ease-in-out infinite;
+}
+@-webkit-keyframes light-data-v-74f0a79e {
+to {
+    background-position-x: -20%;
+}
+}
+@keyframes light-data-v-74f0a79e {
+to {
+    background-position-x: -20%;
+}
+}
+.list .item .left .duration.data-v-74f0a79e {
   position: absolute;
   right: 10rpx;
   bottom: 10rpx;

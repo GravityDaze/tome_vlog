@@ -1,6 +1,6 @@
 <!-- 我的页面 -->
 <template>
-	<view class="mine">
+	<view class="mine" v-show="isLogin !== null">
 		<navbar ref="navbar" :immersive="immersive">
 			<view slot="center">
 				<text>个人中心</text>
@@ -46,10 +46,10 @@
 		<template v-if="isLogin">
 			<view class="tabs">
 				<view class="item">
-					<view :class="['single-item',{ active: current === 0 }]" @click="current = 0">
+					<view :class="['single-item',{ active: current === 0 ,hint:msg.noReadCount >= 1}]" @click="current = 0">
 						<text>我的游记</text>
 					</view>
-					<view :class="['single-item',{ active: current === 1 }]" @click="current = 1">
+					<view :class="['single-item',{ active: current === 1, hint:msg.noReadBuy === 1 }]" @click="current = 1">
 						<text>已购视频</text>
 					</view>
 				</view>
@@ -63,7 +63,7 @@
 				<!-- 我的游记 -->
 				<list :dataList="travelList" v-show="current === 0" />
 				<!-- 已购视频 -->
-				<buyList :dataList="buyListData" v-show="current === 1"></buyList>
+				<buyList :dataList="buyListData" v-show="current === 1" @update-list="getBuyList"></buyList>
 			</view>
 		</template>
 		
@@ -100,11 +100,13 @@
 				current: 0,
 				topHeight: 0,
 				immersive: true, //是否沉浸式导航栏
-				isLogin: false, //判断是否登录
+				isLogin: null, //判断是否登录
 				userInfo: {}, //用户信息
 				travelList: [], //游记数据
 				buyListData: [], //已购买的视频数据
-				count:{} //统计数据
+				count:{} ,//统计数据
+				msg:{} // hint
+				
 			}
 		},
 		onLoad() {
@@ -119,8 +121,7 @@
 		watch: {
 			async current(val) {
 				if (val === 1 && !this.buyListData.length) {
-					const res = await queryBuyList()
-					this.buyListData = res.value.list
+					this.getBuyList()
 				}
 			}
 		},
@@ -141,12 +142,12 @@
 				if (token && userInfo) {
 					this.userInfo = userInfo
 					this.isLogin = true
-					// 获取消息提示
-					// const msg = await queryMsg()
-					// this.redPoint = !!msg.value.noReadCount
-					// 获取游记数据
-					const res = await queryTravel()
-					this.travelList = res.value.info
+					const [ msg,list ] = await Promise.all([
+						queryMsg(),
+						queryTravel()
+					])
+					this.msg = msg.value
+					this.travelList = list.value.info
 					// 获取消息数据
 					this.getMsg()
 					
@@ -155,11 +156,18 @@
 				}
 			},
 			
+			async getBuyList(){
+				const res = await queryBuyList()
+				this.buyListData = res.value.list
+			},
+			
 			
 			async getMsg(){
-				const commentData = await queryCommentCount()
-				const likeData = await queryLikeCount()
-				const sceneryData = await queryMySceneryCount()
+				const [ commentData,likeData,sceneryData] = await Promise.all([
+					 queryCommentCount(),
+					 queryLikeCount(),
+					 queryMySceneryCount()
+				]) 
 				this.count = {
 					comment:commentData.value,
 					like:likeData.value,
@@ -181,12 +189,6 @@
 				})
 			},
 
-			// 跳转至已购视频
-			aboutUs() {
-				uni.navigateTo({
-					url: '/pages/about/about'
-				})
-			},
 			// 跳转至消息页面
 			checkMsg(type){
 				uni.navigateTo({
@@ -222,10 +224,8 @@
 	.user-bg {
 		height: 300rpx;
 		position: relative;
-		// background:url(http://i2.tiimg.com/733051/b46f91c023c4b145.jpg) no-repeat center center;
 		background: url(https://tomevideo.zhihuiquanyu.com/20210208150344.jpg) no-repeat center center;
 		background-size: cover;
-		// background-position:center center;
 
 		.mask {
 			width: 100%;
@@ -328,13 +328,29 @@
 		margin: auto;
 
 		.item {
-
+			
 			display: flex;
 			justify-content: space-around;
-
+			
 			.single-item {
 				font-size: 30rpx;
 				color: #202020;
+			}
+			
+			.hint{
+				position:relative;
+				
+				&::before{
+					content:"";	
+					position:absolute;
+					right:-15rpx;
+					top:0;
+					height: 12rpx;
+					width:12rpx;
+					background: #FB3C38;
+					box-shadow: 0px 0px 19rpx 2rpx rgba(244, 40, 35, 0.29);
+					border-radius: 50%;
+				}
 			}
 
 			.active {

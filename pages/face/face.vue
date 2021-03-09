@@ -46,7 +46,7 @@
 				hasRes: false, // 是否已经完成网络请求 防止camera组件闪烁
 				showBtn: false, //是否显示重新采集
 				count: 3,
-				initdone:false //相机是否初始化完成
+				initdone: false //相机是否初始化完成
 			}
 		},
 		onLoad(options) {
@@ -64,6 +64,8 @@
 							this.shoot()
 						}
 					}, 1000)
+				}else{
+					this.count = 3
 				}
 			}
 		},
@@ -115,23 +117,21 @@
 			// 拍照
 			shoot() {
 				const ctx = uni.createCameraContext()
+				// 结束采集
+				this.initdone = false
 				ctx.takePhoto({
 					quality: 'high',
 					success: async (res) => {
-						// 结束采集
 						this.rec = false
-						this.initdone = false
-						// 恢复倒计时
-						this.count = 3
 						this.faceUrl = res.tempImagePath
-						uni.showLoading({
-							title: '验证人脸中',
-							mask: true
-						})
 						// 上传七牛云
 						const result = await this.upload(res.tempImagePath)
 						const data = JSON.parse(result.data)
 						try {
+							uni.showLoading({
+								title: '验证人脸中',
+								mask: true
+							})
 							// 调用人脸检测接口
 							await checkFace({
 								url: `https://tomevideo.zhihuiquanyu.com/${data.key}`
@@ -140,30 +140,33 @@
 							await editFace({
 								frontFace: data.key
 							})
+
 							uni.hideLoading()
 							uni.showModal({
 								content: '人脸采集成功',
 								showCancel: false,
 								success: _ => {
 									if (this.action === 'shoot') {
-										getApp().globalData.handler = 'start'
+										const pages = getCurrentPages()
+										const prevPage = pages[pages.length - 2]
+										prevPage.$vm.start()
 									}
-									return uni.navigateBack()
+									uni.navigateBack()
 								}
 							})
 						} catch (err) {
 							uni.hideLoading()
 							this.err = true
 							this.showBtn = true
-						} 
+						}
 
 					}
 				})
 			},
-			
-			recapture(){
+
+			recapture() {
 				this.err = false
-				this.rec = true 
+				this.rec = true
 			},
 
 			// 上传头像
@@ -267,11 +270,11 @@
 				}
 			}
 
-			.warning{
+			.warning {
 				font-size: 24rpx;
 				font-weight: 500;
 				color: #FF0000;
-				margin-top:50rpx;
+				margin-top: 50rpx;
 			}
 
 			.recapture {

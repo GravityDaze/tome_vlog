@@ -24,26 +24,6 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
-@-webkit-keyframes rota-data-v-05917e21 {
-from {
-    -webkit-transform: rotate(0);
-            transform: rotate(0);
-}
-to {
-    -webkit-transform: rotate(1turn);
-            transform: rotate(1turn);
-}
-}
-@keyframes rota-data-v-05917e21 {
-from {
-    -webkit-transform: rotate(0);
-            transform: rotate(0);
-}
-to {
-    -webkit-transform: rotate(1turn);
-            transform: rotate(1turn);
-}
-}
 .load.data-v-05917e21 {
   height: 185rpx;
   display: -webkit-box;
@@ -196,5 +176,23 @@ to {
 }
 .hot-scenery .scenery-list .list .scenery-card .text .open.data-v-05917e21 {
   background: #FFB90C;
+  background-color: #FBC32A;
+  background: -webkit-linear-gradient(350deg, rgba(255, 255, 255, 0) 40%, rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0) 60%) #FBC32A;
+  background: linear-gradient(100deg, rgba(255, 255, 255, 0) 40%, rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0) 60%) #FBC32A;
+  box-shadow: 0px 8rpx 16rpx 0px rgba(239, 181, 22, 0.48);
+  background-size: 200% 100%;
+  background-position-x: 150%;
+  -webkit-animation: 1.5s light-data-v-05917e21 ease-in-out infinite;
+          animation: 1.5s light-data-v-05917e21 ease-in-out infinite;
+}
+@-webkit-keyframes light-data-v-05917e21 {
+to {
+    background-position-x: -20%;
+}
+}
+@keyframes light-data-v-05917e21 {
+to {
+    background-position-x: -20%;
+}
 }
 

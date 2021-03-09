@@ -1,6 +1,9 @@
 <template>
 	<!-- 分享弹框 -->
 	<view :class="{'shareModal':true,'out':!show}">
+		<view class="text">
+			<text>立即分享给好友</text>
+		</view>
 		<view class="item-box">
 			<view class="item">
 				<button style="position:absolute;top:0;bottom:0;width:100%;opacity:0" open-type="share"></button>
@@ -130,17 +133,27 @@
 						id: this.videoInfo.id,
 						describe: this.describe
 					})
-					uni.showToast({
-						title: '发布成功'
+
+					uni.showModal({
+						title:"发布成功",
+						content:"快去首页看看吧",
+						success:res=>{
+							if(res.confirm){
+								uni.switchTab({
+									url:'/pages/home/home'
+								})
+							}
+						}
 					})
 					this.describe = ""
 					this.$emit('close')
-					this.$emit('change')
+					this.$emit('publish-success')
 				} catch (err) {
-					uni.hideLoading()
 					uni.showModal({
 						content: err.toString()
 					})
+				} finally{
+					uni.hideLoading()
 				}
 			},
 			// 分享朋友圈
@@ -166,12 +179,21 @@
 				// 	pagePath = "pages/shareVideo/shareVideo";
 				// 	scene = "videoShareId=" + this.videoInfo.videoShareId;
 				// }
-
-				// const res = await getQrCode({
-				// 	pagePath,
-				// 	scene
-				// })
-				// console.log(res)
+				
+				// try{
+				// 	const res = await getQrCode({
+				// 		pagePath,
+				// 		scene
+				// 	})
+				// }catch(err){
+				// 	uni.showModal({
+				// 		content:'朋友圈分享功能暂未开放',
+				// 		success
+				// 	})
+				// }finally{
+				// 	uni.hideLoading()
+				// }
+				
 			}
 		}
 	}
@@ -185,14 +207,22 @@
 
 	.shareModal {
 		position: fixed;
+		padding-bottom:env(safe-area-inset-bottom);
 		bottom: 0;
 		z-index: 99;
 		width: 100%;
-		height: 339rpx;
 		background: #FFFFFF;
 		display: flex;
 		flex-flow: column;
 		transition: .3s;
+		border-radius:27rpx 27rpx 0 0;
+		
+		.text{
+			text-align: center;
+			font-size:26rpx;
+			color:#414141;
+			padding-top:44rpx;
+		}
 
 		.item-box {
 			display: flex;
@@ -200,7 +230,7 @@
 			box-sizing: border-box;
 			align-items: center;
 			justify-content: space-around;
-			border-bottom: 1rpx solid #d9d9d9;
+			border-bottom: 15rpx solid #f7f7f7;
 
 			.item {
 				position: relative;
@@ -210,7 +240,7 @@
 				font-size: 24rpx;
 				font-family: PingFang SC;
 				font-weight: 500;
-				color: #333332;
+				color: #7c7c7c;
 				flex: 1;
 
 
@@ -225,14 +255,14 @@
 		}
 
 		.btn {
-			flex: 1;
 			display: flex;
 			justify-content: center;
 			align-items: center;
-			font-size: 30rpx;
+			font-size: 28rpx;
+			height:90rpx;
 			font-family: PingFang SC;
 			font-weight: 500;
-			color: #999896;
+			color: #2f2f2f;
 		}
 
 
@@ -241,7 +271,6 @@
 			position: fixed;
 			border-radius: 30rpx 30rpx 0 0;
 			width: 100%;
-			height: 715rpx;
 			z-index: 700;
 			background-color: white;
 			padding: 174rpx 55rpx 0;
@@ -249,6 +278,7 @@
 			transition: 0.5s;
 			bottom: 0;
 			transition: 0.3s;
+			padding-bottom:calc( env(safe-area-inset-bottom) + 41rpx) ;
 
 			.cover {
 				position: absolute;

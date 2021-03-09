@@ -1,7 +1,8 @@
 <!-- 视频详情页面 -->
 <template>
 	<view>
-		<video v-if="videoInfo.url" id="video" style="width:100%" autoplay @fullscreenchange="fullScreenChange" :src="videoInfo.url" :objectFit="fullScreen?'contain':'cover'" ></video>
+		<video v-if="videoInfo.url" id="video" style="width:100%" autoplay @fullscreenchange="fullScreenChange" :src="videoInfo.url"
+		 :objectFit="fullScreen?'contain':'cover'"></video>
 		<view v-else class="block"></view>
 		<!-- 视频详细信息面板 -->
 		<view class="details">
@@ -18,7 +19,7 @@
 					<image :src="videoInfo.headUrl"></image>
 					<text>{{videoInfo.shareCustomer}}</text>
 				</view>
-				<view class="like"  @click="like(videoInfo)">
+				<view class="like" @click="like(videoInfo)">
 					<image v-if="!videoInfo.laudMe" src="../../static/like.png"></image>
 					<image v-else src="../../static/like2.jpg"></image>
 					<text>{{videoInfo.laudTimes}}</text>
@@ -38,7 +39,7 @@
 	// 解密视频url
 	import {
 		JSEncrypt
-	} from '../../utils/jsencrypt.js';
+	} from '../../libs/jsencrypt/index.js';
 	import {
 		queryShareVideoInfo
 	} from '../../api/video.js'
@@ -50,12 +51,12 @@
 		data() {
 			return {
 				videoInfo: {},
-				fullScreen:false //是否全屏
+				fullScreen: false //是否全屏
 			}
 		},
-		onShow(){
+		onShow() {
 			// 如果存在videoInfo 则是登录返回
-			if(Object.keys(this.videoInfo).length){
+			if (Object.keys(this.videoInfo).length) {
 				this.getShareVideoInfo(this.videoInfo.videoShareId)
 			}
 		},
@@ -68,11 +69,11 @@
 				const res = await queryShareVideoInfo({
 					videoShareId
 				})
-				this.videoInfo = this.handleVideoUrl(res)
+				this.videoInfo = this.decryptVideoUrl(res)
 			},
 
 			// 解密视频url
-			handleVideoUrl(res) {
+			decryptVideoUrl(res) {
 				const encryptByRsa = (text, privateKey) => {
 					const encrypt = new JSEncrypt();
 					encrypt.setPrivateKey(privateKey);
@@ -81,67 +82,68 @@
 				res.value.url = encryptByRsa(res.value.url, getApp().globalData.encryptKey)
 				return res.value
 			},
-			
-			fullScreenChange(e){
+
+			fullScreenChange(e) {
 				this.fullScreen = e.detail.fullScreen
-				console.log(e)
 			},
-			
+
 			// 开拍按钮
-			shoot(){
+			shoot() {
 				// 判断是否定位
 				const {
 					sceneryId
 				} = getApp().globalData
 				if (!sceneryId) {
-					// 设置全局返回路径 确保选择景区后能返回到开拍页面
-					getApp().globalData.returnPath = '/pages/shoot/shoot'
-					return wx.navigateTo({
+					uni.navigateTo({
 						url: '/pages/sceneryList/sceneryList?type=select'
 					})
-				}
-				uni.navigateTo({
-					url:'/pages/shoot/shoot'
-				})
-			},
-			
-			// 点赞
-			async like(item){
-				if(!uni.getStorageSync('access_token')){
-					// getApp().globalData.returnPath = `/pages/shareVideo/shareVideo?videoShareId=${item.videoShareId}`
-					return uni.navigateTo({
-						url:'/pages/login/login'
-					}) 
-				}
-				
-				if(item.laudMe){
-					uni.showToast({
-						title:'您已点赞',
-						icon:'none'
+				} else {
+					uni.navigateTo({
+						url: '/pages/shoot/shoot'
 					})
-				}else{
-					try{
+				}
+			},
+
+			// 点赞
+			async like(item) {
+				if (!uni.getStorageSync('access_token')) {
+					return uni.navigateTo({
+						url: '/pages/login/login'
+					})
+				}
+
+				if (item.laudMe) {
+					uni.showToast({
+						title: '您已点赞',
+						icon: 'none'
+					})
+				} else {
+					try {
 						// 直接修改数据
 						item.laudMe = 1
 						item.laudTimes++
 						await like({
-							videoShareId:item.videoShareId
+							videoShareId: item.videoShareId
 						})
-						// 通知首页瀑布流卡片更新点赞数据
-						getApp().globalData.updateLikeId = item.videoShareId
-					}catch(err){
+						const pages = getCurrentPages()
+						const prevPage = pages[pages.length - 2]
+						if (prevPage.route === "pages/home/home") {
+							// 通知moment组件更新点赞数据
+							prevPage.$vm.$refs.moment.updateLikeData(item.videoShareId)
+						}
+					} catch (err) {
 						uni.showToast({
-							title:'点赞失败',
-							icon:'none'
+							title: '点赞失败',
+							icon: 'none'
 						})
 						console.log(err)
 						titem.laudMe = 0
 						item.laudTimes--
 					}
-					
+
 				}
 			},
-			
+
 		},
 		components: {
 			comment
@@ -209,8 +211,8 @@
 				color: #999896;
 
 				image {
-					width: 32rpx;
-					height: 29rpx;
+					width: 30rpx;
+					height: 28rpx;
 					margin-right: 9rpx;
 				}
 			}
@@ -232,9 +234,9 @@
 		left: 50%;
 		transform: translateX(-50%);
 	}
-	
-	.block{
-		background:#000;
-		height:225px;
+
+	.block {
+		background: #000;
+		height: 225px;
 	}
 </style>

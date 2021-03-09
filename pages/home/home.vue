@@ -24,8 +24,6 @@
 				</swiper-item>
 			</swiper>
 		</view>
-		<!-- 菜单 -->
-		<!-- <menubar class="menubar" /> -->
 		<!-- 周边景区 -->
 		<nearby :list="nearbyList" />
 		<!-- 精彩瞬间瀑布流 -->
@@ -60,27 +58,21 @@
 				nearbyList: [],//周边景区列表
 				immersive: true, //导航条是否处于沉浸式状态
 				done: false, // 瀑布流数据加载是否完毕
-				sceneryName: '',
-				repeatModal: true //是否重复弹框
+				sceneryName: ''
 			}
 		},
 		onLoad() {
 			// 获取banner数据
 			this.getBannerList()
+			// 监听是否刷新瀑布流
+			uni.$on("refreshWaterfall", _=>{
+				this.done = false
+				this.$refs.moment.refresh()
+			} )
 		},
 		onShow() {
 			// 自定义tabBar mixin 详见https://developers.weixin.qq.com/community/develop/article/doc/0000047ece8448712589b28525b413
 			this.setTabBarIndex(0)
-			// 提示moment组件刷新瀑布流
-			if( getApp().globalData.refreshWaterFall ){
-				getApp().globalData.refreshWaterFall = false
-				this.done = false
-				this.$refs.moment.refresh()
-			}
-			// 提示moment组件更新用户点赞数据
-			if( getApp().globalData.updateLikeId ){
-				this.$refs.moment.updateLikeData()
-			}
 			// 获取用户定位
 			this.getLocation()
 			// 获取用户在全局保存的景区名
@@ -95,13 +87,12 @@
 					// 定位获取失败时,周边景区会默认以麦田中心的经纬度为基准
 					const {
 						lon,
-						lat
+						lat,
+						sceneryId
 					} = getApp().globalData
-					const manualLon = getApp().globalData.manual.lon
-					const manualLat = getApp().globalData.manual.lat
 					this.getNearbyList(lon, lat)
-					// 在定位失败的情况下 如果不存在手动定位 则提示未定位到景区
-					if(!manualLon){
+					// 在定位失败的情况下 且当前不存在其他定位的情况下
+					if(!sceneryId){
 						this.sceneryName = '未定位到景区'
 						getApp().globalData.sceneryName = '未定位到景区'
 					}
@@ -112,11 +103,9 @@
 						uni.showModal({
 							title: '提示',
 							content: '检测到您拒绝了地理位置授权，这将无法为您提供VLOG服务，请打开设置界面手动开启权限。 ',
-							success: async ({
-								confirm
-							}) => {
-								if (confirm) {
-									await uni.openSetting()
+							success: res => {
+								if (res.confirm) {
+									uni.openSetting()
 								} else {
 									uni.showToast({
 										title: '授权失败',
@@ -136,11 +125,8 @@
 
 				}
 			},
-
-			async getBannerList() {
-				const res = await queryBannerList()
-				this.bannerList = res.value
-			},
+			
+		
 
 			// 判断当前所属景区
 			async getCurrentScenery() {
@@ -241,10 +227,15 @@
 				}
 				this.nearbyList = sceneryList
 			},
+			
+			// 获取Banner数据
+			async getBannerList() {
+				const res = await queryBannerList()
+				this.bannerList = res.value
+			},
 
 			// 点击定位框跳转到景区列表页面
 			queryScenery() {
-				getApp().globalData.returnPath = "/pages/home/home"
 				uni.navigateTo({
 					url: '/pages/sceneryList/sceneryList'
 				})

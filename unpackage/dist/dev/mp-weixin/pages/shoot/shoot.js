@@ -234,7 +234,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var _shoot = __webpack_require__(/*! ../../api/shoot.js */ 35);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var navbar = function navbar() {__webpack_require__.e(/*! require.ensure | components/nav */ "components/nav").then((function () {return resolve(__webpack_require__(/*! ../../components/nav.vue */ 137));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var tips = function tips() {__webpack_require__.e(/*! require.ensure | pages/shoot/components/tips */ "pages/shoot/components/tips").then((function () {return resolve(__webpack_require__(/*! ./components/tips.vue */ 159));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+
+
+
+
+var _shoot = __webpack_require__(/*! ../../api/shoot.js */ 35);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _slicedToArray(arr, i) {return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();}function _nonIterableRest() {throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");}function _unsupportedIterableToArray(o, minLen) {if (!o) return;if (typeof o === "string") return _arrayLikeToArray(o, minLen);var n = Object.prototype.toString.call(o).slice(8, -1);if (n === "Object" && o.constructor) n = o.constructor.name;if (n === "Map" || n === "Set") return Array.from(o);if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);}function _arrayLikeToArray(arr, len) {if (len == null || len > arr.length) len = arr.length;for (var i = 0, arr2 = new Array(len); i < len; i++) {arr2[i] = arr[i];}return arr2;}function _iterableToArrayLimit(arr, i) {if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return;var _arr = [];var _n = true;var _d = false;var _e = undefined;try {for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {_arr.push(_s.value);if (i && _arr.length === i) break;}} catch (err) {_d = true;_e = err;} finally {try {if (!_n && _i["return"] != null) _i["return"]();} finally {if (_d) throw _e;}}return _arr;}function _arrayWithHoles(arr) {if (Array.isArray(arr)) return arr;}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var navbar = function navbar() {__webpack_require__.e(/*! require.ensure | components/nav */ "components/nav").then((function () {return resolve(__webpack_require__(/*! ../../components/nav.vue */ 138));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var tips = function tips() {__webpack_require__.e(/*! require.ensure | pages/shoot/components/tips */ "pages/shoot/components/tips").then((function () {return resolve(__webpack_require__(/*! ./components/tips.vue */ 160));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+
 
 
 
@@ -243,72 +248,62 @@ var _shoot = __webpack_require__(/*! ../../api/shoot.js */ 35);function _interop
   data: function data() {
     return {
       sceneryInfo: {},
-      isStartTrip: false,
+      hasStartTrip: false,
       latitude: "",
       longitude: "",
       immersive: true,
       showVideo: false, //是否展示攻略视频
-      startNow: "", //是否立即开启视频之旅
-      testData: [{
-        img: "https://img1.qunarzz.com/travel/d5/1801/d0/6a8fbbdf116efcb5.jpg_r_720x480x95_bef77a31.jpg",
-        name: "广场",
-        desc: "打卡点未开放，敬请期待" },
-
-
-      {
-        img: "https://youimg1.c-ctrip.com/target/100ghk133vsycxbk0D1D9.jpg",
-        name: "咖啡厅",
-        desc: "打卡点未开放，敬请期待" },
-
-      {
-        img: "https://youimg1.c-ctrip.com/target//100h16000000yzfy6C1F2.jpg",
-        name: "博物馆",
-        desc: "打卡点未开放，敬请期待" }] };
-
-
+      pointList: [] };
 
   },
   onLoad: function onLoad(options) {
     // 查询该页面数据
-    this.getPageInfo(options.id || getApp().globalData.sceneryId);
+    this._id = options.id || getApp().globalData.sceneryId;
+    this.getPageInfo(this._id);
+    // 查询打卡点
+    this.getPositionPoint(this._id);
 
-  },
-  onShow: function onShow() {
-    if (getApp().globalData.handler === 'start') {
-      this.start();
-    }
   },
   methods: {
-    getPageInfo: function getPageInfo(id) {var _this = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var _res, res;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
+    getPageInfo: function getPageInfo(id) {var _this = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var res, _yield$Promise$all, _yield$Promise$all2, _res, res2;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
                 uni.showLoading({
-                  title: '加载中' });
+                  title: '加载中' });if (
 
-                // 如果登录 则请求是否开启视频之旅信息
-                if (!uni.getStorageSync('access_token')) {_context.next = 6;break;}_context.next = 4;return (
-                  (0, _shoot.isStartTrip)({
-                    sceneryId: id }));case 4:_res = _context.sent;
-
-                _this.isStartTrip = _res.value;case 6:_context.next = 8;return (
-
-
+                uni.getStorageSync('access_token')) {_context.next = 8;break;}_context.next = 4;return (
                   (0, _shoot.querySceneryInfo)({
-                    id: id }));case 8:res = _context.sent;
+                    id: id }));case 4:res = _context.sent;
 
-                _this.sceneryInfo = res.value;
-                uni.hideLoading();case 11:case "end":return _context.stop();}}}, _callee);}))();
+                _this.sceneryInfo = res.value;_context.next = 16;break;case 8:_context.next = 10;return (
+
+                  Promise.all([(0, _shoot.querySceneryInfo)({
+                    id: id }),
+                  (0, _shoot.hasStartTrip)({
+                    sceneryId: id })]));case 10:_yield$Promise$all = _context.sent;_yield$Promise$all2 = _slicedToArray(_yield$Promise$all, 2);_res = _yield$Promise$all2[0];res2 = _yield$Promise$all2[1];
+
+                _this.sceneryInfo = _res.value;
+                _this.hasStartTrip = res2.value;case 16:
+
+                uni.hideLoading();case 17:case "end":return _context.stop();}}}, _callee);}))();
+    },
+
+    getPositionPoint: function getPositionPoint(id) {var _this2 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2() {var res;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:_context2.next = 2;return (
+                  (0, _shoot.queryPointList)({ sceneryId: id, status: 1 }));case 2:res = _context2.sent;
+                if (res.value.list.length) {
+                  _this2.pointList = res.value.list;
+                }case 4:case "end":return _context2.stop();}}}, _callee2);}))();
     },
 
     // 开启视频之旅
-    start: function start() {var _this2 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2() {var composeSuccessSubscribeTmplId;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:if (!(
+    start: function start() {var _this3 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee3() {var composeSuccessSubscribeTmplId;return _regenerator.default.wrap(function _callee3$(_context3) {while (1) {switch (_context3.prev = _context3.next) {case 0:if (!
 
-                _this2.isStartTrip && getApp().globalData.handler !== 'start')) {_context2.next = 2;break;}return _context2.abrupt("return",
+                _this3.hasStartTrip) {_context3.next = 2;break;}return _context3.abrupt("return",
                 uni.switchTab({
                   url: '/pages/home/home' }));case 2:if (
 
 
 
 
-                uni.getStorageSync('access_token')) {_context2.next = 4;break;}return _context2.abrupt("return",
+                uni.getStorageSync('access_token')) {_context3.next = 4;break;}return _context3.abrupt("return",
                 uni.navigateTo({
                   url: "/pages/login/login?action=shoot" }));case 4:
 
@@ -316,11 +311,11 @@ var _shoot = __webpack_require__(/*! ../../api/shoot.js */ 35);function _interop
 
                 uni.showLoading({
                   title: '视频之旅开启中',
-                  mask: true });_context2.prev = 5;_context2.next = 8;return (
+                  mask: true });_context3.prev = 5;_context3.next = 8;return (
 
 
                   (0, _shoot.startTrip)({
-                    sceneryId: _this2.sceneryInfo.id }));case 8:
+                    sceneryId: _this3.sceneryInfo.id }));case 8:
 
                 // 订阅模板消息
 
@@ -329,50 +324,53 @@ var _shoot = __webpack_require__(/*! ../../api/shoot.js */ 35);function _interop
                 uni.requestSubscribeMessage({
                   tmplIds: [composeSuccessSubscribeTmplId],
                   complete: function complete(_) {
-                    _this2.isStartTrip = true;
+                    _this3.hasStartTrip = true;
                     uni.showModal({
                       content: '视频之旅开启成功，快去景区游玩吧',
                       showCancel: false });
 
-                  } });_context2.next = 15;break;case 12:_context2.prev = 12;_context2.t0 = _context2["catch"](5);
+                  } });_context3.next = 15;break;case 12:_context3.prev = 12;_context3.t0 = _context3["catch"](5);
 
 
-                _this2.handleErr(_context2.t0);case 15:_context2.prev = 15;
+                _this3.handleErr(_context3.t0);case 15:_context3.prev = 15;
 
-                getApp().globalData.handler = '';
-                uni.hideLoading();return _context2.finish(15);case 19:case "end":return _context2.stop();}}}, _callee2, null, [[5, 12, 15, 19]]);}))();
+                uni.hideLoading();return _context3.finish(15);case 18:case "end":return _context3.stop();}}}, _callee3, null, [[5, 12, 15, 18]]);}))();
 
     },
 
     // 开启视频之旅失败时的错误处理
     handleErr: function handleErr(err) {
-      if (err.resultCode === '0012') {
-        uni.showModal({
-          content: '一小时内只能同时开启两个视频之旅哟~',
-          showCancel: false });
+      switch (err.resultCode) {
+        case '0012':
+          uni.showModal({
+            content: '一小时内只能同时开启两个视频之旅哟~',
+            showCancel: false });
 
-      } else if (err.resultCode === '0011') {
-        // 未采集人脸
-        uni.navigateTo({
-          url: "/pages/face/face?action=shoot" });
+          break;
+        case '0011':
+          // 未采集人脸
+          uni.navigateTo({
+            url: "/pages/face/face?action=shoot" });
 
-      } else if (err.resultCode === '0014') {
-        uni.showModal({
-          content: '该景区未开启视频服务，请重新选择',
-          showCancel: false,
-          success: function success(_) {return uni.switchTab({
-              url: '/pages/home/home' });} });
+          break;
+        case '0014':
+          uni.showModal({
+            content: '该景区未开启视频服务，请重新选择',
+            showCancel: false,
+            success: function success(_) {return uni.switchTab({
+                url: '/pages/home/home' });} });
+
+
+          break;
+        case '0013':
+          this.hasStartTrip = true;
+          // 用户指定景区视频之旅已提交
+          uni.showModal({
+            showCancel: false,
+            content: "您已开启了该景区视频之旅，请勿重复开启" });}
 
 
 
-      } else if (err.resultCode === "0013") {
-        this.isStartTrip = true;
-        // 用户指定景区视频之旅已提交
-        uni.showModal({
-          showCancel: false,
-          content: "您已开启了该景区视频之旅，请勿重复开启" });
-
-      }
     },
 
     // 观看攻略视频
@@ -388,7 +386,7 @@ var _shoot = __webpack_require__(/*! ../../api/shoot.js */ 35);function _interop
     // 地图页面
     goMap: function goMap(index) {
       uni.navigateTo({
-        url: "/pages/map/map?index=".concat(index) });
+        url: "/pages/map/map?index=".concat(index, "&id=").concat(this._id) });
 
     } },
 
@@ -404,6 +402,17 @@ var _shoot = __webpack_require__(/*! ../../api/shoot.js */ 35);function _interop
       this.immersive = true;
     }
   },
+
+  onShareAppMessage: function onShareAppMessage() {
+    // 来自页面内转发按钮
+    return {
+      path: "/pages/index/index?sceneryId=".concat(this.sceneryInfo.id),
+      title: "\u5FEB\u6765\u8DDF\u6211\u4E00\u8D77\u5F00\u542F".concat(this.sceneryInfo.name, "\u7684\u89C6\u9891\u4E4B\u65C5\u5427"),
+      imageUrl: this.sceneryInfo.coverUrl };
+
+
+  },
+
   components: {
     navbar: navbar,
     tips: tips } };exports.default = _default;

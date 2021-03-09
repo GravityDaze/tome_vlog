@@ -61,16 +61,6 @@
 </script>
 
 <style lang="scss" scoped>
-	@keyframes rota {
-		from {
-			transform: rotate(0);
-		}
-	
-		to {
-			transform: rotate(1turn);
-		}
-	}
-	
 	.load {
 		
 		height:185rpx;
@@ -148,6 +138,8 @@
 					box-shadow: 1rpx 1rpx 8rpx 2rpx rgba(0, 0, 0, 0.27);
 					margin-right: 15rpx;
 					box-sizing: border-box;
+					
+					
 
 					.hot {
 						position: absolute;
@@ -205,6 +197,23 @@
 
 						.open {
 							background: #FFB90C;
+							background-color: #FBC32A;
+							background:linear-gradient(
+							 100deg,
+							 rgba(255,255,255,0) 40%,
+							 rgba(255,255,255,.5) 50%,
+							 rgba(255,255,255,0) 60%
+							 ) #FBC32A;
+							box-shadow: 0px 8rpx 16rpx 0px rgba(239, 181, 22, 0.48);
+							background-size: 200% 100%;
+							background-position-x: 150%;
+							animation: 1.5s light ease-in-out infinite;
+						}
+						
+						@keyframes light{
+							to{
+								background-position-x: -20%;
+							}
 						}
 
 					}

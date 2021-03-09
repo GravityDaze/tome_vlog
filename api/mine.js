@@ -17,3 +17,10 @@ export const queryCommentCount = () => http.get('/videoapp/me/queryCommentMsgCou
 
 //  查询点赞数量
 export const queryLikeCount = () => http.get('/videoapp/me/queryLaudMsgCount')
+
+// 修改购买视频的阅读状态为已读
+export const updateBuyVideoStatus = data => http.post('/videoapp/me/updateVideoBuyReadStatus',data)
+
+// 修改新视频的阅读状态为已读
+export const updateNewVideoStatus = data => http.post('/videoapp/me/updateVideoNewReadStatus',data)
+

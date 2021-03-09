@@ -1,8 +1,11 @@
 <template>
 	<view class="list">
-		<view class="item" @click="watchVideo(item.id)" v-for="(item,index) in dataList" :key="index">
+		<view class="item" @click="watchVideo(item)" v-for="(item,index) in dataList" :key="index">
 			<!-- <view class="mask"></view> -->
 			<view class="left">
+				<view class="hint" v-if="item.buyRead === 0">
+					<text>NEW</text>
+				</view>
 				<image :src="item.coverUrl" mode=""></image>
 				<view class="duration">
 					<text>{{item.duration}}</text>
@@ -15,8 +18,9 @@
 				</view>
 
 				<view class="bottom">
-					<image src="../../../static/state.png" mode=""></image>
-					<text>{{item.describe?'已发布':'未发布'}}</text>
+					<image v-if="!item.describe" src="../../../static/state.png" mode=""></image>
+					<image v-else src="../../../static/state_success.png" mode=""></image>
+					<text :style="{color: item.describe?'#83cf20':'#A3A3A3' }">{{item.describe?'已发布':'未发布'}}</text>
 				</view>
 			</view>
 		</view>
@@ -24,6 +28,7 @@
 </template>
 
 <script>
+	import { updateBuyVideoStatus } from '../../../api/mine.js'
 	export default {
 		props: {
 			dataList: {
@@ -32,9 +37,18 @@
 			}
 		},
 		methods: {
-			watchVideo(id) {
+			watchVideo(item) {
 				uni.navigateTo({
-					url: `/pages/myVideo/myVideo?videoId=${id}`
+					url: `/pages/myVideo/myVideo?videoId=${item.id}`,
+					success:async _=>{
+						if(item.buyRead === 0){
+							// 通知已购视频页面刷新dataList 
+							await updateBuyVideoStatus({
+								videoId:item.id
+							})
+							this.$emit('update-list')
+						}
+					}
 				})
 			}
 		}
@@ -54,7 +68,42 @@
 				position:relative;
 				flex: 2;
 				
-				view{
+			
+				
+				.hint{
+					position:absolute;
+					width: 74rpx;
+					height: 32rpx;
+					background: linear-gradient(199deg, #97ce1e, #96ce1d);
+					right: 10rpx;
+					 top: 10rpx;
+					font-size: 20rpx;
+					color: #FFFFFF;
+					display:flex;
+					justify-content: center;
+					align-items: center;
+					border-radius: 8rpx;
+					
+					background:linear-gradient(
+					 100deg,
+					 rgba(255,255,255,0) 40%,
+					 rgba(255,255,255,.5) 50%,
+					 rgba(255,255,255,0) 60%
+					 ) #97ce1e;
+					background-size: 200% 100%;
+					background-position-x: 150%;
+					animation: 1.5s light ease-in-out infinite;
+					
+				}
+							
+				
+				@keyframes light{
+					to{
+						background-position-x: -20%;
+					}
+				}
+				
+				.duration{
 					position:absolute;
 					right:10rpx;
 					bottom:10rpx;

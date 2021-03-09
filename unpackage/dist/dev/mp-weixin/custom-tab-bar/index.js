@@ -31,8 +31,6 @@ Component({
 					sceneryId
 				} = getApp().globalData
 				if (!sceneryId) {
-					// 设置全局返回路径 确保选择景区后能返回到开拍页面
-					getApp().globalData.returnPath = '/pages/shoot/shoot'
 					return wx.navigateTo({
 						url: '/pages/sceneryList/sceneryList?type=select'
 					})

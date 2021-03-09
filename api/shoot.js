@@ -7,4 +7,7 @@ export const querySceneryInfo = data => http.get('/videoapp/scenery/get',{ param
 export const startTrip = data => http.post('/videoapp/video/startTrip',data )
 
 // 是否开启视频之旅
-export const isStartTrip = data => http.post('/videoapp/video/isStartTrip',data)
+export const hasStartTrip = data => http.post('/videoapp/video/isStartTrip',data)
+
+// 查询打卡点
+export const queryPointList = data => http.post('/videomis/point/query',data)

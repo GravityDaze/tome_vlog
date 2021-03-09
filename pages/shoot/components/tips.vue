@@ -2,7 +2,7 @@
 	<view class="tips" v-if="show">
 		<view class="mask"></view>
 		<view class="play">
-			<video style="width:100vw" autoplay src="https://tomevideo.zhihuiquanyu.com/M_%E7%94%A8%E6%88%B7%E6%8C%87%E5%8D%97%E5%90%88%E6%88%90.mp4" controls></video>
+			<video style="width:100vw" autoplay src="https://tomevideo.zhihuiquanyu.com/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%BC%95%E5%AF%BC_0302.mp4" controls></video>
 			<image @click="close" src="../../../static/close.png" mode=""></image>
 		</view>
 
@@ -14,6 +14,9 @@
 		props:{
 			show:{
 				default:false,
+				
+				
+				
 				type:Boolean
 			}
 		},

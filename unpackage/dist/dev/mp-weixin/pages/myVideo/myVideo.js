@@ -211,11 +211,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var _jsencrypt = __webpack_require__(/*! ../../utils/jsencrypt.js */ 80);
+var _index = __webpack_require__(/*! ../../libs/jsencrypt/index.js */ 80);
 
 
 
-var _video = __webpack_require__(/*! ../../api/video.js */ 81);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var shareModal = function shareModal() {__webpack_require__.e(/*! require.ensure | pages/myVideo/componets/shareModal */ "pages/myVideo/componets/shareModal").then((function () {return resolve(__webpack_require__(/*! ./componets/shareModal.vue */ 187));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+var _video = __webpack_require__(/*! ../../api/video.js */ 81);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var shareModal = function shareModal() {__webpack_require__.e(/*! require.ensure | pages/myVideo/componets/shareModal */ "pages/myVideo/componets/shareModal").then((function () {return resolve(__webpack_require__(/*! ./componets/shareModal.vue */ 188));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
 
 
 
@@ -226,17 +226,16 @@ var _video = __webpack_require__(/*! ../../api/video.js */ 81);function _interop
 {
   data: function data() {
     return {
-      type: '', //进入本页面的类型
+      shareMode: false, //从分享框进入本页面
       videoInfo: {},
       mask: false, //是否展开遮罩
       showModal: false, // 是否展开分享
-      publishModal: false, // 发布至途咪
       controls: true,
       availableTime: 0 };
 
   },
   onLoad: function onLoad(options) {
-    this.type = options.type;
+    this.shareMode = options.type === "share";
     this.getVideoInfo(options.videoId);
   },
   methods: {
@@ -246,13 +245,13 @@ var _video = __webpack_require__(/*! ../../api/video.js */ 81);function _interop
                   (0, _video.queryVideoInfo)({
                     videoId: videoId }));case 2:res = _context.sent;
 
-                _this.videoInfo = _this.handleVideoUrl(res);case 4:case "end":return _context.stop();}}}, _callee);}))();
+                _this.videoInfo = _this.decryptVideoUrl(res);case 4:case "end":return _context.stop();}}}, _callee);}))();
     },
 
     // 解密视频url
-    handleVideoUrl: function handleVideoUrl(res) {
+    decryptVideoUrl: function decryptVideoUrl(res) {
       var encryptByRsa = function encryptByRsa(text, privateKey) {
-        var encrypt = new _jsencrypt.JSEncrypt();
+        var encrypt = new _index.JSEncrypt();
         encrypt.setPrivateKey(privateKey);
         return encrypt.decrypt(text);
       };
@@ -273,10 +272,9 @@ var _video = __webpack_require__(/*! ../../api/video.js */ 81);function _interop
         getApp().globalData.initParams.noBuyVideoLook;
         this.availableTime = Math.ceil(duration * (noBuyVideoLook / 100));
         if (currentTime > this.availableTime) {
-          var ctx = uni.createVideoContext('video');
           // 试看结束
           this.controls = false;
-          ctx.stop();
+          this.ended();
         }
       }
     },
@@ -374,11 +372,17 @@ var _video = __webpack_require__(/*! ../../api/video.js */ 81);function _interop
       this.showModal = false;
     },
 
-    // 组件发布时改变分享状态
-    changeShareStatus: function changeShareStatus() {
+    // 组件改变分享状态
+    changeShareStatus: function changeShareStatus() {var status = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
       // 刷新瀑布流
-      getApp().globalData.refreshWaterFall = true;
-      this.videoInfo.shareStatus = 1;
+      uni.$emit("refreshWaterfall");
+      // 刷新我的页面已购视频
+      var pages = getCurrentPages();
+      var prevPage = pages[pages.length - 2];
+      if (prevPage.$vm.buyListData.length) {
+        prevPage.$vm.getBuyList();
+      }
+      this.videoInfo.shareStatus = status;
     },
 
     // 取消发布
@@ -386,7 +390,7 @@ var _video = __webpack_require__(/*! ../../api/video.js */ 81);function _interop
       uni.showModal({
         content: '是否取消发布',
         success: function () {var _success = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2(res) {var _res;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:if (!
-                    res.confirm) {_context2.next = 14;break;}
+                    res.confirm) {_context2.next = 13;break;}
                     uni.showLoading({
                       title: '正在取消',
                       mask: true });_context2.prev = 2;_context2.next = 5;return (
@@ -398,17 +402,11 @@ var _video = __webpack_require__(/*! ../../api/video.js */ 81);function _interop
                     uni.showToast({
                       title: '取消成功' });
 
-                    // 刷新瀑布流
-                    getApp().globalData.refreshWaterFall = true;
+                    _this3.changeShareStatus(0);_context2.next = 13;break;case 10:_context2.prev = 10;_context2.t0 = _context2["catch"](2);
 
-                    // 更改状态
-                    // this.$set(this.videoInfo, 'shareStatus', 0)
-                    _this3.videoInfo.shareStatus = 0;
-                    // this.getVideoInfo(this.videoInfo.id)
-                    _context2.next = 14;break;case 11:_context2.prev = 11;_context2.t0 = _context2["catch"](2);
                     uni.showToast({
                       title: '取消失败',
-                      icon: 'none' });case 14:case "end":return _context2.stop();}}}, _callee2, null, [[2, 11]]);}));function success(_x) {return _success.apply(this, arguments);}return success;}() });
+                      icon: 'none' });case 13:case "end":return _context2.stop();}}}, _callee2, null, [[2, 10]]);}));function success(_x) {return _success.apply(this, arguments);}return success;}() });
 
 
 
@@ -421,9 +419,7 @@ var _video = __webpack_require__(/*! ../../api/video.js */ 81);function _interop
       uni.showModal({
         content: '购买视频后开启下载、分享功能 是否立即购买视频？',
         success: function success(res) {
-          if (res.confirm) {
-            _this4.buy();
-          }
+          res.confirm && _this4.buy();
         } });
 
     },
@@ -432,7 +428,6 @@ var _video = __webpack_require__(/*! ../../api/video.js */ 81);function _interop
     buy: function buy() {var _this5 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee3() {var res, params;return _regenerator.default.wrap(function _callee3$(_context3) {while (1) {switch (_context3.prev = _context3.next) {case 0:
                 uni.showLoading({
                   title: '生成订单中',
-                  icon: 'none',
                   mask: true });_context3.next = 3;return (
 
                   (0, _video.confirmOrder)({
@@ -442,7 +437,7 @@ var _video = __webpack_require__(/*! ../../api/video.js */ 81);function _interop
                 uni.hideLoading();
                 uni.showModal({
                   content: "请勿重复购买",
-                  showCancel: false });_context3.next = 22;break;case 9:_context3.prev = 9;_context3.next = 12;return (
+                  showCancel: false });_context3.next = 21;break;case 9:_context3.prev = 9;_context3.next = 12;return (
 
 
 
@@ -461,14 +456,14 @@ var _video = __webpack_require__(/*! ../../api/video.js */ 81);function _interop
                       content: '购买成功，快去分享吧~',
                       showCancel: false });
 
-                  } }));_context3.next = 19;break;case 16:_context3.prev = 16;_context3.t0 = _context3["catch"](9);
+                  } }));
 
+                uni.hideLoading();_context3.next = 21;break;case 17:_context3.prev = 17;_context3.t0 = _context3["catch"](9);
 
+                uni.hideLoading();
                 uni.showModal({
-                  content: _context3.t0.toString() });case 19:_context3.prev = 19;
+                  content: _context3.t0.toString() });case 21:case "end":return _context3.stop();}}}, _callee3, null, [[9, 17]]);}))();
 
-
-                uni.hideLoading();return _context3.finish(19);case 22:case "end":return _context3.stop();}}}, _callee3, null, [[9, 16, 19, 22]]);}))();
 
 
     } },

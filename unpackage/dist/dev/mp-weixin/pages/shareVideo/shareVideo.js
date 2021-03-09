@@ -168,13 +168,14 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var _jsencrypt = __webpack_require__(/*! ../../utils/jsencrypt.js */ 80);
+
+var _index = __webpack_require__(/*! ../../libs/jsencrypt/index.js */ 80);
 
 
 var _video = __webpack_require__(/*! ../../api/video.js */ 81);
 
 
-var _home = __webpack_require__(/*! ../../api/home.js */ 45);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var comment = function comment() {__webpack_require__.e(/*! require.ensure | pages/shareVideo/components/comment */ "pages/shareVideo/components/comment").then((function () {return resolve(__webpack_require__(/*! ./components/comment.vue */ 180));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+var _home = __webpack_require__(/*! ../../api/home.js */ 45);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var comment = function comment() {__webpack_require__.e(/*! require.ensure | pages/shareVideo/components/comment */ "pages/shareVideo/components/comment").then((function () {return resolve(__webpack_require__(/*! ./components/comment.vue */ 181));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
 
 
 
@@ -200,13 +201,13 @@ var _home = __webpack_require__(/*! ../../api/home.js */ 45);function _interopRe
                   (0, _video.queryShareVideoInfo)({
                     videoShareId: videoShareId }));case 2:res = _context.sent;
 
-                _this.videoInfo = _this.handleVideoUrl(res);case 4:case "end":return _context.stop();}}}, _callee);}))();
+                _this.videoInfo = _this.decryptVideoUrl(res);case 4:case "end":return _context.stop();}}}, _callee);}))();
     },
 
     // 解密视频url
-    handleVideoUrl: function handleVideoUrl(res) {
+    decryptVideoUrl: function decryptVideoUrl(res) {
       var encryptByRsa = function encryptByRsa(text, privateKey) {
-        var encrypt = new _jsencrypt.JSEncrypt();
+        var encrypt = new _index.JSEncrypt();
         encrypt.setPrivateKey(privateKey);
         return encrypt.decrypt(text);
       };
@@ -216,7 +217,6 @@ var _home = __webpack_require__(/*! ../../api/home.js */ 45);function _interopRe
 
     fullScreenChange: function fullScreenChange(e) {
       this.fullScreen = e.detail.fullScreen;
-      console.log(e);
     },
 
     // 开拍按钮
@@ -226,21 +226,19 @@ var _home = __webpack_require__(/*! ../../api/home.js */ 45);function _interopRe
       sceneryId =
       getApp().globalData.sceneryId;
       if (!sceneryId) {
-        // 设置全局返回路径 确保选择景区后能返回到开拍页面
-        getApp().globalData.returnPath = '/pages/shoot/shoot';
-        return wx.navigateTo({
+        uni.navigateTo({
           url: '/pages/sceneryList/sceneryList?type=select' });
 
-      }
-      uni.navigateTo({
-        url: '/pages/shoot/shoot' });
+      } else {
+        uni.navigateTo({
+          url: '/pages/shoot/shoot' });
 
+      }
     },
 
     // 点赞
-    like: function like(item) {return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2() {return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:if (
+    like: function like(item) {return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2() {var pages, prevPage;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:if (
                 uni.getStorageSync('access_token')) {_context2.next = 2;break;}return _context2.abrupt("return",
-
                 uni.navigateTo({
                   url: '/pages/login/login' }));case 2:if (!
 
@@ -249,7 +247,7 @@ var _home = __webpack_require__(/*! ../../api/home.js */ 45);function _interopRe
                 item.laudMe) {_context2.next = 6;break;}
                 uni.showToast({
                   title: '您已点赞',
-                  icon: 'none' });_context2.next = 20;break;case 6:_context2.prev = 6;
+                  icon: 'none' });_context2.next = 22;break;case 6:_context2.prev = 6;
 
 
 
@@ -259,8 +257,12 @@ var _home = __webpack_require__(/*! ../../api/home.js */ 45);function _interopRe
                   (0, _home.like)({
                     videoShareId: item.videoShareId }));case 11:
 
-                // 通知首页瀑布流卡片更新点赞数据
-                getApp().globalData.updateLikeId = item.videoShareId;_context2.next = 20;break;case 14:_context2.prev = 14;_context2.t0 = _context2["catch"](6);
+                pages = getCurrentPages();
+                prevPage = pages[pages.length - 2];
+                if (prevPage.route === "pages/home/home") {
+                  // 通知moment组件更新点赞数据
+                  prevPage.$vm.$refs.moment.updateLikeData(item.videoShareId);
+                }_context2.next = 22;break;case 16:_context2.prev = 16;_context2.t0 = _context2["catch"](6);
 
                 uni.showToast({
                   title: '点赞失败',
@@ -268,7 +270,7 @@ var _home = __webpack_require__(/*! ../../api/home.js */ 45);function _interopRe
 
                 console.log(_context2.t0);
                 titem.laudMe = 0;
-                item.laudTimes--;case 20:case "end":return _context2.stop();}}}, _callee2, null, [[6, 14]]);}))();
+                item.laudTimes--;case 22:case "end":return _context2.stop();}}}, _callee2, null, [[6, 16]]);}))();
 
 
 

@@ -227,7 +227,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var _mine = __webpack_require__(/*! ../../api/mine.js */ 62);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var navbar = function navbar() {__webpack_require__.e(/*! require.ensure | components/nav */ "components/nav").then((function () {return resolve(__webpack_require__(/*! ../../components/nav.vue */ 137));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var list = function list() {__webpack_require__.e(/*! require.ensure | pages/mine/components/list */ "pages/mine/components/list").then((function () {return resolve(__webpack_require__(/*! ./components/list.vue */ 166));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var buyList = function buyList() {__webpack_require__.e(/*! require.ensure | pages/mine/components/buyList */ "pages/mine/components/buyList").then((function () {return resolve(__webpack_require__(/*! ./components/buyList.vue */ 173));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+var _mine = __webpack_require__(/*! ../../api/mine.js */ 62);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _slicedToArray(arr, i) {return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();}function _nonIterableRest() {throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");}function _unsupportedIterableToArray(o, minLen) {if (!o) return;if (typeof o === "string") return _arrayLikeToArray(o, minLen);var n = Object.prototype.toString.call(o).slice(8, -1);if (n === "Object" && o.constructor) n = o.constructor.name;if (n === "Map" || n === "Set") return Array.from(o);if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);}function _arrayLikeToArray(arr, len) {if (len == null || len > arr.length) len = arr.length;for (var i = 0, arr2 = new Array(len); i < len; i++) {arr2[i] = arr[i];}return arr2;}function _iterableToArrayLimit(arr, i) {if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return;var _arr = [];var _n = true;var _d = false;var _e = undefined;try {for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {_arr.push(_s.value);if (i && _arr.length === i) break;}} catch (err) {_d = true;_e = err;} finally {try {if (!_n && _i["return"] != null) _i["return"]();} finally {if (_d) throw _e;}}return _arr;}function _arrayWithHoles(arr) {if (Array.isArray(arr)) return arr;}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var navbar = function navbar() {__webpack_require__.e(/*! require.ensure | components/nav */ "components/nav").then((function () {return resolve(__webpack_require__(/*! ../../components/nav.vue */ 138));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var list = function list() {__webpack_require__.e(/*! require.ensure | pages/mine/components/list */ "pages/mine/components/list").then((function () {return resolve(__webpack_require__(/*! ./components/list.vue */ 167));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var buyList = function buyList() {__webpack_require__.e(/*! require.ensure | pages/mine/components/buyList */ "pages/mine/components/buyList").then((function () {return resolve(__webpack_require__(/*! ./components/buyList.vue */ 174));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
 
 
 
@@ -241,12 +241,14 @@ var _mine = __webpack_require__(/*! ../../api/mine.js */ 62);function _interopRe
       current: 0,
       topHeight: 0,
       immersive: true, //是否沉浸式导航栏
-      isLogin: false, //判断是否登录
+      isLogin: null, //判断是否登录
       userInfo: {}, //用户信息
       travelList: [], //游记数据
       buyListData: [], //已购买的视频数据
-      count: {} //统计数据
+      count: {}, //统计数据
+      msg: {} // hint
     };
+
   },
   onLoad: function onLoad() {
     // 获取到导航栏高度
@@ -258,11 +260,10 @@ var _mine = __webpack_require__(/*! ../../api/mine.js */ 62);function _interopRe
     this.checkLoginStatus();
   },
   watch: {
-    current: function current(val) {var _this = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var res;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:if (!(
-                val === 1 && !_this.buyListData.length)) {_context.next = 5;break;}_context.next = 3;return (
-                  (0, _mine.queryBuyList)());case 3:res = _context.sent;
-                _this.buyListData = res.value.list;case 5:case "end":return _context.stop();}}}, _callee);}))();
-
+    current: function current(val) {var _this = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
+                if (val === 1 && !_this.buyListData.length) {
+                  _this.getBuyList();
+                }case 1:case "end":return _context.stop();}}}, _callee);}))();
     } },
 
 
@@ -276,35 +277,42 @@ var _mine = __webpack_require__(/*! ../../api/mine.js */ 62);function _interopRe
     },
 
     // 检查登录状态
-    checkLoginStatus: function checkLoginStatus() {var _this2 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2() {var token, userInfo, res;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:
+    checkLoginStatus: function checkLoginStatus() {var _this2 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2() {var token, userInfo, _yield$Promise$all, _yield$Promise$all2, msg, list;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:
                 token = uni.getStorageSync('access_token');
                 userInfo = uni.getStorageSync('userInfo');if (!(
-                token && userInfo)) {_context2.next = 12;break;}
+                token && userInfo)) {_context2.next = 16;break;}
                 _this2.userInfo = userInfo;
-                _this2.isLogin = true;
-                // 获取消息提示
-                // const msg = await queryMsg()
-                // this.redPoint = !!msg.value.noReadCount
-                // 获取游记数据
-                _context2.next = 7;return (0, _mine.queryTravel)();case 7:res = _context2.sent;
-                _this2.travelList = res.value.info;
+                _this2.isLogin = true;_context2.next = 7;return (
+                  Promise.all([
+                  (0, _mine.queryMsg)(),
+                  (0, _mine.queryTravel)()]));case 7:_yield$Promise$all = _context2.sent;_yield$Promise$all2 = _slicedToArray(_yield$Promise$all, 2);msg = _yield$Promise$all2[0];list = _yield$Promise$all2[1];
+
+                _this2.msg = msg.value;
+                _this2.travelList = list.value.info;
                 // 获取消息数据
-                _this2.getMsg();_context2.next = 13;break;case 12:
+                _this2.getMsg();_context2.next = 17;break;case 16:
 
 
-                _this2.isLogin = false;case 13:case "end":return _context2.stop();}}}, _callee2);}))();
+                _this2.isLogin = false;case 17:case "end":return _context2.stop();}}}, _callee2);}))();
 
     },
 
+    getBuyList: function getBuyList() {var _this3 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee3() {var res;return _regenerator.default.wrap(function _callee3$(_context3) {while (1) {switch (_context3.prev = _context3.next) {case 0:_context3.next = 2;return (
+                  (0, _mine.queryBuyList)());case 2:res = _context3.sent;
+                _this3.buyListData = res.value.list;case 4:case "end":return _context3.stop();}}}, _callee3);}))();
+    },
 
-    getMsg: function getMsg() {var _this3 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee3() {var commentData, likeData, sceneryData;return _regenerator.default.wrap(function _callee3$(_context3) {while (1) {switch (_context3.prev = _context3.next) {case 0:_context3.next = 2;return (
-                  (0, _mine.queryCommentCount)());case 2:commentData = _context3.sent;_context3.next = 5;return (
-                  (0, _mine.queryLikeCount)());case 5:likeData = _context3.sent;_context3.next = 8;return (
-                  (0, _mine.queryMySceneryCount)());case 8:sceneryData = _context3.sent;
-                _this3.count = {
+
+    getMsg: function getMsg() {var _this4 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee4() {var _yield$Promise$all3, _yield$Promise$all4, commentData, likeData, sceneryData;return _regenerator.default.wrap(function _callee4$(_context4) {while (1) {switch (_context4.prev = _context4.next) {case 0:_context4.next = 2;return (
+                  Promise.all([
+                  (0, _mine.queryCommentCount)(),
+                  (0, _mine.queryLikeCount)(),
+                  (0, _mine.queryMySceneryCount)()]));case 2:_yield$Promise$all3 = _context4.sent;_yield$Promise$all4 = _slicedToArray(_yield$Promise$all3, 3);commentData = _yield$Promise$all4[0];likeData = _yield$Promise$all4[1];sceneryData = _yield$Promise$all4[2];
+
+                _this4.count = {
                   comment: commentData.value,
                   like: likeData.value,
-                  scenery: sceneryData.value };case 10:case "end":return _context3.stop();}}}, _callee3);}))();
+                  scenery: sceneryData.value };case 8:case "end":return _context4.stop();}}}, _callee4);}))();
 
     },
 
@@ -322,12 +330,6 @@ var _mine = __webpack_require__(/*! ../../api/mine.js */ 62);function _interopRe
 
     },
 
-    // 跳转至已购视频
-    aboutUs: function aboutUs() {
-      uni.navigateTo({
-        url: '/pages/about/about' });
-
-    },
     // 跳转至消息页面
     checkMsg: function checkMsg(type) {
       uni.navigateTo({
