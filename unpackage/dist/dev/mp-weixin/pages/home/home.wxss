@@ -64,7 +64,8 @@ to {
   -webkit-align-items: center;
           align-items: center;
   background: rgba(51, 51, 51, 0.48);
-  border-radius: 30rpx;
+  -webkit-border-radius: 30rpx;
+          border-radius: 30rpx;
   height: 90%;
   padding: 0 25rpx;
 }
@@ -98,7 +99,8 @@ to {
           transform: translateX(-50%);
   width: 72rpx;
   height: 72rpx;
-  border-radius: 50%;
+  -webkit-border-radius: 50%;
+          border-radius: 50%;
 }
 .banner .swiper .swiper-item.data-v-92bb8f34 {
   width: 100%;

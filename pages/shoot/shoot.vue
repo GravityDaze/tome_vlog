@@ -69,7 +69,7 @@
 					</view>
 				</view>
 			</view>
-			
+
 			<view v-else style="text-align: center; font-size:22rpx;padding-top:50rpx;color: #B2B2B2">
 				<text>暂无打卡点信息</text>
 			</view>
@@ -81,15 +81,18 @@
 				<text>{{hasStartTrip?'去首页浏览其他精彩VLOG':'开启视频之旅'}}</text>
 			</view>
 		</view>
-
-		<tips @touchmove.stop.prevent="moveHandle" :show="showVideo" @close="showVideo=false" />
-
+		<!-- 模板选择弹出层 -->
+		<uni-popup ref="popup" type="center">
+			<tempModal @submit="submit" />
+		</uni-popup>
+		<videoPlayer src="https://tomevideo.zhihuiquanyu.com/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%BC%95%E5%AF%BC_0302.mp4" @touchmove.stop.prevent="moveHandle" :show="showVideo" @close="showVideo = false" />
 	</view>
 </template>
 
 <script>
 	import navbar from '../../components/nav.vue'
-	import tips from './components/tips.vue'
+	import videoPlayer from '../../components/video-player.vue'
+	import tempModal from './components/tempModal.vue'
 	import {
 		querySceneryInfo,
 		startTrip,
@@ -137,16 +140,16 @@
 				}
 				uni.hideLoading()
 			},
-			
-			async getPositionPoint(id){
-				const res = await queryPointList({sceneryId:id,status:1})
-				if(res.value.list.length){
+
+			async getPositionPoint(id) {
+				const res = await queryPointList({ sceneryId: id, status: 1 })
+				if (res.value.list.length) {
 					this.pointList = res.value.list
 				}
 			},
-			
-			// 开启视频之旅
-			async start() {
+
+			// 弹出模板选择框
+			start() {
 				// 如果已开启视频之旅 点击该按钮跳转回首页
 				if (this.hasStartTrip) {
 					return uni.switchTab({
@@ -161,6 +164,11 @@
 					})
 				}
 
+				// 弹出模板选择框
+				this.$refs.popup.open()
+			},
+			
+			async submit(){
 				uni.showLoading({
 					title: '视频之旅开启中',
 					mask: true
@@ -254,20 +262,21 @@
 				this.immersive = true
 			}
 		},
-		
+
 		onShareAppMessage() {
 			// 来自页面内转发按钮
 			return {
-				path:`/pages/index/index?sceneryId=${ this.sceneryInfo.id }`,
+				path: `/pages/index/index?sceneryId=${ this.sceneryInfo.id }`,
 				title: `快来跟我一起开启${this.sceneryInfo.name}的视频之旅吧`,
 				imageUrl: this.sceneryInfo.coverUrl
 			}
-		
+
 		},
-		
+
 		components: {
 			navbar,
-			tips
+			videoPlayer,
+			tempModal
 		}
 	}
 </script>

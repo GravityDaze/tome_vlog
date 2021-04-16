@@ -1,6 +1,6 @@
 <template>
 	<!-- 分享弹框 -->
-	<view :class="{'shareModal':true,'out':!show}">
+	<view :class="{'shareModal':true}">
 		<view class="text">
 			<text>立即分享给好友</text>
 		</view>
@@ -16,35 +16,38 @@
 				<text>朋友圈</text>
 			</view>
 
-			<view class="item" @click="showPublishModal = true" v-if="videoInfo.shareStatus === 0">
+			<view class="item" @click="$refs.toTome.open()" v-if="videoInfo.shareStatus === 0">
 				<image src="../../../static/zbicon.png"></image>
 				<text class="publish">发布至途咪</text>
 			</view>
 		</view>
 
-		<view class="btn" @click="cancel">
+		<view class="btn" @click="popup.close()">
 			<text>取消</text>
 		</view>
 
 		<!-- 发布至途咪 -->
-		<view :class="{'publishModal':true,'out':!showPublishModal }">
-			<view class="cover">
-				<image :src="videoInfo.coverUrl"></image>
+		<uni-popup ref="toTome" type="bottom">
+			<view :class="{'publishModal':true }">
+				<view class="cover">
+					<image :src="videoInfo.coverUrl"></image>
+				</view>
+				<view class="tips">
+					<text>发布至途咪平台后，视频可公开评论和点赞</text>
+				</view>
+				<view class="input-box">
+					<text>游记说明</text>
+					<input v-model="describe" maxlength="30" type='text' placeholder-class="placeholder" placeholder='请输入（必填,最大输入长度为30）' />
+				</view>
+				<view class="publish-btn" @click="shareToTome">
+					<text>立即发布</text>
+				</view>
+				<view class="cancel-publish" @click="$refs.toTome.close()">
+					<text>暂不发布</text>
+				</view>
 			</view>
-			<view class="tips">
-				<text>发布至途咪平台后，视频可公开评论和点赞</text>
-			</view>
-			<view class="input-box">
-				<text>游记说明</text>
-				<input v-model="describe" maxlength="30" type='text' placeholder-class="placeholder" placeholder='请输入（必填,最大输入长度为30）' />
-			</view>
-			<view class="publish-btn" @click="shareToTome">
-				<text>立即发布</text>
-			</view>
-			<view class="cancel-publish" @click="showPublishModal = false">
-				<text>暂不发布</text>
-			</view>
-		</view>
+		</uni-popup>
+		
 
 		<!-- 朋友圈分享码 -->
 		<view class="qr-code" v-if="false">
@@ -73,32 +76,18 @@
 	} from '../../../api/video.js'
 	export default {
 		props: {
-			show: {
-				default: false,
-				type: Boolean
-			},
 			videoInfo: {
 				default: {},
 				type: Object
 			}
 		},
+		inject: ['popup'],
 		data() {
 			return {
 				describe: "",
-				showPublishModal: false
-			}
-		},
-		watch: {
-			show(val) {
-				if (!val) {
-					this.showPublishModal = false
-				}
 			}
 		},
 		methods: {
-			cancel() {
-				this.$emit('close')
-			},
 			// 分享到途咪
 			async shareToTome() {
 				// emoji正则
@@ -146,7 +135,8 @@
 						}
 					})
 					this.describe = ""
-					this.$emit('close')
+					this.popup.close()
+					this.$refs.toTome.close()
 					this.$emit('publish-success')
 				} catch (err) {
 					uni.showModal({
@@ -200,21 +190,13 @@
 </script>
 
 <style lang="scss" scoped>
-	// 过渡类名
-	.out {
-		bottom: -100% !important;
-	}
 
 	.shareModal {
-		position: fixed;
 		padding-bottom:env(safe-area-inset-bottom);
-		bottom: 0;
-		z-index: 99;
 		width: 100%;
 		background: #FFFFFF;
 		display: flex;
 		flex-flow: column;
-		transition: .3s;
 		border-radius:27rpx 27rpx 0 0;
 		
 		.text{
@@ -268,16 +250,11 @@
 
 
 		.publishModal {
-			position: fixed;
 			border-radius: 30rpx 30rpx 0 0;
 			width: 100%;
-			z-index: 700;
 			background-color: white;
 			padding: 174rpx 55rpx 0;
 			box-sizing: border-box;
-			transition: 0.5s;
-			bottom: 0;
-			transition: 0.3s;
 			padding-bottom:calc( env(safe-area-inset-bottom) + 41rpx) ;
 
 			.cover {

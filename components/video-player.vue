@@ -1,35 +1,32 @@
+<!-- 弹出式视频播放组件 -->
 <template>
 	<view class="tips" v-if="show">
 		<view class="mask"></view>
 		<view class="play">
-			<video style="width:100vw" autoplay src="https://tomevideo.zhihuiquanyu.com/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%BC%95%E5%AF%BC_0302.mp4" controls></video>
-			<image @click="close" src="../../../static/close.png" mode=""></image>
+			<video style="width:100vw" autoplay :src="src" controls></video>
+			<image @click="$emit('close')" src="../static/close.png" mode=""></image>
 		</view>
-
 	</view>
 </template>
 
 <script>
 	export default {
-		props:{
+		props: {
+			src:{
+				default:'https://tomevideo.zhihuiquanyu.com/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%BC%95%E5%AF%BC_0302.mp4',
+				type:String
+			},
+			
 			show:{
 				default:false,
-				
-				
-				
 				type:Boolean
-			}
-		},
-		methods:{
-			close(){
-				this.$emit('close')
 			}
 		}
 	}
 </script>
 
-<style lang="scss">
-	.tips {
+<style lang="scss" scoped>
+.tips {
 		position: fixed;
 		z-index: 100;
 		

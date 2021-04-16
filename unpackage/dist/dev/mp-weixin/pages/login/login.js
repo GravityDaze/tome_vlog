@@ -146,13 +146,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-
 var _index = __webpack_require__(/*! ../../api/index.js */ 20);
 
 
 
-var _face = __webpack_require__(/*! ../../api/face.js */ 107);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var _default =
+var _face = __webpack_require__(/*! ../../api/face.js */ 107);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}function _slicedToArray(arr, i) {return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();}function _nonIterableRest() {throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");}function _unsupportedIterableToArray(o, minLen) {if (!o) return;if (typeof o === "string") return _arrayLikeToArray(o, minLen);var n = Object.prototype.toString.call(o).slice(8, -1);if (n === "Object" && o.constructor) n = o.constructor.name;if (n === "Map" || n === "Set") return Array.from(o);if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);}function _arrayLikeToArray(arr, len) {if (len == null || len > arr.length) len = arr.length;for (var i = 0, arr2 = new Array(len); i < len; i++) {arr2[i] = arr[i];}return arr2;}function _iterableToArrayLimit(arr, i) {if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return;var _arr = [];var _n = true;var _d = false;var _e = undefined;try {for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {_arr.push(_s.value);if (i && _arr.length === i) break;}} catch (err) {_d = true;_e = err;} finally {try {if (!_n && _i["return"] != null) _i["return"]();} finally {if (_d) throw _e;}}return _arr;}function _arrayWithHoles(arr) {if (Array.isArray(arr)) return arr;}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var _default =
 
 
 {
@@ -165,42 +163,45 @@ var _face = __webpack_require__(/*! ../../api/face.js */ 107);function _interopR
     this.action = options.action;
   },
   methods: {
-    getUserInfo: function getUserInfo(e) {
-      if (e.detail.userInfo) {
-        uni.setStorageSync('userInfo', e.detail.userInfo);
-        // 执行登录逻辑
-        this.loginFn();
-      }
+    getUserInfo: function getUserInfo() {var _this = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var _yield$uni$getUserPro, _yield$uni$getUserPro2, err, res;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:_context.next = 2;return (
+                  uni.getUserProfile({
+                    desc: '用于完善用户资料' }));case 2:_yield$uni$getUserPro = _context.sent;_yield$uni$getUserPro2 = _slicedToArray(_yield$uni$getUserPro, 2);err = _yield$uni$getUserPro2[0];res = _yield$uni$getUserPro2[1];
+
+                if (res === null || res === void 0 ? void 0 : res.userInfo) {
+                  uni.setStorageSync('userInfo', res.userInfo);
+                  // 执行登录逻辑
+                  _this.loginFn();
+                }case 7:case "end":return _context.stop();}}}, _callee);}))();
     },
-    loginFn: function loginFn() {var _this = this;
+    loginFn: function loginFn() {var _this2 = this;
       uni.showLoading({
         title: '登录中',
         mask: true });
 
       wx.login({
-        success: function () {var _success = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee(_ref) {var code, userInfo, res, params, face, pages, prevPage;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
-                    code = _ref.code;_context.prev = 1;
+        success: function () {var _success = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2(_ref) {var code, userInfo, res, params, face, pages, prevPage;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:
+                    code = _ref.code;_context2.prev = 1;
 
 
 
-                    userInfo = uni.getStorageSync('userInfo');_context.next = 5;return (
+                    userInfo = uni.getStorageSync('userInfo');_context2.next = 5;return (
                       (0, _index.login)(_objectSpread({
                         code: code },
-                      userInfo)));case 5:res = _context.sent;
+                      userInfo)));case 5:res = _context2.sent;
 
                     uni.setStorageSync('refresh_token', res.value.refresh_token);
                     uni.setStorageSync('access_token', res.value.access_token);
                     // 获取初始化参数
-                    _context.next = 10;return (0, _index.initParams)();case 10:params = _context.sent;
+                    _context2.next = 10;return (0, _index.initParams)();case 10:params = _context2.sent;
                     getApp().globalData.initParams = params.value;
                     // 刷新瀑布流
                     uni.$emit("refreshWaterfall");
 
                     // 如果是从开拍页面登录 则需要检测是否录入了人脸
-                    if (!(_this.action === 'shoot')) {_context.next = 24;break;}_context.next = 16;return (
-                      (0, _face.queryFace)());case 16:face = _context.sent;if (
+                    if (!(_this2.action === 'shoot')) {_context2.next = 24;break;}_context2.next = 16;return (
+                      (0, _face.queryFace)());case 16:face = _context2.sent;if (
 
-                    face.value.frontFace) {_context.next = 21;break;}return _context.abrupt("return",
+                    face.value.frontFace) {_context2.next = 21;break;}return _context2.abrupt("return",
                     uni.redirectTo({
                       url: '/pages/face/face?actions=shoot' }));case 21:
 
@@ -211,17 +212,17 @@ var _face = __webpack_require__(/*! ../../api/face.js */ 107);function _interopR
 
 
 
-                    uni.navigateBack();_context.next = 31;break;case 27:_context.prev = 27;_context.t0 = _context["catch"](1);
+                    uni.navigateBack();_context2.next = 31;break;case 27:_context2.prev = 27;_context2.t0 = _context2["catch"](1);
 
 
 
-                    console.log(_context.t0);
+                    console.log(_context2.t0);
                     uni.showToast({
                       icon: 'none',
-                      title: '登陆失败' });case 31:_context.prev = 31;
+                      title: '登陆失败' });case 31:_context2.prev = 31;
 
 
-                    uni.hideLoading();return _context.finish(31);case 34:case "end":return _context.stop();}}}, _callee, null, [[1, 27, 31, 34]]);}));function success(_x) {return _success.apply(this, arguments);}return success;}(),
+                    uni.hideLoading();return _context2.finish(31);case 34:case "end":return _context2.stop();}}}, _callee2, null, [[1, 27, 31, 34]]);}));function success(_x) {return _success.apply(this, arguments);}return success;}(),
 
 
         fail: function fail() {

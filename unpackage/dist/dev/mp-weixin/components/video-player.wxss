@@ -24,11 +24,11 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
-.tips {
+.tips.data-v-f8920ca4 {
   position: fixed;
   z-index: 100;
 }
-.tips .mask {
+.tips .mask.data-v-f8920ca4 {
   position: fixed;
   top: 0;
   bottom: 0;
@@ -36,7 +36,7 @@
   left: 0;
   right: 0;
 }
-.tips .play {
+.tips .play.data-v-f8920ca4 {
   position: fixed;
   top: 50%;
   left: 50%;
@@ -44,7 +44,7 @@
           transform: translate(-50%, -50%);
   text-align: center;
 }
-.tips .play image {
+.tips .play image.data-v-f8920ca4 {
   margin-top: 40rpx;
   width: 55rpx;
   height: 55rpx;

@@ -503,7 +503,7 @@ function processArgs(methodName, fromArgs) {var argsOption = arguments.length > 
           keyOption = keyOption(fromArgs[key], fromArgs, toArgs);
         }
         if (!keyOption) {// 不支持的参数
-          console.warn("\u5FAE\u4FE1\u5C0F\u7A0B\u5E8F ".concat(methodName, "\u6682\u4E0D\u652F\u6301").concat(key));
+          console.warn("The '".concat(methodName, "' method of platform '\u5FAE\u4FE1\u5C0F\u7A0B\u5E8F' does not support option '").concat(key, "'"));
         } else if (isStr(keyOption)) {// 重写参数 key
           toArgs[keyOption] = fromArgs[key];
         } else if (isPlainObject(keyOption)) {// {name:newName,value:value}可重新指定参数 key:value
@@ -538,7 +538,7 @@ function wrapper(methodName, method) {
     var protocol = protocols[methodName];
     if (!protocol) {// 暂不支持的 api
       return function () {
-        console.error("\u5FAE\u4FE1\u5C0F\u7A0B\u5E8F \u6682\u4E0D\u652F\u6301".concat(methodName));
+        console.error("Platform '\u5FAE\u4FE1\u5C0F\u7A0B\u5E8F' does not support '".concat(methodName, "'."));
       };
     }
     return function (arg1, arg2) {// 目前 api 最多两个参数
@@ -585,7 +585,7 @@ function createTodoApi(name) {
 
   {var fail = _ref.fail,complete = _ref.complete;
     var res = {
-      errMsg: "".concat(name, ":fail:\u6682\u4E0D\u652F\u6301 ").concat(name, " \u65B9\u6CD5") };
+      errMsg: "".concat(name, ":fail method '").concat(name, "' not supported") };
 
     isFn(fail) && fail(res);
     isFn(complete) && complete(res);
@@ -619,7 +619,7 @@ function getProvider(_ref2)
     isFn(success) && success(res);
   } else {
     res = {
-      errMsg: 'getProvider:fail:服务[' + service + ']不存在' };
+      errMsg: 'getProvider:fail service not found' };
 
     isFn(fail) && fail(res);
   }
@@ -1323,7 +1323,12 @@ function parseBaseApp(vm, _ref3)
 
       delete this.$options.mpType;
       delete this.$options.mpInstance;
-
+      if (this.mpType === 'page') {// hack vue-i18n
+        var app = getApp();
+        if (app.$vm && app.$vm.$i18n) {
+          this._i18n = app.$vm.$i18n;
+        }
+      }
       if (this.mpType !== 'app') {
         initRefs(this);
         initMocks(this, mocks);
@@ -2035,6 +2040,98 @@ var handleText = function handleText(text, clipLength) {var multiple = arguments
     }
   }
 };exports.handleText = handleText;
+
+/***/ }),
+
+/***/ 165:
+/*!****************************************************************************************************!*\
+  !*** C:/Users/11632/Desktop/project/tome_vlog/uni_modules/uni-popup/components/uni-popup/popup.js ***!
+  \****************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _message = _interopRequireDefault(__webpack_require__(/*! ./message.js */ 166));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+// 定义 type 类型:弹出类型：top/bottom/center
+var config = {
+  // 顶部弹出
+  top: 'top',
+  // 底部弹出
+  bottom: 'bottom',
+  // 居中弹出
+  center: 'center',
+  // 消息提示
+  message: 'top',
+  // 对话框
+  dialog: 'center',
+  // 分享
+  share: 'bottom' };var _default =
+
+
+{
+  data: function data() {
+    return {
+      config: config,
+      popupWidth: 0,
+      popupHeight: 0 };
+
+  },
+  mixins: [_message.default],
+  computed: {
+    isDesktop: function isDesktop() {
+      return this.popupWidth >= 500 && this.popupHeight >= 500;
+    } },
+
+  mounted: function mounted() {var _this = this;
+    var fixSize = function fixSize() {var _uni$getSystemInfoSyn =
+
+
+
+
+      uni.getSystemInfoSync(),windowWidth = _uni$getSystemInfoSyn.windowWidth,windowHeight = _uni$getSystemInfoSyn.windowHeight,windowTop = _uni$getSystemInfoSyn.windowTop;
+      _this.popupWidth = windowWidth;
+      _this.popupHeight = windowHeight + windowTop;
+    };
+    fixSize();
+
+
+
+
+
+
+  } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+
+/***/ }),
+
+/***/ 166:
+/*!******************************************************************************************************!*\
+  !*** C:/Users/11632/Desktop/project/tome_vlog/uni_modules/uni-popup/components/uni-popup/message.js ***!
+  \******************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = {
+  created: function created() {
+    if (this.type === 'message') {
+      // 不显示遮罩
+      this.maskShow = false;
+      // 获取子组件对象
+      this.childrenMsg = null;
+    }
+  },
+  methods: {
+    customOpen: function customOpen() {
+      if (this.childrenMsg) {
+        this.childrenMsg.open();
+      }
+    },
+    customClose: function customClose() {
+      if (this.childrenMsg) {
+        this.childrenMsg.close();
+      }
+    } } };exports.default = _default;
 
 /***/ }),
 
@@ -8914,6 +9011,7 @@ var http = new _index.default();
 // 全局配置
 exports.http = http;http.setConfig(function (config) {
   config.baseURL = 'https://tome3pay.zhihuiquanyu.com',
+  // config.baseURL = 'http://192.168.0.134:8088',
   config.timeout = 10000;
   return config;
 });
@@ -9985,7 +10083,7 @@ exports.queryCard = queryCard;var like = function like(data) {return _request.ht
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.updateNewVideoStatus = exports.updateBuyVideoStatus = exports.queryLikeCount = exports.queryCommentCount = exports.queryMySceneryCount = exports.queryBuyList = exports.queryMsg = exports.queryTravel = void 0;var _request = __webpack_require__(/*! @/utils/request.js */ 21);
+Object.defineProperty(exports, "__esModule", { value: true });exports.closeTrip = exports.updateNewVideoStatus = exports.updateBuyVideoStatus = exports.queryLikeCount = exports.queryCommentCount = exports.queryMySceneryCount = exports.queryBuyList = exports.queryMsg = exports.queryTravel = void 0;var _request = __webpack_require__(/*! @/utils/request.js */ 21);
 
 // 获取游记
 var queryTravel = function queryTravel(data) {return _request.http.get('/videoapp/me/queryMyVideos', { params: data });};
@@ -10009,7 +10107,10 @@ exports.queryCommentCount = queryCommentCount;var queryLikeCount = function quer
 exports.queryLikeCount = queryLikeCount;var updateBuyVideoStatus = function updateBuyVideoStatus(data) {return _request.http.post('/videoapp/me/updateVideoBuyReadStatus', data);};
 
 // 修改新视频的阅读状态为已读
-exports.updateBuyVideoStatus = updateBuyVideoStatus;var updateNewVideoStatus = function updateNewVideoStatus(data) {return _request.http.post('/videoapp/me/updateVideoNewReadStatus', data);};exports.updateNewVideoStatus = updateNewVideoStatus;
+exports.updateBuyVideoStatus = updateBuyVideoStatus;var updateNewVideoStatus = function updateNewVideoStatus(data) {return _request.http.post('/videoapp/me/updateVideoNewReadStatus', data);};
+
+// 撤销视频之旅
+exports.updateNewVideoStatus = updateNewVideoStatus;var closeTrip = function closeTrip(data) {return _request.http.post('/videoapp/video/closeTrip', data);};exports.closeTrip = closeTrip;
 
 /***/ }),
 

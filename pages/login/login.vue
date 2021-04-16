@@ -3,11 +3,9 @@
 		<view class="login-bg">
 			<image src="../../static/login.jpg"></image>
 		</view>
-		<view class="btn">
+		<view class="btn" @click="getUserInfo">
 			<image src="../../static/wx.png"></image>
 			<text>微信一键登录</text>
-			<button style="position:absolute;top:0;bottom:0;width:100%;opacity:0" size="small" open-type="getUserInfo" type="default"
-			 @getuserinfo="getUserInfo">登录</button>
 		</view>
 		<view class="tips">
 			<text>请授权头像等信息，以便为您提供更好的服务</text>
@@ -33,9 +31,12 @@
 			this.action = options.action
 		},
 		methods: {
-			getUserInfo(e) {
-				if (e.detail.userInfo) {
-					uni.setStorageSync('userInfo', e.detail.userInfo)
+			async getUserInfo() {
+				const [err,res] = await uni.getUserProfile({
+					desc:'用于完善用户资料'
+				})
+				if (res?.userInfo) {
+					uni.setStorageSync('userInfo', res.userInfo)
 					// 执行登录逻辑
 					this.loginFn()
 				}

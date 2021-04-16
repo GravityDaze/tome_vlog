@@ -165,8 +165,6 @@ var _parseQs = __webpack_require__(/*! ../../utils/parseQs.js */ 36);function _i
       this.id = params.sceneryId;
       this.getSceneryInfo(this.id);
     }
-
-
     this.handleRefreshToken();
   },
   data: function data() {
@@ -188,8 +186,8 @@ var _parseQs = __webpack_require__(/*! ../../utils/parseQs.js */ 36);function _i
       // 查询缓存中是否有刷新用的缓存token
       var refreshToken = uni.getStorageSync("refresh_token");
       if (!refreshToken) {
-        // 没有刷新token 获取授权数据以重新登录
-        this.getAuthData();
+        // 没有刷新token 直接登录
+        this.transfer();
       } else {
         // 有刷新token 将token刷新
         this.freshenToken(refreshToken);
@@ -217,38 +215,15 @@ var _parseQs = __webpack_require__(/*! ../../utils/parseQs.js */ 36);function _i
                 console.log(_context2.t0);
                 // 刷新失败时清除token
                 uni.clearStorageSync();
-                // 刷新失败 判断用户是否有授权,如有授权,仍然可以调用登录方法
-                _this.getAuthData();case 19:case "end":return _context2.stop();}}}, _callee2, null, [[0, 14]]);}))();
+                _this.transfer();case 19:case "end":return _context2.stop();}}}, _callee2, null, [[0, 14]]);}))();
+
 
     },
 
-    // 获取授权数据
-    getAuthData: function getAuthData() {var _this2 = this;
-      // 判断用户是否授权
-      uni.getSetting({
-        success: function success(res) {
-          if (res.authSetting['scope.userInfo']) {
-            // 已经授权，可以直接调用 getUserInfo 获取头像昵称
-            uni.getUserInfo({
-              success: function success(res) {
-                // 获取用户信息成功
-                uni.setStorageSync('userInfo', res.userInfo);
-                // 登录
-                _this2.loginFn();
-              },
-              fail: function fail() {
-                _this2.transfer();
-              } });
 
-          } else {
-            _this2.transfer();
-          }
-        } });
-
-    },
 
     // 登录方法
-    loginFn: function loginFn() {var _this3 = this;
+    loginFn: function loginFn() {var _this2 = this;
       uni.login({
         success: function () {var _success = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee3(_ref) {var code, userInfo, res, params;return _regenerator.default.wrap(function _callee3$(_context3) {while (1) {switch (_context3.prev = _context3.next) {case 0:
                     code = _ref.code;_context3.prev = 1;
@@ -266,15 +241,15 @@ var _parseQs = __webpack_require__(/*! ../../utils/parseQs.js */ 36);function _i
                     _context3.next = 10;return (0, _index.initParams)();case 10:params = _context3.sent;
                     getApp().globalData.initParams = params.value;
                     // 登录成功，查询用户的消息提示
-                    _this3.selectMsgHitFn();_context3.next = 18;break;case 15:_context3.prev = 15;_context3.t0 = _context3["catch"](1);
+                    _this2.selectMsgHitFn();_context3.next = 18;break;case 15:_context3.prev = 15;_context3.t0 = _context3["catch"](1);
 
                     console.log(_context3.t0);case 18:_context3.prev = 18;
 
-                    _this3.transfer();return _context3.finish(18);case 21:case "end":return _context3.stop();}}}, _callee3, null, [[1, 15, 18, 21]]);}));function success(_x) {return _success.apply(this, arguments);}return success;}(),
+                    _this2.transfer();return _context3.finish(18);case 21:case "end":return _context3.stop();}}}, _callee3, null, [[1, 15, 18, 21]]);}));function success(_x) {return _success.apply(this, arguments);}return success;}(),
 
 
         fail: function fail() {
-          _this3.transfer();
+          _this2.transfer();
         } });
 
     },
@@ -296,11 +271,6 @@ var _parseQs = __webpack_require__(/*! ../../utils/parseQs.js */ 36);function _i
     // 查询消息提示
     selectMsgHitFn: function selectMsgHitFn() {return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee4() {var res;return _regenerator.default.wrap(function _callee4$(_context4) {while (1) {switch (_context4.prev = _context4.next) {case 0:_context4.next = 2;return (
                   (0, _index.queryMsgHit)());case 2:res = _context4.sent;case 3:case "end":return _context4.stop();}}}, _callee4);}))();
-
-
-
-
-
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

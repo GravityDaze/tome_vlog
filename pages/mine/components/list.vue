@@ -11,7 +11,7 @@
 					<!-- 如果内容是视频 -->
 					<view class="video-area" v-if="subItem.status === 2">
 						<template v-for="(videoItem,videoIndex) in subItem.videoInfo">
-							<view class="video-box" :key="videoItem.videoId"  @click="watchVideo(videoItem)">
+							<view class="video-box" :key="videoItem.videoId" @click="watchVideo(videoItem)">
 								<view class="cover" :style="{backgroundImage:`url(${videoItem.coverUrl})`}">
 									<view v-if="videoItem.newRead === 0" class="new">
 										<text>NEW</text>
@@ -39,6 +39,9 @@
 							</view>
 							<view class="panel-btn" @click="goUpload(subItem.videoInfo,item.sceneryName)">
 								<text>上传自拍视频</text>
+							</view>
+							<view class="cancel" @click="cancel(subItem)">
+								<text>关闭</text>
 							</view>
 						</template>
 
@@ -75,7 +78,7 @@
 </template>
 
 <script>
-	import { updateNewVideoStatus } from '../../../api/mine.js'
+	import { updateNewVideoStatus, closeTrip } from '../../../api/mine.js'
 	export default {
 		props: {
 			dataList: {
@@ -83,27 +86,56 @@
 				default: []
 			}
 		},
-		methods:{
-			watchVideo(item){
+		methods: {
+			watchVideo(item) {
 				uni.navigateTo({
-					url:`/pages/myVideo/myVideo?videoId=${item.videoId}`,
-					success:async _=>{
-						if(item.newRead === 0){
+					url: `/pages/myVideo/myVideo?videoId=${item.videoId}`,
+					success: async _ => {
+						if (item.newRead === 0) {
 							await updateNewVideoStatus({
-								videoId:item.videoId
+								videoId: item.videoId
 							})
 						}
 					}
 				})
 			},
-			checkFace(){
+			checkFace() {
 				uni.navigateTo({
-					url:"/pages/face/face"
+					url: "/pages/face/face"
 				})
 			},
-			goUpload(item,sceneryName){
+			goUpload(item, sceneryName) {
 				uni.navigateTo({
-					url:`/pages/upload/upload?customerNeedId=${item[0].customerNeedId}&sceneryName=${sceneryName}`
+					url: `/pages/upload/upload?customerNeedId=${item[0].customerNeedId}&sceneryName=${sceneryName}`
+				})
+			},
+			// 撤销视频之旅
+			cancel(item) {
+				uni.showModal({
+					content:"是否关闭该景区的视频之旅",
+					success: async res => {
+						if (res.confirm) {
+							try {
+								uni.showLoading({
+									title:'关闭中'
+								})
+								await closeTrip({
+									id: item.videoInfo[0].customerNeedId
+								})
+								// 通知list刷新
+								this.$emit('refreshList')
+							} catch (err) {
+								uni.showModal({
+									content: "关闭失败",
+									showCancel: false
+								})
+							}finally{
+								uni.showToast({
+									title:'关闭成功'
+								})
+							}
+						}
+					}
 				})
 			}
 		}
@@ -112,8 +144,8 @@
 
 <style lang="scss" scoped>
 	.list {
-		padding:0 55rpx;
-		
+		padding: 0 55rpx;
+
 		.list-item {
 			margin-bottom: 50rpx;
 
@@ -149,8 +181,8 @@
 						display: flex;
 						flex-direction: column;
 						align-items: center;
-						
-						
+
+
 
 						.cover {
 							position: relative;
@@ -160,38 +192,36 @@
 							background-size: cover;
 							display: flex;
 							box-shadow: 10rpx 0 50rpx rgba(0, 0, 0, 0.2);
-							
-							
-							
-							.new{
-								position:absolute;
+
+
+
+							.new {
+								position: absolute;
 								width: 74rpx;
 								height: 32rpx;
 								background: linear-gradient(199deg, #97ce1e, #96ce1d);
 								right: 10rpx;
-								 top: 10rpx;
+								top: 10rpx;
 								font-size: 20rpx;
 								color: #FFFFFF;
-								display:flex;
+								display: flex;
 								justify-content: center;
 								align-items: center;
 								border-radius: 8rpx;
-								
-								background:linear-gradient(
-								 100deg,
-								 rgba(255,255,255,0) 40%,
-								 rgba(255,255,255,.5) 50%,
-								 rgba(255,255,255,0) 60%
-								 ) #97ce1e;
+
+								background: linear-gradient(100deg,
+									rgba(255, 255, 255, 0) 40%,
+									rgba(255, 255, 255, .5) 50%,
+									rgba(255, 255, 255, 0) 60%) #97ce1e;
 								background-size: 200% 100%;
 								background-position-x: 150%;
 								animation: 1.5s light ease-in-out infinite;
-								
+
 							}
-			
-							
-							@keyframes light{
-								to{
+
+
+							@keyframes light {
+								to {
 									background-position-x: -20%;
 								}
 							}
@@ -205,21 +235,21 @@
 								font-size: 20rpx;
 							}
 						}
-						
+
 						.tips {
-						  margin-left: -75rpx;
-						  margin-top: 10rpx;
-						  display: flex;
-						  justify-content: flex-start;
-						  align-items: center;
-						  font-size: 22rpx;
-						  color: #999;
-						  
-						  image{
+							margin-left: -75rpx;
+							margin-top: 10rpx;
+							display: flex;
+							justify-content: flex-start;
+							align-items: center;
+							font-size: 22rpx;
+							color: #999;
+
+							image {
 								width: 25rpx;
-							    height: 25rpx;
-							    margin-right: 15rpx;
-						  }
+								height: 25rpx;
+								margin-right: 15rpx;
+							}
 						}
 
 					}
@@ -228,6 +258,7 @@
 
 
 				.notification {
+					position: relative;
 					border-radius: 30rpx;
 					background: #fff;
 					box-shadow: 10rpx 0 100rpx rgba(0, 0, 0, 0.1);
@@ -277,6 +308,17 @@
 						background: rgba(252, 69, 65, 1);
 						color: #fff;
 						box-shadow: 0px 0px 24rpx 0px rgba(244, 40, 35, 0.29);
+					}
+
+					.cancel {
+						position: absolute;
+						right: 0;
+						bottom: 0;
+						color:#fff;
+						background:#fac83c;
+						border-radius:30rpx 0;
+						font-size:22rpx;
+						padding:10rpx 25rpx;
 					}
 
 				}

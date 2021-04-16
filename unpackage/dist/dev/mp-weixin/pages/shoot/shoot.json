@@ -3,7 +3,9 @@
   "navigationBarBackgroundColor": "#000000",
   "navigationBarTextStyle": "white",
   "usingComponents": {
+    "uni-popup": "/uni_modules/uni-popup/components/uni-popup/uni-popup",
     "navbar": "/components/nav",
-    "tips": "/pages/shoot/components/tips"
+    "video-player": "/components/video-player",
+    "temp-modal": "/pages/shoot/components/tempModal"
   }
 }

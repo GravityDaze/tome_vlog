@@ -76,12 +76,14 @@
   position: relative;
   width: 300rpx;
   height: 175rpx;
-  border-radius: 15rpx;
+  -webkit-border-radius: 15rpx;
+          border-radius: 15rpx;
   background-size: cover;
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
-  box-shadow: 10rpx 0 50rpx rgba(0, 0, 0, 0.2);
+  -webkit-box-shadow: 10rpx 0 50rpx rgba(0, 0, 0, 0.2);
+          box-shadow: 10rpx 0 50rpx rgba(0, 0, 0, 0.2);
 }
 .list .list-item .content .video-area .video-box .cover .new.data-v-5b9064b4 {
   position: absolute;
@@ -102,7 +104,8 @@
   -webkit-box-align: center;
   -webkit-align-items: center;
           align-items: center;
-  border-radius: 8rpx;
+  -webkit-border-radius: 8rpx;
+          border-radius: 8rpx;
   background: -webkit-linear-gradient(350deg, rgba(255, 255, 255, 0) 40%, rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0) 60%) #97ce1e;
   background: linear-gradient(100deg, rgba(255, 255, 255, 0) 40%, rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0) 60%) #97ce1e;
   background-size: 200% 100%;
@@ -149,11 +152,15 @@ to {
   margin-right: 15rpx;
 }
 .list .list-item .content .notification.data-v-5b9064b4 {
-  border-radius: 30rpx;
+  position: relative;
+  -webkit-border-radius: 30rpx;
+          border-radius: 30rpx;
   background: #fff;
-  box-shadow: 10rpx 0 100rpx rgba(0, 0, 0, 0.1);
+  -webkit-box-shadow: 10rpx 0 100rpx rgba(0, 0, 0, 0.1);
+          box-shadow: 10rpx 0 100rpx rgba(0, 0, 0, 0.1);
   padding: 30rpx 15rpx 0;
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
   height: 180rpx;
   display: -webkit-box;
   display: -webkit-flex;
@@ -183,7 +190,8 @@ to {
   margin-top: 20rpx;
 }
 .list .list-item .content .notification .panel-btn.data-v-5b9064b4 {
-  border-radius: 27rpx;
+  -webkit-border-radius: 27rpx;
+          border-radius: 27rpx;
   background-color: #fac83c;
   color: #333332;
   font-size: 24rpx;
@@ -198,12 +206,25 @@ to {
   -webkit-box-align: center;
   -webkit-align-items: center;
           align-items: center;
-  box-shadow: 0px 8rpx 37rpx 1rpx rgba(248, 185, 14, 0.29);
+  -webkit-box-shadow: 0px 8rpx 37rpx 1rpx rgba(248, 185, 14, 0.29);
+          box-shadow: 0px 8rpx 37rpx 1rpx rgba(248, 185, 14, 0.29);
 }
 .list .list-item .content .notification .fail-status.data-v-5b9064b4 {
   background: #fc4541;
   color: #fff;
-  box-shadow: 0px 0px 24rpx 0px rgba(244, 40, 35, 0.29);
+  -webkit-box-shadow: 0px 0px 24rpx 0px rgba(244, 40, 35, 0.29);
+          box-shadow: 0px 0px 24rpx 0px rgba(244, 40, 35, 0.29);
+}
+.list .list-item .content .notification .cancel.data-v-5b9064b4 {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  color: #fff;
+  background: #fac83c;
+  -webkit-border-radius: 30rpx 0;
+          border-radius: 30rpx 0;
+  font-size: 22rpx;
+  padding: 10rpx 25rpx;
 }
 .list .list-item .location.data-v-5b9064b4 {
   font-size: 24rpx;
@@ -213,7 +234,8 @@ to {
   height: 40rpx;
   line-height: 40rpx;
   margin-top: 20rpx;
-  border-radius: 20rpx;
+  -webkit-border-radius: 20rpx;
+          border-radius: 20rpx;
   background-color: rgba(220, 220, 220, 0.5);
 }
 .list .list-item .location image.data-v-5b9064b4 {

@@ -40,16 +40,19 @@
   width: calc((100% - var(--offset) * (var(--cols) - 1)) / var(--cols));
   position: absolute;
   background-color: #fff;
-  border-radius: 18rpx;
+  -webkit-border-radius: 18rpx;
+          border-radius: 18rpx;
   left: calc(-50% - var(--offset));
 }
 .waterfalls-box .waterfalls-list .waterfalls-list-image.data-v-77aa3c8a {
   width: 100%;
   will-change: transform;
-  border-radius: 18rpx 18rpx 0 0;
+  -webkit-border-radius: 18rpx 18rpx 0 0;
+          border-radius: 18rpx 18rpx 0 0;
   display: block;
 }
 .waterfalls-box .waterfalls-list .waterfalls-list-image.single.data-v-77aa3c8a {
-  border-radius: 18rpx;
+  -webkit-border-radius: 18rpx;
+          border-radius: 18rpx;
 }
 

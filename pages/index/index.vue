@@ -33,8 +33,6 @@
 				this.id = params.sceneryId
 				this.getSceneryInfo(this.id)
 			}
-			
-			
 			this.handleRefreshToken()
 		},
 		data(){
@@ -56,8 +54,8 @@
 				// 查询缓存中是否有刷新用的缓存token
 				const refreshToken = uni.getStorageSync("refresh_token");
 				if (!refreshToken) {
-					// 没有刷新token 获取授权数据以重新登录
-					this.getAuthData()
+					// 没有刷新token 直接登录
+					this.transfer()
 				} else {
 					// 有刷新token 将token刷新
 					this.freshenToken(refreshToken)
@@ -85,35 +83,12 @@
 					console.log(err)
 					// 刷新失败时清除token
 					uni.clearStorageSync()
-					// 刷新失败 判断用户是否有授权,如有授权,仍然可以调用登录方法
-					this.getAuthData()
+					this.transfer()
+					
 				}
 			},
 
-			// 获取授权数据
-			getAuthData() {
-				// 判断用户是否授权
-				uni.getSetting({
-					success: res => {
-						if (res.authSetting['scope.userInfo']) {
-							// 已经授权，可以直接调用 getUserInfo 获取头像昵称
-							uni.getUserInfo({
-								success: res => {
-									// 获取用户信息成功
-									uni.setStorageSync('userInfo', res.userInfo)
-									// 登录
-									this.loginFn()
-								},
-								fail: () => {
-									this.transfer()
-								}
-							})
-						} else {
-							this.transfer()
-						}
-					}
-				})
-			},
+
 
 			// 登录方法
 			loginFn() {
@@ -164,11 +139,6 @@
 			// 查询消息提示
 			async selectMsgHitFn() {
 				const res = await queryMsgHit()
-				// if (res.hasMsg === 1) {
-				//   wx.showTabBarRedDot({
-				//     index: 2
-				//   })
-				// }
 			},
 		}
 	}

@@ -23,7 +23,7 @@
 							<text>景点</text>
 						</view>
 
-						<view @click="checkMsg(0)"> 
+						<view @click="checkMsg(0)">
 							<text>{{count.comment}}</text>
 							<text>回复</text>
 						</view>
@@ -42,7 +42,7 @@
 
 			</view>
 		</view>
-		
+
 		<template v-if="isLogin">
 			<view class="tabs">
 				<view class="item">
@@ -58,15 +58,15 @@
 				<text v-show="current === 0">视频最长保留一周，请及时购买</text>
 				<text v-show="current === 1">已购买的视频都在这哟~</text>
 			</view>
-			
+
 			<view class="content-box">
 				<!-- 我的游记 -->
-				<list :dataList="travelList" v-show="current === 0" />
+				<list :dataList="travelList" v-show="current === 0" @refresh-list="refreshList" />
 				<!-- 已购视频 -->
 				<buyList :dataList="buyListData" v-show="current === 1" @update-list="getBuyList"></buyList>
 			</view>
 		</template>
-		
+
 		<!-- 未登录提示 -->
 		<view class="login-tips" v-else>
 			<image src="../../static/login-tips.png"></image>
@@ -104,9 +104,9 @@
 				userInfo: {}, //用户信息
 				travelList: [], //游记数据
 				buyListData: [], //已购买的视频数据
-				count:{} ,//统计数据
-				msg:{} // hint
-				
+				count: {}, //统计数据
+				msg: {} // hint
+
 			}
 		},
 		onLoad() {
@@ -136,45 +136,65 @@
 			},
 
 			// 检查登录状态
-			async checkLoginStatus() {
+			checkLoginStatus() {
 				const token = uni.getStorageSync('access_token')
 				const userInfo = uni.getStorageSync('userInfo')
 				if (token && userInfo) {
 					this.userInfo = userInfo
 					this.isLogin = true
-					const [ msg,list ] = await Promise.all([
+					// 获取游记数据
+					this.getList()
+					// 获取点赞/回复数据
+					this.getMsgValue()
+				} else {
+					this.isLogin = false
+				}
+			},
+
+			// 获取我的游记数据
+			async getList() {
+				try {
+					const [msg, list] = await Promise.all([
 						queryMsg(),
 						queryTravel()
 					])
 					this.msg = msg.value
 					this.travelList = list.value.info
-					// 获取消息数据
-					this.getMsg()
-					
-				} else {
-					this.isLogin = false
+				} finally {
+					uni.stopPullDownRefresh()
 				}
+
 			},
-			
-			async getBuyList(){
-				const res = await queryBuyList()
-				this.buyListData = res.value.list
+
+			// 获取已购视频列表
+			async getBuyList() {
+				try{
+					const res = await queryBuyList()
+					this.buyListData = res.value.list
+				}finally{
+					uni.stopPullDownRefresh()
+				}
+				
 			},
-			
-			
-			async getMsg(){
-				const [ commentData,likeData,sceneryData] = await Promise.all([
-					 queryCommentCount(),
-					 queryLikeCount(),
-					 queryMySceneryCount()
-				]) 
+
+			// 刷新列表
+			refreshList() {
+				this.getList()
+			},
+
+			async getMsgValue() {
+				const [commentData, likeData, sceneryData] = await Promise.all([
+					queryCommentCount(),
+					queryLikeCount(),
+					queryMySceneryCount()
+				])
 				this.count = {
-					comment:commentData.value,
-					like:likeData.value,
-					scenery:sceneryData.value
+					comment: commentData.value,
+					like: likeData.value,
+					scenery: sceneryData.value
 				}
 			},
-			
+
 			// 跳转至登录界面
 			toLogin() {
 				uni.navigateTo({
@@ -190,7 +210,7 @@
 			},
 
 			// 跳转至消息页面
-			checkMsg(type){
+			checkMsg(type) {
 				uni.navigateTo({
 					url: `/pages/message/message?type=${type}`
 				})
@@ -208,6 +228,16 @@
 				this.immersive = true
 			}
 		},
+
+		onPullDownRefresh() {
+			if(!this.isLogin) return uni.stopPullDownRefresh()
+			if (this.current === 0) {
+				this.getList()
+			} else {
+				this.getBuyList()
+			}
+		},
+
 		components: {
 			navbar,
 			list,
@@ -328,25 +358,25 @@
 		margin: auto;
 
 		.item {
-			
+
 			display: flex;
 			justify-content: space-around;
-			
+
 			.single-item {
 				font-size: 30rpx;
 				color: #202020;
 			}
-			
-			.hint{
-				position:relative;
-				
-				&::before{
-					content:"";	
-					position:absolute;
-					right:-15rpx;
-					top:0;
+
+			.hint {
+				position: relative;
+
+				&::before {
+					content: "";
+					position: absolute;
+					right: -15rpx;
+					top: 0;
 					height: 12rpx;
-					width:12rpx;
+					width: 12rpx;
 					background: #FB3C38;
 					box-shadow: 0px 0px 19rpx 2rpx rgba(244, 40, 35, 0.29);
 					border-radius: 50%;

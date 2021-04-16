@@ -6,7 +6,6 @@
 		</view>
 		<!-- 评论列表 -->
 		<view class="list">
-			<!-- <image src="../../../static/bad.png"></image> -->
 			<text>当前视频的评论已关闭</text>
 		</view>
 	</view>

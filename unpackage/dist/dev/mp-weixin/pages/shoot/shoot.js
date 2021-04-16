@@ -93,6 +93,29 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "recyclableRender", function() { return recyclableRender; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
 var components
+try {
+  components = {
+    uniPopup: function() {
+      return Promise.all(/*! import() | uni_modules/uni-popup/components/uni-popup/uni-popup */[__webpack_require__.e("common/vendor"), __webpack_require__.e("uni_modules/uni-popup/components/uni-popup/uni-popup")]).then(__webpack_require__.bind(null, /*! @/uni_modules/uni-popup/components/uni-popup/uni-popup.vue */ 160))
+    }
+  }
+} catch (e) {
+  if (
+    e.message.indexOf("Cannot find module") !== -1 &&
+    e.message.indexOf(".vue") !== -1
+  ) {
+    console.error(e.message)
+    console.error("1. 排查组件名称拼写是否正确")
+    console.error(
+      "2. 排查组件是否符合 easycom 规范，文档：https://uniapp.dcloud.net.cn/collocation/pages?id=easycom"
+    )
+    console.error(
+      "3. 若组件不符合 easycom 规范，需手动引入，并在 components 中注册该组件"
+    )
+  } else {
+    throw e
+  }
+}
 var render = function() {
   var _vm = this
   var _h = _vm.$createElement
@@ -238,7 +261,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var _shoot = __webpack_require__(/*! ../../api/shoot.js */ 35);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _slicedToArray(arr, i) {return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();}function _nonIterableRest() {throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");}function _unsupportedIterableToArray(o, minLen) {if (!o) return;if (typeof o === "string") return _arrayLikeToArray(o, minLen);var n = Object.prototype.toString.call(o).slice(8, -1);if (n === "Object" && o.constructor) n = o.constructor.name;if (n === "Map" || n === "Set") return Array.from(o);if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);}function _arrayLikeToArray(arr, len) {if (len == null || len > arr.length) len = arr.length;for (var i = 0, arr2 = new Array(len); i < len; i++) {arr2[i] = arr[i];}return arr2;}function _iterableToArrayLimit(arr, i) {if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return;var _arr = [];var _n = true;var _d = false;var _e = undefined;try {for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {_arr.push(_s.value);if (i && _arr.length === i) break;}} catch (err) {_d = true;_e = err;} finally {try {if (!_n && _i["return"] != null) _i["return"]();} finally {if (_d) throw _e;}}return _arr;}function _arrayWithHoles(arr) {if (Array.isArray(arr)) return arr;}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var navbar = function navbar() {__webpack_require__.e(/*! require.ensure | components/nav */ "components/nav").then((function () {return resolve(__webpack_require__(/*! ../../components/nav.vue */ 138));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var tips = function tips() {__webpack_require__.e(/*! require.ensure | pages/shoot/components/tips */ "pages/shoot/components/tips").then((function () {return resolve(__webpack_require__(/*! ./components/tips.vue */ 160));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+
+
+
+var _shoot = __webpack_require__(/*! ../../api/shoot.js */ 35);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _slicedToArray(arr, i) {return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();}function _nonIterableRest() {throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");}function _unsupportedIterableToArray(o, minLen) {if (!o) return;if (typeof o === "string") return _arrayLikeToArray(o, minLen);var n = Object.prototype.toString.call(o).slice(8, -1);if (n === "Object" && o.constructor) n = o.constructor.name;if (n === "Map" || n === "Set") return Array.from(o);if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);}function _arrayLikeToArray(arr, len) {if (len == null || len > arr.length) len = arr.length;for (var i = 0, arr2 = new Array(len); i < len; i++) {arr2[i] = arr[i];}return arr2;}function _iterableToArrayLimit(arr, i) {if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return;var _arr = [];var _n = true;var _d = false;var _e = undefined;try {for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {_arr.push(_s.value);if (i && _arr.length === i) break;}} catch (err) {_d = true;_e = err;} finally {try {if (!_n && _i["return"] != null) _i["return"]();} finally {if (_d) throw _e;}}return _arr;}function _arrayWithHoles(arr) {if (Array.isArray(arr)) return arr;}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var navbar = function navbar() {__webpack_require__.e(/*! require.ensure | components/nav */ "components/nav").then((function () {return resolve(__webpack_require__(/*! ../../components/nav.vue */ 138));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var videoPlayer = function videoPlayer() {__webpack_require__.e(/*! require.ensure | components/video-player */ "components/video-player").then((function () {return resolve(__webpack_require__(/*! ../../components/video-player.vue */ 169));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var tempModal = function tempModal() {__webpack_require__.e(/*! require.ensure | pages/shoot/components/tempModal */ "pages/shoot/components/tempModal").then((function () {return resolve(__webpack_require__(/*! ./components/tempModal.vue */ 176));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
 
 
 
@@ -293,29 +319,34 @@ var _shoot = __webpack_require__(/*! ../../api/shoot.js */ 35);function _interop
                 }case 4:case "end":return _context2.stop();}}}, _callee2);}))();
     },
 
-    // 开启视频之旅
-    start: function start() {var _this3 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee3() {var composeSuccessSubscribeTmplId;return _regenerator.default.wrap(function _callee3$(_context3) {while (1) {switch (_context3.prev = _context3.next) {case 0:if (!
+    // 弹出模板选择框
+    start: function start() {
+      // 如果已开启视频之旅 点击该按钮跳转回首页
+      if (this.hasStartTrip) {
+        return uni.switchTab({
+          url: '/pages/home/home' });
 
-                _this3.hasStartTrip) {_context3.next = 2;break;}return _context3.abrupt("return",
-                uni.switchTab({
-                  url: '/pages/home/home' }));case 2:if (
+      }
 
+      // 如果未登录
+      if (!uni.getStorageSync('access_token')) {
+        return uni.navigateTo({
+          url: "/pages/login/login?action=shoot" });
 
+      }
 
+      // 弹出模板选择框
+      this.$refs.popup.open();
+    },
 
-                uni.getStorageSync('access_token')) {_context3.next = 4;break;}return _context3.abrupt("return",
-                uni.navigateTo({
-                  url: "/pages/login/login?action=shoot" }));case 4:
-
-
-
+    submit: function submit() {var _this3 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee3() {var composeSuccessSubscribeTmplId;return _regenerator.default.wrap(function _callee3$(_context3) {while (1) {switch (_context3.prev = _context3.next) {case 0:
                 uni.showLoading({
                   title: '视频之旅开启中',
-                  mask: true });_context3.prev = 5;_context3.next = 8;return (
+                  mask: true });_context3.prev = 1;_context3.next = 4;return (
 
 
                   (0, _shoot.startTrip)({
-                    sceneryId: _this3.sceneryInfo.id }));case 8:
+                    sceneryId: _this3.sceneryInfo.id }));case 4:
 
                 // 订阅模板消息
 
@@ -329,12 +360,12 @@ var _shoot = __webpack_require__(/*! ../../api/shoot.js */ 35);function _interop
                       content: '视频之旅开启成功，快去景区游玩吧',
                       showCancel: false });
 
-                  } });_context3.next = 15;break;case 12:_context3.prev = 12;_context3.t0 = _context3["catch"](5);
+                  } });_context3.next = 11;break;case 8:_context3.prev = 8;_context3.t0 = _context3["catch"](1);
 
 
-                _this3.handleErr(_context3.t0);case 15:_context3.prev = 15;
+                _this3.handleErr(_context3.t0);case 11:_context3.prev = 11;
 
-                uni.hideLoading();return _context3.finish(15);case 18:case "end":return _context3.stop();}}}, _callee3, null, [[5, 12, 15, 18]]);}))();
+                uni.hideLoading();return _context3.finish(11);case 14:case "end":return _context3.stop();}}}, _callee3, null, [[1, 8, 11, 14]]);}))();
 
     },
 
@@ -415,7 +446,8 @@ var _shoot = __webpack_require__(/*! ../../api/shoot.js */ 35);function _interop
 
   components: {
     navbar: navbar,
-    tips: tips } };exports.default = _default;
+    videoPlayer: videoPlayer,
+    tempModal: tempModal } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),

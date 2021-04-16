@@ -24,3 +24,5 @@ export const updateBuyVideoStatus = data => http.post('/videoapp/me/updateVideoB
 // 修改新视频的阅读状态为已读
 export const updateNewVideoStatus = data => http.post('/videoapp/me/updateVideoNewReadStatus',data)
 
+// 撤销视频之旅
+export const closeTrip = data => http.post('/videoapp/video/closeTrip',data)

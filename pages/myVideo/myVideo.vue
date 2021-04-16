@@ -35,7 +35,7 @@
 					<text>取消发布</text>
 				</view>
 				<view class="btn-group">
-					<view class="share" @click="share">
+					<view class="share" @click="$refs.popup.open()">
 						<text>我要分享</text>
 					</view>
 					<view class="download" @click="download">
@@ -60,11 +60,11 @@
 			</view>
 
 		</view>
-
-		<!-- 遮罩 -->
-		<view class="mask" v-if="mask" @click="cancel"></view>
+		
 		<!-- 分享组件 -->
-		<shareModal @close="cancel" @publish-success="changeShareStatus" :videoInfo="videoInfo" :show="showModal" />
+		<uni-popup ref="popup" type="bottom" @change="change">
+			<shareModal @publish-success="changeShareStatus" ref="shareModal" :videoInfo="videoInfo" />
+		</uni-popup>
 	</view>
 </template>
 
@@ -87,8 +87,6 @@
 			return {
 				shareMode:false,//从分享框进入本页面
 				videoInfo: {},
-				mask: false, //是否展开遮罩
-				showModal: false, // 是否展开分享
 				controls: true,
 				availableTime: 0
 			}
@@ -98,6 +96,14 @@
 			this.getVideoInfo(options.videoId)
 		},
 		methods: {
+			change(e){
+				if(e.show === false){
+					// 关闭子组件的弹框
+					const { shareModal } = this.$refs
+					shareModal.$refs.toTome.close()
+				}
+			},
+			
 			// 获取分享视频
 			async getVideoInfo(videoId) {
 				
@@ -145,12 +151,6 @@
 				ctx.stop()
 			},
 
-
-			// 分享视频
-			share() {
-				this.mask = true
-				this.showModal = true
-			},
 
 			// 下载视频
 			download() {

@@ -3,6 +3,7 @@ export const http = new Request()
 // 全局配置
 http.setConfig(config => {
 	config.baseURL = 'https://tome3pay.zhihuiquanyu.com',
+	// config.baseURL = 'http://192.168.0.134:8088',
 	config.timeout = 10000
 	return config
 })

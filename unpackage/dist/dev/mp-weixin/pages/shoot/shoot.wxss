@@ -41,6 +41,7 @@
   height: 145rpx;
   width: 100%;
   bottom: 0;
+  background: -webkit-gradient(linear, left top, left bottom, from(transparent), to(rgba(0, 0, 0, 0.8)));
   background: -webkit-linear-gradient(top, transparent, rgba(0, 0, 0, 0.8));
   background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.8));
 }
@@ -112,7 +113,8 @@
   background: #fff;
   -webkit-transform: translateY(-35rpx);
           transform: translateY(-35rpx);
-  border-radius: 27rpx 27rpx 0px 0px;
+  -webkit-border-radius: 27rpx 27rpx 0px 0px;
+          border-radius: 27rpx 27rpx 0px 0px;
   padding: 30rpx 30rpx 150rpx;
 }
 .shoot .panel .special.data-v-12276a74 {
@@ -145,8 +147,10 @@
 .shoot .panel .guide .guide-cover .cover.data-v-12276a74 {
   height: 292rpx;
   width: 100%;
-  box-shadow: 0px 8rpx 27rpx 0px rgba(0, 0, 0, 0.06);
-  border-radius: 27rpx;
+  -webkit-box-shadow: 0px 8rpx 27rpx 0px rgba(0, 0, 0, 0.06);
+          box-shadow: 0px 8rpx 27rpx 0px rgba(0, 0, 0, 0.06);
+  -webkit-border-radius: 27rpx;
+          border-radius: 27rpx;
 }
 .shoot .panel .guide .guide-cover .play.data-v-12276a74 {
   position: absolute;
@@ -199,7 +203,8 @@
 .shoot .panel .poi .box image.data-v-12276a74 {
   width: 337rpx;
   height: 225rpx;
-  border-radius: 18rpx;
+  -webkit-border-radius: 18rpx;
+          border-radius: 18rpx;
 }
 .shoot .panel .poi .box .desc .top.data-v-12276a74 {
   display: -webkit-box;
@@ -241,7 +246,8 @@
   bottom: 0;
   width: 100%;
   height: 137rpx;
-  box-shadow: 0 5rpx 19rpx rgba(0, 0, 0, 0.15);
+  -webkit-box-shadow: 0 5rpx 19rpx rgba(0, 0, 0, 0.15);
+          box-shadow: 0 5rpx 19rpx rgba(0, 0, 0, 0.15);
   background: #fff;
 }
 .shoot .bottom-bar view.data-v-12276a74 {
@@ -256,15 +262,18 @@
           justify-content: center;
   width: calc(100% - 60rpx);
   height: 88rpx;
-  border-radius: 44rpx;
+  -webkit-border-radius: 44rpx;
+          border-radius: 44rpx;
 }
 .shoot .bottom-bar .btn.data-v-12276a74 {
   background-color: #FBC32A;
-  box-shadow: 0px 8rpx 16rpx 0px rgba(239, 181, 22, 0.48);
+  -webkit-box-shadow: 0px 8rpx 16rpx 0px rgba(239, 181, 22, 0.48);
+          box-shadow: 0px 8rpx 16rpx 0px rgba(239, 181, 22, 0.48);
 }
 .shoot .bottom-bar .btn-start.data-v-12276a74 {
   background: #6ADB26;
-  box-shadow: 0px 8rpx 16rpx 0px rgba(83, 178, 25, 0.48);
+  -webkit-box-shadow: 0px 8rpx 16rpx 0px rgba(83, 178, 25, 0.48);
+          box-shadow: 0px 8rpx 16rpx 0px rgba(83, 178, 25, 0.48);
   color: #fff;
 }
 
