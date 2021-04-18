@@ -123,7 +123,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var videoPlayer = function videoPlayer() {__webpack_require__.e(/*! require.ensure | components/video-player */ "components/video-player").then((function () {return resolve(__webpack_require__(/*! ../../../components/video-player.vue */ 169));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ 17));
 
 
 
@@ -155,6 +155,11 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 
 
+
+
+
+
+var _shoot = __webpack_require__(/*! ../../../api/shoot.js */ 35);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _toConsumableArray(arr) {return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();}function _nonIterableSpread() {throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");}function _unsupportedIterableToArray(o, minLen) {if (!o) return;if (typeof o === "string") return _arrayLikeToArray(o, minLen);var n = Object.prototype.toString.call(o).slice(8, -1);if (n === "Object" && o.constructor) n = o.constructor.name;if (n === "Map" || n === "Set") return Array.from(o);if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);}function _iterableToArray(iter) {if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter);}function _arrayWithoutHoles(arr) {if (Array.isArray(arr)) return _arrayLikeToArray(arr);}function _arrayLikeToArray(arr, len) {if (len == null || len > arr.length) len = arr.length;for (var i = 0, arr2 = new Array(len); i < len; i++) {arr2[i] = arr[i];}return arr2;}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var videoPlayer = function videoPlayer() {__webpack_require__.e(/*! require.ensure | components/video-player */ "components/video-player").then((function () {return resolve(__webpack_require__(/*! ../../../components/video-player.vue */ 169));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
 
 
 
@@ -162,73 +167,41 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 {
   data: function data() {
     return {
-      tags: [
-      {
-        title: '全部' },
-
-      {
-        title: '浪漫' },
-
-      {
-        title: '怀旧' }],
-
-
-      list: [],
+      tags: [],
+      temps: [],
       current: 0,
       currentCate: 0,
       previewSrc: '',
       show: false };
 
   },
+  props: {
+    sceneryId: {
+      default: "" } },
+
+
   inject: ['popup'],
   created: function created() {
-    this.getList();
+    this.getTags();
+    this.getTemps();
   },
   methods: {
-    getList: function getList() {var _this = this;
-      setTimeout(function () {
-        _this.list = [{
-          title: '哈哈',
-          url: 'https://ss0.baidu.com/94o3dSag_xI4khGko9WTAnF6hhy/zhidao/pic/item/a6efce1b9d16fdfabf36882ab08f8c5495ee7b9f.jpg',
-          cover: 'https://sf1-scmcdn-tos.pstatp.com/goofy/ies/douyin_home_web/medias/banner_video3.3ce510ed.mp4' },
+    getTags: function getTags() {var _this = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var res;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:_context.next = 2;return (
+                  (0, _shoot.queryTempTags)({
+                    id: _this.sceneryId }));case 2:res = _context.sent;
 
-        {
-          title: '哈哈',
-          url: 'https://ss0.baidu.com/94o3dSag_xI4khGko9WTAnF6hhy/zhidao/pic/item/a6efce1b9d16fdfabf36882ab08f8c5495ee7b9f.jpg',
-          cover: 'https://sf1-scmcdn-tos.pstatp.com/goofy/ies/douyin_home_web/medias/banner_video3.3ce510ed.mp4' },
+                _this.tags = [{
+                  tagId: '',
+                  tagName: "全部" }].concat(_toConsumableArray(
+                res.value));case 4:case "end":return _context.stop();}}}, _callee);}))();
+    },
 
-        {
-          title: '哈哈',
-          url: 'https://ss0.baidu.com/94o3dSag_xI4khGko9WTAnF6hhy/zhidao/pic/item/a6efce1b9d16fdfabf36882ab08f8c5495ee7b9f.jpg',
-          cover: 'https://sf1-scmcdn-tos.pstatp.com/goofy/ies/douyin_home_web/medias/banner_video3.3ce510ed.mp4' },
+    getTemps: function getTemps() {var _arguments = arguments,_this2 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2() {var tagsId, res;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:tagsId = _arguments.length > 0 && _arguments[0] !== undefined ? _arguments[0] : "";_context2.next = 3;return (
+                  (0, _shoot.queryTemps)({
+                    sceneryId: _this2.sceneryId,
+                    tagsId: tagsId }));case 3:res = _context2.sent;
 
-        {
-          title: '哈哈',
-          url: 'https://ss0.baidu.com/94o3dSag_xI4khGko9WTAnF6hhy/zhidao/pic/item/a6efce1b9d16fdfabf36882ab08f8c5495ee7b9f.jpg',
-          cover: 'https://sf1-scmcdn-tos.pstatp.com/goofy/ies/douyin_home_web/medias/banner_video3.3ce510ed.mp4' },
-
-        {
-          title: '哈哈',
-          url: 'https://ss0.baidu.com/94o3dSag_xI4khGko9WTAnF6hhy/zhidao/pic/item/a6efce1b9d16fdfabf36882ab08f8c5495ee7b9f.jpg',
-          cover: 'https://sf1-scmcdn-tos.pstatp.com/goofy/ies/douyin_home_web/medias/banner_video3.3ce510ed.mp4' },
-
-        {
-          title: '哈哈',
-          url: 'https://ss0.baidu.com/94o3dSag_xI4khGko9WTAnF6hhy/zhidao/pic/item/a6efce1b9d16fdfabf36882ab08f8c5495ee7b9f.jpg',
-          cover: 'https://sf1-scmcdn-tos.pstatp.com/goofy/ies/douyin_home_web/medias/banner_video3.3ce510ed.mp4' },
-
-        {
-          title: '哈哈',
-          url: 'https://ss0.baidu.com/94o3dSag_xI4khGko9WTAnF6hhy/zhidao/pic/item/a6efce1b9d16fdfabf36882ab08f8c5495ee7b9f.jpg',
-          cover: 'https://sf1-scmcdn-tos.pstatp.com/goofy/ies/douyin_home_web/medias/banner_video3.3ce510ed.mp4' },
-
-        {
-          title: '哈哈',
-          url: 'https://ss0.baidu.com/94o3dSag_xI4khGko9WTAnF6hhy/zhidao/pic/item/a6efce1b9d16fdfabf36882ab08f8c5495ee7b9f.jpg',
-          cover: 'https://sf1-scmcdn-tos.pstatp.com/goofy/ies/douyin_home_web/medias/banner_video3.3ce510ed.mp4' }];
-
-
-      }, 200);
+                _this2.temps = res.value;case 5:case "end":return _context2.stop();}}}, _callee2);}))();
     },
 
     select: function select(item, index) {
@@ -240,8 +213,9 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
       this.previewSrc = url;
     },
 
-    changeCate: function changeCate(item, index) {
+    changeCate: function changeCate(_ref, index) {var tagId = _ref.tagId;
       this.currentCate = index;
+      this.getTemps(tagId);
     },
 
     apply: function apply() {

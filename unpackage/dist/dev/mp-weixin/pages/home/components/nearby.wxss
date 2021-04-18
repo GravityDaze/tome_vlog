@@ -34,23 +34,20 @@
   background: #e2e2e2;
   width: 238rpx;
   height: 168rpx;
-  -webkit-border-radius: 18rpx;
-          border-radius: 18rpx;
+  border-radius: 18rpx;
   margin-right: 15rpx;
   -webkit-flex-shrink: 0;
           flex-shrink: 0;
 }
 .hot-scenery.data-v-05917e21 {
-  -webkit-border-radius: 27rpx 27rpx 0 0;
-          border-radius: 27rpx 27rpx 0 0;
+  border-radius: 27rpx 27rpx 0 0;
   -webkit-transform: translateY(-35rpx);
           transform: translateY(-35rpx);
   background: #fff;
 }
 .hot-scenery .title-bar.data-v-05917e21 {
   padding: 35rpx 30rpx;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
@@ -108,15 +105,12 @@
   position: relative;
   width: 238rpx;
   height: 168rpx;
-  -webkit-border-radius: 18rpx;
-          border-radius: 18rpx;
+  border-radius: 18rpx;
   background-size: cover;
   background-position: center center;
-  -webkit-box-shadow: 1rpx 1rpx 8rpx 2rpx rgba(0, 0, 0, 0.27);
-          box-shadow: 1rpx 1rpx 8rpx 2rpx rgba(0, 0, 0, 0.27);
+  box-shadow: 1rpx 1rpx 8rpx 2rpx rgba(0, 0, 0, 0.27);
   margin-right: 15rpx;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
 }
 .hot-scenery .scenery-list .list .scenery-card .hot.data-v-05917e21 {
   position: absolute;
@@ -131,14 +125,12 @@
           justify-content: center;
   background: -webkit-linear-gradient(251deg, #FFA012, #FFDA05);
   background: linear-gradient(199deg, #FFA012, #FFDA05);
-  -webkit-box-shadow: 0px 2rpx 5rpx 0px rgba(121, 93, 11, 0.3);
-          box-shadow: 0px 2rpx 5rpx 0px rgba(121, 93, 11, 0.3);
+  box-shadow: 0px 2rpx 5rpx 0px rgba(121, 93, 11, 0.3);
   right: 10rpx;
   top: 10rpx;
   z-index: 99;
   padding: 3rpx 8rpx;
-  -webkit-border-radius: 8rpx;
-          border-radius: 8rpx;
+  border-radius: 8rpx;
   font-size: 20rpx;
 }
 .hot-scenery .scenery-list .list .scenery-card .mask.data-v-05917e21 {
@@ -147,8 +139,7 @@
   top: 0;
   bottom: 0;
   width: 100%;
-  -webkit-border-radius: 18rpx;
-          border-radius: 18rpx;
+  border-radius: 18rpx;
 }
 .hot-scenery .scenery-list .list .scenery-card .text.data-v-05917e21 {
   display: -webkit-box;
@@ -177,8 +168,7 @@
 }
 .hot-scenery .scenery-list .list .scenery-card .text .desc.data-v-05917e21 {
   background: rgba(40, 40, 40, 0.5);
-  -webkit-border-radius: 16rpx;
-          border-radius: 16rpx;
+  border-radius: 16rpx;
   font-size: 22rpx;
   font-weight: 500;
   color: #FFFFFF;
@@ -189,8 +179,7 @@
   background-color: #FBC32A;
   background: -webkit-linear-gradient(350deg, rgba(255, 255, 255, 0) 40%, rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0) 60%) #FBC32A;
   background: linear-gradient(100deg, rgba(255, 255, 255, 0) 40%, rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0) 60%) #FBC32A;
-  -webkit-box-shadow: 0px 8rpx 16rpx 0px rgba(239, 181, 22, 0.48);
-          box-shadow: 0px 8rpx 16rpx 0px rgba(239, 181, 22, 0.48);
+  box-shadow: 0px 8rpx 16rpx 0px rgba(239, 181, 22, 0.48);
   background-size: 200% 100%;
   background-position-x: 150%;
   -webkit-animation: 1.5s light-data-v-05917e21 ease-in-out infinite;

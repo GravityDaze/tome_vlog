@@ -38,13 +38,10 @@
 }
 .scenery-list .search.data-v-6146b12a {
   background-color: #fff;
-  -webkit-box-shadow: 5rpx 0 50rpx #c8c8c8;
-          box-shadow: 5rpx 0 50rpx #c8c8c8;
+  box-shadow: 5rpx 0 50rpx #c8c8c8;
   margin-top: 20rpx;
-  -webkit-border-radius: 30px;
-          border-radius: 30px;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  border-radius: 30px;
+  box-sizing: border-box;
   padding: 0 30rpx;
   height: 78rpx;
   font-size: 24rpx;
@@ -90,8 +87,7 @@
   height: 173rpx;
   font-size: 34rpx;
   font-weight: 700;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
   padding: 0 56rpx;
 }
 .scenery-list .list.data-v-6146b12a {
@@ -99,8 +95,7 @@
   top: 256rpx;
   bottom: 0;
   padding: 0 56rpx;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
 }
 .scenery-list .list .item.data-v-6146b12a {
   display: -webkit-box;
@@ -114,8 +109,7 @@
   -webkit-box-pack: center;
   -webkit-justify-content: center;
           justify-content: center;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
   border-bottom: 1px solid #d6d7d9;
 }
 .scenery-list .list .item .top.data-v-6146b12a {

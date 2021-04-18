@@ -15,8 +15,7 @@
 	width: 58rpx;
 	height: 58rpx;
 	background-size: 100% 100%;
-	-webkit-border-radius: 29rpx;
-	        border-radius: 29rpx;
+	border-radius: 29rpx;
 	margin-right: 10rpx;
 }
 .name_date {
@@ -130,8 +129,7 @@
 }
 .huifu_dialog_box {
 	background-color: white;
-	-webkit-border-radius: 30rpx 30rpx 0 0;
-	        border-radius: 30rpx 30rpx 0 0;
+	border-radius: 30rpx 30rpx 0 0;
 	width: calc(100% - 50rpx);
 	height: 290rpx;
 	padding: 25rpx;
@@ -157,8 +155,7 @@
 	background-color: rgba(250, 200, 60, 1);
 	width: 160rpx;
 	height: 68rpx;
-	-webkit-border-radius: 34rpx;
-	        border-radius: 34rpx;
+	border-radius: 34rpx;
 	display: -webkit-box;
 	display: -webkit-flex;
 	display: flex;
@@ -174,13 +171,11 @@
 }
 .textarea3 {
 	background-color: rgba(220, 220, 220, 0.3);
-	-webkit-border-radius: 15rpx 15rpx 0 0;
-	        border-radius: 15rpx 15rpx 0 0;
+	border-radius: 15rpx 15rpx 0 0;
 	width: 700rpx;
 	height: 180rpx;
 	margin: 0 auto;
-	-webkit-box-sizing: border-box;
-	        box-sizing: border-box;
+	box-sizing: border-box;
 	padding: 10rpx;
 }
 

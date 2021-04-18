@@ -39,7 +39,6 @@
   position: absolute;
   top: 0;
   left: 0;
-  background: -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, 0)), to(white));
   background: -webkit-linear-gradient(rgba(255, 255, 255, 0), white);
   background: linear-gradient(rgba(255, 255, 255, 0), white);
 }
@@ -82,8 +81,7 @@
   width: 130rpx;
   height: 130rpx;
   margin-right: 15rpx;
-  -webkit-border-radius: 50%;
-          border-radius: 50%;
+  border-radius: 50%;
 }
 .user-bg .user-container .bottom.data-v-dcbcfe34 {
   display: -webkit-box;
@@ -134,8 +132,7 @@
   width: 170rpx;
   height: 50rpx;
   background: #FFCB3E;
-  -webkit-border-radius: 30rpx;
-          border-radius: 30rpx;
+  border-radius: 30rpx;
   font-size: 24rpx;
   display: -webkit-box;
   display: -webkit-flex;
@@ -178,10 +175,8 @@
   height: 12rpx;
   width: 12rpx;
   background: #FB3C38;
-  -webkit-box-shadow: 0px 0px 19rpx 2rpx rgba(244, 40, 35, 0.29);
-          box-shadow: 0px 0px 19rpx 2rpx rgba(244, 40, 35, 0.29);
-  -webkit-border-radius: 50%;
-          border-radius: 50%;
+  box-shadow: 0px 0px 19rpx 2rpx rgba(244, 40, 35, 0.29);
+  border-radius: 50%;
 }
 .tabs .item .active.data-v-dcbcfe34 {
   font-weight: bold;
@@ -251,8 +246,7 @@
   margin-top: 50rpx;
   height: 75rpx;
   background: #FFD305;
-  -webkit-border-radius: 44rpx;
-          border-radius: 44rpx;
+  border-radius: 44rpx;
   color: #4D4A45;
 }
 .login-tips .btn text.data-v-dcbcfe34 {

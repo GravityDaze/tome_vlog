@@ -83,7 +83,7 @@
 		</view>
 		<!-- 模板选择弹出层 -->
 		<uni-popup ref="popup" type="center">
-			<tempModal @submit="submit" />
+			<tempModal v-if="id" :sceneryId="id" @submit="submit" />
 		</uni-popup>
 		<videoPlayer src="https://tomevideo.zhihuiquanyu.com/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%BC%95%E5%AF%BC_0302.mp4" @touchmove.stop.prevent="moveHandle" :show="showVideo" @close="showVideo = false" />
 	</view>
@@ -108,15 +108,16 @@
 				longitude: "",
 				immersive: true,
 				showVideo: false, //是否展示攻略视频
-				pointList: []
+				pointList: [],
+				id:""
 			}
 		},
 		onLoad(options) {
 			// 查询该页面数据
-			this._id = options.id || getApp().globalData.sceneryId
-			this.getPageInfo(this._id)
+			this.id = options.id || getApp().globalData.sceneryId
+			this.getPageInfo(this.id)
 			// 查询打卡点
-			this.getPositionPoint(this._id)
+			this.getPositionPoint(this.id)
 
 		},
 		methods: {
@@ -246,7 +247,7 @@
 			// 地图页面
 			goMap(index) {
 				uni.navigateTo({
-					url: `/pages/map/map?index=${index}&id=${this._id}`
+					url: `/pages/map/map?index=${index}&id=${this.id}`
 				})
 			}
 

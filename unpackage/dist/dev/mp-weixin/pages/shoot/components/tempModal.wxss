@@ -36,10 +36,8 @@
   width: 90vw;
   height: 70vh;
   background: #fff;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
-  -webkit-border-radius: 30rpx;
-          border-radius: 30rpx;
+  box-sizing: border-box;
+  border-radius: 30rpx;
 }
 .wrapper .close.data-v-761992ae {
   position: absolute;
@@ -78,8 +76,7 @@
   margin-right: 15rpx;
   padding: 3rpx 22rpx;
   border: 2rpx solid #999;
-  -webkit-border-radius: 30rpx;
-          border-radius: 30rpx;
+  border-radius: 30rpx;
   color: #999;
 }
 .wrapper .top .tags .active.data-v-761992ae {
@@ -120,8 +117,7 @@
 .wrapper .list .single .inner image.data-v-761992ae {
   width: 272rpx;
   height: 181rpx;
-  -webkit-border-radius: 18rpx;
-          border-radius: 18rpx;
+  border-radius: 18rpx;
 }
 .wrapper .list .single .inner .text.data-v-761992ae {
   margin-top: 18rpx;
@@ -156,8 +152,7 @@
   margin-right: 8rpx;
 }
 .wrapper .list .active .inner > image.data-v-761992ae {
-  -webkit-box-shadow: 0px 0rpx 17rpx 5px #fbc32a !important;
-          box-shadow: 0px 0rpx 17rpx 5px #fbc32a !important;
+  box-shadow: 0px 0rpx 17rpx 5px #fbc32a !important;
 }
 .wrapper .btn.data-v-761992ae {
   margin: 40rpx;
@@ -173,9 +168,7 @@
   color: #fff;
   height: 80rpx;
   background: #6FD531;
-  -webkit-box-shadow: 0px 8rpx 16rpx 0px rgba(57, 109, 25, 0.48);
-          box-shadow: 0px 8rpx 16rpx 0px rgba(57, 109, 25, 0.48);
-  -webkit-border-radius: 33rpx;
-          border-radius: 33rpx;
+  box-shadow: 0px 8rpx 16rpx 0px rgba(57, 109, 25, 0.48);
+  border-radius: 33rpx;
 }
 

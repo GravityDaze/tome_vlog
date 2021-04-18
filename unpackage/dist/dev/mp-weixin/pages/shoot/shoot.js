@@ -279,15 +279,16 @@ var _shoot = __webpack_require__(/*! ../../api/shoot.js */ 35);function _interop
       longitude: "",
       immersive: true,
       showVideo: false, //是否展示攻略视频
-      pointList: [] };
+      pointList: [],
+      id: "" };
 
   },
   onLoad: function onLoad(options) {
     // 查询该页面数据
-    this._id = options.id || getApp().globalData.sceneryId;
-    this.getPageInfo(this._id);
+    this.id = options.id || getApp().globalData.sceneryId;
+    this.getPageInfo(this.id);
     // 查询打卡点
-    this.getPositionPoint(this._id);
+    this.getPositionPoint(this.id);
 
   },
   methods: {
@@ -417,7 +418,7 @@ var _shoot = __webpack_require__(/*! ../../api/shoot.js */ 35);function _interop
     // 地图页面
     goMap: function goMap(index) {
       uni.navigateTo({
-        url: "/pages/map/map?index=".concat(index, "&id=").concat(this._id) });
+        url: "/pages/map/map?index=".concat(index, "&id=").concat(this.id) });
 
     } },
 

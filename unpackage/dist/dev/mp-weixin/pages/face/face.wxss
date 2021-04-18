@@ -73,8 +73,7 @@
 }
 .face .camera-box .shoot.data-v-50e7d1b4 {
   background-color: #ffcb3e;
-  -webkit-border-radius: 44rpx;
-          border-radius: 44rpx;
+  border-radius: 44rpx;
   width: 488rpx;
   height: 88rpx;
   font-size: 30rpx;
@@ -123,8 +122,7 @@
 .face .collected .face-box image.data-v-50e7d1b4 {
   width: 460rpx;
   height: 460rpx;
-  -webkit-border-radius: 50%;
-          border-radius: 50%;
+  border-radius: 50%;
 }
 .face .collected .warning.data-v-50e7d1b4 {
   font-size: 24rpx;
@@ -134,8 +132,7 @@
 }
 .face .collected .recapture.data-v-50e7d1b4 {
   background-color: #ffcb3e;
-  -webkit-border-radius: 44rpx;
-          border-radius: 44rpx;
+  border-radius: 44rpx;
   width: 488rpx;
   height: 88rpx;
   font-size: 30rpx;

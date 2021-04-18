@@ -100,8 +100,7 @@
 /* 上传面板 */
 .upload-panel.data-v-132d2ab4 {
   position: absolute;
-  -webkit-border-radius: 30rpx;
-          border-radius: 30rpx;
+  border-radius: 30rpx;
   background-color: white;
   width: 700rpx;
   top: 300rpx;
@@ -109,8 +108,7 @@
   left: 0;
   right: 0;
   margin: auto;
-  -webkit-box-shadow: 10rpx 0 50rpx rgba(0, 0, 0, 0.2);
-          box-shadow: 10rpx 0 50rpx rgba(0, 0, 0, 0.2);
+  box-shadow: 10rpx 0 50rpx rgba(0, 0, 0, 0.2);
 }
 .upload-panel .title.data-v-132d2ab4 {
   margin-top: 50rpx;
@@ -143,8 +141,7 @@
 }
 .upload-panel .upload-wrapper .item .rechoose.data-v-132d2ab4 {
   background-color: #ff593e;
-  -webkit-border-radius: 25rpx;
-          border-radius: 25rpx;
+  border-radius: 25rpx;
   width: 196rpx;
   height: 50rpx;
   display: -webkit-box;
@@ -157,8 +154,7 @@
   -webkit-align-items: center;
           align-items: center;
   color: #fff;
-  -webkit-box-shadow: 0px 8rpx 16rpx 0px rgba(242, 82, 80, 0.3);
-          box-shadow: 0px 8rpx 16rpx 0px rgba(242, 82, 80, 0.3);
+  box-shadow: 0px 8rpx 16rpx 0px rgba(242, 82, 80, 0.3);
   font-size: 26rpx;
   margin-top: 20rpx;
 }
@@ -195,8 +191,7 @@
   right: 0;
   margin: auto;
   width: 638rpx;
-  -webkit-border-radius: 44rpx;
-          border-radius: 44rpx;
+  border-radius: 44rpx;
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
@@ -209,7 +204,6 @@
   height: 88rpx;
   z-index: 500;
   background: #FFCB3E;
-  -webkit-box-shadow: 0px 8rpx 16rpx 0px rgba(239, 181, 22, 0.48);
-          box-shadow: 0px 8rpx 16rpx 0px rgba(239, 181, 22, 0.48);
+  box-shadow: 0px 8rpx 16rpx 0px rgba(239, 181, 22, 0.48);
 }
 
