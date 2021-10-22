@@ -39,9 +39,9 @@
 				<view class="upload-box" @click="addVideo">
 					<image src="../../static/add.png"></image>
 				</view>
-
 			</view>
 		</scroll-view>
+
 		<view class="btn" @click="submit">
 			<text>提交</text>
 			<!-- <text wx:if="{{isUpload}}">自拍视频已提交</text> -->

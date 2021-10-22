@@ -1,7 +1,7 @@
 <!-- 我的页面 -->
 <template>
 	<view class="mine" v-show="isLogin !== null">
-		<navbar ref="navbar" :immersive="immersive">
+		<navbar ref="navbar" :scrollTop="scrollTop">
 			<view slot="center">
 				<text>个人中心</text>
 			</view>
@@ -46,10 +46,12 @@
 		<template v-if="isLogin">
 			<view class="tabs">
 				<view class="item">
-					<view :class="['single-item',{ active: current === 0 ,hint:msg.noReadCount >= 1}]" @click="current = 0">
+					<view :class="['single-item',{ active: current === 0 ,hint:msg.noReadCount >= 1}]"
+						@click="current = 0">
 						<text>我的游记</text>
 					</view>
-					<view :class="['single-item',{ active: current === 1, hint:msg.noReadBuy === 1 }]" @click="current = 1">
+					<view :class="['single-item',{ active: current === 1, hint:msg.noReadBuy === 1 }]"
+						@click="current = 1">
 						<text>已购视频</text>
 					</view>
 				</view>
@@ -99,7 +101,7 @@
 			return {
 				current: 0,
 				topHeight: 0,
-				immersive: true, //是否沉浸式导航栏
+				scrollTop: 0, //是否沉浸导航栏
 				isLogin: null, //判断是否登录
 				userInfo: {}, //用户信息
 				travelList: [], //游记数据
@@ -168,13 +170,13 @@
 
 			// 获取已购视频列表
 			async getBuyList() {
-				try{
+				try {
 					const res = await queryBuyList()
 					this.buyListData = res.value.list
-				}finally{
+				} finally {
 					uni.stopPullDownRefresh()
 				}
-				
+
 			},
 
 			// 刷新列表
@@ -217,25 +219,30 @@
 			}
 
 		},
+		// 判断当前滚动位置改变导航条颜色
 		onPageScroll(e) {
-			if (e.scrollTop > 50) {
-				// 防止频繁修改
-				if (!this.immersive) return
-				this.immersive = false
-
-			} else {
-				if (this.immersive) return
-				this.immersive = true
-			}
+			this.scrollTop = e.scrollTop
 		},
 
 		onPullDownRefresh() {
-			if(!this.isLogin) return uni.stopPullDownRefresh()
+			if (!this.isLogin) return uni.stopPullDownRefresh()
 			if (this.current === 0) {
 				this.getList()
 			} else {
 				this.getBuyList()
 			}
+		},
+
+		onShareAppMessage() {
+			// 来自页面内转发按钮
+			return {
+				path: `/pages/index/index`,
+				title: `快来跟我一起体验途咪vlog吧`
+			}
+		},
+		// 分享到朋友圈
+		onShareTimeline() {
+			return {}
 		},
 
 		components: {

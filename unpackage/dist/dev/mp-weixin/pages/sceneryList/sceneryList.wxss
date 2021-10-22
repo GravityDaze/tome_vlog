@@ -26,13 +26,8 @@
 /* 文章场景相关 */
 .scenery-list.data-v-6146b12a {
   height: 100vh;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: column;
-          flex-direction: column;
+  flex-direction: column;
   /* 搜索栏 */
   /* 景区选择区域 */
 }
@@ -45,45 +40,26 @@
   padding: 0 30rpx;
   height: 78rpx;
   font-size: 24rpx;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: reverse;
-  -webkit-flex-direction: row-reverse;
-          flex-direction: row-reverse;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
+  flex-direction: row-reverse;
+  align-items: center;
   margin: 20rpx 26rpx 0;
-  -webkit-box-pack: end;
-  -webkit-justify-content: flex-end;
-          justify-content: flex-end;
+  justify-content: flex-end;
 }
 .scenery-list .search input.data-v-6146b12a {
-  -webkit-box-flex: 1;
-  -webkit-flex-grow: 1;
-          flex-grow: 1;
+  flex-grow: 1;
   height: 100%;
   padding-left: 20rpx;
   color: #999896;
   background-color: #fff;
 }
 .scenery-list .search .icons.data-v-6146b12a {
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
+  align-items: center;
 }
 .scenery-list .title.data-v-6146b12a {
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
+  align-items: center;
   height: 173rpx;
   font-size: 34rpx;
   font-weight: 700;
@@ -98,27 +74,16 @@
   box-sizing: border-box;
 }
 .scenery-list .list .item.data-v-6146b12a {
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
   height: 130rpx;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -webkit-flex-flow: column;
-          flex-flow: column;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-          justify-content: center;
+  flex-flow: column;
+  justify-content: center;
   box-sizing: border-box;
   border-bottom: 1px solid #d6d7d9;
 }
 .scenery-list .list .item .top.data-v-6146b12a {
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-          justify-content: space-between;
+  justify-content: space-between;
   font-size: 30rpx;
   font-family: PingFang SC;
   font-weight: 500;

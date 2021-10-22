@@ -43,7 +43,6 @@ Component({
 					url
 				})
 			}
-
 		}
 	}
 })

@@ -43,6 +43,7 @@
 		methods: {
 			async getSceneryInfo(id){
 				const res = await querySceneryInfo({id})
+				console.log(res)
 				getApp().globalData.manual.lon = res.value.lon
 				getApp().globalData.manual.lat = res.value.lat
 				getApp().globalData.sceneryId = id
@@ -87,8 +88,6 @@
 					
 				}
 			},
-
-
 
 			// 登录方法
 			loginFn() {

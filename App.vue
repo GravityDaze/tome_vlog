@@ -1,4 +1,5 @@
 <script>
+	import { refreshAccessToken, initParams } from 'api/index.js'
 	export default {
 		onLaunch: function() {
 			// 更新信息
@@ -15,15 +16,32 @@
 					}
 				})
 			})
-		},
-		onShow: function() {
-			console.log('App Show')
-		},
-		onHide: function() {
-			console.log('App Hide')
+
+			// 初始化判断是否刷新token
+			const refreshToken = uni.getStorageSync("refresh_token")
+			refreshToken ? this.getNewToken(refreshToken) : this.$isResolve()
 		},
 		methods: {
-
+			async getNewToken(refreshToken) {
+				try {
+					const res = await refreshAccessToken({
+						refreshToken
+					})
+					// 缓存refresh_token
+					uni.setStorageSync('refresh_token', res.value.refresh_token)
+					// 缓存access_token
+					uni.setStorageSync("access_token", res.value.access_token)
+					// 获取初始化参数
+					const params = await initParams()
+					getApp().globalData.initParams = params.value
+					this.$isResolve()
+				} catch (err) {
+					console.log(err)
+					// 刷新失败时清除token
+					uni.clearStorageSync()
+					this.$isResolve()
+				}
+			},
 		},
 		globalData: {
 			initParams: {}, //初始化参数

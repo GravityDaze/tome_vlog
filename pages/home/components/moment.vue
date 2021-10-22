@@ -5,7 +5,8 @@
 		</view>
 		<!-- 瀑布流 -->
 		<view>
-			<waterfallsFlow ref="waterfallsFlow" :list="momentList" imageSrcKey="coverUrl" idKey="videoId" @image-load="imageLoad" @wapper-lick="watchVideo" >
+			<waterfallsFlow ref="waterfallsFlow" :list="momentList" imageSrcKey="coverUrl" idKey="videoId"
+				@image-load="imageLoad" @wapper-lick="watchVideo">
 				<view class="box" v-for="(item, index) of momentList" :key="index" slot="slot{{index}}">
 					<view class="content">
 						<!-- 地点 -->
@@ -23,7 +24,7 @@
 						<!-- 用户 & 点赞 -->
 						<view class="bottom">
 							<view class="user">
-								<image :src="item.headUrl" ></image>
+								<image :src="item.headUrl"></image>
 								<text>{{item.shareCustomer}}</text>
 							</view>
 
@@ -34,7 +35,6 @@
 							</view>
 						</view>
 					</view>
-
 				</view>
 			</waterfallsFlow>
 		</view>
@@ -53,7 +53,7 @@
 				momentList: [],
 				pageNum: 1,
 				pageSize: 10,
-				finish:false //提示瀑布流所有数据是否加载完成
+				finish: false //提示瀑布流所有数据是否加载完成
 			}
 		},
 		created() {
@@ -72,77 +72,77 @@
 				const res = await queryMoment(data)
 				this.momentList.push(...res.value)
 				// 如果已经加载到最后一页数据
-				if( res.value.length < pageSize ){
+				if (res.value.length < pageSize) {
 					this.finish = true
 				}
-				
+
 			},
 			// 图片加载完成
-			imageLoad(){
+			imageLoad() {
 				// 如果数据已经全部加载完成
-				if(this.finish){
+				if (this.finish) {
 					// 提示父组件显示加载结束字样
 					this.$emit("loadFinish")
 				}
 			},
-			
+
 			// 加载下一页数据
-			loadNextPage(){
-				this.pageNum ++
+			loadNextPage() {
+				this.pageNum++
 				this.getMomentList()
 			},
 			// 跳转到视频播放
-			watchVideo(e){
+			watchVideo(e) {
 				uni.navigateTo({
-					url:`/pages/shareVideo/shareVideo?videoShareId=${e.videoShareId}`
+					url: `/pages/shareVideo/shareVideo?videoShareId=${e.videoShareId}`
 				})
 			},
 			// 点赞
-			async like(item,index){
-				
-				if(!uni.getStorageSync('access_token')){
+			async like(item, index) {
+
+				if (!uni.getStorageSync('access_token')) {
 					return uni.navigateTo({
-						url:'/pages/login/login'
-					}) 
-				}
-				
-				if(item.laudMe){
-					uni.showToast({
-						title:'您已点赞',
-						icon:'none'
+						url: '/pages/login/login'
 					})
-				}else{
-					try{
+				}
+
+				if (item.laudMe) {
+					uni.showToast({
+						title: '您已点赞',
+						icon: 'none'
+					})
+				} else {
+					try {
 						// 直接修改数据
 						this.momentList[index].laudMe = 1
 						this.momentList[index].laudTimes++
 						await like({
-							videoShareId:item.videoShareId
+							videoShareId: item.videoShareId
 						})
-					}catch(err){
+					} catch (err) {
 						uni.showToast({
-							title:'点赞失败',
-							icon:'none'
+							title: '点赞失败',
+							icon: 'none'
 						})
 						console.log(err)
 						this.momentList[index].laudMe = 0
 						this.momentList[index].laudTimes--
 					}
-					
+
 				}
 			},
-			
+
 			// 更新点赞数据
-			updateLikeData(id){
-				const index = this.momentList.findIndex( v=>v.videoShareId === id )
+			updateLikeData(id) {
+				const index = this.momentList.findIndex(v => v.videoShareId === id)
 				this.momentList[index].laudMe = 1
-				this.momentList[index].laudTimes++ 
+				this.momentList[index].laudTimes++
 			},
-			
+
 			// 刷新
-			refresh(){
-				
-				if( this.momentList.length ){
+			refresh() {
+
+				if (this.momentList.length) {
 					// 初始化数据
 					this.finish = false
 					this.momentList = []
@@ -161,7 +161,8 @@
 </script>
 
 <style lang="scss" scoped>
-	.moment {	
+	.moment {
+
 		.title-bar {
 			padding: 0rpx 30rpx 30rpx;
 			box-sizing: border-box;
@@ -206,7 +207,7 @@
 
 			.content {
 				padding: 15rpx 22rpx 15rpx;
-				
+
 
 				.location {
 					display: flex;
@@ -230,19 +231,19 @@
 					font-size: 28rpx;
 					font-weight: 500;
 					color: #333333;
-					
+
 					// 推荐标志
-					  .recommend{
-						  display: inline-block;
-						  font-size:22rpx;
-						  background:rgb(255,203,62);
-						  margin-right:10rpx;
-						  color:#fff;
-						  // z-index:99;
-						  padding:3rpx 10rpx;
-						  border-radius: 8rpx;
-						  vertical-align: 1rpx;
-					  }
+					.recommend {
+						display: inline-block;
+						font-size: 22rpx;
+						background: rgb(255, 203, 62);
+						margin-right: 10rpx;
+						color: #fff;
+						// z-index:99;
+						padding: 3rpx 10rpx;
+						border-radius: 8rpx;
+						vertical-align: 1rpx;
+					}
 				}
 
 				.bottom {

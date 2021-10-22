@@ -1,0 +1,23 @@
+{
+  "condition": {
+    "plugin": {
+      "list": []
+    },
+    "game": {
+      "list": []
+    },
+    "gamePlugin": {
+      "list": []
+    },
+    "miniprogram": {
+      "list": [
+        {
+          "name": "pages/myVideo/myVideo",
+          "pathName": "pages/myVideo/myVideo",
+          "query": "videoId=102978",
+          "scene": null
+        }
+      ]
+    }
+  }
+}

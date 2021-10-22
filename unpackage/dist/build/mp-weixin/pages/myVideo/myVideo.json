@@ -1,6 +1,6 @@
 {
   "navigationBarTitleText": "视频详情",
   "usingComponents": {
-    "share-modal": "/pages/myVideo/componets/shareModal"
+    "share": "/pages/myVideo/componets/share"
   }
 }

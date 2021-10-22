@@ -1,39 +1,40 @@
 <template>
 	<view class="home">
-		<!-- 导航条 -->
-		<navbar :immersive="immersive">
-			<view class="location" slot="left" v-if="immersive">
-				<view class="inner" @click="queryScenery">
-					<image src="../../static/location.png" mode=""></image>
-					<text>{{ sceneryName || '定位中' }}</text>
-					<image src="../../static/sj.png" mode=""></image>
-				</view>
-			</view>
-			<view v-else slot="center">
-				<text>首页</text>
-			</view>
-		</navbar>
-		<!-- banner -->
-		<view class="banner">
-			<swiper interval="10000" class="swiper" :indicator-dots="false" :autoplay="true" circular>
-				<swiper-item v-for="(item,index) in bannerList" :key="index" @click="navigate(item)">
-					<image class="play-icon" src="../../static/play.png"></image>
-					<view class="swiper-item">
-						<image :src="item.coverUrl"></image>
+		<skeleton v-if="loading" />
+		<view v-else>
+			<!-- 导航条 -->
+			<navbar :scrollTop="scrollTop" threshold="100">
+				<view class="location" slot="left">
+					<view class="inner" @click="queryScenery">
+						<image src="../../static/location.png" mode=""></image>
+						<text>{{ sceneryName }}</text>
+						<image src="../../static/sj.png" mode=""></image>
 					</view>
-				</swiper-item>
-			</swiper>
-		</view>
-		<!-- 周边景区 -->
-		<nearby :list="nearbyList" />
-		<!-- 精彩瞬间瀑布流 -->
-		<moment ref="moment" @loadFinish="done = true" />
-		<!-- 瀑布流下方加载提示 -->
-		<view class="load">
-			<image v-if="!done" src="../../static/load.png"></image>
-			<view class="empty" v-else>
-				<text>加载完毕</text>
+				</view>
+				<view slot="center">
+					<text>首页</text>
+				</view>
+			</navbar>
+			<!-- banner -->
+			<view class="banner">
+				<swiper interval="10000" class="swiper" :indicator-dots="false" :autoplay="true" circular>
+					<swiper-item v-for="(item,index) in bannerList" :key="index" @click="navigate(item)">
+						<image class="play-icon" src="../../static/play.png"></image>
+						<view class="swiper-item">
+							<image :src="item.coverUrl"></image>
+						</view>
+					</swiper-item>
+				</swiper>
 			</view>
+
+			<!-- 周边景区 -->
+			<nearby :list="nearbyList" />
+			<!-- 推广 -->
+			<promote />
+			<!-- 精彩瞬间瀑布流 -->
+			<moment ref="moment" @loadFinish="done = true" />
+			<!-- 瀑布流下方加载提示 -->
+			<uni-load-more :status="done?'noMore':'loading'" />
 		</view>
 	</view>
 </template>
@@ -51,26 +52,33 @@
 	// import menubar from './components/menubar.vue' 菜单组件目前无跳转路径 暂时隐藏
 	import nearby from './components/nearby.vue'
 	import moment from './components/moment.vue'
+	import promote from './components/promote.vue'
+	// 骨架屏
+	import skeleton from '../../skeleton/home.vue'
 	export default {
 		data() {
 			return {
+				loading: true, //提示页面在未获取景区前的加载状态
 				bannerList: [],
-				nearbyList: [],//周边景区列表
+				nearbyList: [], //周边景区列表
 				immersive: true, //导航条是否处于沉浸式状态
 				done: false, // 瀑布流数据加载是否完毕
-				sceneryName: ''
+				sceneryName: '',
+				scrollTop: 0
 			}
 		},
-		onLoad() {
+		async onLoad() {
+			await this.$onLaunched
 			// 获取banner数据
 			this.getBannerList()
 			// 监听是否刷新瀑布流
-			uni.$on("refreshWaterfall", _=>{
+			uni.$on("refreshWaterfall", _ => {
 				this.done = false
 				this.$refs.moment.refresh()
-			} )
+			})
 		},
-		onShow() {
+		async onShow() {
+			await this.$onLaunched
 			// 自定义tabBar mixin 详见https://developers.weixin.qq.com/community/develop/article/doc/0000047ece8448712589b28525b413
 			this.setTabBarIndex(0)
 			// 获取用户定位
@@ -92,11 +100,11 @@
 					} = getApp().globalData
 					this.getNearbyList(lon, lat)
 					// 在定位失败的情况下 且当前不存在其他定位的情况下
-					if(!sceneryId){
+					if (!sceneryId) {
 						this.sceneryName = '未定位到景区'
 						getApp().globalData.sceneryName = '未定位到景区'
 					}
-					
+
 					// 检查是否是拒绝授权造成的定位失败
 					const [err, res] = await uni.getSetting()
 					if (res.authSetting['scope.userLocation'] === false) {
@@ -115,18 +123,17 @@
 							}
 						})
 					}
-
+					this.loading = false
 				} else {
 					console.log('授权地理位置成功')
 					getApp().globalData.lat = res.latitude
 					getApp().globalData.lon = res.longitude
 					// 获取当前所属景区
 					this.getCurrentScenery()
-
 				}
 			},
-			
-		
+
+
 
 			// 判断当前所属景区
 			async getCurrentScenery() {
@@ -156,7 +163,7 @@
 							// 用户已经定位在了新的景区
 							if (sceneryName !== name) {
 								uni.showModal({
-									title:`定位到您在${name}`,
+									title: `定位到您在${name}`,
 									content: `是否切换至${name}？`,
 									confirmText: '切换',
 									success: ({
@@ -164,7 +171,7 @@
 									}) => {
 										if (confirm) {
 											// 清除用户的手动定位
-											 getApp().globalData.manual = {}
+											getApp().globalData.manual = {}
 											// 进行自动定位更新周边景区
 											this.sceneryName = name
 											getApp().globalData.sceneryName = name
@@ -202,13 +209,15 @@
 							this.getNearbyList(lon, lat)
 						}
 					}
-
+					
 				} catch (err) {
 					console.log(err)
+				} finally{
+					this.loading = false
 				}
 			},
-			
-			
+
+
 			// 根据用当前景区获取到周边景区
 			async getNearbyList(lon, lat) {
 				const res = await queryCard({
@@ -227,7 +236,7 @@
 				}
 				this.nearbyList = sceneryList
 			},
-			
+
 			// 获取Banner数据
 			async getBannerList() {
 				const res = await queryBannerList()
@@ -257,21 +266,27 @@
 		},
 		// 判断当前滚动位置改变导航条颜色
 		onPageScroll(e) {
-			if (e.scrollTop > 50) {
-				// 防止频繁修改
-				if (!this.immersive) return
-				this.immersive = false
-
-			} else {
-				if (this.immersive) return
-				this.immersive = true
+			this.scrollTop = e.scrollTop
+		},
+		onShareAppMessage() {
+			// 来自页面内转发按钮
+			return {
+				path: `/pages/index/index`,
+				title: `快来跟我一起体验途咪vlog吧`
 			}
 		},
+		// 分享到朋友圈
+		onShareTimeline() {
+			return {}
+		},
+
 		components: {
 			navbar,
 			// menubar,
 			nearby,
-			moment
+			moment,
+			promote,
+			skeleton
 		}
 	}
 </script>
@@ -357,30 +372,5 @@
 				}
 			}
 		}
-	}
-
-	.load {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		
-
-
-		&>image {
-			padding: 20rpx 0;
-			width: 45rpx;
-			height: 45rpx;
-			animation: rota .5s infinite linear;
-		}
-
-		.empty {
-			display: flex;
-			align-items: center;
-			color: #bfbfbf;
-			font-size: 28rpx;
-			padding: 40rpx 0;
-		}
-
-
 	}
 </style>

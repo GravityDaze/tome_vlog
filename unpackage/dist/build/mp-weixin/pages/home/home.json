@@ -5,6 +5,7 @@
   "usingComponents": {
     "navbar": "/components/nav",
     "nearby": "/pages/home/components/nearby",
-    "moment": "/pages/home/components/moment"
+    "moment": "/pages/home/components/moment",
+    "promote": "/pages/home/components/promote"
   }
 }

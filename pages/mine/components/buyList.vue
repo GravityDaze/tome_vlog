@@ -33,7 +33,7 @@
 		props: {
 			dataList: {
 				type: Array,
-				default: []
+				default: ()=>[]
 			}
 		},
 		methods: {

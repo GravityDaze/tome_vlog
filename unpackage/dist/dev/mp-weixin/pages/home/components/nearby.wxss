@@ -26,8 +26,6 @@
 /* 文章场景相关 */
 .load.data-v-05917e21 {
   height: 185rpx;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
 }
 .load .load-block.data-v-05917e21 {
@@ -36,8 +34,7 @@
   height: 168rpx;
   border-radius: 18rpx;
   margin-right: 15rpx;
-  -webkit-flex-shrink: 0;
-          flex-shrink: 0;
+  flex-shrink: 0;
 }
 .hot-scenery.data-v-05917e21 {
   border-radius: 27rpx 27rpx 0 0;
@@ -48,15 +45,9 @@
 .hot-scenery .title-bar.data-v-05917e21 {
   padding: 35rpx 30rpx;
   box-sizing: border-box;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-          justify-content: space-between;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
+  justify-content: space-between;
+  align-items: center;
 }
 .hot-scenery .title-bar .title.data-v-05917e21 {
   font-size: 32rpx;
@@ -64,12 +55,8 @@
   color: #333332;
 }
 .hot-scenery .title-bar .more.data-v-05917e21 {
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
+  align-items: center;
   font-size: 22rpx;
   font-weight: 400;
   color: #B5B3B2;
@@ -85,23 +72,16 @@
 }
 .hot-scenery .scenery-list .card-wrapper.data-v-05917e21 {
   padding-right: 15rpx;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
   height: 100%;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
+  align-items: center;
 }
 .hot-scenery .scenery-list .list.data-v-05917e21 {
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
   height: 100%;
 }
 .hot-scenery .scenery-list .list .scenery-card.data-v-05917e21 {
-  -webkit-flex-shrink: 0;
-          flex-shrink: 0;
+  flex-shrink: 0;
   position: relative;
   width: 238rpx;
   height: 168rpx;
@@ -114,16 +94,9 @@
 }
 .hot-scenery .scenery-list .list .scenery-card .hot.data-v-05917e21 {
   position: absolute;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-          justify-content: center;
-  background: -webkit-linear-gradient(251deg, #FFA012, #FFDA05);
+  align-items: center;
+  justify-content: center;
   background: linear-gradient(199deg, #FFA012, #FFDA05);
   box-shadow: 0px 2rpx 5rpx 0px rgba(121, 93, 11, 0.3);
   right: 10rpx;
@@ -142,19 +115,12 @@
   border-radius: 18rpx;
 }
 .hot-scenery .scenery-list .list .scenery-card .text.data-v-05917e21 {
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: column;
-          flex-direction: column;
+  flex-direction: column;
   position: relative;
   z-index: 20;
   padding-top: 58rpx;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
+  align-items: center;
   height: 100%;
 }
 .hot-scenery .scenery-list .list .scenery-card .text .name.data-v-05917e21 {
@@ -177,7 +143,6 @@
 .hot-scenery .scenery-list .list .scenery-card .text .open.data-v-05917e21 {
   background: #FFB90C;
   background-color: #FBC32A;
-  background: -webkit-linear-gradient(350deg, rgba(255, 255, 255, 0) 40%, rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0) 60%) #FBC32A;
   background: linear-gradient(100deg, rgba(255, 255, 255, 0) 40%, rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0) 60%) #FBC32A;
   box-shadow: 0px 8rpx 16rpx 0px rgba(239, 181, 22, 0.48);
   background-size: 200% 100%;

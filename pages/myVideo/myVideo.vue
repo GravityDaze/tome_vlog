@@ -1,8 +1,9 @@
 <!-- '我的'视频详情页面 -->
 <template>
 	<view v-if="Object.keys(videoInfo).length">
-		<video @timeupdate="timeupdate" @ended="ended" id="video" style="width:100%" autoplay :controls="controls" :src="videoInfo.url"
-		 objectFit="fill">
+		<video @timeupdate="timeupdate" @ended="ended" id="video" style="width:100%" autoplay :controls="controls"
+			:src="videoInfo.url" @fullscreenchange="e => fullScreen = e.detail.fullScreen"
+			:objectFit="fullScreen?'contain':'cover'">
 			<cover-view class="tips" v-if="videoInfo.buyStatus === 0 && availableTime !== 0">
 				<cover-view>{{ controls? `试看${availableTime}秒`:'试看结束'}}，查看完整版请</cover-view>
 				<cover-view style="color: rgba(252, 69, 65, 1);margin-left:15rpx" @click="buy">立即购买</cover-view>
@@ -35,7 +36,7 @@
 					<text>取消发布</text>
 				</view>
 				<view class="btn-group">
-					<view class="share" @click="$refs.popup.open()">
+					<view class="share" @click="shareModalVisual = true">
 						<text>我要分享</text>
 					</view>
 					<view class="download" @click="download">
@@ -60,11 +61,18 @@
 			</view>
 
 		</view>
-		
-		<!-- 分享组件 -->
-		<uni-popup ref="popup" type="bottom" @change="change">
-			<shareModal @publish-success="changeShareStatus" ref="shareModal" :videoInfo="videoInfo" />
-		</uni-popup>
+
+		<view class="btn" @click="shoot" v-else>
+			<text>我也要拍</text>
+		</view>
+
+		<!-- 下载弹框 -->
+		<download :show="showDownloadModal" :progress="progress" :videoInfo="videoInfo" @close="closeDownloadModal" />
+
+		<!-- 分享选择组件 -->
+		<share :shareModalVisual="shareModalVisual" @close="shareModalVisual = false"
+			@publish-success="changeShareStatus" ref="shareModal" :videoInfo="videoInfo" />
+
 	</view>
 </template>
 
@@ -80,33 +88,29 @@
 		confirmOrder,
 		buy
 	} from '../../api/video.js'
-	// 分享组件
-	import shareModal from './componets/shareModal.vue'
+	import share from './componets/share.vue'
+	import download from './componets/download.vue'
 	export default {
 		data() {
 			return {
-				shareMode:false,//从分享框进入本页面
+				shareMode: false, //从分享框进入本页面
 				videoInfo: {},
 				controls: true,
-				availableTime: 0
+				availableTime: 0,
+				shareModalVisual: false,
+				showDownloadModal: false,
+				progress:0,
+				fullScreen: false //是否全屏
 			}
 		},
 		onLoad(options) {
-			this.shareMode = options.type === "share"
+			this.shareMode = options.type === 'share'
 			this.getVideoInfo(options.videoId)
 		},
 		methods: {
-			change(e){
-				if(e.show === false){
-					// 关闭子组件的弹框
-					const { shareModal } = this.$refs
-					shareModal.$refs.toTome.close()
-				}
-			},
-			
 			// 获取分享视频
 			async getVideoInfo(videoId) {
-				
+
 				const res = await queryVideoInfo({
 					videoId
 				})
@@ -139,7 +143,7 @@
 					if (currentTime > this.availableTime) {
 						// 试看结束
 						this.controls = false
-						this.ended() 
+						this.ended()
 					}
 				}
 			},
@@ -154,21 +158,24 @@
 
 			// 下载视频
 			download() {
+				uni.showLoading({
+					mask: true
+				})
 				// 检测用户之前是否拒绝了存储权限
 				uni.getSetting({
 					success: res => {
 						if (res.authSetting['scope.writePhotosAlbum'] === false) {
-							wx.showModal({
+							uni.hideLoading()
+							uni.showModal({
 								content: '检测到您没有打开存储权限，无法将视频保存到手机本地，是否去设置打开？',
-								success(res) {
-									if (res.confirm) {
-										uni.openSetting()
-									}
-								}
+								success: res => res.confirm && uni.openSetting()
 							})
 						} else {
+							// 弹出下载框
+							this.showDownloadModal = true
+							uni.hideLoading()
 							// 执行下载方法
-							const downloadTask = uni.downloadFile({
+							this.downloadTask = uni.downloadFile({
 								url: this.videoInfo.url,
 								success: res => {
 									if (res.statusCode === 200) {
@@ -181,16 +188,30 @@
 									}
 								}
 							})
-							// 进度
-							downloadTask.onProgressUpdate((res) => {
-								uni.showLoading({
-									title: `下载中${res.progress}%`,
-									mask: true
-								})
+							// 监听进度
+							this.downloadTask.onProgressUpdate((res) => {
+								if(res.progress === 100){
+									this.showDownloadModal = false
+									setTimeout(()=>{
+										this.progress = 0
+									},500)
+								}else{
+									this.progress = res.progress
+								}
 							})
 						}
 					},
 				})
+			},
+			
+			// 关闭下载弹框
+			closeDownloadModal(){
+				// 强制结束下载任务
+				this.downloadTask.abort()
+				this.showDownloadModal = false
+				setTimeout(()=>{
+					this.progress = 0
+				},500)
 			},
 
 			// 保存视频到相册
@@ -238,7 +259,7 @@
 				// 刷新我的页面已购视频
 				const pages = getCurrentPages()
 				const prevPage = pages[pages.length - 2]
-				if(prevPage.$vm.buyListData.length){
+				if (prevPage.$vm.buyListData.length) {
 					prevPage.$vm.getBuyList()
 				}
 				this.videoInfo.shareStatus = status
@@ -325,6 +346,22 @@
 						})
 					}
 				}
+			},
+			// 开拍按钮
+			shoot() {
+				// 判断是否定位
+				const {
+					sceneryId
+				} = getApp().globalData
+				if (!sceneryId) {
+					uni.navigateTo({
+						url: '/pages/sceneryList/sceneryList?type=select'
+					})
+				} else {
+					uni.navigateTo({
+						url: '/pages/shoot/shoot'
+					})
+				}
 			}
 		},
 		onShareAppMessage(res) {
@@ -332,22 +369,21 @@
 			// 来自页面内转发按钮
 			let path
 			if (!this.videoInfo.shareStatus) {
-				path = `/pages/myVideo/myVideo?videoId=${this.videoInfo.id}&type=share` 
+				path = `/pages/myVideo/myVideo?videoId=${this.videoInfo.id}&type=share`
 			} else {
 				// 已发布
 				path = `/pages/shareVideo/shareVideo?videoShareId=${this.videoInfo.videoShareId}`
 			}
-			
+
 			return {
 				path,
 				title: `这是我在${this.videoInfo.sceneryName}的VLOG，快来看看吧`,
 				imageUrl: this.videoInfo.coverUrl
 			}
-
-
 		},
 		components: {
-			shareModal
+			share,
+			download
 		}
 	}
 </script>
@@ -553,5 +589,20 @@
 		padding: 174rpx 55rpx 0;
 		box-sizing: border-box;
 		transition: 0.5s;
+	}
+
+	.btn {
+		background-color: rgba(250, 200, 60, 1);
+		box-shadow: 0rpx 8rpx 16rpx 0px rgba(239, 181, 22, 0.48);
+		width: 700rpx;
+		height: 88rpx;
+		border-radius: 44rpx;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		position: fixed;
+		bottom: 40rpx;
+		left: 50%;
+		transform: translateX(-50%);
 	}
 </style>

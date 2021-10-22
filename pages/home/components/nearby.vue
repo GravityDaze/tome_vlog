@@ -10,7 +10,7 @@
 		</view>
 
 		<view class="scenery-list">
-			<scroll-view v-if="list.length" scroll-x enable-flex class="list" enhanced :show-scrollbar="false">
+			<scroll-view scroll-x enable-flex class="list" enhanced :show-scrollbar="false">
 				<view class="card-wrapper">
 					<navigator :url="`/pages/shoot/shoot?id=${item.id}`" v-for="(item,index) in list" :key="index" class="scenery-card"
 					 :style="{backgroundImage:`url(${item.coverUrl})`,border:item.isOpen===1?'1rpx solid #FFB90C':'none'}">
@@ -28,9 +28,6 @@
 						</view>
 					</navigator>
 				</view>
-			</scroll-view>
-			<scroll-view enable-flex class="load" v-else >
-				<view class="load-block" v-for="(_,index) in 3" :key="index"></view>
 			</scroll-view>
 		</view>
 	</view>

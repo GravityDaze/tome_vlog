@@ -189,6 +189,7 @@
 							width: 300rpx;
 							height: 175rpx;
 							border-radius: 15rpx;
+							background-position:center;
 							background-size: cover;
 							display: flex;
 							box-shadow: 10rpx 0 50rpx rgba(0, 0, 0, 0.2);

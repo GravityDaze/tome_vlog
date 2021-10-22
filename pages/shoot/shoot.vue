@@ -1,6 +1,6 @@
 <template>
 	<view class="shoot" v-if="Object.keys(sceneryInfo).length">
-		<navbar showBack :immersive="immersive">
+		<navbar showBack :scrollTop="scrollTop">
 			<view slot="center">
 				<text>{{sceneryInfo.name}}</text>
 			</view>
@@ -99,6 +99,7 @@
 		hasStartTrip,
 		queryPointList
 	} from '../../api/shoot.js'
+	import { parseQueryString } from '../../utils/parseQs.js'
 	export default {
 		data() {
 			return {
@@ -106,21 +107,36 @@
 				hasStartTrip: false,
 				latitude: "",
 				longitude: "",
-				immersive: true,
+				scrollTop: 0,
 				showVideo: false, //是否展示攻略视频
 				pointList: [],
 				id:""
 			}
 		},
-		onLoad(options) {
+		
+		async onLoad(options) {
+			await this.$onLaunched
 			// 查询该页面数据
-			this.id = options.id || getApp().globalData.sceneryId
+			this.id = this.getIdByQr(options) || options.id || getApp().globalData.sceneryId
 			this.getPageInfo(this.id)
 			// 查询打卡点
 			this.getPositionPoint(this.id)
 
 		},
 		methods: {
+			// 如果是从二维码进入该页面 解析二维码获取景区id的方法
+			getIdByQr(options){
+				// 对于二维码中携带了景区信息的 处理两种风格的二维码
+				if(options.sceneryId){
+					// 小程序码
+					return options.sceneryId
+				}else if(options.q){
+					// 普通二维码
+					const q = decodeURIComponent(options.q)
+					return parseQueryString(q).sceneryId
+				}
+			},
+			
 			async getPageInfo(id) {
 				uni.showLoading({
 					title: '加载中'
@@ -166,7 +182,8 @@
 				}
 
 				// 弹出模板选择框
-				this.$refs.popup.open()
+				// this.$refs.popup.open()
+				this.submit()
 			},
 			
 			async submit(){
@@ -252,16 +269,9 @@
 			}
 
 		},
+		// 判断当前滚动位置改变导航条颜色
 		onPageScroll(e) {
-			if (e.scrollTop > 50) {
-				// 防止频繁修改
-				if (!this.immersive) return
-				this.immersive = false
-
-			} else {
-				if (this.immersive) return
-				this.immersive = true
-			}
+			this.scrollTop = e.scrollTop
 		},
 
 		onShareAppMessage() {

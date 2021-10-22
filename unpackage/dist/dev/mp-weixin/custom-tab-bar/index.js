@@ -23,27 +23,28 @@ Component({
 	},
 	methods: {
 		switchTab(e) {
+			const {
+				sceneryId,
+				sceneryName
+			} = getApp().globalData
 			const data = e.currentTarget.dataset
 			const url = data.path
 			if (data.index === 1) {
-				// 判断是否定位
-				const {
-					sceneryId
-				} = getApp().globalData
-				if (!sceneryId) {
-					return wx.navigateTo({
+				// 景区未获取未完成时禁止点击
+				if( sceneryName === '' ) return 
+				// 未获取到景区时 跳转到景区选择页面
+				return !sceneryId ?
+					wx.navigateTo({
 						url: '/pages/sceneryList/sceneryList?type=select'
+					}) :
+					wx.navigateTo({
+						url
 					})
-				}
-				wx.navigateTo({
-					url
-				})
 			} else {
 				wx.switchTab({
 					url
 				})
 			}
-
 		}
 	}
 })

@@ -26,25 +26,14 @@
 /* 文章场景相关 */
 .details.data-v-0f776dc6 {
   padding: 25rpx;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: column;
-          flex-direction: column;
+  flex-direction: column;
   border-bottom: 20rpx solid #f7f7f7;
 }
 .details .top-info.data-v-0f776dc6 {
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-          justify-content: space-between;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
+  justify-content: space-between;
+  align-items: center;
 }
 .details .top-info .title.data-v-0f776dc6 {
   font-size: 36rpx;
@@ -58,24 +47,14 @@
   color: #999896;
 }
 .details .bottom-info.data-v-0f776dc6 {
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-          justify-content: space-between;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
+  justify-content: space-between;
+  align-items: center;
   margin-top: 28rpx;
 }
 .details .bottom-info .user.data-v-0f776dc6 {
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
+  align-items: center;
   font-size: 26rpx;
   font-weight: 500;
   color: #999996;
@@ -88,12 +67,8 @@
   margin-right: 9rpx;
 }
 .details .bottom-info .like.data-v-0f776dc6 {
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
+  align-items: center;
   font-size: 26rpx;
   font-family: San Francisco Display;
   font-weight: 400;
@@ -110,15 +85,9 @@
   width: 700rpx;
   height: 88rpx;
   border-radius: 44rpx;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-          justify-content: center;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
+  justify-content: center;
+  align-items: center;
   position: fixed;
   bottom: 40rpx;
   left: 50%;

@@ -57,7 +57,7 @@
         "usingComponents" : true,
         "permission" : {
             "scope.userLocation" : {
-                "desc" : "给我位置"
+                "desc" : "请授权位置信息"
             }
         }
     },

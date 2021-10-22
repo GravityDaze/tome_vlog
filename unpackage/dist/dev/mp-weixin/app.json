@@ -1,6 +1,5 @@
 {
   "pages": [
-    "pages/index/index",
     "pages/home/home",
     "pages/shoot/shoot",
     "pages/mine/mine",
@@ -11,7 +10,8 @@
     "pages/login/login",
     "pages/face/face",
     "pages/upload/upload",
-    "pages/message/message"
+    "pages/message/message",
+    "pages/360/360"
   ],
   "subPackages": [],
   "window": {
@@ -43,7 +43,7 @@
   },
   "permission": {
     "scope.userLocation": {
-      "desc": "给我位置"
+      "desc": "请授权位置信息"
     }
   },
   "usingComponents": {}

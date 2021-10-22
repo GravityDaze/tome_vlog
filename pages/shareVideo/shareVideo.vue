@@ -1,7 +1,7 @@
 <!-- 视频详情页面 -->
 <template>
 	<view>
-		<video v-if="videoInfo.url" id="video" style="width:100%" autoplay @fullscreenchange="fullScreenChange" :src="videoInfo.url"
+		<video v-if="videoInfo.url" id="video" style="width:100%" autoplay @fullscreenchange="e => fullScreen = e.detail.fullScreen" :src="videoInfo.url"
 		 :objectFit="fullScreen?'contain':'cover'"></video>
 		<view v-else class="block"></view>
 		<!-- 视频详细信息面板 -->
@@ -61,7 +61,7 @@
 			}
 		},
 		onLoad(options) {
-			this.getShareVideoInfo(options.videoShareId)
+			this.getShareVideoInfo(options.scene || options.videoShareId)
 		},
 		methods: {
 			// 解析分享视频
@@ -143,7 +143,20 @@
 
 				}
 			},
-
+			
+			onShareAppMessage() {
+				// 来自页面内转发按钮
+				return {
+					path: `/pages/shareVideo/shareVideo?videoShareId=${ this.videoInfo.videoShareId }`,
+					title: this.videoInfo.describe,
+					imageUrl:this.videoInfo.coverUrl
+				}
+			},
+			// 分享到朋友圈
+			onShareTimeline(){
+				return {
+					}
+			},
 		},
 		components: {
 			comment

@@ -1,7 +1,7 @@
 <template>
 	<view class="login">
 		<view class="login-bg">
-			<image src="../../static/login.jpg"></image>
+			<image src="https://tomevideo.zhihuiquanyu.com/login.jpg"></image>
 		</view>
 		<view class="btn" @click="getUserInfo">
 			<image src="../../static/wx.png"></image>

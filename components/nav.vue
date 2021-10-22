@@ -1,16 +1,18 @@
-<!-- 沉浸式导航条公用组件 -->
+<!-- 导航条公用组件 -->
 <template>
-	<view class="nav" :style="{paddingTop:`${statusBarHeight}px`,height:`${navHeight}px`,background:immersive?'transpranst':'#fff'}">
+	<view class="nav"
+		:style="{paddingTop:`${statusBarHeight}px`,height:`${navHeight}px`,background:immersive?'transpranst':'#fff'}">
 		<view class="content">
 			<view class="left" :style="{left:`${capsuleLeft}px`,top:`${capsuleTop}px`,height:`${capsuleHeight}px`}">
-				<!-- 左侧插槽 -->
-				<slot name="left"></slot>
+				<!-- 从左侧开始的自定义插槽 -->
+				<slot name="left" v-if="immersive"></slot>
 				<!-- 返回按钮 -->
 				<view v-if="showBack" @click="back" class="back">
 					<image v-show="immersive" src="../static/back_white.png"></image>
 					<image v-show="!immersive" src="../static/back_black.png"></image>
 				</view>
 			</view>
+			<!-- 标题插槽 -->
 			<view class="center" v-show="!immersive">
 				<slot name="center"></slot>
 			</view>
@@ -26,42 +28,51 @@
 				navHeight: 0,
 				capsuleLeft: 0,
 				capsuleHeight: 0,
-				capsuleTop: 0
+				capsuleTop: 0,
+				immersive: true
 			}
 		},
 		props: {
-			// 控制导航栏是否沉浸
-			immersive: {
-				default: true,
-				type: Boolean
-			},
 			// 控制是否显示返回按钮
 			showBack: {
 				default: false,
 				type: Boolean
 			},
+			// 滑动多少px显示导航栏
+			threshold: {
+				default: 50,
+				type: Number
+			},
+			// 当前页面滑动值
+			scrollTop: {
+				default: 0,
+				type: Number
+			}
 		},
 		watch: {
-			immersive(val) {
-				if (val) {
-					uni.setNavigationBarColor({
-						frontColor: "#ffffff",
-						backgroundColor: "#000000"
-					})
-					
-				} else {
+			scrollTop(val) {
+				if (val > this.threshold) {
+					if (!this.immersive) return
+					this.immersive = false
 					uni.setNavigationBarColor({
 						frontColor: "#000000",
+						backgroundColor: "#000000"
+					})
+				} else {
+					if (this.immersive) return
+					this.immersive = true
+					uni.setNavigationBarColor({
+						frontColor: "#ffffff",
 						backgroundColor: "#000000"
 					})
 				}
 			}
 		},
 		created() {
-			this.getSysInfo()
+			this.getNavInfo()
 		},
 		methods: {
-			getSysInfo() {
+			getNavInfo() {
 				const sysInfo = uni.getSystemInfoSync()
 				const menuButton = uni.getMenuButtonBoundingClientRect()
 				// 获取状态栏高度
@@ -77,8 +88,8 @@
 			},
 			back() {
 				uni.navigateBack({
-					fail:_=>uni.switchTab({
-						url:'/pages/home/home'
+					fail: _ => uni.switchTab({
+						url: '/pages/home/home'
 					})
 				})
 			}
@@ -113,12 +124,12 @@
 				}
 			}
 		}
-		
-		.center{
-			position:absolute;
-			top:50%;
-			left:50%;
-			transform:translate(-50%,-50%);
+
+		.center {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
 		}
 
 	}

@@ -33,15 +33,9 @@
 .list .list-item .timeline.data-v-5b9064b4 {
   font-size: 28rpx;
   color: #999896;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-          justify-content: space-between;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
+  justify-content: space-between;
+  align-items: center;
 }
 .list .list-item .timeline .greyline.data-v-5b9064b4 {
   width: 450rpx;
@@ -61,25 +55,17 @@
   position: relative;
   width: 300rpx;
   /* height: 230rpx; */
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
+  flex-direction: column;
+  align-items: center;
 }
 .list .list-item .content .video-area .video-box .cover.data-v-5b9064b4 {
   position: relative;
   width: 300rpx;
   height: 175rpx;
   border-radius: 15rpx;
+  background-position: center;
   background-size: cover;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
   box-shadow: 10rpx 0 50rpx rgba(0, 0, 0, 0.2);
 }
@@ -87,23 +73,15 @@
   position: absolute;
   width: 74rpx;
   height: 32rpx;
-  background: -webkit-linear-gradient(251deg, #97ce1e, #96ce1d);
   background: linear-gradient(199deg, #97ce1e, #96ce1d);
   right: 10rpx;
   top: 10rpx;
   font-size: 20rpx;
   color: #FFFFFF;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-          justify-content: center;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
+  justify-content: center;
+  align-items: center;
   border-radius: 8rpx;
-  background: -webkit-linear-gradient(350deg, rgba(255, 255, 255, 0) 40%, rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0) 60%) #97ce1e;
   background: linear-gradient(100deg, rgba(255, 255, 255, 0) 40%, rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0) 60%) #97ce1e;
   background-size: 200% 100%;
   background-position-x: 150%;
@@ -131,15 +109,9 @@ to {
 .list .list-item .content .video-area .video-box .tips.data-v-5b9064b4 {
   margin-left: -75rpx;
   margin-top: 10rpx;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-pack: start;
-  -webkit-justify-content: flex-start;
-          justify-content: flex-start;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
+  justify-content: flex-start;
+  align-items: center;
   font-size: 22rpx;
   color: #999;
 }
@@ -156,22 +128,13 @@ to {
   padding: 30rpx 15rpx 0;
   box-sizing: border-box;
   height: 180rpx;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-          justify-content: space-between;
+  justify-content: space-between;
   /* 按钮 */
 }
 .list .list-item .content .notification .text-area.data-v-5b9064b4 {
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: column;
-          flex-direction: column;
+  flex-direction: column;
 }
 .list .list-item .content .notification .text-area > text.data-v-5b9064b4:first-child {
   color: #333332;
@@ -190,15 +153,9 @@ to {
   font-size: 24rpx;
   width: 188rpx;
   height: 54rpx;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-          justify-content: center;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
+  justify-content: center;
+  align-items: center;
   box-shadow: 0px 8rpx 37rpx 1rpx rgba(248, 185, 14, 0.29);
 }
 .list .list-item .content .notification .fail-status.data-v-5b9064b4 {

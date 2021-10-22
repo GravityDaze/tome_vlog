@@ -39,39 +39,25 @@
   position: absolute;
   top: 0;
   left: 0;
-  background: -webkit-linear-gradient(rgba(255, 255, 255, 0), white);
   background: linear-gradient(rgba(255, 255, 255, 0), white);
 }
 .user-bg .user-container.data-v-dcbcfe34 {
   position: relative;
   z-index: 1;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -webkit-flex-flow: column;
-          flex-flow: column;
+  flex-flow: column;
   padding: 0 35rpx;
   height: 100%;
 }
 .user-bg .user-container .user-info.data-v-dcbcfe34 {
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
+  align-items: center;
   width: 100%;
 }
 .user-bg .user-container .user-info .user.data-v-dcbcfe34 {
   position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
+  align-items: center;
   height: 100%;
   width: 100%;
   font-size: 34rpx;
@@ -84,40 +70,21 @@
   border-radius: 50%;
 }
 .user-bg .user-container .bottom.data-v-dcbcfe34 {
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-flex: 1;
-  -webkit-flex: 1;
-          flex: 1;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-          justify-content: space-between;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
+  flex: 1;
+  justify-content: space-between;
+  align-items: center;
 }
 .user-bg .user-container .bottom .data.data-v-dcbcfe34 {
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
   margin-left: 32rpx;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
+  align-items: center;
 }
 .user-bg .user-container .bottom .data > view.data-v-dcbcfe34 {
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
   margin-right: 50rpx;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -webkit-flex-flow: column;
-          flex-flow: column;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
+  flex-flow: column;
+  align-items: center;
   font-size: 28rpx;
   font-family: Source Han Sans CN;
   font-weight: 400;
@@ -134,15 +101,9 @@
   background: #FFCB3E;
   border-radius: 30rpx;
   font-size: 24rpx;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-          justify-content: center;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
+  justify-content: center;
+  align-items: center;
 }
 .user-bg .user-container .bottom .edit image.data-v-dcbcfe34 {
   width: 26rpx;
@@ -154,11 +115,8 @@
   margin: auto;
 }
 .tabs .item.data-v-dcbcfe34 {
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-justify-content: space-around;
-          justify-content: space-around;
+  justify-content: space-around;
 }
 .tabs .item .single-item.data-v-dcbcfe34 {
   font-size: 30rpx;
@@ -207,19 +165,10 @@
   background: #fff;
 }
 .login-tips.data-v-dcbcfe34 {
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -webkit-flex-flow: column;
-          flex-flow: column;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-          justify-content: center;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
   font-size: 24rpx;
   font-family: Source Han Sans CN;
   font-weight: 400;
@@ -232,15 +181,9 @@
   margin-bottom: 30rpx;
 }
 .login-tips .btn.data-v-dcbcfe34 {
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-          justify-content: center;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
+  justify-content: center;
+  align-items: center;
   margin: 0 auto;
   width: 265rpx;
   margin-top: 50rpx;

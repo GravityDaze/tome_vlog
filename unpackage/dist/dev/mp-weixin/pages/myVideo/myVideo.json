@@ -1,7 +1,7 @@
 {
   "navigationBarTitleText": "视频详情",
   "usingComponents": {
-    "uni-popup": "/uni_modules/uni-popup/components/uni-popup/uni-popup",
-    "share-modal": "/pages/myVideo/componets/shareModal"
+    "share": "/pages/myVideo/componets/share",
+    "download": "/pages/myVideo/componets/download"
   }
 }

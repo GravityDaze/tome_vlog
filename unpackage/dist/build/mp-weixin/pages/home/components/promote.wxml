@@ -1,0 +1,1 @@
+<view class="promote data-v-202fa6d2"><view class="title-bar data-v-202fa6d2"><text class="title data-v-202fa6d2">玩转途咪</text></view><view class="banner data-v-202fa6d2"><carousel vue-id="d6a3b090-1" img-list="{{imgList}}" url-key="url" data-event-opts="{{[['^selected',[['selectedBanner']]]]}}" bind:selected="__e" class="data-v-202fa6d2" bind:__l="__l"></carousel></view></view>

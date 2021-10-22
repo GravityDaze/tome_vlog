@@ -41,10 +41,8 @@
   opacity: 0;
 }
 .mask-ani.data-v-7c43d41b {
-  -webkit-transition-property: opacity;
   transition-property: opacity;
-  -webkit-transition-duration: 0.2s;
-          transition-duration: 0.2s;
+  transition-duration: 0.2s;
 }
 .uni-top-mask.data-v-7c43d41b {
   opacity: 1;
@@ -76,12 +74,10 @@
   padding-bottom: env(safe-area-inset-bottom);
 }
 .content-ani.data-v-7c43d41b {
-  -webkit-transition-property: opacity, -webkit-transform;
   transition-property: opacity, -webkit-transform;
   transition-property: transform, opacity;
   transition-property: transform, opacity, -webkit-transform;
-  -webkit-transition-duration: 0.2s;
-          transition-duration: 0.2s;
+  transition-duration: 0.2s;
 }
 .uni-top-content.data-v-7c43d41b {
   -webkit-transform: translateY(0);

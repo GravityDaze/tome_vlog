@@ -20,19 +20,10 @@
 }
 .name_date {
 	/* border: 1px solid red; */
-	display: -webkit-box;
-	display: -webkit-flex;
 	display: flex;
-	-webkit-box-orient: vertical;
-	-webkit-box-direction: normal;
-	-webkit-flex-direction: column;
-	        flex-direction: column;
-	-webkit-box-pack: center;
-	-webkit-justify-content: center;
-	        justify-content: center;
-	-webkit-box-align: start;
-	-webkit-align-items: flex-start;
-	        align-items: flex-start;
+	flex-direction: column;
+	justify-content: center;
+	align-items: flex-start;
 }
 .icon_huifu {
 	width: 25rpx;
@@ -41,41 +32,23 @@
 }
 .single_row1 {
 	/* border: 1px solid blue; */
-	display: -webkit-box;
-	display: -webkit-flex;
 	display: flex;
-	-webkit-box-pack: justify;
-	-webkit-justify-content: space-between;
-	        justify-content: space-between;
-	-webkit-box-align: center;
-	-webkit-align-items: center;
-	        align-items: center;
+	justify-content: space-between;
+	align-items: center;
 	padding: 10rpx 0;
 }
 .single_row1_left {
 	/* border:1px solid yellow; */
-	display: -webkit-box;
-	display: -webkit-flex;
 	display: flex;
-	-webkit-box-pack: start;
-	-webkit-justify-content: flex-start;
-	        justify-content: flex-start;
-	-webkit-box-align: center;
-	-webkit-align-items: center;
-	        align-items: center;
+	justify-content: flex-start;
+	align-items: center;
 }
 .single_row1_right {
 	/* border:1px solid red; */
 	min-width: 90rpx;
-	display: -webkit-box;
-	display: -webkit-flex;
 	display: flex;
-	-webkit-box-pack: justify;
-	-webkit-justify-content: space-between;
-	        justify-content: space-between;
-	-webkit-box-align: center;
-	-webkit-align-items: center;
-	        align-items: center;
+	justify-content: space-between;
+	align-items: center;
 }
 .dianzan_hiddenhuifu {
 	opacity: 0;
@@ -108,15 +81,9 @@
 	margin-bottom: 20rpx;
 	color: gray;
 	font-size: 25rpx;
-	display: -webkit-box;
-	display: -webkit-flex;
 	display: flex;
-	-webkit-box-pack: center;
-	-webkit-justify-content: center;
-	        justify-content: center;
-	-webkit-box-align: center;
-	-webkit-align-items: center;
-	        align-items: center;
+	justify-content: center;
+	align-items: center;
 }
 .row_box5 {
 	background-color: rgba(0, 0, 0, 0.5);
@@ -134,20 +101,10 @@
 	height: 290rpx;
 	padding: 25rpx;
 	position: fixed;
-	display: -webkit-box;
-	display: -webkit-flex;
 	display: flex;
-	-webkit-box-orient: vertical;
-	-webkit-box-direction: normal;
-	-webkit-flex-direction: column;
-	        flex-direction: column;
-	-webkit-box-pack: center;
-	-webkit-justify-content: center;
-	        justify-content: center;
-	-webkit-box-align: center;
-	-webkit-align-items: center;
-	        align-items: center;
-	-webkit-transition: 0.05s;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
 	transition: 0.05s;
 }
 .row_box5_2 {
@@ -156,17 +113,10 @@
 	width: 160rpx;
 	height: 68rpx;
 	border-radius: 34rpx;
-	display: -webkit-box;
-	display: -webkit-flex;
 	display: flex;
-	-webkit-box-pack: center;
-	-webkit-justify-content: center;
-	        justify-content: center;
-	-webkit-box-align: center;
-	-webkit-align-items: center;
-	        align-items: center;
-	-webkit-align-self: flex-end;
-	        align-self: flex-end;
+	justify-content: center;
+	align-items: center;
+	align-self: flex-end;
 	margin-top: 30rpx;
 }
 .textarea3 {

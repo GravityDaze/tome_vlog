@@ -1,0 +1,1 @@
+.tips.data-v-2414f28d{position:fixed;z-index:100}.tips .mask.data-v-2414f28d{position:fixed;top:0;bottom:0;background:rgba(0,0,0,.8);left:0;right:0}.tips .play.data-v-2414f28d{position:fixed;top:50%;left:50%;-webkit-transform:translate(-50%,-50%);transform:translate(-50%,-50%);text-align:center}.tips .play image.data-v-2414f28d{margin-top:40rpx;width:55rpx;height:55rpx}
